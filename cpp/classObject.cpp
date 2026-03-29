@@ -9,12 +9,12 @@ class student {
     {
       cout<<"enter name "<<endl;
       cin >> Name;
-      std::cout << "enter Sch_No: "<< endl;
+      cout << "enter Sch_No: "<< endl;
       cin >> Sch_No ;}
    void output()
    {
-     std::cout << Name;
-     std::cout << Sch_No;
+     cout << Name;
+     cout << Sch_No;
    }
 };
 

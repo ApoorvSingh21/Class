@@ -9,5 +9,6 @@ public class string{
     System.out.println(S1.charAt(1));
     System.out.println(S1.indexOf("a"));
     System.out.println(S1.concat (" Singh Rathor"));
+    
   }
 }
