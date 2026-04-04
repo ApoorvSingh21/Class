@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 void ChangeValue(int *num){
   *num = *num+10;
