@@ -5,15 +5,28 @@
 // Define structure for student data
 struct Student {
     int student_no;
-    char student_name[50];
+    char *student_name[50];
     float student_marks;
 };
 
 int main() {
+      // struct and pointer 
+     struct Student s1;
+     struct Student *ptr = &s1;
+     ptr->student_no = 10;
+     ptr->student_name ,"Apoorv";
+     ptr->student_marks = 64.55;
+     printf("%d\n",ptr->student_no);
+     printf("%s\n",ptr->student_name);
+     printf("%f\n",ptr->student_marks);
+     
+     
+
+
     // Declare array of structures for 10 students
     struct Student students[10];
 
-    // Read data for 10 students
+    // Read data for 10 students using Object
     printf("Enter data for 10 students:\n");
     for (int i = 0; i < 10; i++) {
         printf("Student %d:\n", i + 1);
@@ -35,5 +48,9 @@ int main() {
             printf("Student Marks: %.2f\n\n", students[i].student_marks);
         }
     }
+
+    
+
+
 
     return 0;}
