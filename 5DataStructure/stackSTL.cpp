@@ -4,7 +4,9 @@ using namespace std;
 
 int main(){
     stack<int>s;
-    s.push(1);
+    s.push(9);
+    cout<< s.top()<<endl;
+
    cout<< s.size()<<"\n";
    s.pop();
    cout<< s.size();

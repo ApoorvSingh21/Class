@@ -18,11 +18,11 @@ int main(){
      // arr.back()=9;
 
 
-    cout <<arr.at(2);
-    cout <<arr.front();
-    cout <<arr.back();
-    cout <<arr.begin();
-    cout <<arr.end();
+    cout <<arr.at(2)<<"\n";
+    cout <<arr.front()<<"\n";
+    cout <<arr.back()<<"\n";
+    cout <<arr.begin()<<"\n";
+    cout <<arr.end()<<"\n";
     //arr.fill(9);
      cout<<"\n";
     for(int i:arr){
@@ -32,12 +32,12 @@ int main(){
    sort(arr.begin(),arr.end());
      
    for(int i:arr){
-        cout<<i;
+        cout<<i<<"\n";
     }
    reverse(arr.begin(),arr.end());
      
    for(int i:arr){
-        cout<<i;
+        cout<<i<<"\n";
     }
-
+     cout<<arr.size()<<"\n";
 return 0;}
