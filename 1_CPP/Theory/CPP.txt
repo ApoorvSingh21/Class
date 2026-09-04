@@ -1,0 +1,1527 @@
+===============================================================
+        C++ PROGRAMMING — JOB-READY MASTER SYLLABUS
+        M.Tech 1st Year | Beginner → Interview Ready
+===============================================================
+
+GOAL:
+-----
+1. Learn C++ from absolute beginner level
+2. Build strong programming fundamentals
+3. Master Object-Oriented Programming
+4. Master Modern C++
+5. Master STL
+6. Use C++ for DSA and competitive programming
+7. Solve interview-level coding problems
+8. Build practical C++ projects
+9. Become placement/job interview ready
+
+
+===============================================================
+PHASE 0 — PROGRAMMING & C++ ENVIRONMENT
+===============================================================
+
+CHAPTER 1 — Introduction to Programming
+-----------------------------------------
+1.1 What is Programming?
+1.2 What is a Program?
+1.3 Source Code
+1.4 Compiler
+1.5 Interpreter
+1.6 Linker
+1.7 Executable File
+1.8 Programming Languages
+1.9 High-Level vs Low-Level Languages
+1.10 Compiled vs Interpreted Languages
+
+CHAPTER 2 — Introduction to C++
+-------------------------------
+2.1 What is C++?
+2.2 History of C++
+2.3 C vs C++
+2.4 Features of C++
+2.5 Applications of C++
+2.6 C++ Standards
+    - C++98
+    - C++03
+    - C++11
+    - C++14
+    - C++17
+    - C++20
+    - C++23
+2.7 Modern C++
+2.8 C++ Compilation Process
+2.9 C++ Program Structure
+
+CHAPTER 3 — Development Environment
+------------------------------------
+3.1 Installing C++
+3.2 GCC / G++
+3.3 Clang
+3.4 MSVC
+3.5 IDEs
+    - Visual Studio
+    - VS Code
+    - CLion
+3.6 Compile and Run Program
+3.7 Command-Line Compilation
+3.8 Debug vs Release Build
+3.9 Compiler Errors
+3.10 Runtime Errors
+3.11 Debugging Basics
+3.12 Git + C++ Project Setup
+
+
+===============================================================
+PHASE 1 — C++ PROGRAMMING FUNDAMENTALS
+===============================================================
+
+CHAPTER 4 — First C++ Program
+-----------------------------
+4.1 Hello World
+4.2 main() Function
+4.3 #include
+4.4 Header Files
+4.5 iostream
+4.6 std Namespace
+4.7 cout
+4.8 cin
+4.9 endl
+4.10 Comments
+4.11 Program Execution Flow
+
+CHAPTER 5 — Variables and Constants
+------------------------------------
+5.1 Variables
+5.2 Declaration
+5.3 Initialization
+5.4 Assignment
+5.5 Naming Rules
+5.6 Scope of Variables
+5.7 Constants
+5.8 const Keyword
+5.9 constexpr
+5.10 Literals
+5.11 Type Deduction
+5.12 auto
+
+CHAPTER 6 — Data Types
+-----------------------
+6.1 Fundamental Data Types
+    - int
+    - char
+    - bool
+    - float
+    - double
+    - void
+6.2 Integer Types
+    - short
+    - int
+    - long
+    - long long
+6.3 Signed vs Unsigned
+6.4 Fixed Width Integers
+6.5 wchar_t
+6.6 char8_t
+6.7 char16_t
+6.8 char32_t
+6.9 sizeof()
+6.10 Type Limits
+6.11 Integer Overflow
+6.12 Floating-Point Precision
+
+CHAPTER 7 — Operators
+---------------------
+7.1 Arithmetic Operators
+7.2 Relational Operators
+7.3 Logical Operators
+7.4 Assignment Operators
+7.5 Increment / Decrement
+7.6 Unary Operators
+7.7 Conditional Operator
+7.8 Bitwise Operators
+    - &
+    - |
+    - ^
+    - ~
+    - <<
+    - >>
+7.9 sizeof Operator
+7.10 Operator Precedence
+7.11 Operator Associativity
+
+CHAPTER 8 — Type Conversion
+----------------------------
+8.1 Implicit Conversion
+8.2 Explicit Conversion
+8.3 C-Style Casting
+8.4 static_cast
+8.5 const_cast
+8.6 reinterpret_cast
+8.7 dynamic_cast
+8.8 Narrowing Conversion
+8.9 Type Promotion
+
+
+===============================================================
+PHASE 2 — CONTROL FLOW & PROBLEM SOLVING
+===============================================================
+
+CHAPTER 9 — Conditional Statements
+-----------------------------------
+9.1 if
+9.2 if-else
+9.3 else-if
+9.4 Nested if
+9.5 switch
+9.6 Nested switch
+9.7 Conditional Operator
+9.8 Decision-Making Problems
+
+CHAPTER 10 — Loops
+------------------
+10.1 Why Loops?
+10.2 for Loop
+10.3 while Loop
+10.4 do-while Loop
+10.5 Nested Loops
+10.6 Infinite Loops
+10.7 break
+10.8 continue
+10.9 Loop Control
+10.10 Pattern Problems
+
+CHAPTER 11 — Problem Solving Fundamentals
+------------------------------------------
+11.1 Algorithm
+11.2 Pseudocode
+11.3 Flowcharts
+11.4 Input / Output
+11.5 Dry Run
+11.6 Edge Cases
+11.7 Test Cases
+11.8 Time Complexity Introduction
+11.9 Space Complexity Introduction
+11.10 Debugging Techniques
+
+PRACTICE:
+----------
+- Number Problems
+- Digit Problems
+- Prime Number
+- Factorial
+- Fibonacci
+- Palindrome
+- Armstrong Number
+- Reverse Number
+- GCD / LCM
+- Pattern Printing
+
+
+===============================================================
+PHASE 3 — FUNCTIONS
+===============================================================
+
+CHAPTER 12 — Functions
+----------------------
+12.1 What is a Function?
+12.2 Function Declaration
+12.3 Function Definition
+12.4 Function Call
+12.5 Parameters
+12.6 Arguments
+12.7 Return Values
+12.8 void Functions
+12.9 Function Prototypes
+12.10 Default Arguments
+12.11 Inline Functions
+12.12 Function Overloading
+12.13 Scope of Functions
+
+CHAPTER 13 — Parameter Passing
+------------------------------
+13.1 Pass by Value
+13.2 Pass by Reference
+13.3 Pass by Pointer
+13.4 const Reference
+13.5 Return by Value
+13.6 Return by Reference
+13.7 Returning Multiple Values
+13.8 std::pair
+13.9 std::tuple
+
+CHAPTER 14 — Recursion
+----------------------
+14.1 What is Recursion?
+14.2 Base Case
+14.3 Recursive Case
+14.4 Call Stack
+14.5 Direct Recursion
+14.6 Indirect Recursion
+14.7 Tail Recursion
+14.8 Recursion vs Iteration
+14.9 Recursive Problem Solving
+
+PRACTICE:
+----------
+- Factorial
+- Fibonacci
+- Sum of digits
+- Reverse string
+- Power
+- GCD
+- Binary search
+- Tower of Hanoi
+
+
+===============================================================
+PHASE 4 — ARRAYS, STRINGS & POINTERS
+===============================================================
+
+CHAPTER 15 — Arrays
+-------------------
+15.1 One-Dimensional Array
+15.2 Declaration
+15.3 Initialization
+15.4 Traversal
+15.5 Insertion
+15.6 Deletion
+15.7 Searching
+15.8 Updating
+15.9 Two-Dimensional Arrays
+15.10 Multidimensional Arrays
+15.11 Array Memory Layout
+15.12 Passing Arrays to Functions
+
+CHAPTER 16 — Strings
+---------------------
+16.1 Character Arrays
+16.2 C-Style Strings
+16.3 std::string
+16.4 String Initialization
+16.5 String Input
+16.6 String Traversal
+16.7 String Concatenation
+16.8 String Comparison
+16.9 String Searching
+16.10 String Modification
+16.11 Common string Functions
+16.12 String Conversion
+16.13 String Streams
+
+CHAPTER 17 — Pointers
+---------------------
+17.1 What is Memory?
+17.2 Address
+17.3 Pointer Concept
+17.4 Pointer Declaration
+17.5 Dereferencing
+17.6 Address-of Operator
+17.7 Pointer Arithmetic
+17.8 Null Pointer
+17.9 nullptr
+17.10 Pointer to Pointer
+17.11 Pointer and Arrays
+17.12 Pointer and Functions
+17.13 Function Pointers
+17.14 const Pointers
+17.15 Pointer Safety
+
+CHAPTER 18 — References
+-----------------------
+18.1 Reference Concept
+18.2 Reference Declaration
+18.3 Reference vs Pointer
+18.4 const Reference
+18.5 Reference as Function Parameter
+18.6 Reference as Return Value
+18.7 References and Objects
+18.8 Reference Collapsing Introduction
+
+
+===============================================================
+PHASE 5 — DYNAMIC MEMORY & USER-DEFINED TYPES
+===============================================================
+
+CHAPTER 19 — Dynamic Memory
+----------------------------
+19.1 Stack Memory
+19.2 Heap Memory
+19.3 Static Memory
+19.4 new
+19.5 delete
+19.6 new[]
+19.7 delete[]
+19.8 Memory Leaks
+19.9 Dangling Pointers
+19.10 Double Delete
+19.11 RAII Concept
+
+CHAPTER 20 — Structures
+-----------------------
+20.1 struct
+20.2 Structure Members
+20.3 Structure Objects
+20.4 Nested Structures
+20.5 Structure Arrays
+20.6 Passing Structures
+20.7 struct vs class
+
+CHAPTER 21 — Enumerations
+-------------------------
+21.1 enum
+21.2 enum class
+21.3 Scoped Enumerations
+21.4 Underlying Types
+21.5 Practical Applications
+
+
+===============================================================
+PHASE 6 — OBJECT-ORIENTED PROGRAMMING
+===============================================================
+
+CHAPTER 22 — OOP Fundamentals
+------------------------------
+22.1 What is OOP?
+22.2 Procedural vs Object-Oriented Programming
+22.3 Class
+22.4 Object
+22.5 Attributes
+22.6 Methods
+22.7 Encapsulation
+22.8 Abstraction
+22.9 Inheritance
+22.10 Polymorphism
+
+CHAPTER 23 — Classes and Objects
+---------------------------------
+23.1 Class Definition
+23.2 Object Creation
+23.3 Access Specifiers
+    - public
+    - private
+    - protected
+23.4 Member Variables
+23.5 Member Functions
+23.6 Inline Member Functions
+23.7 this Pointer
+23.8 Static Data Members
+23.9 Static Member Functions
+23.10 const Member Functions
+
+CHAPTER 24 — Constructors and Destructors
+------------------------------------------
+24.1 Constructor
+24.2 Default Constructor
+24.3 Parameterized Constructor
+24.4 Copy Constructor
+24.5 Move Constructor
+24.6 Constructor Overloading
+24.7 Destructor
+24.8 Constructor Initialization List
+24.9 Delegating Constructors
+24.10 Constructor / Destructor Order
+
+CHAPTER 25 — Inheritance
+-------------------------
+25.1 Inheritance Concept
+25.2 Base Class
+25.3 Derived Class
+25.4 Single Inheritance
+25.5 Multilevel Inheritance
+25.6 Multiple Inheritance
+25.7 Hierarchical Inheritance
+25.8 Hybrid Inheritance
+25.9 Access Modes
+25.10 protected Members
+25.11 Constructor / Destructor in Inheritance
+25.12 Diamond Problem
+25.13 Virtual Base Class
+
+CHAPTER 26 — Polymorphism
+-------------------------
+26.1 Compile-Time Polymorphism
+26.2 Function Overloading
+26.3 Operator Overloading
+26.4 Runtime Polymorphism
+26.5 Virtual Functions
+26.6 Function Overriding
+26.7 Dynamic Binding
+26.8 Pure Virtual Functions
+26.9 Abstract Classes
+26.10 Virtual Destructor
+26.11 Interface Design
+
+CHAPTER 27 — Abstraction & Encapsulation
+-----------------------------------------
+27.1 Data Hiding
+27.2 Encapsulation
+27.3 Abstraction
+27.4 Abstract Classes
+27.5 Interface-like Design
+27.6 Getters and Setters
+27.7 SOLID Introduction
+
+
+===============================================================
+PHASE 7 — OPERATOR OVERLOADING & ADVANCED OOP
+===============================================================
+
+CHAPTER 28 — Operator Overloading
+----------------------------------
+28.1 Why Operator Overloading?
+28.2 Unary Operators
+28.3 Binary Operators
+28.4 Arithmetic Operators
+28.5 Comparison Operators
+28.6 Assignment Operator
+28.7 Stream Operators
+28.8 Member vs Non-Member Operators
+28.9 Friend Operators
+28.10 Rules and Restrictions
+
+CHAPTER 29 — Friend Functions
+------------------------------
+29.1 Friend Function
+29.2 Friend Class
+29.3 Advantages
+29.4 Disadvantages
+29.5 Encapsulation Considerations
+
+CHAPTER 30 — Advanced Class Concepts
+-------------------------------------
+30.1 Nested Classes
+30.2 Anonymous Objects
+30.3 Object Arrays
+30.4 Objects as Function Arguments
+30.5 Objects as Return Values
+30.6 const Objects
+30.7 Mutable Members
+30.8 Explicit Constructors
+30.9 Conversion Constructors
+
+
+===============================================================
+PHASE 8 — MODERN C++ CORE
+===============================================================
+
+CHAPTER 31 — C++11 Essentials
+-----------------------------
+31.1 auto
+31.2 nullptr
+31.3 range-based for
+31.4 constexpr
+31.5 enum class
+31.6 lambda expressions
+31.7 uniform initialization
+31.8 initializer_list
+31.9 smart pointers
+31.10 move semantics
+31.11 rvalue references
+
+CHAPTER 32 — Lambda Expressions
+-------------------------------
+32.1 Lambda Syntax
+32.2 Parameters
+32.3 Return Type
+32.4 Capture by Value
+32.5 Capture by Reference
+32.6 Generic Lambdas
+32.7 Mutable Lambda
+32.8 Lambda with STL Algorithms
+
+CHAPTER 33 — Move Semantics
+---------------------------
+33.1 Lvalue
+33.2 Rvalue
+33.3 Lvalue Reference
+33.4 Rvalue Reference
+33.5 std::move
+33.6 Move Constructor
+33.7 Move Assignment
+33.8 Copy vs Move
+33.9 Performance Benefits
+
+CHAPTER 34 — Rule of 3 / 5 / 0
+-------------------------------
+34.1 Copy Constructor
+34.2 Copy Assignment
+34.3 Destructor
+34.4 Move Constructor
+34.5 Move Assignment
+34.6 Rule of Three
+34.7 Rule of Five
+34.8 Rule of Zero
+
+
+===============================================================
+PHASE 9 — SMART POINTERS & RESOURCE MANAGEMENT
+===============================================================
+
+CHAPTER 35 — Smart Pointers
+----------------------------
+35.1 Why Smart Pointers?
+35.2 unique_ptr
+35.3 shared_ptr
+35.4 weak_ptr
+35.5 make_unique
+35.6 make_shared
+35.7 Ownership
+35.8 Reference Counting
+35.9 Circular References
+35.10 RAII
+35.11 Smart Pointer Best Practices
+
+CHAPTER 36 — Memory Management
+------------------------------
+36.1 Resource Ownership
+36.2 RAII
+36.3 Exception-Safe Resource Management
+36.4 Memory Leaks
+36.5 Dangling References
+36.6 Object Lifetime
+36.7 Lifetime Extension
+36.8 Stack vs Heap
+
+
+===============================================================
+PHASE 10 — TEMPLATES & GENERIC PROGRAMMING
+===============================================================
+
+CHAPTER 37 — Function Templates
+--------------------------------
+37.1 Generic Functions
+37.2 Template Syntax
+37.3 Multiple Template Parameters
+37.4 Template Type Deduction
+37.5 Explicit Template Arguments
+37.6 Non-Type Template Parameters
+
+CHAPTER 38 — Class Templates
+----------------------------
+38.1 Generic Classes
+38.2 Template Classes
+38.3 Multiple Parameters
+38.4 Template Specialization
+38.5 Partial Specialization
+
+CHAPTER 39 — Generic Programming
+---------------------------------
+39.1 Type Independence
+39.2 Generic Algorithms
+39.3 Template Instantiation
+39.4 Concepts Introduction
+39.5 requires
+39.6 Constraints
+
+
+===============================================================
+PHASE 11 — STL (STANDARD TEMPLATE LIBRARY)
+===============================================================
+
+CHAPTER 40 — STL Fundamentals
+------------------------------
+40.1 What is STL?
+40.2 Containers
+40.3 Iterators
+40.4 Algorithms
+40.5 Function Objects
+40.6 Allocators
+40.7 STL Complexity
+
+CHAPTER 41 — Sequence Containers
+---------------------------------
+41.1 array
+41.2 vector
+41.3 deque
+41.4 list
+41.5 forward_list
+41.6 Container Selection
+
+CHAPTER 42 — Associative Containers
+------------------------------------
+42.1 set
+42.2 multiset
+42.3 map
+42.4 multimap
+42.5 Ordered Containers
+42.6 Tree-Based Implementation
+42.7 Complexity
+
+CHAPTER 43 — Unordered Containers
+----------------------------------
+43.1 unordered_set
+43.2 unordered_map
+43.3 unordered_multiset
+43.4 unordered_multimap
+43.5 Hashing
+43.6 Collision
+43.7 Hash Functions
+43.8 Average vs Worst-Case Complexity
+
+CHAPTER 44 — Container Adapters
+--------------------------------
+44.1 stack
+44.2 queue
+44.3 priority_queue
+44.4 Min Heap
+44.5 Max Heap
+
+CHAPTER 45 — Iterators
+----------------------
+45.1 Iterator Concept
+45.2 begin()
+45.3 end()
+45.4 rbegin()
+45.5 rend()
+45.6 const_iterator
+45.7 Iterator Categories
+45.8 Iterator Invalidation
+
+CHAPTER 46 — STL Algorithms
+----------------------------
+46.1 sort
+46.2 stable_sort
+46.3 reverse
+46.4 find
+46.5 binary_search
+46.6 lower_bound
+46.7 upper_bound
+46.8 min_element
+46.9 max_element
+46.10 count
+46.11 accumulate
+46.12 transform
+46.13 remove
+46.14 unique
+46.15 partition
+46.16 merge
+46.17 custom comparators
+
+CHAPTER 47 — STL Utilities
+---------------------------
+47.1 pair
+47.2 tuple
+47.3 optional
+47.4 variant
+47.5 any
+47.6 string_view
+47.7 span
+47.8 numeric utilities
+
+
+===============================================================
+PHASE 12 — EXCEPTION HANDLING
+===============================================================
+
+CHAPTER 48 — Exception Handling
+--------------------------------
+48.1 Errors vs Exceptions
+48.2 try
+48.3 catch
+48.4 throw
+48.5 Multiple catch Blocks
+48.6 Catch-all
+48.7 Custom Exceptions
+48.8 Exception Specifications
+48.9 noexcept
+48.10 Exception Safety
+48.11 RAII and Exceptions
+
+
+===============================================================
+PHASE 13 — FILE HANDLING
+===============================================================
+
+CHAPTER 49 — File I/O
+----------------------
+49.1 Files
+49.2 ifstream
+49.3 ofstream
+49.4 fstream
+49.5 Opening Files
+49.6 Closing Files
+49.7 Reading Files
+49.8 Writing Files
+49.9 Append Mode
+49.10 Binary Files
+49.11 File Positioning
+49.12 Error Handling
+
+PRACTICE PROJECT:
+------------------
+- Student Record Management System
+- Employee Record System
+- Inventory Management System
+
+
+===============================================================
+PHASE 14 — NAMESPACES, PREPROCESSOR & COMPILATION
+===============================================================
+
+CHAPTER 50 — Namespaces
+-----------------------
+50.1 Namespace
+50.2 std Namespace
+50.3 Custom Namespace
+50.4 Nested Namespace
+50.5 using Declaration
+50.6 using Directive
+
+CHAPTER 51 — Preprocessor
+--------------------------
+51.1 #include
+51.2 #define
+51.3 Macros
+51.4 Conditional Compilation
+51.5 #ifdef
+51.6 #ifndef
+51.7 #if
+51.8 #elif
+51.9 #endif
+51.10 Header Guards
+51.11 pragma once
+
+CHAPTER 52 — Compilation & Linking
+-----------------------------------
+52.1 Preprocessing
+52.2 Compilation
+52.3 Assembly
+52.4 Linking
+52.5 Object Files
+52.6 Static Libraries
+52.7 Dynamic Libraries
+52.8 Header / Source Separation
+52.9 One Definition Rule
+
+
+===============================================================
+PHASE 15 — DATA STRUCTURES & ALGORITHMS USING C++
+===============================================================
+
+CHAPTER 53 — Complexity Analysis
+---------------------------------
+53.1 Big-O
+53.2 Big-Omega
+53.3 Big-Theta
+53.4 Best Case
+53.5 Average Case
+53.6 Worst Case
+53.7 Time Complexity
+53.8 Space Complexity
+53.9 Amortized Analysis
+
+CHAPTER 54 — Searching
+----------------------
+54.1 Linear Search
+54.2 Binary Search
+54.3 Binary Search Variations
+54.4 Search on Answer
+
+CHAPTER 55 — Sorting
+--------------------
+55.1 Bubble Sort
+55.2 Selection Sort
+55.3 Insertion Sort
+55.4 Merge Sort
+55.5 Quick Sort
+55.6 Heap Sort
+55.7 Counting Sort
+55.8 Radix Sort
+55.9 Bucket Sort
+55.10 Sorting Complexity
+55.11 Stable vs Unstable Sorting
+
+CHAPTER 56 — Linked List
+-------------------------
+56.1 Singly Linked List
+56.2 Doubly Linked List
+56.3 Circular Linked List
+56.4 Insert
+56.5 Delete
+56.6 Search
+56.7 Reverse
+56.8 Cycle Detection
+56.9 Merge Lists
+56.10 Fast and Slow Pointers
+
+CHAPTER 57 — Stack
+------------------
+57.1 Stack Concept
+57.2 Array Implementation
+57.3 Linked List Implementation
+57.4 STL Stack
+57.5 Applications
+57.6 Balanced Parentheses
+57.7 Expression Evaluation
+57.8 Monotonic Stack
+
+CHAPTER 58 — Queue
+------------------
+58.1 Queue
+58.2 Circular Queue
+58.3 Deque
+58.4 Priority Queue
+58.5 STL Queue
+58.6 Applications
+
+CHAPTER 59 — Trees
+------------------
+59.1 Tree Terminology
+59.2 Binary Tree
+59.3 Tree Traversals
+    - Preorder
+    - Inorder
+    - Postorder
+    - Level Order
+59.4 Binary Search Tree
+59.5 BST Operations
+59.6 Balanced Trees
+59.7 AVL Tree
+59.8 Heap
+59.9 Min Heap
+59.10 Max Heap
+59.11 Trie
+
+CHAPTER 60 — Graphs
+-------------------
+60.1 Graph Terminology
+60.2 Directed Graph
+60.3 Undirected Graph
+60.4 Weighted Graph
+60.5 Adjacency Matrix
+60.6 Adjacency List
+60.7 BFS
+60.8 DFS
+60.9 Cycle Detection
+60.10 Topological Sorting
+60.11 Shortest Path
+    - Dijkstra
+    - Bellman-Ford
+    - Floyd-Warshall
+60.12 Minimum Spanning Tree
+    - Prim
+    - Kruskal
+60.13 Disjoint Set Union
+
+CHAPTER 61 — Hashing
+--------------------
+61.1 Hash Table
+61.2 Hash Function
+61.3 Collision
+61.4 Chaining
+61.5 Open Addressing
+61.6 unordered_map
+61.7 unordered_set
+61.8 Hashing Problems
+
+
+===============================================================
+PHASE 16 — ADVANCED DSA & PROBLEM SOLVING
+===============================================================
+
+CHAPTER 62 — Recursion & Backtracking
+--------------------------------------
+62.1 Decision Trees
+62.2 Subsets
+62.3 Subsequences
+62.4 Permutations
+62.5 Combination Problems
+62.6 N-Queens
+62.7 Sudoku
+62.8 Maze Problems
+
+CHAPTER 63 — Greedy Algorithms
+------------------------------
+63.1 Greedy Strategy
+63.2 Activity Selection
+63.3 Fractional Knapsack
+63.4 Job Sequencing
+63.5 Interval Problems
+63.6 Huffman Coding
+63.7 Greedy Proof Concepts
+
+CHAPTER 64 — Dynamic Programming
+---------------------------------
+64.1 DP Introduction
+64.2 Overlapping Subproblems
+64.3 Optimal Substructure
+64.4 Memoization
+64.5 Tabulation
+64.6 1D DP
+64.7 2D DP
+64.8 Knapsack
+64.9 LCS
+64.10 LIS
+64.11 Matrix Chain Multiplication
+64.12 Grid DP
+64.13 State Design
+64.14 DP Optimization
+
+CHAPTER 65 — Advanced Problem-Solving Patterns
+-----------------------------------------------
+65.1 Two Pointers
+65.2 Sliding Window
+65.3 Prefix Sum
+65.4 Difference Array
+65.5 Fast and Slow Pointer
+65.6 Binary Search on Answer
+65.7 Bit Manipulation
+65.8 Intervals
+65.9 Sweep Line Introduction
+65.10 Divide and Conquer
+
+
+===============================================================
+PHASE 17 — C++ FOR SOFTWARE DEVELOPMENT
+===============================================================
+
+CHAPTER 66 — Software Design Basics
+------------------------------------
+66.1 Modular Programming
+66.2 Separation of Concerns
+66.3 Encapsulation
+66.4 Dependency Management
+66.5 Code Reusability
+66.6 Maintainability
+66.7 Clean Code
+
+CHAPTER 67 — SOLID Principles
+------------------------------
+67.1 Single Responsibility
+67.2 Open/Closed
+67.3 Liskov Substitution
+67.4 Interface Segregation
+67.5 Dependency Inversion
+
+CHAPTER 68 — Design Patterns
+-----------------------------
+68.1 Singleton
+68.2 Factory
+68.3 Abstract Factory
+68.4 Builder
+68.5 Adapter
+68.6 Decorator
+68.7 Observer
+68.8 Strategy
+68.9 Command
+68.10 Prototype
+
+
+===============================================================
+PHASE 18 — C++ MULTITHREADING & CONCURRENCY
+===============================================================
+
+CHAPTER 69 — Threading
+----------------------
+69.1 Process vs Thread
+69.2 std::thread
+69.3 Thread Creation
+69.4 Thread Joining
+69.5 Thread Detaching
+69.6 Thread Arguments
+69.7 Thread Lifetime
+
+CHAPTER 70 — Synchronization
+-----------------------------
+70.1 Race Condition
+70.2 Critical Section
+70.3 Mutex
+70.4 lock_guard
+70.5 unique_lock
+70.6 scoped_lock
+70.7 Condition Variables
+70.8 Deadlock
+70.9 Atomic Operations
+70.10 std::atomic
+
+CHAPTER 71 — C++ Concurrency
+-----------------------------
+71.1 Futures
+71.2 Promises
+71.3 async
+71.4 packaged_task
+71.5 Producer-Consumer
+71.6 Thread Pool Introduction
+
+
+===============================================================
+PHASE 19 — C++ DATABASE & NETWORKING BASICS
+===============================================================
+
+CHAPTER 72 — Database Connectivity
+-----------------------------------
+72.1 Database Basics
+72.2 SQL Fundamentals
+72.3 C++ Database Connectivity
+72.4 Connection Management
+72.5 CRUD Operations
+72.6 Transactions
+72.7 Error Handling
+
+CHAPTER 73 — Networking Basics
+------------------------------
+73.1 Network Fundamentals
+73.2 Client-Server Model
+73.3 Socket Programming
+73.4 TCP
+73.5 UDP
+73.6 Client Socket
+73.7 Server Socket
+73.8 Request / Response
+73.9 Basic Network Application
+
+
+===============================================================
+PHASE 20 — C++ TESTING & DEBUGGING
+===============================================================
+
+CHAPTER 74 — Debugging
+----------------------
+74.1 Debugger
+74.2 Breakpoints
+74.3 Step Over
+74.4 Step Into
+74.5 Step Out
+74.6 Watch Variables
+74.7 Call Stack
+74.8 Memory Debugging
+74.9 Core Dump Introduction
+
+CHAPTER 75 — Testing
+---------------------
+75.1 Unit Testing
+75.2 Integration Testing
+75.3 Test Cases
+75.4 Assertions
+75.5 GoogleTest Introduction
+75.6 Test-Driven Development Introduction
+
+
+===============================================================
+PHASE 21 — BUILD SYSTEM & PROFESSIONAL C++ DEVELOPMENT
+===============================================================
+
+CHAPTER 76 — CMake
+------------------
+76.1 What is CMake?
+76.2 CMakeLists.txt
+76.3 Targets
+76.4 Libraries
+76.5 Dependencies
+76.6 Debug / Release Builds
+76.7 Multi-File Projects
+76.8 CMake + Git
+
+CHAPTER 77 — Git for C++ Developers
+------------------------------------
+77.1 Git Basics
+77.2 Repository
+77.3 commit
+77.4 branch
+77.5 merge
+77.6 rebase
+77.7 pull
+77.8 push
+77.9 .gitignore
+77.10 GitHub
+77.11 Pull Requests
+77.12 Code Review
+
+
+===============================================================
+PHASE 22 — INTERVIEW-READY C++ INTERNALS
+===============================================================
+
+CHAPTER 78 — C++ Memory Model
+-----------------------------
+78.1 Stack
+78.2 Heap
+78.3 Static Storage
+78.4 Object Lifetime
+78.5 Memory Alignment
+78.6 Padding
+78.7 References
+78.8 Pointers
+78.9 Undefined Behavior
+78.10 Dangling Pointer
+78.11 Memory Leak
+
+CHAPTER 79 — C++ Object Model
+-----------------------------
+79.1 Object Lifetime
+79.2 vtable
+79.3 vptr
+79.4 Virtual Functions
+79.5 Object Layout
+79.6 Inheritance Layout
+79.7 Multiple Inheritance
+
+CHAPTER 80 — Performance
+------------------------
+80.1 Copy vs Move
+80.2 Pass by Value vs Reference
+80.3 Cache Locality
+80.4 Allocation Cost
+80.5 STL Performance
+80.6 Compiler Optimization
+80.7 Profiling Introduction
+
+
+===============================================================
+PHASE 23 — INTERVIEW PREPARATION
+===============================================================
+
+CHAPTER 81 — C++ Basic Interview Questions
+-------------------------------------------
+81.1 C vs C++
+81.2 Compiler vs Linker
+81.3 Pointer vs Reference
+81.4 const
+81.5 static
+81.6 namespace
+81.7 struct vs class
+81.8 Stack vs Heap
+81.9 Array vs Vector
+81.10 Pointer vs Smart Pointer
+
+CHAPTER 82 — OOP Interview Questions
+-------------------------------------
+82.1 Encapsulation
+82.2 Abstraction
+82.3 Inheritance
+82.4 Polymorphism
+82.5 Overloading
+82.6 Overriding
+82.7 Virtual Function
+82.8 Pure Virtual Function
+82.9 Abstract Class
+82.10 Virtual Destructor
+
+CHAPTER 83 — Advanced C++ Interview Questions
+----------------------------------------------
+83.1 Rule of 3
+83.2 Rule of 5
+83.3 Rule of 0
+83.4 Move Semantics
+83.5 Rvalue References
+83.6 Smart Pointers
+83.7 RAII
+83.8 Templates
+83.9 Lambda
+83.10 STL
+83.11 Exception Safety
+83.12 Multithreading
+
+CHAPTER 84 — Coding Interview Preparation
+------------------------------------------
+84.1 Easy Problems
+84.2 Medium Problems
+84.3 Hard Problems
+84.4 Arrays
+84.5 Strings
+84.6 Linked Lists
+84.7 Stack / Queue
+84.8 Trees
+84.9 Graphs
+84.10 Hashing
+84.11 Recursion
+84.12 Backtracking
+84.13 Greedy
+84.14 Dynamic Programming
+
+
+===============================================================
+PHASE 24 — PRACTICAL PROJECTS
+===============================================================
+
+PROJECT 1 — Beginner
+---------------------
+Student Management System
+
+Concepts:
+- Classes
+- Objects
+- Functions
+- STL
+- File Handling
+
+PROJECT 2 — Intermediate
+------------------------
+Bank Management System
+
+Concepts:
+- OOP
+- Inheritance
+- Polymorphism
+- File Handling
+- Exception Handling
+
+PROJECT 3 — Intermediate
+------------------------
+Library Management System
+
+Concepts:
+- STL
+- OOP
+- File I/O
+- Searching
+- Sorting
+
+PROJECT 4 — Advanced
+--------------------
+Employee Management System
+
+Concepts:
+- OOP
+- STL
+- Templates
+- File Handling
+- CMake
+
+PROJECT 5 — Advanced
+--------------------
+Chat Application
+
+Concepts:
+- Socket Programming
+- Client-Server
+- Multithreading
+- Synchronization
+
+PROJECT 6 — Job Portfolio
+-------------------------
+DSA Problem-Solving Platform
+
+Features:
+- Problem database
+- User accounts
+- Problem search
+- Difficulty classification
+- Submission tracking
+- Statistics
+
+Concepts:
+- OOP
+- STL
+- DSA
+- Database
+- Networking
+- Multithreading
+- Git
+- CMake
+
+
+===============================================================
+PHASE 25 — CODING PLATFORM PREPARATION
+===============================================================
+
+PLATFORMS:
+----------
+1. LeetCode
+2. HackerRank
+3. CodeChef
+4. Codeforces
+5. GeeksforGeeks
+
+TARGET:
+-------
+Beginner:
+    50+ problems
+
+Intermediate:
+    100+ problems
+
+Advanced:
+    150+ problems
+
+Interview:
+    100+ carefully selected problems
+
+TOTAL TARGET:
+-------------
+400+ quality problems
+
+
+===============================================================
+PHASE 26 — JOB-READY SKILL CHECKLIST
+===============================================================
+
+C++ FUNDAMENTALS
+----------------
+[ ] Syntax
+[ ] Variables
+[ ] Data Types
+[ ] Operators
+[ ] Conditions
+[ ] Loops
+[ ] Functions
+[ ] Arrays
+[ ] Strings
+
+MEMORY
+------
+[ ] Pointers
+[ ] References
+[ ] Stack
+[ ] Heap
+[ ] Dynamic Memory
+[ ] RAII
+[ ] Smart Pointers
+
+OOP
+---
+[ ] Class
+[ ] Object
+[ ] Encapsulation
+[ ] Abstraction
+[ ] Inheritance
+[ ] Polymorphism
+[ ] Virtual Functions
+[ ] Constructors
+[ ] Destructors
+[ ] Operator Overloading
+
+MODERN C++
+----------
+[ ] auto
+[ ] constexpr
+[ ] nullptr
+[ ] Lambda
+[ ] Move Semantics
+[ ] Rvalue References
+[ ] Smart Pointers
+[ ] Rule of 3/5/0
+[ ] Concepts
+
+STL
+---
+[ ] vector
+[ ] array
+[ ] list
+[ ] deque
+[ ] stack
+[ ] queue
+[ ] priority_queue
+[ ] set
+[ ] map
+[ ] unordered_set
+[ ] unordered_map
+[ ] iterators
+[ ] algorithms
+[ ] pair
+[ ] tuple
+[ ] optional
+
+DSA
+---
+[ ] Arrays
+[ ] Strings
+[ ] Linked List
+[ ] Stack
+[ ] Queue
+[ ] Hashing
+[ ] Trees
+[ ] BST
+[ ] Heap
+[ ] Graph
+[ ] Trie
+[ ] Recursion
+[ ] Backtracking
+[ ] Greedy
+[ ] Dynamic Programming
+
+TOOLS
+-----
+[ ] GCC
+[ ] GDB
+[ ] VS Code / Visual Studio
+[ ] Git
+[ ] GitHub
+[ ] CMake
+[ ] GoogleTest
+
+SOFTWARE DEVELOPMENT
+--------------------
+[ ] Clean Code
+[ ] SOLID
+[ ] Design Patterns
+[ ] Debugging
+[ ] Testing
+[ ] Code Review
+[ ] Documentation
+
+INTERVIEW
+---------
+[ ] C++ Fundamentals
+[ ] OOP
+[ ] STL
+[ ] Memory Management
+[ ] DSA
+[ ] Problem Solving
+[ ] System Design Basics
+[ ] Project Discussion
+[ ] HR + Technical Interview
+
+
+===============================================================
+FINAL JOB-READY OUTCOME
+===============================================================
+
+After completing this roadmap, you should be able to:
+
+1. Write C++ programs confidently
+2. Understand C++ memory management
+3. Build object-oriented applications
+4. Use Modern C++ features
+5. Master STL
+6. Implement important data structures
+7. Solve algorithmic problems
+8. Debug C++ applications
+9. Build multi-file C++ projects
+10. Use Git/GitHub professionally
+11. Build C++ projects for your resume
+12. Face C++ technical interviews
+13. Solve LeetCode / coding-test problems
+14. Understand performance and memory issues
+15. Work on real-world C++ development tasks
+
+===============================================================
+RECOMMENDED LEARNING ORDER
+===============================================================
+
+C++ Basics
+    ↓
+Control Flow
+    ↓
+Functions
+    ↓
+Arrays & Strings
+    ↓
+Pointers & References
+    ↓
+OOP
+    ↓
+Memory Management
+    ↓
+Modern C++
+    ↓
+Templates
+    ↓
+STL
+    ↓
+Exception & File Handling
+    ↓
+DSA
+    ↓
+Advanced Problem Solving
+    ↓
+Multithreading
+    ↓
+CMake + Git
+    ↓
+Projects
+    ↓
+C++ Interview Preparation
+    ↓
+JOB READY
+===============================================================

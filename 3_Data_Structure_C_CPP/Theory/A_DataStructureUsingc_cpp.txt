@@ -1,0 +1,1342 @@
+============================================================
+        DATA STRUCTURES USING C/C++
+        JOB-READY MASTER SYLLABUS
+============================================================
+
+Target:
+    M.Tech 1st Year → Strong DSA Fundamentals → 
+    Coding Interviews → Placement → Competitive Programming
+
+Recommended Language:
+    C++17 / C++20
+
+Prerequisites:
+    1. Basic C/C++ programming
+    2. Variables and data types
+    3. Operators
+    4. Conditional statements
+    5. Loops
+    6. Functions
+    7. Arrays
+    8. Pointers
+    9. References
+   10. Structures/classes
+   11. Basic recursion
+
+============================================================
+PHASE 0 — PROGRAMMING FOUNDATION
+============================================================
+
+CHAPTER 1 — C++ FOR DSA
+
+1.1 C++ Basics
+    ├── Program structure
+    ├── main()
+    ├── Header files
+    ├── Namespace
+    └── Compilation and execution
+
+1.2 Variables and Data Types
+    ├── int
+    ├── float
+    ├── double
+    ├── char
+    ├── bool
+    ├── long long
+    └── Type conversion
+
+1.3 Operators
+    ├── Arithmetic
+    ├── Relational
+    ├── Logical
+    ├── Bitwise
+    ├── Assignment
+    └── Increment/decrement
+
+1.4 Control Flow
+    ├── if
+    ├── if-else
+    ├── nested if
+    ├── switch
+    ├── for
+    ├── while
+    └── do-while
+
+1.5 Functions
+    ├── Function declaration
+    ├── Function definition
+    ├── Parameters
+    ├── Return values
+    ├── Pass by value
+    ├── Pass by reference
+    ├── Function overloading
+    └── Inline functions
+
+1.6 Pointers
+    ├── Address operator
+    ├── Dereference operator
+    ├── Pointer variables
+    ├── Pointer arithmetic
+    ├── Pointer and arrays
+    ├── Pointer and functions
+    ├── Pointer to pointer
+    └── nullptr
+
+1.7 Dynamic Memory
+    ├── new
+    ├── delete
+    ├── Dynamic arrays
+    └── Memory leaks
+
+1.8 Structures and Classes
+    ├── struct
+    ├── class
+    ├── Objects
+    ├── Constructors
+    └── Basic OOP concepts
+
+------------------------------------------------------------
+CHAPTER 2 — RECURSION
+------------------------------------------------------------
+
+2.1 Recursion Fundamentals
+    ├── What is recursion?
+    ├── Base case
+    ├── Recursive case
+    └── Call stack
+
+2.2 Basic Problems
+    ├── Factorial
+    ├── Fibonacci
+    ├── Sum of numbers
+    ├── Power
+    └── Digit problems
+
+2.3 Recursion Analysis
+    ├── Recursion tree
+    ├── Time complexity
+    ├── Space complexity
+    └── Stack overflow
+
+2.4 Advanced Recursion
+    ├── Multiple recursion
+    ├── Tail recursion
+    ├── Tree recursion
+    └── Backtracking introduction
+
+
+============================================================
+PHASE 1 — DSA FUNDAMENTALS
+============================================================
+
+CHAPTER 3 — INTRODUCTION TO DATA STRUCTURES
+
+3.1 What is Data?
+3.2 What is a Data Structure?
+3.3 Why Data Structures are Required?
+3.4 Abstract Data Type (ADT)
+
+3.5 Classification
+    ├── Primitive
+    ├── Non-primitive
+    ├── Linear
+    ├── Non-linear
+    ├── Static
+    └── Dynamic
+
+3.6 Data Structure Operations
+    ├── Traversal
+    ├── Insertion
+    ├── Deletion
+    ├── Searching
+    ├── Sorting
+    └── Updating
+
+3.7 Data Structure Selection
+    ├── Time requirements
+    ├── Space requirements
+    └── Application requirements
+
+
+------------------------------------------------------------
+CHAPTER 4 — ALGORITHM ANALYSIS
+------------------------------------------------------------
+
+4.1 What is an Algorithm?
+
+4.2 Algorithm Characteristics
+    ├── Input
+    ├── Output
+    ├── Definiteness
+    ├── Finiteness
+    └── Effectiveness
+
+4.3 Complexity
+    ├── Time complexity
+    └── Space complexity
+
+4.4 Asymptotic Notations
+    ├── Big O
+    ├── Big Omega
+    └── Big Theta
+
+4.5 Common Complexities
+    ├── O(1)
+    ├── O(log n)
+    ├── O(n)
+    ├── O(n log n)
+    ├── O(n²)
+    ├── O(n³)
+    └── O(2ⁿ)
+
+4.6 Best, Average and Worst Case
+
+4.7 Amortized Analysis
+    ├── Dynamic arrays
+    └── Amortized operations
+
+4.8 Complexity Analysis of Loops
+4.9 Complexity Analysis of Recursion
+4.10 Comparing Algorithms
+
+
+------------------------------------------------------------
+CHAPTER 5 — ARRAYS
+------------------------------------------------------------
+
+5.1 Array Fundamentals
+    ├── Definition
+    ├── Memory representation
+    ├── Indexing
+    └── Contiguous memory
+
+5.2 One-Dimensional Arrays
+
+5.3 Two-Dimensional Arrays
+
+5.4 Multidimensional Arrays
+
+5.5 Array Operations
+    ├── Traversal
+    ├── Insertion
+    ├── Deletion
+    ├── Searching
+    └── Updating
+
+5.6 Array Problems
+    ├── Maximum/minimum
+    ├── Reverse array
+    ├── Rotate array
+    ├── Remove duplicates
+    ├── Frequency counting
+    ├── Prefix sum
+    └── Subarrays
+
+5.7 Important Techniques
+    ├── Two pointers
+    ├── Sliding window
+    ├── Prefix sum
+    ├── Difference array
+    └── Kadane's algorithm
+
+5.8 Dynamic Arrays
+    ├── Vector
+    ├── Capacity
+    ├── Resize
+    └── push_back()
+
+
+------------------------------------------------------------
+CHAPTER 6 — STRINGS
+------------------------------------------------------------
+
+6.1 Character Arrays
+6.2 C-Style Strings
+6.3 std::string
+
+6.4 String Operations
+    ├── Length
+    ├── Concatenation
+    ├── Comparison
+    ├── Searching
+    └── Substring
+
+6.5 String Problems
+    ├── Reverse string
+    ├── Palindrome
+    ├── Anagram
+    ├── Character frequency
+    ├── Remove duplicates
+    └── String rotation
+
+6.6 Advanced String Techniques
+    ├── Two pointers
+    ├── Sliding window
+    ├── Prefix function
+    ├── KMP
+    ├── Rabin-Karp
+    └── Z algorithm
+
+
+============================================================
+PHASE 2 — LINEAR DATA STRUCTURES
+============================================================
+
+CHAPTER 7 — LINKED LIST
+
+7.1 Linked List Fundamentals
+    ├── Node
+    ├── Data
+    ├── Pointer
+    └── Dynamic memory
+
+7.2 Singly Linked List
+    ├── Creation
+    ├── Traversal
+    ├── Insertion
+    ├── Deletion
+    └── Searching
+
+7.3 Insertion
+    ├── Beginning
+    ├── End
+    └── Specific position
+
+7.4 Deletion
+    ├── Beginning
+    ├── End
+    └── Specific node
+
+7.5 Doubly Linked List
+    ├── Previous pointer
+    ├── Next pointer
+    ├── Insertion
+    └── Deletion
+
+7.6 Circular Linked List
+
+7.7 Circular Doubly Linked List
+
+7.8 Important Problems
+    ├── Reverse linked list
+    ├── Find middle node
+    ├── Detect cycle
+    ├── Remove cycle
+    ├── Find nth node from end
+    ├── Merge two sorted lists
+    ├── Intersection of lists
+    ├── Palindrome linked list
+    └── Sort linked list
+
+7.9 Advanced
+    ├── Fast and slow pointers
+    ├── Floyd's cycle detection
+    ├── Merge sort on linked list
+    └── LRU cache introduction
+
+
+------------------------------------------------------------
+CHAPTER 8 — STACK
+------------------------------------------------------------
+
+8.1 Stack Concept
+    ├── LIFO
+    └── Applications
+
+8.2 Stack Implementation
+    ├── Array
+    └── Linked list
+
+8.3 Stack Operations
+    ├── push()
+    ├── pop()
+    ├── top()
+    ├── isEmpty()
+    └── size()
+
+8.4 Stack Problems
+    ├── Balanced parentheses
+    ├── Reverse string
+    ├── Expression evaluation
+    ├── Infix
+    ├── Prefix
+    └── Postfix
+
+8.5 Monotonic Stack
+    ├── Next greater element
+    ├── Next smaller element
+    ├── Previous greater element
+    └── Previous smaller element
+
+8.6 Important Interview Problems
+    ├── Largest rectangle in histogram
+    ├── Stock span
+    └── Min stack
+
+
+------------------------------------------------------------
+CHAPTER 9 — QUEUE
+------------------------------------------------------------
+
+9.1 Queue Concept
+    ├── FIFO
+    └── Applications
+
+9.2 Queue Implementation
+    ├── Array
+    └── Linked list
+
+9.3 Queue Operations
+    ├── enqueue
+    ├── dequeue
+    ├── front
+    └── rear
+
+9.4 Circular Queue
+
+9.5 Deque
+    ├── Input restricted deque
+    └── Output restricted deque
+
+9.6 Priority Queue
+
+9.7 C++ STL
+    ├── queue
+    ├── deque
+    └── priority_queue
+
+9.8 Important Problems
+    ├── Sliding window maximum
+    ├── First non-repeating character
+    ├── Queue using stacks
+    └── Stack using queues
+
+
+============================================================
+PHASE 3 — SEARCHING AND SORTING
+============================================================
+
+CHAPTER 10 — SEARCHING
+
+10.1 Linear Search
+
+10.2 Binary Search
+    ├── Basic binary search
+    ├── Iterative implementation
+    ├── Recursive implementation
+    └── Complexity
+
+10.3 Binary Search Variations
+    ├── First occurrence
+    ├── Last occurrence
+    ├── Lower bound
+    ├── Upper bound
+    ├── Search insert position
+    └── Count occurrences
+
+10.4 Binary Search on Answer
+    ├── Minimum possible answer
+    ├── Maximum possible answer
+    ├── Feasibility function
+    └── Optimization problems
+
+10.5 Important Problems
+    ├── Search rotated sorted array
+    ├── Find minimum in rotated array
+    ├── Peak element
+    ├── Square root
+    ├── Koko eating bananas
+    └── Allocate books
+
+
+------------------------------------------------------------
+CHAPTER 11 — SORTING
+------------------------------------------------------------
+
+11.1 Sorting Fundamentals
+
+11.2 Bubble Sort
+11.3 Selection Sort
+11.4 Insertion Sort
+
+11.5 Merge Sort
+    ├── Divide and conquer
+    ├── Merge operation
+    └── Complexity
+
+11.6 Quick Sort
+    ├── Pivot
+    ├── Partition
+    ├── Lomuto partition
+    └── Hoare partition
+
+11.7 Heap Sort
+
+11.8 Counting Sort
+
+11.9 Radix Sort
+
+11.10 Bucket Sort
+
+11.11 Comparison of Sorting Algorithms
+
+11.12 Stability
+11.13 In-place sorting
+11.14 Adaptive sorting
+
+11.15 C++ STL
+    ├── sort()
+    ├── stable_sort()
+    ├── partial_sort()
+    └── nth_element()
+
+
+============================================================
+PHASE 4 — HASHING
+============================================================
+
+CHAPTER 12 — HASHING
+
+12.1 Hashing Fundamentals
+12.2 Hash Function
+12.3 Hash Table
+12.4 Collision
+
+12.5 Collision Resolution
+    ├── Separate chaining
+    ├── Open addressing
+    ├── Linear probing
+    ├── Quadratic probing
+    └── Double hashing
+
+12.6 Load Factor
+12.7 Rehashing
+
+12.8 C++ STL
+    ├── unordered_map
+    ├── unordered_set
+    ├── map
+    └── set
+
+12.9 Hashing Problems
+    ├── Two sum
+    ├── Frequency counting
+    ├── First unique element
+    ├── Longest consecutive sequence
+    ├── Subarray with sum K
+    ├── Zero-sum subarray
+    └── Anagram grouping
+
+
+============================================================
+PHASE 5 — TREES
+============================================================
+
+CHAPTER 13 — TREE FUNDAMENTALS
+
+13.1 Tree Terminology
+    ├── Root
+    ├── Node
+    ├── Edge
+    ├── Parent
+    ├── Child
+    ├── Sibling
+    ├── Leaf
+    ├── Degree
+    ├── Depth
+    └── Height
+
+13.2 Tree Properties
+
+13.3 Binary Tree
+
+13.4 Binary Tree Representation
+    ├── Array
+    └── Linked representation
+
+
+------------------------------------------------------------
+CHAPTER 14 — BINARY TREE
+
+14.1 Types
+    ├── Full binary tree
+    ├── Complete binary tree
+    ├── Perfect binary tree
+    ├── Balanced binary tree
+    └── Degenerate tree
+
+14.2 Tree Traversals
+    ├── Preorder
+    ├── Inorder
+    ├── Postorder
+    └── Level order
+
+14.3 Recursive Traversal
+
+14.4 Iterative Traversal
+
+14.5 Important Problems
+    ├── Height of tree
+    ├── Count nodes
+    ├── Count leaves
+    ├── Diameter
+    ├── Maximum path sum
+    ├── Mirror tree
+    ├── Symmetric tree
+    ├── Lowest common ancestor
+    └── Boundary traversal
+
+14.6 Views
+    ├── Left view
+    ├── Right view
+    ├── Top view
+    └── Bottom view
+
+14.7 Tree Construction
+    ├── Preorder + inorder
+    └── Postorder + inorder
+
+
+------------------------------------------------------------
+CHAPTER 15 — BINARY SEARCH TREE
+
+15.1 BST Properties
+
+15.2 BST Operations
+    ├── Search
+    ├── Insert
+    ├── Delete
+    └── Find minimum/maximum
+
+15.3 BST Traversal
+
+15.4 Important Problems
+    ├── Validate BST
+    ├── Lowest common ancestor
+    ├── Kth smallest
+    ├── Kth largest
+    ├── Floor
+    ├── Ceiling
+    └── Inorder successor/predecessor
+
+
+------------------------------------------------------------
+CHAPTER 16 — BALANCED TREES
+
+16.1 Why Balancing is Required?
+
+16.2 AVL Tree
+    ├── Balance factor
+    ├── LL rotation
+    ├── RR rotation
+    ├── LR rotation
+    └── RL rotation
+
+16.3 Red-Black Tree
+    ├── Properties
+    ├── Rotations
+    └── Recoloring
+
+16.4 B-Tree
+16.5 B+ Tree
+16.6 Applications in databases and file systems
+
+
+============================================================
+PHASE 6 — HEAPS
+============================================================
+
+CHAPTER 17 — HEAP
+
+17.1 Heap Fundamentals
+17.2 Complete Binary Tree
+17.3 Min Heap
+17.4 Max Heap
+
+17.5 Array Representation
+
+17.6 Heap Operations
+    ├── Insert
+    ├── Delete
+    ├── Heapify
+    └── Extract min/max
+
+17.7 Build Heap
+
+17.8 Heap Sort
+
+17.9 Priority Queue
+
+17.10 Important Problems
+    ├── K largest elements
+    ├── K smallest elements
+    ├── Kth largest
+    ├── Kth smallest
+    ├── Merge K sorted arrays
+    ├── Merge K sorted lists
+    └── Median of data stream
+
+
+============================================================
+PHASE 7 — GRAPHS
+============================================================
+
+CHAPTER 18 — GRAPH FUNDAMENTALS
+
+18.1 Graph Definition
+18.2 Vertex
+18.3 Edge
+
+18.4 Types
+    ├── Directed graph
+    ├── Undirected graph
+    ├── Weighted graph
+    ├── Unweighted graph
+    ├── Connected graph
+    ├── Cyclic graph
+    └── Acyclic graph
+
+18.5 Graph Representation
+    ├── Adjacency matrix
+    ├── Adjacency list
+    └── Edge list
+
+
+------------------------------------------------------------
+CHAPTER 19 — GRAPH TRAVERSAL
+
+19.1 BFS
+    ├── Algorithm
+    ├── Queue
+    ├── Complexity
+    └── Applications
+
+19.2 DFS
+    ├── Recursive DFS
+    ├── Iterative DFS
+    ├── Stack
+    └── Complexity
+
+19.3 Applications
+    ├── Connected components
+    ├── Cycle detection
+    ├── Path finding
+    ├── Bipartite graph
+    └── Grid traversal
+
+
+------------------------------------------------------------
+CHAPTER 20 — SHORTEST PATH
+
+20.1 BFS Shortest Path
+
+20.2 Dijkstra Algorithm
+    ├── Priority queue
+    ├── Relaxation
+    └── Complexity
+
+20.3 Bellman-Ford
+
+20.4 Floyd-Warshall
+
+20.5 Shortest Path in DAG
+
+
+------------------------------------------------------------
+CHAPTER 21 — MINIMUM SPANNING TREE
+
+21.1 Spanning Tree
+21.2 Minimum Spanning Tree
+
+21.3 Prim's Algorithm
+
+21.4 Kruskal's Algorithm
+
+21.5 Disjoint Set Union
+    ├── Parent array
+    ├── Find
+    ├── Union
+    ├── Path compression
+    └── Union by rank/size
+
+
+------------------------------------------------------------
+CHAPTER 22 — ADVANCED GRAPH ALGORITHMS
+
+22.1 Topological Sorting
+    ├── DFS approach
+    └── Kahn's algorithm
+
+22.2 Directed Cycle Detection
+
+22.3 Strongly Connected Components
+    ├── Kosaraju
+    └── Tarjan
+
+22.4 Bridges
+
+22.5 Articulation Points
+
+22.6 Euler Path and Circuit
+
+22.7 Hamiltonian Path
+22.8 Graph Coloring
+
+22.9 Network Flow Introduction
+
+
+============================================================
+PHASE 8 — TRIES AND ADVANCED STRUCTURES
+============================================================
+
+CHAPTER 23 — TRIE
+
+23.1 Trie Fundamentals
+23.2 Trie Node
+23.3 Insert
+23.4 Search
+23.5 Delete
+
+23.6 Applications
+    ├── Dictionary
+    ├── Prefix search
+    ├── Autocomplete
+    └── Spell checking
+
+23.7 Problems
+    ├── Longest prefix
+    ├── Word search
+    └── Maximum XOR
+
+
+------------------------------------------------------------
+CHAPTER 24 — SEGMENT TREE
+
+24.1 Why Segment Tree?
+
+24.2 Construction
+
+24.3 Range Query
+
+24.4 Point Update
+
+24.5 Range Update
+
+24.6 Lazy Propagation
+
+24.7 Applications
+    ├── Range sum
+    ├── Range minimum
+    ├── Range maximum
+    └── Range GCD
+
+
+------------------------------------------------------------
+CHAPTER 25 — FENWICK TREE / BIT
+
+25.1 Binary Indexed Tree
+25.2 Prefix Sum
+25.3 Point Update
+25.4 Range Query
+25.5 Range Update
+25.6 Coordinate Compression
+
+
+------------------------------------------------------------
+CHAPTER 26 — DISJOINT SET UNION
+
+26.1 Disjoint Sets
+26.2 Make Set
+26.3 Find
+26.4 Union
+
+26.5 Optimizations
+    ├── Path compression
+    ├── Union by rank
+    └── Union by size
+
+26.6 Applications
+    ├── Kruskal
+    ├── Connected components
+    ├── Dynamic connectivity
+    └── Cycle detection
+
+
+============================================================
+PHASE 9 — ALGORITHM PARADIGMS
+============================================================
+
+CHAPTER 27 — DIVIDE AND CONQUER
+
+27.1 Concept
+27.2 Recurrence Relations
+27.3 Master Theorem
+
+27.4 Algorithms
+    ├── Binary Search
+    ├── Merge Sort
+    └── Quick Sort
+
+27.5 Problems
+
+
+------------------------------------------------------------
+CHAPTER 28 — GREEDY ALGORITHMS
+
+28.1 Greedy Strategy
+28.2 Greedy Choice Property
+28.3 Optimal Substructure
+
+28.4 Problems
+    ├── Activity selection
+    ├── Fractional knapsack
+    ├── Job sequencing
+    ├── Huffman coding
+    ├── Minimum platforms
+    └── Interval scheduling
+
+
+------------------------------------------------------------
+CHAPTER 29 — BACKTRACKING
+
+29.1 Backtracking Concept
+29.2 State Space Tree
+29.3 Decision Tree
+
+29.4 Problems
+    ├── N-Queens
+    ├── Rat in a maze
+    ├── Sudoku
+    ├── Subsets
+    ├── Permutations
+    ├── Combinations
+    └── Combination sum
+
+
+------------------------------------------------------------
+CHAPTER 30 — DYNAMIC PROGRAMMING
+
+30.1 DP Fundamentals
+    ├── Overlapping subproblems
+    └── Optimal substructure
+
+30.2 Memoization
+
+30.3 Tabulation
+
+30.4 Space Optimization
+
+30.5 1D DP
+    ├── Fibonacci
+    ├── Climbing stairs
+    └── House robber
+
+30.6 2D DP
+    ├── Grid problems
+    ├── Unique paths
+    └── Minimum path sum
+
+30.7 Knapsack
+    ├── 0/1 Knapsack
+    ├── Unbounded Knapsack
+    └── Subset Sum
+
+30.8 String DP
+    ├── LCS
+    ├── Longest common substring
+    ├── Edit distance
+    └── Palindromic subsequence
+
+30.9 Advanced DP
+    ├── LIS
+    ├── Matrix chain multiplication
+    ├── Interval DP
+    ├── Tree DP
+    ├── Bitmask DP
+    └── Digit DP
+
+
+============================================================
+PHASE 10 — C++ STL FOR DSA
+============================================================
+
+CHAPTER 31 — STL
+
+31.1 Containers
+    ├── vector
+    ├── array
+    ├── deque
+    ├── list
+    ├── forward_list
+    ├── stack
+    ├── queue
+    ├── priority_queue
+    ├── set
+    ├── multiset
+    ├── map
+    ├── multimap
+    ├── unordered_set
+    └── unordered_map
+
+31.2 Iterators
+
+31.3 Algorithms
+    ├── sort
+    ├── reverse
+    ├── binary_search
+    ├── lower_bound
+    ├── upper_bound
+    ├── min_element
+    ├── max_element
+    ├── accumulate
+    ├── count
+    ├── find
+    └── next_permutation
+
+31.4 Lambda Functions
+
+31.5 Custom Comparators
+
+31.6 Pair and Tuple
+
+31.7 Emplace Operations
+
+31.8 STL Complexity Analysis
+
+
+============================================================
+PHASE 11 — INTERVIEW PROBLEM-SOLVING PATTERNS
+============================================================
+
+CHAPTER 32 — ARRAY PATTERNS
+
+32.1 Two Pointer
+32.2 Sliding Window
+32.3 Prefix Sum
+32.4 Difference Array
+32.5 Kadane's Algorithm
+32.6 Dutch National Flag
+32.7 Merge Intervals
+
+------------------------------------------------------------
+
+CHAPTER 33 — HASHING PATTERNS
+
+33.1 Frequency Map
+33.2 Prefix Sum + Hashing
+33.3 Two Sum Pattern
+33.4 Grouping
+33.5 Duplicate Detection
+
+------------------------------------------------------------
+
+CHAPTER 34 — LINKED LIST PATTERNS
+
+34.1 Fast/Slow Pointer
+34.2 Reverse Linked List
+34.3 Dummy Node
+34.4 Merge Lists
+34.5 Cycle Detection
+
+------------------------------------------------------------
+
+CHAPTER 35 — STACK/QUEUE PATTERNS
+
+35.1 Monotonic Stack
+35.2 Monotonic Queue
+35.3 Sliding Window
+35.4 Expression Problems
+
+------------------------------------------------------------
+
+CHAPTER 36 — TREE PATTERNS
+
+36.1 DFS
+36.2 BFS
+36.3 Recursive Tree DP
+36.4 Path Problems
+36.5 Lowest Common Ancestor
+36.6 Binary Search Tree Patterns
+
+------------------------------------------------------------
+
+CHAPTER 37 — GRAPH PATTERNS
+
+37.1 BFS
+37.2 DFS
+37.3 Topological Sort
+37.4 Shortest Path
+37.5 MST
+37.6 DSU
+37.7 Connected Components
+
+------------------------------------------------------------
+
+CHAPTER 38 — DP PATTERNS
+
+38.1 1D DP
+38.2 2D DP
+38.3 Knapsack Pattern
+38.4 Subsequence Pattern
+38.5 Grid DP
+38.6 String DP
+38.7 Interval DP
+38.8 Tree DP
+
+
+============================================================
+PHASE 12 — JOB/INTERVIEW PREPARATION
+============================================================
+
+CHAPTER 39 — CODING INTERVIEW BASICS
+
+39.1 Understanding Problem Statements
+39.2 Constraints Analysis
+39.3 Brute Force Solution
+39.4 Optimization
+39.5 Complexity Analysis
+39.6 Edge Cases
+39.7 Test Cases
+
+------------------------------------------------------------
+
+CHAPTER 40 — INTERVIEW QUESTION CATEGORIES
+
+40.1 Arrays
+40.2 Strings
+40.3 Linked Lists
+40.4 Stack
+40.5 Queue
+40.6 Hashing
+40.7 Binary Search
+40.8 Sorting
+40.9 Trees
+40.10 BST
+40.11 Heap
+40.12 Graph
+40.13 Greedy
+40.14 Backtracking
+40.15 Dynamic Programming
+
+------------------------------------------------------------
+
+CHAPTER 41 — CODING PRACTICE
+
+Beginner:
+    ├── Easy array problems
+    ├── Easy string problems
+    ├── Basic recursion
+    └── Basic linked list
+
+Intermediate:
+    ├── Binary search
+    ├── Trees
+    ├── Graphs
+    ├── Heaps
+    └── Greedy
+
+Advanced:
+    ├── Dynamic programming
+    ├── Advanced graphs
+    ├── Segment tree
+    ├── Trie
+    └── Complex optimization
+
+
+============================================================
+PHASE 13 — PRACTICAL DATA STRUCTURE PROJECTS
+============================================================
+
+PROJECT 1
+    Student Record Management System
+    ├── Arrays
+    ├── Linked list
+    ├── Searching
+    └── Sorting
+
+PROJECT 2
+    Library Management System
+    ├── Linked list
+    ├── Hashing
+    └── Searching
+
+PROJECT 3
+    Browser History
+    ├── Stack
+    └── Linked list
+
+PROJECT 4
+    Task Scheduler
+    ├── Queue
+    └── Priority queue
+
+PROJECT 5
+    Contact Management System
+    ├── Hash table
+    └── Trie
+
+PROJECT 6
+    File/Directory Structure
+    ├── Tree
+    └── Graph
+
+PROJECT 7
+    Route Finder
+    ├── Graph
+    ├── BFS
+    ├── DFS
+    └── Dijkstra
+
+PROJECT 8
+    Autocomplete System
+    └── Trie
+
+PROJECT 9
+    LRU Cache
+    ├── Hash map
+    └── Doubly linked list
+
+PROJECT 10
+    Mini Search Engine
+    ├── Hashing
+    ├── Trie
+    └── Graph concepts
+
+
+============================================================
+PHASE 14 — COMPETITIVE PROGRAMMING FOUNDATION
+============================================================
+
+CHAPTER 42 — CP ESSENTIALS
+
+42.1 Fast I/O
+42.2 Integer Overflow
+42.3 Modular Arithmetic
+42.4 GCD / LCM
+42.5 Prime Numbers
+42.6 Sieve of Eratosthenes
+42.7 Bit Manipulation
+42.8 Combinatorics Basics
+42.9 Coordinate Compression
+42.10 Mathematical Optimization
+
+
+============================================================
+PHASE 15 — ADVANCED DATA STRUCTURES
+============================================================
+
+CHAPTER 43 — ADVANCED TOPICS
+
+43.1 Advanced Trie
+43.2 Segment Tree
+43.3 Lazy Segment Tree
+43.4 Fenwick Tree
+43.5 Sparse Table
+43.6 Disjoint Set Union
+43.7 Ordered Set
+43.8 Policy-Based Data Structures
+43.9 Interval Tree
+43.10 Skip List
+43.11 Bloom Filter — Introduction
+43.12 Suffix Array — Introduction
+43.13 Suffix Tree — Introduction
+
+
+============================================================
+PHASE 16 — FINAL JOB-READY CHECKLIST
+============================================================
+
+You should be able to:
+
+[ ] Analyze time complexity
+[ ] Analyze space complexity
+[ ] Implement arrays
+[ ] Implement dynamic arrays
+[ ] Implement linked lists
+[ ] Implement stacks
+[ ] Implement queues
+[ ] Implement circular queues
+[ ] Implement hash tables
+[ ] Implement binary trees
+[ ] Implement BST
+[ ] Understand AVL trees
+[ ] Implement heaps
+[ ] Implement priority queues
+[ ] Perform BFS
+[ ] Perform DFS
+[ ] Detect graph cycles
+[ ] Find shortest paths
+[ ] Implement MST
+[ ] Understand DSU
+[ ] Implement Trie
+[ ] Understand Segment Tree
+[ ] Use Fenwick Tree
+[ ] Solve recursion problems
+[ ] Solve backtracking problems
+[ ] Solve greedy problems
+[ ] Solve DP problems
+[ ] Use C++ STL confidently
+[ ] Analyze constraints
+[ ] Convert brute force → optimized solution
+[ ] Explain your solution in an interview
+[ ] Write clean and readable C++ code
+
+
+============================================================
+RECOMMENDED LEARNING ORDER
+============================================================
+
+C++ Basics
+     ↓
+Pointers & References
+     ↓
+Recursion
+     ↓
+Complexity Analysis
+     ↓
+Arrays
+     ↓
+Strings
+     ↓
+Linked List
+     ↓
+Stack
+     ↓
+Queue
+     ↓
+Searching
+     ↓
+Sorting
+     ↓
+Hashing
+     ↓
+Binary Tree
+     ↓
+BST
+     ↓
+Heap
+     ↓
+Graph
+     ↓
+Trie
+     ↓
+Greedy
+     ↓
+Backtracking
+     ↓
+Dynamic Programming
+     ↓
+DSU
+     ↓
+Segment Tree / Fenwick Tree
+     ↓
+Advanced DSA
+     ↓
+Interview Patterns
+     ↓
+Coding Practice
+     ↓
+Mock Interviews
+     ↓
+JOB READY
+============================================================

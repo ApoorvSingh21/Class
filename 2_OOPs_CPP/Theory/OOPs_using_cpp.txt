@@ -1,0 +1,1026 @@
+============================================================
+        OBJECT-ORIENTED PROGRAMMING USING C++
+        JOB-READY DETAILED SYLLABUS
+============================================================
+
+Target:
+    M.Tech 1st Year Student
+    Goal: Job Ready + Interview Ready + Strong OOP Fundamentals
+
+Prerequisite:
+    Basic C++ syntax
+    Variables, data types
+    Operators
+    if/else
+    loops
+    functions
+    arrays
+    basic pointers/references
+
+============================================================
+PHASE 1 — C++ FOUNDATION FOR OOP
+============================================================
+
+CHAPTER 1 — Introduction to OOP
+------------------------------------------------------------
+1.1 What is Programming?
+1.2 Procedural Programming
+1.3 Limitations of Procedural Programming
+1.4 What is Object-Oriented Programming?
+1.5 Why OOP?
+1.6 OOP vs Procedural Programming
+1.7 Real-world objects and software objects
+1.8 Classes and Objects
+1.9 Major OOP Principles
+
+    1. Encapsulation
+    2. Abstraction
+    3. Inheritance
+    4. Polymorphism
+
+1.10 Advantages of OOP
+1.11 Disadvantages of OOP
+1.12 Applications of OOP
+1.13 OOP in real-world software
+1.14 OOP and software engineering
+1.15 OOP and job interviews
+
+
+CHAPTER 2 — C++ Fundamentals Required for OOP
+------------------------------------------------------------
+2.1 Structure of a C++ Program
+2.2 Compilation and Execution
+2.3 Variables and Constants
+2.4 Data Types
+2.5 Type Conversion
+2.6 Operators
+2.7 Conditional Statements
+2.8 Loops
+2.9 Functions
+2.10 Function Parameters
+2.11 Return Values
+2.12 Pass by Value
+2.13 Pass by Reference
+2.14 Pointers
+2.15 References
+2.16 Arrays
+2.17 Strings
+2.18 Structures
+2.19 enum
+2.20 typedef / using
+2.21 Scope
+2.22 Header Files
+2.23 Namespaces
+2.24 const correctness
+2.25 Basic dynamic memory
+
+
+CHAPTER 3 — C++ Classes and Objects
+------------------------------------------------------------
+3.1 What is a Class?
+3.2 What is an Object?
+3.3 Class Syntax
+3.4 Object Creation
+3.5 Data Members
+3.6 Member Functions
+3.7 Accessing Members
+3.8 public
+3.9 private
+3.10 protected
+3.11 Access Specifiers
+3.12 Class vs Structure
+3.13 Multiple Objects
+3.14 Object Memory
+3.15 Size of a Class
+3.16 Empty Classes
+3.17 this Pointer
+3.18 Static Data Members
+3.19 Static Member Functions
+3.20 const Member Functions
+3.21 const Objects
+
+
+============================================================
+PHASE 2 — CORE OOP CONCEPTS
+============================================================
+
+CHAPTER 4 — Encapsulation
+------------------------------------------------------------
+4.1 What is Encapsulation?
+4.2 Data Hiding
+4.3 Access Control
+4.4 Getters
+4.5 Setters
+4.6 Validation using Setters
+4.7 Read-only Data
+4.8 Encapsulation vs Data Hiding
+4.9 Benefits of Encapsulation
+4.10 Real-world examples
+
+Practice:
+    Bank Account
+    Student
+    Employee
+    Product
+    ATM
+
+
+CHAPTER 5 — Constructors
+------------------------------------------------------------
+5.1 What is a Constructor?
+5.2 Constructor Syntax
+5.3 Default Constructor
+5.4 Parameterized Constructor
+5.5 Constructor with Default Arguments
+5.6 Multiple Constructors
+5.7 Constructor Overloading
+5.8 Copy Constructor
+5.9 Constructor Initialization List
+5.10 Member Initialization
+5.11 const Data Members
+5.12 Reference Data Members
+5.13 Static Data Members
+5.14 Constructor Execution Order
+5.15 Constructor and Dynamic Memory
+5.16 Delegating Constructors
+5.17 Explicit Constructors
+5.18 Common Constructor Mistakes
+
+
+CHAPTER 6 — Destructors
+------------------------------------------------------------
+6.1 What is a Destructor?
+6.2 Destructor Syntax
+6.3 When Destructor is Called
+6.4 Constructor vs Destructor
+6.5 Resource Management
+6.6 Dynamic Memory
+6.7 Destructor and Heap Memory
+6.8 Destructor Execution Order
+6.9 Destructor in Inheritance
+6.10 Virtual Destructor
+6.11 Common Destructor Problems
+6.12 Resource Acquisition Is Initialization (RAII)
+
+
+CHAPTER 7 — Abstraction
+------------------------------------------------------------
+7.1 What is Abstraction?
+7.2 Real-world Abstraction
+7.3 Abstraction vs Encapsulation
+7.4 Abstract Classes
+7.5 Pure Virtual Functions
+7.6 Interface-like Design in C++
+7.7 Concrete Classes
+7.8 Abstract Class Objects
+7.9 Abstraction using Access Specifiers
+7.10 Abstraction in Software Design
+7.11 Real-world examples
+
+Practice:
+    Payment System
+    Vehicle System
+    Shape System
+    Notification System
+
+
+============================================================
+PHASE 3 — INHERITANCE
+============================================================
+
+CHAPTER 8 — Inheritance Fundamentals
+------------------------------------------------------------
+8.1 What is Inheritance?
+8.2 Need for Inheritance
+8.3 Base Class
+8.4 Derived Class
+8.5 IS-A Relationship
+8.6 Code Reusability
+8.7 Syntax of Inheritance
+8.8 Base Class Members
+8.9 Derived Class Members
+8.10 Accessing Inherited Members
+
+
+CHAPTER 9 — Types of Inheritance
+------------------------------------------------------------
+9.1 Single Inheritance
+9.2 Multilevel Inheritance
+9.3 Multiple Inheritance
+9.4 Hierarchical Inheritance
+9.5 Hybrid Inheritance
+
+9.6 Examples of Each Type
+9.7 Advantages
+9.8 Disadvantages
+9.9 Inheritance Design Problems
+
+
+CHAPTER 10 — Access Control in Inheritance
+------------------------------------------------------------
+10.1 public inheritance
+10.2 protected inheritance
+10.3 private inheritance
+10.4 Effect on public Members
+10.5 Effect on protected Members
+10.6 Effect on private Members
+10.7 Access Control Table
+10.8 IS-A vs HAS-A
+10.9 When to Use Inheritance
+10.10 When NOT to Use Inheritance
+
+
+CHAPTER 11 — Constructor and Destructor in Inheritance
+------------------------------------------------------------
+11.1 Base Constructor
+11.2 Derived Constructor
+11.3 Constructor Calling Order
+11.4 Destructor Calling Order
+11.5 Parameterized Base Constructor
+11.6 Constructor Initialization
+11.7 Inheritance and Object Lifetime
+11.8 Multiple Inheritance Constructor Order
+
+
+CHAPTER 12 — Multiple Inheritance
+------------------------------------------------------------
+12.1 Multiple Base Classes
+12.2 Ambiguity Problem
+12.3 Resolving Ambiguity
+12.4 Scope Resolution
+12.5 Diamond Problem
+12.6 Virtual Base Class
+12.7 Virtual Inheritance
+12.8 Constructor Behavior
+12.9 Practical Applications
+12.10 Problems with Multiple Inheritance
+
+
+============================================================
+PHASE 4 — POLYMORPHISM
+============================================================
+
+CHAPTER 13 — Polymorphism Fundamentals
+------------------------------------------------------------
+13.1 What is Polymorphism?
+13.2 Types of Polymorphism
+
+    Compile-Time Polymorphism
+    Run-Time Polymorphism
+
+13.3 Static Binding
+13.4 Dynamic Binding
+13.5 Early Binding
+13.6 Late Binding
+13.7 Real-world Examples
+
+
+CHAPTER 14 — Function Overloading
+------------------------------------------------------------
+14.1 What is Function Overloading?
+14.2 Rules of Function Overloading
+14.3 Different Parameters
+14.4 Different Parameter Types
+14.5 Different Number of Parameters
+14.6 Return Type and Overloading
+14.7 Ambiguous Calls
+14.8 Default Arguments and Overloading
+14.9 Practical Examples
+
+
+CHAPTER 15 — Operator Overloading
+------------------------------------------------------------
+15.1 What is Operator Overloading?
+15.2 Why Operator Overloading?
+15.3 Operators that Can Be Overloaded
+15.4 Operators that Cannot Be Overloaded
+15.5 Unary Operator Overloading
+15.6 Binary Operator Overloading
+15.7 Member Function Approach
+15.8 Friend Function Approach
+15.9 Prefix ++
+15.10 Postfix ++
+15.11 Comparison Operators
+15.12 Arithmetic Operators
+15.13 Assignment Operators
+15.14 Stream Operators
+15.15 Best Practices
+
+
+CHAPTER 16 — Function Overriding
+------------------------------------------------------------
+16.1 What is Function Overriding?
+16.2 Base Class Function
+16.3 Derived Class Function
+16.4 Override Keyword
+16.5 Rules of Overriding
+16.6 Overloading vs Overriding
+16.7 Hiding Base Functions
+16.8 using Declaration
+16.9 Common Mistakes
+
+
+CHAPTER 17 — Virtual Functions
+------------------------------------------------------------
+17.1 What is a Virtual Function?
+17.2 Need for Virtual Functions
+17.3 Dynamic Dispatch
+17.4 Runtime Polymorphism
+17.5 Base Class Pointer
+17.6 Derived Class Object
+17.7 Virtual Function Calling
+17.8 Override Keyword
+17.9 final Keyword
+17.10 Pure Virtual Function
+17.11 Abstract Classes
+17.12 Virtual Function Table (vtable)
+17.13 Virtual Pointer (vptr)
+17.14 Runtime Dispatch Internals
+
+
+CHAPTER 18 — Virtual Destructor
+------------------------------------------------------------
+18.1 Problem with Base Pointer
+18.2 Destructor and Polymorphism
+18.3 Virtual Destructor
+18.4 Non-Virtual Destructor Problem
+18.5 Correct Design
+18.6 Real-world Resource Management
+
+
+============================================================
+PHASE 5 — FRIENDS, STATIC & ADVANCED CLASS FEATURES
+============================================================
+
+CHAPTER 19 — Friend Functions and Friend Classes
+------------------------------------------------------------
+19.1 Friend Function
+19.2 Syntax
+19.3 Accessing Private Members
+19.4 Friend Class
+19.5 Friend Member Function
+19.6 Advantages
+19.7 Disadvantages
+19.8 Encapsulation Concerns
+19.9 When to Use Friends
+
+
+CHAPTER 20 — Static Members
+------------------------------------------------------------
+20.1 Static Data Members
+20.2 Static Member Functions
+20.3 Shared Class Data
+20.4 Static Initialization
+20.5 Static Functions and this
+20.6 Static vs Non-Static Members
+20.7 Real-world Applications
+
+
+CHAPTER 21 — Nested Classes
+------------------------------------------------------------
+21.1 Nested Class
+21.2 Inner Class Concept
+21.3 Access Rules
+21.4 Static Nested Members
+21.5 Practical Applications
+
+
+============================================================
+PHASE 6 — OBJECT MEMORY & SPECIAL MEMBER FUNCTIONS
+============================================================
+
+CHAPTER 22 — Object Memory Management
+------------------------------------------------------------
+22.1 Stack Objects
+22.2 Heap Objects
+22.3 new
+22.4 delete
+22.5 new[]
+22.6 delete[]
+22.7 Memory Leaks
+22.8 Dangling Pointers
+22.9 Double Delete
+22.10 Shallow Copy
+22.11 Deep Copy
+
+
+CHAPTER 23 — Copy Constructor
+------------------------------------------------------------
+23.1 What is Copy Constructor?
+23.2 When It Is Called
+23.3 Copy Initialization
+23.4 Passing Object by Value
+23.5 Returning Objects
+23.6 Shallow Copy
+23.7 Deep Copy
+23.8 Dynamic Memory and Copying
+23.9 Copy Constructor Best Practices
+
+
+CHAPTER 24 — Assignment Operator
+------------------------------------------------------------
+24.1 Copy Assignment
+24.2 Difference Between Copy Constructor and Assignment
+24.3 Self Assignment
+24.4 Deep Copy Assignment
+24.5 Rule of Three
+
+
+CHAPTER 25 — Move Semantics
+------------------------------------------------------------
+25.1 Why Move Semantics?
+25.2 Lvalue
+25.3 Rvalue
+25.4 Rvalue Reference
+25.5 std::move
+25.6 Move Constructor
+25.7 Move Assignment Operator
+25.8 Copy vs Move
+25.9 Performance Benefits
+25.10 Rule of Five
+25.11 noexcept and Move Operations
+
+
+CHAPTER 26 — Rule of Three, Five and Zero
+------------------------------------------------------------
+26.1 Rule of Three
+26.2 Rule of Five
+26.3 Rule of Zero
+26.4 Destructor
+26.5 Copy Constructor
+26.6 Copy Assignment
+26.7 Move Constructor
+26.8 Move Assignment
+26.9 Resource-owning Classes
+26.10 Modern C++ Design
+
+
+============================================================
+PHASE 7 — TEMPLATES & GENERIC OOP
+============================================================
+
+CHAPTER 27 — Function Templates
+------------------------------------------------------------
+27.1 Generic Programming
+27.2 Function Templates
+27.3 Template Parameters
+27.4 Multiple Template Parameters
+27.5 Template Type Deduction
+27.6 Template Specialization
+
+
+CHAPTER 28 — Class Templates
+------------------------------------------------------------
+28.1 Class Templates
+28.2 Generic Classes
+28.3 Template Constructors
+28.4 Multiple Template Parameters
+28.5 Template Specialization
+28.6 Practical Examples
+
+
+CHAPTER 29 — STL and OOP
+------------------------------------------------------------
+29.1 Introduction to STL
+29.2 Containers
+29.3 vector
+29.4 list
+29.5 deque
+29.6 stack
+29.7 queue
+29.8 priority_queue
+29.9 set
+29.10 map
+29.11 unordered_set
+29.12 unordered_map
+
+29.13 Iterators
+29.14 Algorithms
+29.15 Lambda Functions
+29.16 Function Objects
+29.17 STL with Classes
+29.18 STL with Custom Objects
+
+
+============================================================
+PHASE 8 — RELATIONSHIPS BETWEEN CLASSES
+============================================================
+
+CHAPTER 30 — Association
+------------------------------------------------------------
+30.1 What is Association?
+30.2 One-to-One
+30.3 One-to-Many
+30.4 Many-to-Many
+30.5 UML Representation
+30.6 C++ Implementation
+
+
+CHAPTER 31 — Aggregation
+------------------------------------------------------------
+31.1 What is Aggregation?
+31.2 HAS-A Relationship
+31.3 Weak Ownership
+31.4 Aggregation vs Association
+31.5 C++ Implementation
+
+
+CHAPTER 32 — Composition
+------------------------------------------------------------
+32.1 What is Composition?
+32.2 Strong Ownership
+32.3 Object Lifetime
+32.4 Composition vs Aggregation
+32.5 Composition vs Inheritance
+32.6 C++ Implementation
+
+
+CHAPTER 33 — Inheritance vs Composition
+------------------------------------------------------------
+33.1 IS-A
+33.2 HAS-A
+33.3 "Favor Composition Over Inheritance"
+33.4 Problems with Deep Inheritance
+33.5 Choosing the Correct Relationship
+33.6 Real-world Design Examples
+
+
+============================================================
+PHASE 9 — EXCEPTION HANDLING
+============================================================
+
+CHAPTER 34 — Exception Handling
+------------------------------------------------------------
+34.1 Errors vs Exceptions
+34.2 try
+34.3 catch
+34.4 throw
+34.5 Multiple catch Blocks
+34.6 Catch-All
+34.7 Exception Propagation
+34.8 Standard Exceptions
+34.9 Custom Exceptions
+34.10 Exception Safety
+34.11 Stack Unwinding
+34.12 noexcept
+34.13 RAII and Exceptions
+
+
+============================================================
+PHASE 10 — MODERN C++ OOP
+============================================================
+
+CHAPTER 35 — Smart Pointers
+------------------------------------------------------------
+35.1 Why Smart Pointers?
+35.2 Raw Pointer Problems
+35.3 RAII
+35.4 unique_ptr
+35.5 shared_ptr
+35.6 weak_ptr
+35.7 Ownership
+35.8 Reference Counting
+35.9 Cyclic References
+35.10 make_unique
+35.11 make_shared
+35.12 Smart Pointer Best Practices
+
+
+CHAPTER 36 — Modern C++ Features for OOP
+------------------------------------------------------------
+36.1 auto
+36.2 decltype
+36.3 nullptr
+36.4 Range-Based for Loop
+36.5 Lambda Expressions
+36.6 constexpr
+36.7 enum class
+36.8 structured bindings
+36.9 std::optional
+36.10 std::variant
+36.11 std::any
+36.12 Concepts — Introduction
+
+
+CHAPTER 37 — const Correctness
+------------------------------------------------------------
+37.1 const Variables
+37.2 const Objects
+37.3 const Member Functions
+37.4 const Parameters
+37.5 const References
+37.6 Pointer to const
+37.7 const Pointer
+37.8 Returning const
+37.9 Mutable Keyword
+
+
+============================================================
+PHASE 11 — OOP DESIGN PRINCIPLES
+============================================================
+
+CHAPTER 38 — SOLID Principles
+------------------------------------------------------------
+38.1 Introduction to SOLID
+
+38.2 S — Single Responsibility Principle
+38.3 O — Open/Closed Principle
+38.4 L — Liskov Substitution Principle
+38.5 I — Interface Segregation Principle
+38.6 D — Dependency Inversion Principle
+
+38.7 SOLID Violations
+38.8 Refactoring Bad Designs
+38.9 Real-world Examples
+38.10 Interview Questions
+
+
+CHAPTER 39 — Coupling and Cohesion
+------------------------------------------------------------
+39.1 Coupling
+39.2 Tight Coupling
+39.3 Loose Coupling
+39.4 Cohesion
+39.5 High Cohesion
+39.6 Low Cohesion
+39.7 Dependency Injection — Introduction
+39.8 Designing Maintainable Classes
+
+
+CHAPTER 40 — DRY, KISS and YAGNI
+------------------------------------------------------------
+40.1 DRY
+40.2 KISS
+40.3 YAGNI
+40.4 Code Duplication
+40.5 Overengineering
+40.6 Clean Class Design
+
+
+============================================================
+PHASE 12 — DESIGN PATTERNS
+============================================================
+
+CHAPTER 41 — Design Pattern Fundamentals
+------------------------------------------------------------
+41.1 What is a Design Pattern?
+41.2 Why Design Patterns?
+41.3 Types of Design Patterns
+41.4 Creational
+41.5 Structural
+41.6 Behavioral
+
+
+CHAPTER 42 — Creational Patterns
+------------------------------------------------------------
+42.1 Singleton
+42.2 Factory Method
+42.3 Abstract Factory
+42.4 Builder
+42.5 Prototype
+
+
+CHAPTER 43 — Structural Patterns
+------------------------------------------------------------
+43.1 Adapter
+43.2 Decorator
+43.3 Facade
+43.4 Proxy
+43.5 Composite
+43.6 Bridge
+
+
+CHAPTER 44 — Behavioral Patterns
+------------------------------------------------------------
+44.1 Observer
+44.2 Strategy
+44.3 Command
+44.4 State
+44.5 Template Method
+44.6 Iterator
+44.7 Chain of Responsibility
+
+
+============================================================
+PHASE 13 — UML & OBJECT-ORIENTED DESIGN
+============================================================
+
+CHAPTER 45 — UML Basics
+------------------------------------------------------------
+45.1 What is UML?
+45.2 Class Diagram
+45.3 Object Diagram
+45.4 Use Case Diagram
+45.5 Sequence Diagram
+45.6 Activity Diagram
+45.7 Relationships in UML
+45.8 Association
+45.9 Aggregation
+45.10 Composition
+45.11 Generalization
+
+
+CHAPTER 46 — Object-Oriented Design
+------------------------------------------------------------
+46.1 Requirement Analysis
+46.2 Identify Classes
+46.3 Identify Objects
+46.4 Identify Responsibilities
+46.5 Identify Relationships
+46.6 Class Design
+46.7 Interface Design
+46.8 Dependency Management
+46.9 Refactoring Design
+
+
+============================================================
+PHASE 14 — LOW-LEVEL C++ OOP INTERVIEW TOPICS
+============================================================
+
+CHAPTER 47 — C++ Object Model
+------------------------------------------------------------
+47.1 Object Layout
+47.2 Memory Layout
+47.3 Padding
+47.4 Alignment
+47.5 vtable
+47.6 vptr
+47.7 Virtual Dispatch
+47.8 Multiple Inheritance Layout
+47.9 Virtual Inheritance
+47.10 Object Lifetime
+
+
+CHAPTER 48 — Advanced Polymorphism
+------------------------------------------------------------
+48.1 Static Polymorphism
+48.2 Dynamic Polymorphism
+48.3 CRTP
+48.4 Type Erasure — Introduction
+48.5 Function Objects
+48.6 std::function
+48.7 std::variant-based Polymorphism
+48.8 Runtime vs Compile-Time Tradeoffs
+
+
+CHAPTER 49 — Casting in C++
+------------------------------------------------------------
+49.1 Implicit Casting
+49.2 static_cast
+49.3 dynamic_cast
+49.4 const_cast
+49.5 reinterpret_cast
+49.6 C-Style Cast
+49.7 Safe Casting
+49.8 RTTI
+49.9 Interview Problems
+
+
+============================================================
+PHASE 15 — OOP + DATA STRUCTURES
+============================================================
+
+CHAPTER 50 — OOP with Data Structures
+------------------------------------------------------------
+50.1 Class-based Arrays
+50.2 Linked List Class
+50.3 Stack Class
+50.4 Queue Class
+50.5 Binary Tree Class
+50.6 BST Class
+50.7 Graph Class
+50.8 Generic Data Structures
+50.9 Templates + Data Structures
+50.10 Encapsulation of Data Structures
+
+
+CHAPTER 51 — OOP + Algorithms
+------------------------------------------------------------
+51.1 Algorithm Classes
+51.2 Searching
+51.3 Sorting
+51.4 Recursion
+51.5 Tree Algorithms
+51.6 Graph Algorithms
+51.7 Generic Algorithms
+51.8 STL Algorithms
+51.9 Complexity Analysis
+
+
+============================================================
+PHASE 16 — PRACTICAL PROJECTS
+============================================================
+
+CHAPTER 52 — Beginner OOP Projects
+------------------------------------------------------------
+52.1 Student Management System
+52.2 Bank Account System
+52.3 Employee Management System
+52.4 Library Management System
+52.5 Inventory Management System
+
+
+CHAPTER 53 — Intermediate OOP Projects
+------------------------------------------------------------
+53.1 ATM System
+53.2 Hospital Management System
+53.3 Parking Lot System
+53.4 Hotel Management System
+53.5 E-Commerce Backend Model
+53.6 Quiz Application
+53.7 Railway Reservation System
+
+
+CHAPTER 54 — Advanced OOP / LLD Projects
+------------------------------------------------------------
+54.1 Parking Lot Design
+54.2 Library Management Design
+54.3 Food Delivery System
+54.4 Ride-Sharing System
+54.5 Online Shopping System
+54.6 Vending Machine
+54.7 Elevator System
+54.8 Tic-Tac-Toe
+54.9 Chess Design
+54.10 Snake and Ladder
+
+
+============================================================
+PHASE 17 — JOB & INTERVIEW PREPARATION
+============================================================
+
+CHAPTER 55 — Core OOP Interview Questions
+------------------------------------------------------------
+55.1 What is OOP?
+55.2 Four pillars of OOP
+55.3 Class vs Object
+55.4 Encapsulation vs Abstraction
+55.5 Inheritance vs Composition
+55.6 Overloading vs Overriding
+55.7 Compile-Time vs Runtime Polymorphism
+55.8 Virtual Function
+55.9 Pure Virtual Function
+55.10 Abstract Class
+55.11 Interface concept
+55.12 Virtual Destructor
+55.13 Constructor vs Destructor
+
+
+CHAPTER 56 — Advanced C++ Interview Questions
+------------------------------------------------------------
+56.1 Copy Constructor
+56.2 Copy Assignment
+56.3 Deep vs Shallow Copy
+56.4 Rule of Three
+56.5 Rule of Five
+56.6 Rule of Zero
+56.7 Move Constructor
+56.8 Move Semantics
+56.9 Smart Pointers
+56.10 RAII
+56.11 vtable/vptr
+56.12 Object Slicing
+56.13 Diamond Problem
+56.14 Virtual Inheritance
+56.15 Multiple Inheritance
+56.16 const correctness
+56.17 static members
+56.18 friend
+56.19 Casting
+56.20 Exception Safety
+
+
+CHAPTER 57 — Coding Interview Problems
+------------------------------------------------------------
+57.1 Create a Bank Account Class
+57.2 Employee Hierarchy
+57.3 Shape Hierarchy
+57.4 Payment System
+57.5 Notification System
+57.6 Vehicle Management
+57.7 Library System
+57.8 Parking Lot
+57.9 Vending Machine
+57.10 Tic-Tac-Toe
+57.11 Chess
+57.12 Elevator
+
+
+============================================================
+PHASE 18 — JOB-READY C++ OOP SKILLS
+============================================================
+
+CHAPTER 58 — Clean C++ Code
+------------------------------------------------------------
+58.1 Naming Conventions
+58.2 Class Design
+58.3 Function Design
+58.4 Header/Source Separation
+58.5 const correctness
+58.6 RAII
+58.7 Smart Pointers
+58.8 Avoiding Raw Ownership
+58.9 Error Handling
+58.10 Code Documentation
+58.11 Refactoring
+
+
+CHAPTER 59 — OOP with Git
+------------------------------------------------------------
+59.1 Git Fundamentals
+59.2 Repository Creation
+59.3 Commit Strategy
+59.4 Branching
+59.5 Pull Requests
+59.6 OOP Project Version Control
+59.7 README Writing
+59.8 Project Documentation
+
+
+CHAPTER 60 — Final Job-Ready Assessment
+------------------------------------------------------------
+60.1 OOP Theory Test
+60.2 C++ Coding Test
+60.3 Debugging Test
+60.4 Output Prediction
+60.5 MCQ Test
+60.6 Interview Questions
+60.7 Design Problem
+60.8 Low-Level Design Problem
+60.9 Project Review
+60.10 Mock Technical Interview
+
+
+============================================================
+JOB-READY FINAL SKILL CHECKLIST
+============================================================
+
+C++ FUNDAMENTALS
+[ ] C++ syntax
+[ ] Functions
+[ ] Pointers
+[ ] References
+[ ] Memory management
+[ ] STL
+
+OOP CORE
+[ ] Classes
+[ ] Objects
+[ ] Encapsulation
+[ ] Abstraction
+[ ] Inheritance
+[ ] Polymorphism
+
+C++ OOP
+[ ] Constructors
+[ ] Destructors
+[ ] Copy Constructor
+[ ] Operator Overloading
+[ ] Function Overloading
+[ ] Function Overriding
+[ ] Virtual Functions
+[ ] Pure Virtual Functions
+[ ] Abstract Classes
+[ ] Friend Functions
+[ ] Static Members
+
+MEMORY & MODERN C++
+[ ] Deep Copy
+[ ] Shallow Copy
+[ ] Rule of Three
+[ ] Rule of Five
+[ ] Rule of Zero
+[ ] Move Semantics
+[ ] RAII
+[ ] Smart Pointers
+[ ] const Correctness
+
+DESIGN
+[ ] Association
+[ ] Aggregation
+[ ] Composition
+[ ] Inheritance vs Composition
+[ ] SOLID
+[ ] Coupling
+[ ] Cohesion
+[ ] Design Patterns
+[ ] UML
+[ ] Low-Level Design
+
+INTERVIEW
+[ ] OOP MCQs
+[ ] Output-based Questions
+[ ] Debugging
+[ ] Coding Problems
+[ ] LLD Problems
+[ ] Project Discussion
+[ ] Mock Interview
+
+PROJECTS
+[ ] Student Management
+[ ] Bank System
+[ ] Library System
+[ ] Parking Lot
+[ ] Vending Machine
+[ ] Tic-Tac-Toe
+[ ] One complete LLD project
