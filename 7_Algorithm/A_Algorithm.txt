@@ -1,0 +1,1400 @@
+============================================================
+ALGORITHMS — JOB READY MASTER SYLLABUS
+============================================================
+
+Target:
+M.Tech 1st Year → Strong Algorithm Fundamentals
+→ Competitive Programming Basics
+→ Technical Interview Ready
+→ Placement Ready
+→ Advanced Problem Solving
+
+Prerequisite:
+1. Basic Programming
+2. Variables, loops, functions
+3. Arrays and strings
+4. Basic recursion
+5. Basic data structures
+   - Array
+   - Linked List
+   - Stack
+   - Queue
+   - Hash Table
+   - Tree
+   - Graph
+
+Recommended Language:
+C++ / Java / Python
+
+============================================================
+PHASE 0 — ALGORITHM & PROBLEM-SOLVING FOUNDATION
+============================================================
+
+CHAPTER 1 — Introduction to Algorithms
+
+1.1 What is an Algorithm?
+    - Definition
+    - Algorithm vs Program
+    - Algorithm vs Code
+    - Characteristics of an algorithm
+
+1.2 Properties of Algorithms
+    - Input
+    - Output
+    - Definiteness
+    - Finiteness
+    - Effectiveness
+    - Correctness
+
+1.3 Algorithm Representation
+    - Natural language
+    - Pseudocode
+    - Flowcharts
+    - Structured algorithms
+
+1.4 Algorithm Design Process
+    - Problem understanding
+    - Input/output identification
+    - Constraints
+    - Algorithm design
+    - Correctness
+    - Complexity analysis
+    - Implementation
+    - Testing
+
+1.5 Problem-Solving Methodology
+    - Understand
+    - Plan
+    - Implement
+    - Test
+    - Optimize
+
+1.6 Algorithmic Thinking
+    - Decomposition
+    - Pattern recognition
+    - Abstraction
+    - Optimization
+
+------------------------------------------------------------
+
+CHAPTER 2 — Mathematical Foundations
+
+2.1 Basic Mathematics
+    - Arithmetic
+    - Powers
+    - Logarithms
+    - Exponents
+    - Fractions
+
+2.2 Number Theory Basics
+    - Prime numbers
+    - Factors
+    - Divisibility
+    - GCD
+    - LCM
+
+2.3 Euclidean Algorithm
+    - GCD
+    - Extended Euclidean Algorithm
+
+2.4 Modular Arithmetic
+    - Modulo
+    - Modular addition
+    - Modular multiplication
+    - Modular exponentiation
+
+2.5 Combinatorics
+    - Permutations
+    - Combinations
+    - Basic counting
+
+2.6 Mathematical Series
+    - Arithmetic progression
+    - Geometric progression
+    - Harmonic series
+
+2.7 Recurrence Relations
+    - Definition
+    - Linear recurrence
+    - Recursive algorithm analysis
+
+============================================================
+PHASE 1 — ALGORITHM ANALYSIS
+============================================================
+
+CHAPTER 3 — Complexity Analysis
+
+3.1 Why Analyze Algorithms?
+
+3.2 Time Complexity
+    - Running time
+    - Input size
+    - Best case
+    - Average case
+    - Worst case
+
+3.3 Space Complexity
+    - Auxiliary space
+    - Input space
+    - Memory usage
+
+3.4 Asymptotic Analysis
+    - Big O
+    - Big Omega
+    - Big Theta
+
+3.5 Common Complexities
+    - O(1)
+    - O(log n)
+    - O(n)
+    - O(n log n)
+    - O(n²)
+    - O(n³)
+    - O(2ⁿ)
+    - O(n!)
+
+3.6 Complexity Comparison
+
+3.7 Analyzing Loops
+    - Single loop
+    - Nested loops
+    - Dependent loops
+    - Logarithmic loops
+
+3.8 Analyzing Recursive Algorithms
+    - Recursion tree
+    - Recurrence equations
+
+3.9 Amortized Analysis
+    - Aggregate method
+    - Accounting method
+    - Potential method
+
+3.10 Trade-offs
+    - Time vs space
+    - Memory vs speed
+
+------------------------------------------------------------
+
+CHAPTER 4 — Correctness of Algorithms
+
+4.1 Algorithm Correctness
+
+4.2 Preconditions
+
+4.3 Postconditions
+
+4.4 Loop Invariants
+
+4.5 Proof by Induction
+
+4.6 Mathematical Induction
+
+4.7 Correctness Proof for Recursive Algorithms
+
+4.8 Termination
+
+4.9 Partial vs Total Correctness
+
+============================================================
+PHASE 2 — SEARCHING & BASIC ALGORITHMS
+============================================================
+
+CHAPTER 5 — Searching Algorithms
+
+5.1 Linear Search
+    - Algorithm
+    - Implementation
+    - Complexity
+    - Applications
+
+5.2 Binary Search
+    - Basic binary search
+    - Iterative implementation
+    - Recursive implementation
+
+5.3 Binary Search Variations
+    - First occurrence
+    - Last occurrence
+    - Lower bound
+    - Upper bound
+    - Search insertion position
+    - Count occurrences
+
+5.4 Binary Search on Answer
+    - Minimum possible answer
+    - Maximum possible answer
+
+5.5 Rotated Sorted Array
+    - Search in rotated array
+    - Minimum element
+
+5.6 Searching Problems
+    - Peak element
+    - Square root
+    - Search space reduction
+
+============================================================
+PHASE 3 — SORTING ALGORITHMS
+============================================================
+
+CHAPTER 6 — Elementary Sorting
+
+6.1 Selection Sort
+    - Algorithm
+    - Implementation
+    - Complexity
+    - Stability
+
+6.2 Bubble Sort
+    - Basic algorithm
+    - Optimized bubble sort
+    - Complexity
+
+6.3 Insertion Sort
+    - Algorithm
+    - Complexity
+    - Applications
+
+6.4 Comparison of Elementary Sorting Algorithms
+
+------------------------------------------------------------
+
+CHAPTER 7 — Advanced Sorting
+
+7.1 Merge Sort
+    - Divide and conquer
+    - Merge operation
+    - Recursive implementation
+    - Complexity
+    - Stability
+
+7.2 Quick Sort
+    - Partitioning
+    - Lomuto partition
+    - Hoare partition
+    - Pivot selection
+    - Worst case
+    - Average case
+    - Randomized quicksort
+
+7.3 Heap Sort
+    - Heap concept
+    - Build heap
+    - Heapify
+    - Sorting using heap
+
+7.4 Counting Sort
+    - Frequency array
+    - Complexity
+    - Limitations
+
+7.5 Radix Sort
+    - Digit-based sorting
+    - LSD
+    - MSD
+
+7.6 Bucket Sort
+
+7.7 External Sorting
+    - External merge sort
+    - Large dataset sorting
+
+7.8 Sorting Comparison
+    - Time
+    - Space
+    - Stability
+    - In-place
+    - Adaptive
+
+============================================================
+PHASE 4 — DIVIDE AND CONQUER
+============================================================
+
+CHAPTER 8 — Divide and Conquer
+
+8.1 Divide and Conquer Paradigm
+
+8.2 General Structure
+    - Divide
+    - Conquer
+    - Combine
+
+8.3 Binary Search
+
+8.4 Merge Sort
+
+8.5 Quick Sort
+
+8.6 Maximum Subarray
+
+8.7 Counting Inversions
+
+8.8 Closest Pair of Points
+
+8.9 Strassen's Matrix Multiplication
+
+8.10 Recurrence Analysis
+    - Substitution method
+    - Recursion tree
+    - Master theorem
+
+8.11 Master Theorem
+    - T(n) = aT(n/b) + f(n)
+    - Case 1
+    - Case 2
+    - Case 3
+
+============================================================
+PHASE 5 — GREEDY ALGORITHMS
+============================================================
+
+CHAPTER 9 — Greedy Algorithms
+
+9.1 Greedy Strategy
+
+9.2 Greedy Choice Property
+
+9.3 Optimal Substructure
+
+9.4 Greedy vs Brute Force
+
+9.5 Activity Selection Problem
+
+9.6 Fractional Knapsack
+
+9.7 Job Sequencing with Deadlines
+
+9.8 Huffman Coding
+    - Frequency table
+    - Min heap
+    - Huffman tree
+    - Prefix codes
+
+9.9 Minimum Spanning Tree
+    - Kruskal's Algorithm
+    - Prim's Algorithm
+
+9.10 Dijkstra's Algorithm
+
+9.11 Interval Scheduling
+
+9.12 Interval Partitioning
+
+9.13 Greedy Proof Techniques
+
+9.14 When Greedy Fails
+    - 0/1 Knapsack
+    - Counterexamples
+
+============================================================
+PHASE 6 — RECURSION & BACKTRACKING
+============================================================
+
+CHAPTER 10 — Recursion
+
+10.1 Recursion Fundamentals
+
+10.2 Base Case
+
+10.3 Recursive Case
+
+10.4 Call Stack
+
+10.5 Direct Recursion
+
+10.6 Indirect Recursion
+
+10.7 Tail Recursion
+
+10.8 Tree Recursion
+
+10.9 Recursion vs Iteration
+
+10.10 Recursive Problem Solving
+
+10.11 Recursion Complexity
+
+------------------------------------------------------------
+
+CHAPTER 11 — Backtracking
+
+11.1 Backtracking Concept
+
+11.2 State Space Tree
+
+11.3 Decision Tree
+
+11.4 Constraint Satisfaction
+
+11.5 N-Queens Problem
+
+11.6 Rat in a Maze
+
+11.7 Sudoku Solver
+
+11.8 Subsets
+
+11.9 Permutations
+
+11.10 Combination Generation
+
+11.11 Combination Sum
+
+11.12 Word Search
+
+11.13 Backtracking Optimization
+    - Pruning
+    - Branch ordering
+
+============================================================
+PHASE 7 — DYNAMIC PROGRAMMING
+============================================================
+
+CHAPTER 12 — Dynamic Programming Fundamentals
+
+12.1 What is Dynamic Programming?
+
+12.2 Overlapping Subproblems
+
+12.3 Optimal Substructure
+
+12.4 Memoization
+
+12.5 Tabulation
+
+12.6 Top-down DP
+
+12.7 Bottom-up DP
+
+12.8 DP State
+
+12.9 State Transition
+
+12.10 Base Conditions
+
+12.11 DP Complexity
+
+------------------------------------------------------------
+
+CHAPTER 13 — Classical Dynamic Programming
+
+13.1 Fibonacci
+
+13.2 Climbing Stairs
+
+13.3 House Robber
+
+13.4 0/1 Knapsack
+
+13.5 Unbounded Knapsack
+
+13.6 Coin Change
+    - Minimum coins
+    - Number of ways
+
+13.7 Subset Sum
+
+13.8 Partition Equal Subset Sum
+
+13.9 Longest Common Subsequence
+
+13.10 Longest Common Substring
+
+13.11 Longest Increasing Subsequence
+
+13.12 Edit Distance
+
+13.13 Matrix Chain Multiplication
+
+13.14 Rod Cutting
+
+13.15 Palindromic Subsequence
+
+13.16 Palindrome Partitioning
+
+13.17 Word Break
+
+13.18 Egg Dropping
+
+13.19 DP on Grids
+
+13.20 DP on Trees
+
+13.21 DP on DAG
+
+13.22 Bitmask DP
+
+13.23 State Compression
+
+13.24 DP Optimization
+
+============================================================
+PHASE 8 — GRAPH ALGORITHMS
+============================================================
+
+CHAPTER 14 — Graph Fundamentals
+
+14.1 What is a Graph?
+
+14.2 Graph Terminology
+    - Vertex
+    - Edge
+    - Degree
+    - Path
+    - Cycle
+    - Connected component
+
+14.3 Directed Graph
+
+14.4 Undirected Graph
+
+14.5 Weighted Graph
+
+14.6 Unweighted Graph
+
+14.7 Simple Graph
+
+14.8 Multigraph
+
+14.9 Complete Graph
+
+14.10 Bipartite Graph
+
+14.11 Graph Representation
+    - Adjacency matrix
+    - Adjacency list
+    - Edge list
+
+------------------------------------------------------------
+
+CHAPTER 15 — Graph Traversal
+
+15.1 Breadth First Search (BFS)
+
+15.2 Depth First Search (DFS)
+
+15.3 BFS Implementation
+
+15.4 DFS Implementation
+
+15.5 Recursive DFS
+
+15.6 Iterative DFS
+
+15.7 Connected Components
+
+15.8 Number of Islands
+
+15.9 Flood Fill
+
+15.10 Bipartite Graph Checking
+
+15.11 Cycle Detection
+    - Undirected graph
+    - Directed graph
+
+------------------------------------------------------------
+
+CHAPTER 16 — Shortest Path Algorithms
+
+16.1 Shortest Path Concept
+
+16.2 BFS Shortest Path
+
+16.3 Dijkstra's Algorithm
+    - Priority queue
+    - Relaxation
+    - Complexity
+
+16.4 Bellman-Ford Algorithm
+
+16.5 Negative Edge Weights
+
+16.6 Negative Cycle Detection
+
+16.7 Floyd-Warshall Algorithm
+
+16.8 All-Pairs Shortest Path
+
+16.9 DAG Shortest Path
+
+16.10 Comparison
+    - BFS
+    - Dijkstra
+    - Bellman-Ford
+    - Floyd-Warshall
+
+------------------------------------------------------------
+
+CHAPTER 17 — Minimum Spanning Tree
+
+17.1 Spanning Tree
+
+17.2 Minimum Spanning Tree
+
+17.3 Kruskal's Algorithm
+
+17.4 Prim's Algorithm
+
+17.5 Disjoint Set Union
+    - Make set
+    - Find
+    - Union
+
+17.6 Path Compression
+
+17.7 Union by Rank
+
+17.8 Union by Size
+
+17.9 MST Applications
+
+------------------------------------------------------------
+
+CHAPTER 18 — Advanced Graph Algorithms
+
+18.1 Topological Sorting
+    - DFS method
+    - Kahn's algorithm
+
+18.2 Directed Acyclic Graphs
+
+18.3 Strongly Connected Components
+    - Kosaraju's algorithm
+    - Tarjan's algorithm
+
+18.4 Bridges
+
+18.5 Articulation Points
+
+18.6 Euler Path
+
+18.7 Euler Circuit
+
+18.8 Hamiltonian Path
+
+18.9 Hamiltonian Cycle
+
+18.10 Network Flow
+    - Flow networks
+    - Maximum flow
+    - Minimum cut
+
+18.11 Ford-Fulkerson
+
+18.12 Edmonds-Karp
+
+============================================================
+PHASE 9 — STRING ALGORITHMS
+============================================================
+
+CHAPTER 19 — String Processing
+
+19.1 String Fundamentals
+
+19.2 Pattern Matching
+
+19.3 Naive Pattern Matching
+
+19.4 KMP Algorithm
+    - Prefix function
+    - LPS array
+
+19.5 Rabin-Karp
+    - Rolling hash
+    - Hash collisions
+
+19.6 Z Algorithm
+
+19.7 String Hashing
+
+19.8 Trie
+    - Insert
+    - Search
+    - Prefix search
+
+19.9 Applications of Trie
+
+19.10 Suffix Concepts
+    - Suffix array
+    - Suffix tree
+    - LCP array
+
+============================================================
+PHASE 10 — ADVANCED DATA-STRUCTURE ALGORITHMS
+============================================================
+
+CHAPTER 20 — Heap-Based Algorithms
+
+20.1 Binary Heap
+
+20.2 Min Heap
+
+20.3 Max Heap
+
+20.4 Heapify
+
+20.5 Priority Queue
+
+20.6 K-th Largest Element
+
+20.7 K-th Smallest Element
+
+20.8 Top K Problems
+
+20.9 Median Maintenance
+
+20.10 Heap Applications
+
+------------------------------------------------------------
+
+CHAPTER 21 — Tree Algorithms
+
+21.1 Binary Tree Traversal
+    - Preorder
+    - Inorder
+    - Postorder
+    - Level order
+
+21.2 Tree Height
+
+21.3 Tree Diameter
+
+21.4 Lowest Common Ancestor
+
+21.5 Binary Search Tree
+
+21.6 BST Search
+
+21.7 BST Insertion
+
+21.8 BST Deletion
+
+21.9 Balanced Trees
+    - AVL Tree
+    - Red-Black Tree
+
+21.10 Segment Tree
+    - Build
+    - Query
+    - Update
+
+21.11 Lazy Propagation
+
+21.12 Fenwick Tree
+    - Binary Indexed Tree
+    - Prefix sum
+    - Update
+
+21.13 Sparse Table
+
+21.14 Lowest Common Ancestor Algorithms
+
+============================================================
+PHASE 11 — BIT MANIPULATION ALGORITHMS
+============================================================
+
+CHAPTER 22 — Bit Manipulation
+
+22.1 Binary Representation
+
+22.2 Bitwise Operators
+    - AND
+    - OR
+    - XOR
+    - NOT
+
+22.3 Left Shift
+
+22.4 Right Shift
+
+22.5 Check Odd/Even
+
+22.6 Check Power of Two
+
+22.7 Count Set Bits
+
+22.8 Brian Kernighan Algorithm
+
+22.9 XOR Properties
+
+22.10 Find Unique Element
+
+22.11 Subsets Using Bits
+
+22.12 Bitmasking
+
+22.13 Bitmask DP
+
+============================================================
+PHASE 12 — RANGE & QUERY ALGORITHMS
+============================================================
+
+CHAPTER 23 — Range Query Techniques
+
+23.1 Prefix Sum
+
+23.2 Suffix Sum
+
+23.3 Difference Array
+
+23.4 2D Prefix Sum
+
+23.5 Sliding Window
+
+23.6 Two Pointer Technique
+
+23.7 Binary Search on Answer
+
+23.8 Segment Tree
+
+23.9 Fenwick Tree
+
+23.10 Sparse Table
+
+23.11 Mo's Algorithm
+
+============================================================
+PHASE 13 — ALGORITHM DESIGN PARADIGMS
+============================================================
+
+CHAPTER 24 — Major Algorithm Design Techniques
+
+24.1 Brute Force
+
+24.2 Divide and Conquer
+
+24.3 Greedy
+
+24.4 Dynamic Programming
+
+24.5 Backtracking
+
+24.6 Branch and Bound
+
+24.7 Randomized Algorithms
+
+24.8 Incremental Algorithms
+
+24.9 Approximation Algorithms
+
+24.10 Online Algorithms
+
+24.11 Offline Algorithms
+
+24.12 Comparison of Design Paradigms
+
+============================================================
+PHASE 14 — ADVANCED ALGORITHMS
+============================================================
+
+CHAPTER 25 — Advanced Algorithm Topics
+
+25.1 Randomized Algorithms
+    - Randomized quicksort
+    - Randomized selection
+
+25.2 Selection Algorithms
+    - Quickselect
+    - Median of medians
+
+25.3 Computational Geometry
+    - Points
+    - Lines
+    - Orientation
+    - Convex hull
+    - Line intersection
+    - Closest pair
+
+25.4 Advanced Graph Algorithms
+    - SCC
+    - Bridges
+    - Articulation points
+    - Network flow
+
+25.5 Advanced String Algorithms
+    - Suffix array
+    - Suffix tree
+    - LCP
+
+25.6 Advanced DP
+    - Bitmask DP
+    - Digit DP
+    - Tree DP
+    - Interval DP
+
+25.7 Advanced Optimization
+    - Coordinate compression
+    - Meet in the middle
+    - Divide and conquer optimization
+
+============================================================
+PHASE 15 — NP-COMPLETENESS & COMPUTATIONAL COMPLEXITY
+============================================================
+
+CHAPTER 26 — Complexity Theory
+
+26.1 Computational Complexity
+
+26.2 P Problems
+
+26.3 NP Problems
+
+26.4 NP-Hard
+
+26.5 NP-Complete
+
+26.6 Polynomial Time
+
+26.7 Exponential Time
+
+26.8 Polynomial-Time Reduction
+
+26.9 Cook-Levin Theorem — Concept
+
+26.10 Classic NP-Complete Problems
+    - SAT
+    - 3-SAT
+    - Clique
+    - Vertex Cover
+    - Hamiltonian Cycle
+    - Travelling Salesman Problem
+
+26.11 Approximation Algorithms
+
+26.12 Why NP-Complete Problems Matter
+
+============================================================
+PHASE 16 — INTERVIEW PROBLEM-SOLVING PATTERNS
+============================================================
+
+CHAPTER 27 — Array Patterns
+
+27.1 Two Pointer
+
+27.2 Sliding Window
+
+27.3 Prefix Sum
+
+27.4 Kadane's Algorithm
+
+27.5 Frequency Counting
+
+27.6 Hashing
+
+27.7 Sorting-Based Solutions
+
+27.8 Binary Search
+
+27.9 Matrix Problems
+
+------------------------------------------------------------
+
+CHAPTER 28 — String Patterns
+
+28.1 Character Frequency
+
+28.2 Anagrams
+
+28.3 Palindrome
+
+28.4 Sliding Window Strings
+
+28.5 Pattern Matching
+
+28.6 String Hashing
+
+------------------------------------------------------------
+
+CHAPTER 29 — Linked List Problems
+
+29.1 Reverse Linked List
+
+29.2 Detect Cycle
+
+29.3 Find Middle
+
+29.4 Merge Lists
+
+29.5 Remove Nth Node
+
+29.6 Intersection
+
+29.7 Palindrome Linked List
+
+29.8 Fast and Slow Pointer
+
+------------------------------------------------------------
+
+CHAPTER 30 — Stack & Queue Problems
+
+30.1 Balanced Parentheses
+
+30.2 Next Greater Element
+
+30.3 Next Smaller Element
+
+30.4 Monotonic Stack
+
+30.5 Min Stack
+
+30.6 Largest Rectangle in Histogram
+
+30.7 Sliding Window Maximum
+
+30.8 Queue Using Stack
+
+30.9 Stack Using Queue
+
+------------------------------------------------------------
+
+CHAPTER 31 — Tree Interview Patterns
+
+31.1 Tree Traversal
+
+31.2 Height
+
+31.3 Diameter
+
+31.4 Balanced Tree
+
+31.5 Lowest Common Ancestor
+
+31.6 Path Sum
+
+31.7 Serialize/Deserialize
+
+31.8 BST Problems
+
+31.9 Tree Views
+
+31.10 Level Order Problems
+
+------------------------------------------------------------
+
+CHAPTER 32 — Graph Interview Patterns
+
+32.1 BFS Problems
+
+32.2 DFS Problems
+
+32.3 Connected Components
+
+32.4 Cycle Detection
+
+32.5 Topological Sort
+
+32.6 Shortest Path
+
+32.7 Union-Find
+
+32.8 Minimum Spanning Tree
+
+32.9 Grid Graph Problems
+
+32.10 Island Problems
+
+============================================================
+PHASE 17 — PROBLEM-SOLVING PRACTICE
+============================================================
+
+CHAPTER 33 — Difficulty Progression
+
+33.1 Easy Problems
+    - Basic implementation
+    - Arrays
+    - Strings
+    - Searching
+    - Sorting
+
+33.2 Medium Problems
+    - Recursion
+    - Hashing
+    - Two pointers
+    - Sliding window
+    - Trees
+    - Graphs
+    - DP
+
+33.3 Hard Problems
+    - Advanced DP
+    - Graph algorithms
+    - Segment trees
+    - Advanced strings
+    - Optimization
+
+------------------------------------------------------------
+
+CHAPTER 34 — Problem-Solving Strategy
+
+34.1 Read the Problem
+
+34.2 Identify Constraints
+
+34.3 Identify Input/Output
+
+34.4 Find Brute Force
+
+34.5 Analyze Brute Force
+
+34.6 Find Bottleneck
+
+34.7 Optimize
+
+34.8 Select Algorithm
+
+34.9 Prove Correctness
+
+34.10 Analyze Complexity
+
+34.11 Implement
+
+34.12 Test Edge Cases
+
+============================================================
+PHASE 18 — JOB & INTERVIEW PREPARATION
+============================================================
+
+CHAPTER 35 — Technical Interview Preparation
+
+35.1 Frequently Asked Algorithms
+
+35.2 Complexity Questions
+
+35.3 Sorting Questions
+
+35.4 Searching Questions
+
+35.5 Recursion Questions
+
+35.6 Greedy Questions
+
+35.7 Dynamic Programming Questions
+
+35.8 Graph Questions
+
+35.9 Tree Questions
+
+35.10 String Questions
+
+35.11 Optimization Questions
+
+------------------------------------------------------------
+
+CHAPTER 36 — Coding Interview Patterns
+
+36.1 Two Pointer
+
+36.2 Sliding Window
+
+36.3 Fast & Slow Pointer
+
+36.4 Binary Search
+
+36.5 Prefix Sum
+
+36.6 Hash Map
+
+36.7 Stack
+
+36.8 Monotonic Stack
+
+36.9 Heap
+
+36.10 BFS
+
+36.11 DFS
+
+36.12 Backtracking
+
+36.13 Greedy
+
+36.14 Dynamic Programming
+
+36.15 Union-Find
+
+36.16 Topological Sort
+
+============================================================
+PHASE 19 — COMPETITIVE PROGRAMMING FOUNDATION
+============================================================
+
+CHAPTER 37 — Competitive Programming
+
+37.1 Fast Input/Output
+
+37.2 Constraints Analysis
+
+37.3 Complexity Selection
+
+37.4 Mathematical Tricks
+
+37.5 Number Theory
+
+37.6 Modular Arithmetic
+
+37.7 Sieve of Eratosthenes
+
+37.8 Prime Factorization
+
+37.9 GCD/LCM
+
+37.10 Binary Exponentiation
+
+37.11 Combinatorics
+
+37.12 Bit Manipulation
+
+37.13 Coordinate Compression
+
+37.14 Greedy Optimization
+
+37.15 DP Optimization
+
+37.16 Graph Optimization
+
+============================================================
+PHASE 20 — REAL-WORLD APPLICATIONS
+============================================================
+
+CHAPTER 38 — Algorithms in Software Engineering
+
+38.1 Searching in Databases
+
+38.2 Sorting Large Data
+
+38.3 Caching Algorithms
+
+38.4 Routing Algorithms
+
+38.5 Recommendation Systems
+
+38.6 Search Engines
+
+38.7 Social Networks
+
+38.8 Scheduling Systems
+
+38.9 Operating Systems
+
+38.10 Compilers
+
+38.11 Distributed Systems
+
+38.12 Machine Learning Applications
+
+============================================================
+PHASE 21 — ALGORITHM IMPLEMENTATION PROJECTS
+============================================================
+
+CHAPTER 39 — Mini Projects
+
+39.1 Sorting Visualizer
+
+39.2 Pathfinding Visualizer
+
+39.3 Maze Solver
+
+39.4 Sudoku Solver
+
+39.5 N-Queens Visualizer
+
+39.6 Huffman Compression
+
+39.7 Autocomplete Using Trie
+
+39.8 Dijkstra Route Finder
+
+39.9 Minimum Spanning Tree Visualizer
+
+39.10 Recommendation System Prototype
+
+------------------------------------------------------------
+
+CHAPTER 40 — Final Algorithm Project
+
+Build a complete:
+
+"ALGORITHM VISUALIZATION & PROBLEM-SOLVING PLATFORM"
+
+Features:
+    - Searching visualization
+    - Sorting visualization
+    - Graph traversal
+    - Shortest path
+    - MST
+    - Recursion visualization
+    - Backtracking
+    - Dynamic programming
+    - Complexity comparison
+    - User-selected input
+    - Step-by-step execution
+
+============================================================
+PHASE 22 — FINAL MASTERY
+============================================================
+
+CHAPTER 41 — Algorithm Revision
+
+41.1 Complexity Cheat Sheet
+
+41.2 Sorting Cheat Sheet
+
+41.3 Searching Cheat Sheet
+
+41.4 Greedy Cheat Sheet
+
+41.5 DP Cheat Sheet
+
+41.6 Graph Cheat Sheet
+
+41.7 Tree Cheat Sheet
+
+41.8 String Cheat Sheet
+
+41.9 Problem-Solving Patterns
+
+------------------------------------------------------------
+
+CHAPTER 42 — Interview Revision
+
+42.1 Top 50 Easy Problems
+
+42.2 Top 100 Medium Problems
+
+42.3 Top 50 Hard Problems
+
+42.4 Algorithm MCQs
+
+42.5 Complexity MCQs
+
+42.6 Output-Based Questions
+
+42.7 Debugging Questions
+
+42.8 Coding Round Questions
+
+42.9 Technical Interview Questions
+
+------------------------------------------------------------
+
+CHAPTER 43 — Final Assessment
+
+43.1 Concept Test
+
+43.2 Complexity Test
+
+43.3 Coding Test
+
+43.4 Algorithm Design Test
+
+43.5 Debugging Test
+
+43.6 Interview Simulation
+
+43.7 Final Mock Coding Round
+
+============================================================
+END OF ALGORITHMS JOB-READY MASTER SYLLABUS
+============================================================

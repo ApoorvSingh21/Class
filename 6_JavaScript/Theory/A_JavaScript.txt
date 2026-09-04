@@ -1,0 +1,2074 @@
+============================================================
+             JAVASCRIPT — JOB-READY MASTER SYLLABUS
+============================================================
+
+Target:
+    M.Tech 1st Year → Beginner → Intermediate → Advanced
+    → Job Ready → Interview Ready
+
+Prerequisites:
+    1. Basic computer knowledge
+    2. Basic HTML/CSS is recommended
+    3. No prior JavaScript knowledge required
+
+Recommended Duration:
+    10–12 Weeks
+
+Daily Study:
+    1–2 Hours/day
+
+Learning Goals:
+    ✓ JavaScript fundamentals
+    ✓ Modern JavaScript (ES6+)
+    ✓ Problem solving
+    ✓ DOM & Browser programming
+    ✓ Asynchronous JavaScript
+    ✓ APIs & JSON
+    ✓ Advanced JavaScript
+    ✓ Node.js fundamentals
+    ✓ Backend/API understanding
+    ✓ Testing & debugging
+    ✓ Security fundamentals
+    ✓ Interview preparation
+    ✓ Real-world projects
+
+
+============================================================
+CHAPTER 0 — JAVASCRIPT & WEB FUNDAMENTALS
+============================================================
+
+0.1 What is JavaScript?
+    ├── Definition
+    ├── History of JavaScript
+    ├── JavaScript vs Java
+    ├── ECMAScript
+    ├── JavaScript engines
+    ├── V8 Engine
+    ├── SpiderMonkey
+    └── JavaScriptCore
+
+0.2 Where JavaScript Runs
+    ├── Browser
+    ├── Server
+    ├── Node.js
+    ├── Desktop
+    └── Mobile environments
+
+0.3 JavaScript in Web Development
+    ├── HTML
+    ├── CSS
+    ├── JavaScript
+    ├── Client-side programming
+    └── Server-side programming
+
+0.4 JavaScript Execution
+    ├── Source code
+    ├── Parsing
+    ├── Compilation
+    ├── Execution
+    ├── JavaScript engine
+    └── Runtime environment
+
+0.5 Development Environment
+    ├── Browser DevTools
+    ├── Console
+    ├── VS Code
+    ├── Node.js
+    ├── npm
+    └── Running JavaScript files
+
+
+============================================================
+CHAPTER 1 — JAVASCRIPT BASICS
+============================================================
+
+1.1 First JavaScript Program
+    ├── <script>
+    ├── Inline JavaScript
+    ├── Internal JavaScript
+    └── External JavaScript
+
+1.2 Statements
+    ├── Expressions
+    ├── Statements
+    ├── Semicolons
+    └── Comments
+
+1.3 Variables
+    ├── var
+    ├── let
+    ├── const
+    ├── Variable declaration
+    ├── Variable initialization
+    └── Variable reassignment
+
+1.4 Constants
+
+1.5 Identifiers
+    ├── Naming rules
+    ├── Naming conventions
+    └── Reserved keywords
+
+1.6 Console
+    ├── console.log()
+    ├── console.error()
+    ├── console.warn()
+    ├── console.table()
+    └── console.clear()
+
+
+============================================================
+CHAPTER 2 — DATA TYPES
+============================================================
+
+2.1 Primitive Data Types
+    ├── Number
+    ├── String
+    ├── Boolean
+    ├── Undefined
+    ├── Null
+    ├── BigInt
+    └── Symbol
+
+2.2 Non-Primitive Types
+    ├── Object
+    ├── Array
+    └── Function
+
+2.3 typeof Operator
+
+2.4 Dynamic Typing
+
+2.5 Type Conversion
+    ├── String()
+    ├── Number()
+    ├── Boolean()
+    └── BigInt()
+
+2.6 Type Coercion
+    ├── Implicit conversion
+    ├── Explicit conversion
+    └── Common coercion rules
+
+2.7 Truthy and Falsy Values
+
+2.8 NaN
+    ├── Meaning
+    ├── Detection
+    └── Number.isNaN()
+
+2.9 null vs undefined
+
+2.10 Primitive vs Reference Values
+
+
+============================================================
+CHAPTER 3 — OPERATORS
+============================================================
+
+3.1 Arithmetic Operators
+    ├── +
+    ├── -
+    ├── *
+    ├── /
+    ├── %
+    └── **
+
+3.2 Assignment Operators
+
+3.3 Comparison Operators
+    ├── ==
+    ├── ===
+    ├── !=
+    ├── !==
+    ├── >
+    ├── <
+    ├── >=
+    └── <=
+
+3.4 Logical Operators
+    ├── &&
+    ├── ||
+    └── !
+
+3.5 Unary Operators
+
+3.6 Increment/Decrement
+    ├── ++
+    └── --
+
+3.7 Ternary Operator
+
+3.8 Nullish Coalescing Operator
+    └── ??
+
+3.9 Optional Chaining
+    └── ?.
+
+3.10 Operator Precedence
+
+
+============================================================
+CHAPTER 4 — CONTROL FLOW
+============================================================
+
+4.1 Conditional Statements
+    ├── if
+    ├── if-else
+    ├── else-if
+    └── Nested conditions
+
+4.2 switch Statement
+
+4.3 Loops
+    ├── for
+    ├── while
+    ├── do-while
+    ├── for...of
+    └── for...in
+
+4.4 Loop Control
+    ├── break
+    └── continue
+
+4.5 Nested Loops
+
+4.6 Infinite Loops
+
+4.7 Practical Problem Solving
+    ├── Even/odd
+    ├── Prime number
+    ├── Factorial
+    ├── Fibonacci
+    ├── Palindrome
+    ├── Reverse number
+    └── Pattern problems
+
+
+============================================================
+CHAPTER 5 — FUNCTIONS
+============================================================
+
+5.1 What is a Function?
+
+5.2 Function Declaration
+
+5.3 Function Expression
+
+5.4 Function Parameters
+
+5.5 Arguments
+
+5.6 Return Statement
+
+5.7 Default Parameters
+
+5.8 Rest Parameters
+
+5.9 Spread Syntax
+
+5.10 Arrow Functions
+
+5.11 Anonymous Functions
+
+5.12 Higher-Order Functions
+
+5.13 Callback Functions
+
+5.14 Pure Functions
+
+5.15 Function Scope
+
+5.16 Nested Functions
+
+5.17 Immediately Invoked Function Expression
+     └── IIFE
+
+5.18 Recursion
+
+
+============================================================
+CHAPTER 6 — STRINGS
+============================================================
+
+6.1 Creating Strings
+
+6.2 String Indexing
+
+6.3 String Length
+
+6.4 Escape Characters
+
+6.5 Template Literals
+    ├── Backticks
+    └── Template interpolation
+
+6.6 Important String Methods
+    ├── toUpperCase()
+    ├── toLowerCase()
+    ├── trim()
+    ├── includes()
+    ├── startsWith()
+    ├── endsWith()
+    ├── indexOf()
+    ├── lastIndexOf()
+    ├── slice()
+    ├── substring()
+    ├── replace()
+    ├── replaceAll()
+    ├── split()
+    └── concat()
+
+6.7 String Immutability
+
+6.8 Regular Expressions
+    ├── Pattern
+    ├── Flags
+    ├── test()
+    ├── match()
+    ├── replace()
+    └── Common validation patterns
+
+
+============================================================
+CHAPTER 7 — ARRAYS
+============================================================
+
+7.1 Array Fundamentals
+
+7.2 Creating Arrays
+
+7.3 Indexing
+
+7.4 Array Length
+
+7.5 Adding/Removing Elements
+    ├── push()
+    ├── pop()
+    ├── shift()
+    └── unshift()
+
+7.6 Array Methods
+    ├── slice()
+    ├── splice()
+    ├── concat()
+    ├── join()
+    ├── includes()
+    ├── indexOf()
+    └── reverse()
+
+7.7 Iteration Methods
+    ├── forEach()
+    ├── map()
+    ├── filter()
+    ├── reduce()
+    ├── find()
+    ├── findIndex()
+    ├── some()
+    ├── every()
+    └── sort()
+
+7.8 Array Destructuring
+
+7.9 Spread Operator
+
+7.10 Multidimensional Arrays
+
+7.11 Array of Objects
+
+7.12 Shallow Copy vs Deep Copy
+
+
+============================================================
+CHAPTER 8 — OBJECTS
+============================================================
+
+8.1 Object Fundamentals
+
+8.2 Creating Objects
+
+8.3 Properties
+
+8.4 Methods
+
+8.5 Accessing Properties
+    ├── Dot notation
+    └── Bracket notation
+
+8.6 Adding/Updating/Deleting Properties
+
+8.7 Object Destructuring
+
+8.8 Object Spread
+
+8.9 Object Methods
+    ├── Object.keys()
+    ├── Object.values()
+    ├── Object.entries()
+    ├── Object.assign()
+    ├── Object.freeze()
+    └── Object.seal()
+
+8.10 Nested Objects
+
+8.11 Objects vs Arrays
+
+8.12 Property Shorthand
+
+8.13 Computed Property Names
+
+8.14 Optional Properties
+
+8.15 Object References
+
+
+============================================================
+CHAPTER 9 — JAVASCRIPT SCOPE
+============================================================
+
+9.1 What is Scope?
+
+9.2 Global Scope
+
+9.3 Function Scope
+
+9.4 Block Scope
+
+9.5 Lexical Scope
+
+9.6 Scope Chain
+
+9.7 var vs let vs const
+
+9.8 Shadowing
+
+9.9 Illegal Shadowing
+
+9.10 Practical Scope Problems
+
+
+============================================================
+CHAPTER 10 — HOISTING
+============================================================
+
+10.1 What is Hoisting?
+
+10.2 Variable Hoisting
+
+10.3 Function Hoisting
+
+10.4 var Hoisting
+
+10.5 let/const Hoisting
+
+10.6 Temporal Dead Zone
+
+10.7 Hoisting Interview Questions
+
+
+============================================================
+CHAPTER 11 — EXECUTION CONTEXT & CALL STACK
+============================================================
+
+11.1 JavaScript Execution Model
+
+11.2 Execution Context
+
+11.3 Global Execution Context
+
+11.4 Function Execution Context
+
+11.5 Creation Phase
+
+11.6 Execution Phase
+
+11.7 Call Stack
+
+11.8 Stack Frames
+
+11.9 Lexical Environment
+
+11.10 Variable Environment
+
+11.11 This Binding
+
+
+============================================================
+CHAPTER 12 — CLOSURES
+============================================================
+
+12.1 What is a Closure?
+
+12.2 Lexical Environment
+
+12.3 Closure Creation
+
+12.4 Practical Closure Examples
+
+12.5 Data Privacy
+
+12.6 Function Factory
+
+12.7 Closures with Loops
+
+12.8 Closures in Real Applications
+
+12.9 Closure Interview Problems
+
+
+============================================================
+CHAPTER 13 — THIS KEYWORD
+============================================================
+
+13.1 What is this?
+
+13.2 this in Global Context
+
+13.3 this in Regular Functions
+
+13.4 this in Objects
+
+13.5 this in Arrow Functions
+
+13.6 this in Constructor Functions
+
+13.7 this with call()
+
+13.8 this with apply()
+
+13.9 this with bind()
+
+13.10 this Interview Problems
+
+
+============================================================
+CHAPTER 14 — OBJECT-ORIENTED JAVASCRIPT
+============================================================
+
+14.1 Object-Oriented Programming Concepts
+
+14.2 Constructor Functions
+
+14.3 Prototype
+
+14.4 Prototype Chain
+
+14.5 __proto__
+
+14.6 Object.create()
+
+14.7 Classes
+
+14.8 Constructor
+
+14.9 Instance Methods
+
+14.10 Static Methods
+
+14.11 Getters and Setters
+
+14.12 extends
+
+14.13 super
+
+14.14 Inheritance
+
+14.15 Encapsulation
+
+14.16 Polymorphism
+
+14.17 Abstraction
+
+14.18 Composition vs Inheritance
+
+
+============================================================
+CHAPTER 15 — PROTOTYPES & INHERITANCE DEEP DIVE
+============================================================
+
+15.1 Prototype-based Programming
+
+15.2 Prototype Chain
+
+15.3 Property Lookup
+
+15.4 Constructor Property
+
+15.5 Custom Prototypes
+
+15.6 Prototype Inheritance
+
+15.7 Built-in Prototypes
+
+15.8 Modifying Prototypes
+
+15.9 Prototype Pollution Awareness
+
+
+============================================================
+CHAPTER 16 — ES6+ MODERN JAVASCRIPT
+============================================================
+
+16.1 let and const
+
+16.2 Arrow Functions
+
+16.3 Template Literals
+
+16.4 Destructuring
+
+16.5 Spread Operator
+
+16.6 Rest Parameters
+
+16.7 Default Parameters
+
+16.8 Enhanced Object Literals
+
+16.9 Modules
+
+16.10 Classes
+
+16.11 Promises
+
+16.12 Async/Await
+
+16.13 Optional Chaining
+
+16.14 Nullish Coalescing
+
+16.15 Map
+
+16.16 Set
+
+16.17 WeakMap
+
+16.18 WeakSet
+
+16.19 Symbol
+
+16.20 BigInt
+
+
+============================================================
+CHAPTER 17 — MAP, SET & ADVANCED DATA STRUCTURES
+============================================================
+
+17.1 Map
+    ├── Creating Map
+    ├── set()
+    ├── get()
+    ├── has()
+    ├── delete()
+    └── Iteration
+
+17.2 Set
+    ├── Creating Set
+    ├── add()
+    ├── has()
+    ├── delete()
+    └── Iteration
+
+17.3 WeakMap
+
+17.4 WeakSet
+
+17.5 Map vs Object
+
+17.6 Set vs Array
+
+17.7 Practical Applications
+
+
+============================================================
+CHAPTER 18 — ERROR HANDLING
+============================================================
+
+18.1 Errors
+
+18.2 Types of Errors
+
+18.3 Syntax Errors
+
+18.4 Runtime Errors
+
+18.5 Logical Errors
+
+18.6 try
+
+18.7 catch
+
+18.8 finally
+
+18.9 throw
+
+18.10 Custom Errors
+
+18.11 Error Objects
+
+18.12 Error Handling Best Practices
+
+
+============================================================
+CHAPTER 19 — DEBUGGING
+============================================================
+
+19.1 Debugging Fundamentals
+
+19.2 Browser DevTools
+
+19.3 Console Debugging
+
+19.4 Breakpoints
+
+19.5 Step Over
+
+19.6 Step Into
+
+19.7 Step Out
+
+19.8 Watch Expressions
+
+19.9 Call Stack Inspection
+
+19.10 Network Tab
+
+19.11 Sources Tab
+
+19.12 Common JavaScript Bugs
+
+
+============================================================
+CHAPTER 20 — DOM FUNDAMENTALS
+============================================================
+
+20.1 What is DOM?
+
+20.2 DOM Tree
+
+20.3 Document Object
+
+20.4 Selecting Elements
+    ├── getElementById()
+    ├── getElementsByClassName()
+    ├── getElementsByTagName()
+    ├── querySelector()
+    └── querySelectorAll()
+
+20.5 Changing Content
+    ├── textContent
+    ├── innerHTML
+    └── innerText
+
+20.6 Changing Attributes
+
+20.7 Changing Styles
+
+20.8 classList
+    ├── add()
+    ├── remove()
+    ├── toggle()
+    └── contains()
+
+20.9 Creating Elements
+
+20.10 Appending Elements
+
+20.11 Removing Elements
+
+20.12 Traversing DOM
+    ├── parentElement
+    ├── children
+    ├── firstElementChild
+    ├── nextElementSibling
+    └── previousElementSibling
+
+
+============================================================
+CHAPTER 21 — EVENTS
+============================================================
+
+21.1 Event Fundamentals
+
+21.2 Event Types
+    ├── click
+    ├── submit
+    ├── change
+    ├── input
+    ├── keydown
+    ├── keyup
+    ├── mouse events
+    └── window events
+
+21.3 Event Listeners
+
+21.4 addEventListener()
+
+21.5 Event Object
+
+21.6 Event Bubbling
+
+21.7 Event Capturing
+
+21.8 Event Propagation
+
+21.9 stopPropagation()
+
+21.10 preventDefault()
+
+21.11 Event Delegation
+
+21.12 Custom Events
+
+
+============================================================
+CHAPTER 22 — FORMS & VALIDATION
+============================================================
+
+22.1 HTML Forms with JavaScript
+
+22.2 Reading Form Values
+
+22.3 Input Validation
+
+22.4 Client-Side Validation
+
+22.5 Required Fields
+
+22.6 Email Validation
+
+22.7 Password Validation
+
+22.8 Error Messages
+
+22.9 Form Submission
+
+22.10 preventDefault()
+
+22.11 FormData API
+
+22.12 Form Security Basics
+
+
+============================================================
+CHAPTER 23 — BROWSER APIs
+============================================================
+
+23.1 Window Object
+
+23.2 Document Object
+
+23.3 Location API
+
+23.4 History API
+
+23.5 Navigator API
+
+23.6 Storage APIs
+    ├── localStorage
+    ├── sessionStorage
+    └── Cookies
+
+23.7 URL API
+
+23.8 Clipboard API
+
+23.9 Geolocation API
+
+23.10 Timers
+    ├── setTimeout()
+    ├── setInterval()
+    └── clearTimeout()
+
+
+============================================================
+CHAPTER 24 — JSON
+============================================================
+
+24.1 What is JSON?
+
+24.2 JSON Syntax
+
+24.3 JSON Data Types
+
+24.4 JSON.stringify()
+
+24.5 JSON.parse()
+
+24.6 JSON vs JavaScript Object
+
+24.7 Nested JSON
+
+24.8 JSON with APIs
+
+24.9 JSON Error Handling
+
+
+============================================================
+CHAPTER 25 — SYNCHRONOUS & ASYNCHRONOUS JAVASCRIPT
+============================================================
+
+25.1 Synchronous Programming
+
+25.2 Asynchronous Programming
+
+25.3 Blocking vs Non-Blocking
+
+25.4 Callback Functions
+
+25.5 Callback Hell
+
+25.6 Event Loop
+
+25.7 Call Stack
+
+25.8 Web APIs
+
+25.9 Callback Queue
+
+25.10 Microtask Queue
+
+25.11 Macrotask Queue
+
+25.12 Event Loop Execution
+
+25.13 Interview Problems on Event Loop
+
+
+============================================================
+CHAPTER 26 — PROMISES
+============================================================
+
+26.1 What is Promise?
+
+26.2 Promise States
+    ├── Pending
+    ├── Fulfilled
+    └── Rejected
+
+26.3 Creating Promises
+
+26.4 resolve()
+
+26.5 reject()
+
+26.5 then()
+
+26.6 catch()
+
+26.7 finally()
+
+26.8 Promise Chaining
+
+26.9 Promise.all()
+
+26.10 Promise.allSettled()
+
+26.11 Promise.race()
+
+26.12 Promise.any()
+
+26.13 Error Handling
+
+
+============================================================
+CHAPTER 27 — ASYNC / AWAIT
+============================================================
+
+27.1 async Functions
+
+27.2 await
+
+27.3 Async Return Values
+
+27.4 Error Handling
+
+27.5 try/catch with async/await
+
+27.6 Sequential vs Parallel Execution
+
+27.7 Promise + async/await
+
+27.8 Common Async/Await Mistakes
+
+
+============================================================
+CHAPTER 28 — FETCH API & HTTP
+============================================================
+
+28.1 HTTP Fundamentals
+
+28.2 Request/Response
+
+28.3 HTTP Methods
+    ├── GET
+    ├── POST
+    ├── PUT
+    ├── PATCH
+    └── DELETE
+
+28.4 HTTP Status Codes
+
+28.5 Headers
+
+28.6 fetch()
+
+28.7 GET Requests
+
+28.8 POST Requests
+
+28.9 Sending JSON
+
+28.10 Handling API Errors
+
+28.11 Authentication Basics
+
+28.12 REST API Fundamentals
+
+
+============================================================
+CHAPTER 29 — MODULES
+============================================================
+
+29.1 Why Modules?
+
+29.2 ES Modules
+
+29.3 export
+
+29.4 import
+
+29.5 Named Exports
+
+29.6 Default Exports
+
+29.7 Import Aliases
+
+29.8 Dynamic Imports
+
+29.9 Module Scope
+
+29.10 CommonJS
+    ├── require()
+    └── module.exports
+
+29.11 ES Modules vs CommonJS
+
+
+============================================================
+CHAPTER 30 — JAVASCRIPT MEMORY MANAGEMENT
+============================================================
+
+30.1 Memory Fundamentals
+
+30.2 Stack Memory
+
+30.3 Heap Memory
+
+30.4 Primitive Values
+
+30.5 Reference Values
+
+30.6 Garbage Collection
+
+30.7 Mark-and-Sweep
+
+30.8 Memory Leaks
+
+30.9 Common Memory Leak Causes
+
+30.10 WeakMap and Garbage Collection
+
+
+============================================================
+CHAPTER 31 — ADVANCED FUNCTIONS
+============================================================
+
+31.1 First-Class Functions
+
+31.2 Higher-Order Functions
+
+31.3 Callback Functions
+
+31.4 Closures
+
+31.5 Function Composition
+
+31.6 Currying
+
+31.7 Partial Application
+
+31.8 Memoization
+
+31.9 Debouncing
+
+31.10 Throttling
+
+31.11 Immediately Invoked Functions
+
+
+============================================================
+CHAPTER 32 — ADVANCED JAVASCRIPT CONCEPTS
+============================================================
+
+32.1 Execution Context
+
+32.2 Lexical Environment
+
+32.3 Scope Chain
+
+32.4 Closures
+
+32.5 Hoisting
+
+32.6 Temporal Dead Zone
+
+32.7 this
+
+32.8 call/apply/bind
+
+32.9 Prototypes
+
+32.10 Prototype Chain
+
+32.11 Event Loop
+
+32.12 Microtasks vs Macrotasks
+
+32.13 Garbage Collection
+
+32.14 Shallow Copy vs Deep Copy
+
+32.15 Immutability
+
+
+============================================================
+CHAPTER 33 — ITERATORS & GENERATORS
+============================================================
+
+33.1 Iterable Protocol
+
+33.2 Iterator Protocol
+
+33.3 Symbol.iterator
+
+33.4 Custom Iterators
+
+33.5 Generator Functions
+
+33.6 yield
+
+33.7 Generator Objects
+
+33.8 Generator Applications
+
+
+============================================================
+CHAPTER 34 — REGULAR EXPRESSIONS
+============================================================
+
+34.1 Regex Fundamentals
+
+34.2 Character Classes
+
+34.3 Quantifiers
+
+34.4 Anchors
+
+34.5 Groups
+
+34.6 Capturing Groups
+
+34.7 Alternation
+
+34.8 Flags
+
+34.9 Validation
+
+34.10 Search and Replace
+
+34.11 Practical Regex Problems
+
+
+============================================================
+CHAPTER 35 — NODE.JS FUNDAMENTALS
+============================================================
+
+35.1 What is Node.js?
+
+35.2 Node.js Runtime
+
+35.3 Browser JS vs Node.js
+
+35.4 Node.js Architecture
+
+35.5 V8 Engine
+
+35.6 Event-Driven Architecture
+
+35.7 Non-Blocking I/O
+
+35.8 Node.js REPL
+
+35.9 Running JS with Node
+
+35.10 process Object
+
+
+============================================================
+CHAPTER 36 — NPM & PACKAGE MANAGEMENT
+============================================================
+
+36.1 npm
+
+36.2 package.json
+
+36.3 npm init
+
+36.4 Installing Packages
+
+36.5 Dependencies
+
+36.6 devDependencies
+
+36.7 package-lock.json
+
+36.8 Semantic Versioning
+
+36.9 npm Scripts
+
+36.10 Global vs Local Packages
+
+36.11 npx
+
+36.12 Environment Variables
+
+
+============================================================
+CHAPTER 37 — NODE.JS CORE MODULES
+============================================================
+
+37.1 fs
+
+37.2 path
+
+37.3 os
+
+37.4 http
+
+37.5 events
+
+37.6 crypto
+
+37.7 url
+
+37.8 process
+
+37.9 Buffer
+
+37.10 Streams — Introduction
+
+
+============================================================
+CHAPTER 38 — EXPRESS.JS FUNDAMENTALS
+============================================================
+
+38.1 What is Express.js?
+
+38.2 Creating an Express Server
+
+38.3 Routing
+
+38.4 Request Object
+
+38.5 Response Object
+
+38.6 Middleware
+
+38.7 Custom Middleware
+
+38.8 Error Middleware
+
+38.9 Route Parameters
+
+38.10 Query Parameters
+
+38.11 Request Body
+
+38.12 REST API Development
+
+
+============================================================
+CHAPTER 39 — DATABASE & JAVASCRIPT BACKEND
+============================================================
+
+39.1 Backend Architecture
+
+39.2 Database Fundamentals
+
+39.3 SQL + Node.js
+
+39.4 MongoDB + Node.js
+
+39.5 Database Drivers
+
+39.6 ORM/ODM Concepts
+
+39.7 CRUD Operations
+
+39.8 Connection Management
+
+39.9 Transactions — Introduction
+
+
+============================================================
+CHAPTER 40 — AUTHENTICATION & AUTHORIZATION
+============================================================
+
+40.1 Authentication
+
+40.2 Authorization
+
+40.3 Password Hashing
+
+40.4 Sessions
+
+40.5 Cookies
+
+40.6 JWT
+
+40.7 Access Tokens
+
+40.8 Refresh Tokens
+
+40.9 Role-Based Access Control
+
+40.10 Authentication Middleware
+
+
+============================================================
+CHAPTER 41 — JAVASCRIPT SECURITY
+============================================================
+
+41.1 Security Fundamentals
+
+41.2 XSS
+
+41.3 CSRF
+
+41.4 SQL Injection
+
+41.5 NoSQL Injection
+
+41.6 CORS
+
+41.7 Content Security Policy
+
+41.8 Secure Cookies
+
+41.9 Input Validation
+
+41.10 Output Encoding
+
+41.11 Password Security
+
+41.12 Secrets Management
+
+41.13 Dependency Security
+
+
+============================================================
+CHAPTER 42 — TESTING
+============================================================
+
+42.1 Why Testing?
+
+42.2 Unit Testing
+
+42.3 Integration Testing
+
+42.4 End-to-End Testing
+
+42.5 Assertions
+
+42.6 Test Cases
+
+42.7 Jest/Vitest Fundamentals
+
+42.8 Mocking
+
+42.9 Code Coverage
+
+42.10 Testing APIs
+
+
+============================================================
+CHAPTER 43 — CODE QUALITY
+============================================================
+
+43.1 Clean Code
+
+43.2 Naming Conventions
+
+43.3 DRY Principle
+
+43.4 KISS Principle
+
+43.5 SOLID Principles — Introduction
+
+43.6 Error Handling Practices
+
+43.7 Project Structure
+
+43.8 ESLint
+
+43.9 Prettier
+
+43.10 Documentation
+
+43.11 Code Review
+
+
+============================================================
+CHAPTER 44 — JAVASCRIPT + DATA STRUCTURES
+============================================================
+
+44.1 Complexity Basics
+    ├── Time complexity
+    └── Space complexity
+
+44.2 Arrays
+
+44.3 Strings
+
+44.4 Hash Maps
+
+44.5 Sets
+
+44.6 Stack
+
+44.7 Queue
+
+44.8 Linked List
+
+44.9 Trees — JavaScript implementation
+
+44.10 Graphs — JavaScript implementation
+
+44.11 Searching
+
+44.12 Sorting
+
+44.13 Recursion
+
+44.14 Dynamic Programming — Introduction
+
+
+============================================================
+CHAPTER 45 — PROBLEM SOLVING
+============================================================
+
+45.1 Mathematical Problems
+
+45.2 String Problems
+
+45.3 Array Problems
+
+45.4 Object Problems
+
+45.5 Hashing Problems
+
+45.6 Two Pointer Technique
+
+45.7 Sliding Window
+
+45.8 Prefix Sum
+
+45.9 Binary Search
+
+45.10 Recursion
+
+45.11 Stack Problems
+
+45.12 Queue Problems
+
+45.13 Tree Problems
+
+45.14 Graph Problems
+
+45.15 Dynamic Programming Basics
+
+
+============================================================
+CHAPTER 46 — FRONTEND DEVELOPMENT FOUNDATION
+============================================================
+
+46.1 HTML + JavaScript Integration
+
+46.2 CSS + JavaScript Integration
+
+46.3 DOM Manipulation
+
+46.4 Event Handling
+
+46.5 Form Handling
+
+46.6 API Integration
+
+46.7 Client-Side Storage
+
+46.8 Responsive UI Logic
+
+46.9 Loading States
+
+46.10 Error States
+
+
+============================================================
+CHAPTER 47 — FRONTEND ARCHITECTURE
+============================================================
+
+47.1 MVC Concept
+
+47.2 Separation of Concerns
+
+47.3 Component-Based Architecture
+
+47.4 State Management Concepts
+
+47.5 Application State
+
+47.6 UI State
+
+47.7 API State
+
+47.8 Routing Concepts
+
+47.9 Authentication Flow
+
+47.10 Frontend Project Structure
+
+
+============================================================
+CHAPTER 48 — JAVASCRIPT FRAMEWORK INTRODUCTION
+============================================================
+
+48.1 Why Frameworks?
+
+48.2 Library vs Framework
+
+48.3 React Introduction
+
+48.4 Components
+
+48.5 Props
+
+48.6 State
+
+48.7 Events
+
+48.8 Hooks — Introduction
+
+48.9 React + JavaScript
+
+48.10 API Integration
+
+48.11 Routing
+
+48.12 State Management — Introduction
+
+NOTE:
+    React should be studied AFTER strong JavaScript fundamentals.
+
+
+============================================================
+CHAPTER 49 — BUILD TOOLS
+============================================================
+
+49.1 Why Build Tools?
+
+49.2 Bundlers
+
+49.3 Transpilation
+
+49.4 Minification
+
+49.5 Source Maps
+
+49.6 Vite
+
+49.7 npm Scripts
+
+49.8 Environment Configuration
+
+
+============================================================
+CHAPTER 50 — PERFORMANCE OPTIMIZATION
+============================================================
+
+50.1 JavaScript Performance
+
+50.2 DOM Performance
+
+50.3 Event Delegation
+
+50.4 Debouncing
+
+50.5 Throttling
+
+50.6 Lazy Loading
+
+50.7 Code Splitting
+
+50.8 Caching
+
+50.9 Memory Optimization
+
+50.10 Network Optimization
+
+50.11 Performance Measurement
+
+
+============================================================
+CHAPTER 51 — REAL-WORLD PROJECT DEVELOPMENT
+============================================================
+
+PROJECT 1 — Calculator
+    ├── Operators
+    ├── DOM
+    └── Events
+
+PROJECT 2 — To-Do Application
+    ├── CRUD
+    ├── DOM
+    └── localStorage
+
+PROJECT 3 — Quiz Application
+    ├── Arrays
+    ├── Objects
+    ├── Events
+    └── Score management
+
+PROJECT 4 — Weather Application
+    ├── API
+    ├── fetch()
+    ├── async/await
+    └── JSON
+
+PROJECT 5 — Expense Tracker
+    ├── Forms
+    ├── Arrays
+    ├── localStorage
+    └── Data visualization
+
+PROJECT 6 — GitHub Profile Finder
+    ├── REST API
+    ├── fetch()
+    ├── Search
+    └── Dynamic UI
+
+PROJECT 7 — E-Commerce Frontend
+    ├── Product listing
+    ├── Cart
+    ├── Search
+    ├── Filters
+    ├── Authentication UI
+    └── API integration
+
+PROJECT 8 — REST API
+    ├── Node.js
+    ├── Express
+    ├── CRUD
+    ├── Database
+    └── Authentication
+
+PROJECT 9 — Full-Stack Application
+    ├── Frontend
+    ├── Backend
+    ├── REST API
+    ├── Database
+    ├── Authentication
+    └── Deployment
+
+
+============================================================
+CHAPTER 52 — GIT & GITHUB FOR JAVASCRIPT PROJECTS
+============================================================
+
+52.1 Git Fundamentals
+
+52.2 Repository
+
+52.3 git init
+
+52.4 git add
+
+52.5 git commit
+
+52.6 git branch
+
+52.7 git merge
+
+52.8 git pull
+
+52.9 git push
+
+52.10 GitHub
+
+52.11 README.md
+
+52.12 .gitignore
+
+52.13 Branching Strategy
+
+52.14 Pull Requests
+
+52.15 Portfolio Repository
+
+
+============================================================
+CHAPTER 53 — DEPLOYMENT BASICS
+============================================================
+
+53.1 Development vs Production
+
+53.2 Environment Variables
+
+53.3 Build Process
+
+53.4 Frontend Deployment
+
+53.5 Backend Deployment
+
+53.6 Database Deployment
+
+53.7 Domain & DNS — Basics
+
+53.8 HTTPS
+
+53.9 Logging
+
+53.10 Production Configuration
+
+
+============================================================
+CHAPTER 54 — JAVASCRIPT INTERVIEW PREPARATION
+============================================================
+
+54.1 JavaScript Fundamentals Questions
+
+54.2 var vs let vs const
+
+54.3 == vs ===
+
+54.4 null vs undefined
+
+54.5 Hoisting
+
+54.6 Scope
+
+54.7 Closure
+
+54.8 this
+
+54.9 call/apply/bind
+
+54.10 Prototype
+
+54.11 Event Loop
+
+54.12 Promises
+
+54.13 async/await
+
+54.14 Callback
+
+54.15 Event Delegation
+
+54.16 Shallow vs Deep Copy
+
+54.17 Map vs Object
+
+54.18 Set vs Array
+
+54.19 Debouncing vs Throttling
+
+54.20 Memory Leaks
+
+54.21 ES6+
+
+54.22 DOM Questions
+
+54.23 API Questions
+
+54.24 Node.js Questions
+
+
+============================================================
+CHAPTER 55 — JAVASCRIPT OUTPUT-BASED QUESTIONS
+============================================================
+
+55.1 Scope Output Questions
+
+55.2 Hoisting Output Questions
+
+55.3 Closure Output Questions
+
+55.4 this Output Questions
+
+55.5 Type Coercion Questions
+
+55.6 Promise Output Questions
+
+55.7 Event Loop Questions
+
+55.8 setTimeout Questions
+
+55.9 async/await Questions
+
+55.10 Prototype Questions
+
+55.11 Object Reference Questions
+
+55.12 Array Method Questions
+
+
+============================================================
+CHAPTER 56 — MACHINE CODING / PRACTICAL INTERVIEW
+============================================================
+
+56.1 Build a Counter
+
+56.2 Build a To-Do App
+
+56.3 Build a Modal
+
+56.4 Build a Dropdown
+
+56.5 Build Tabs
+
+56.6 Build an Accordion
+
+56.7 Build a Search Filter
+
+56.8 Build Pagination
+
+56.9 Build Debounced Search
+
+56.10 Build Form Validation
+
+56.11 Build Shopping Cart
+
+56.12 Consume REST API
+
+56.13 Build Authentication Flow
+
+
+============================================================
+CHAPTER 57 — SYSTEM DESIGN FOUNDATION FOR JS DEVELOPERS
+============================================================
+
+57.1 Client-Server Architecture
+
+57.2 HTTP/HTTPS
+
+57.3 REST
+
+57.4 API Gateway — Introduction
+
+57.5 Load Balancing — Introduction
+
+57.6 Caching
+
+57.7 Database Basics
+
+57.8 Authentication Architecture
+
+57.9 Session Management
+
+57.10 Scalability Fundamentals
+
+57.11 CDN — Introduction
+
+57.12 WebSocket — Introduction
+
+
+============================================================
+CHAPTER 58 — ADVANCED WEB DEVELOPMENT
+============================================================
+
+58.1 WebSockets
+
+58.2 Real-Time Applications
+
+58.3 Server-Sent Events
+
+58.4 Web Workers
+
+58.5 Service Workers
+
+58.6 Web Storage
+
+58.7 IndexedDB
+
+58.8 Progressive Web Apps — Introduction
+
+58.9 Browser Rendering
+
+58.10 Critical Rendering Path
+
+
+============================================================
+CHAPTER 59 — JOB-READY CAPSTONE
+============================================================
+
+Build one complete production-style project:
+
+    FULL-STACK JOB PORTAL / E-COMMERCE / TASK MANAGEMENT SYSTEM
+
+Requirements:
+
+    ├── Frontend
+    ├── JavaScript
+    ├── React
+    ├── Backend
+    ├── Node.js
+    ├── Express
+    ├── REST API
+    ├── Database
+    ├── Authentication
+    ├── Authorization
+    ├── Input validation
+    ├── Error handling
+    ├── Testing
+    ├── Git/GitHub
+    ├── Deployment
+    └── Documentation
+
+
+============================================================
+CHAPTER 60 — FINAL JOB-READINESS CHECKLIST
+============================================================
+
+CORE JAVASCRIPT
+    □ Variables
+    □ Data types
+    □ Operators
+    □ Conditions
+    □ Loops
+    □ Functions
+    □ Arrays
+    □ Objects
+    □ Strings
+
+ADVANCED JAVASCRIPT
+    □ Scope
+    □ Hoisting
+    □ Closure
+    □ this
+    □ Prototype
+    □ Classes
+    □ Event Loop
+    □ Promises
+    □ async/await
+    □ Modules
+    □ Memory management
+
+WEB
+    □ DOM
+    □ Events
+    □ Forms
+    □ Browser APIs
+    □ JSON
+    □ HTTP
+    □ REST API
+    □ fetch()
+
+BACKEND
+    □ Node.js
+    □ npm
+    □ Express
+    □ Middleware
+    □ REST API
+    □ Database
+    □ Authentication
+    □ Authorization
+
+TOOLS
+    □ VS Code
+    □ Git
+    □ GitHub
+    □ npm
+    □ DevTools
+    □ Postman/REST client
+
+JOB SKILLS
+    □ Problem solving
+    □ DSA
+    □ Debugging
+    □ Testing
+    □ Clean code
+    □ Project development
+    □ Git workflow
+    □ Deployment
+    □ Interview preparation
+
+
+============================================================
+RECOMMENDED LEARNING ORDER
+============================================================
+
+LEVEL 1 — FOUNDATION
+    Chapters 0–8
+
+LEVEL 2 — CORE JAVASCRIPT
+    Chapters 9–19
+
+LEVEL 3 — BROWSER JAVASCRIPT
+    Chapters 20–24
+
+LEVEL 4 — ASYNCHRONOUS JAVASCRIPT
+    Chapters 25–29
+
+LEVEL 5 — ADVANCED JAVASCRIPT
+    Chapters 30–34
+
+LEVEL 6 — BACKEND
+    Chapters 35–43
+
+LEVEL 7 — DSA + PROBLEM SOLVING
+    Chapters 44–45
+
+LEVEL 8 — FRONTEND
+    Chapters 46–50
+
+LEVEL 9 — PROJECTS
+    Chapters 51–53
+
+LEVEL 10 — JOB & INTERVIEW
+    Chapters 54–60
+
+
+============================================================
+FINAL OUTCOME
+============================================================
+
+After completing this syllabus, you should be able to:
+
+    ✓ Write JavaScript from scratch
+    ✓ Understand JavaScript internally
+    ✓ Solve programming problems
+    ✓ Manipulate webpages using DOM
+    ✓ Work with APIs
+    ✓ Handle asynchronous programming
+    ✓ Understand event loop and promises
+    ✓ Build frontend applications
+    ✓ Build REST APIs with Node.js
+    ✓ Connect applications to databases
+    ✓ Implement authentication
+    ✓ Debug JavaScript applications
+    ✓ Write tests
+    ✓ Use Git/GitHub
+    ✓ Build portfolio projects
+    ✓ Answer JavaScript interview questions
+    ✓ Prepare for entry-level software-development roles

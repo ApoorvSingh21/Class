@@ -1,0 +1,1523 @@
+===============================================================
+              JAVA JOB-READY MASTER SYLLABUS
+                 M.Tech 1st Year → Job Ready
+===============================================================
+
+TARGET:
+    Absolute Beginner
+        ↓
+    Java Fundamentals
+        ↓
+    Core Java
+        ↓
+    Advanced Java
+        ↓
+    Database Integration
+        ↓
+    Backend Development
+        ↓
+    Spring Boot
+        ↓
+    Projects
+        ↓
+    DSA + Interview Preparation
+        ↓
+    JOB READY
+===============================================================
+
+
+PHASE 0 — JAVA & PROGRAMMING FOUNDATIONS
+===============================================================
+
+CHAPTER 1 — Introduction to Programming & Java
+------------------------------------------------
+1.1 What is Programming?
+1.2 What is a Programming Language?
+1.3 Compiled vs Interpreted Languages
+1.4 Why Java?
+1.5 History of Java
+1.6 Java Features
+    - Simple
+    - Object-Oriented
+    - Platform Independent
+    - Secure
+    - Robust
+    - Multithreaded
+    - Distributed
+    - Portable
+    - High Performance
+    - Dynamic
+1.7 Java Editions
+    - Java SE
+    - Java EE / Jakarta EE
+    - Java ME
+1.8 Java use cases
+    - Backend development
+    - Enterprise applications
+    - Android
+    - Cloud
+    - Banking
+    - Distributed systems
+    - Big data
+1.9 Java ecosystem
+1.10 Java versions and LTS releases
+
+
+CHAPTER 2 — Java Environment
+------------------------------------------------
+2.1 JDK
+2.2 JRE
+2.3 JVM
+2.4 JDK vs JRE vs JVM
+2.5 Installing Java
+2.6 JAVA_HOME
+2.7 PATH
+2.8 Java compiler
+2.9 Java launcher
+2.10 JShell
+2.11 IDEs
+    - IntelliJ IDEA
+    - Eclipse
+    - VS Code
+2.12 Command-line compilation
+2.13 First Java program
+2.14 javac
+2.15 java command
+2.16 Class files
+2.17 Bytecode
+
+
+===============================================================
+PHASE 1 — JAVA FUNDAMENTALS
+===============================================================
+
+CHAPTER 3 — Java Program Structure
+------------------------------------------------
+3.1 Java class
+3.2 main() method
+3.3 Statements
+3.4 Blocks
+3.5 Comments
+3.6 Identifiers
+3.7 Keywords
+3.8 Literals
+3.9 Naming conventions
+3.10 Source file structure
+3.11 public class
+3.12 package declaration
+3.13 import statement
+
+
+CHAPTER 4 — Variables & Data Types
+------------------------------------------------
+4.1 Variables
+4.2 Declaration
+4.3 Initialization
+4.4 Assignment
+4.5 Primitive data types
+
+    byte
+    short
+    int
+    long
+    float
+    double
+    char
+    boolean
+
+4.6 Non-primitive/reference types
+4.7 Integer ranges
+4.8 Floating-point numbers
+4.9 Character representation
+4.10 Boolean values
+4.11 Default values
+4.12 Local variables
+4.13 Instance variables
+4.14 Static variables
+4.15 Constants
+4.16 final keyword
+
+
+CHAPTER 5 — Operators
+------------------------------------------------
+5.1 Arithmetic operators
+5.2 Unary operators
+5.3 Assignment operators
+5.4 Relational operators
+5.5 Equality operators
+5.6 Logical operators
+5.7 Bitwise operators
+5.8 Shift operators
+5.9 Conditional operator
+5.10 instanceof
+5.11 Operator precedence
+5.12 Associativity
+
+
+CHAPTER 6 — Input & Output
+------------------------------------------------
+6.1 System.out
+6.2 System.in
+6.3 Scanner
+6.4 BufferedReader
+6.5 Command-line arguments
+6.6 Formatted output
+6.7 printf()
+6.8 Reading different data types
+6.9 Common input mistakes
+
+
+CHAPTER 7 — Control Flow
+------------------------------------------------
+7.1 if
+7.2 if-else
+7.3 nested if
+7.4 else-if ladder
+7.5 switch
+7.6 switch expressions
+7.7 for loop
+7.8 while loop
+7.9 do-while
+7.10 Nested loops
+7.11 break
+7.12 continue
+7.13 return
+7.14 Infinite loops
+
+
+CHAPTER 8 — Methods
+------------------------------------------------
+8.1 What is a method?
+8.2 Method declaration
+8.3 Method invocation
+8.4 Parameters
+8.5 Arguments
+8.6 Return values
+8.7 void methods
+8.8 Method overloading
+8.9 Variable arguments
+8.10 Recursion
+8.11 Pass-by-value
+8.12 Scope of variables
+8.13 Method call stack
+
+
+CHAPTER 9 — Arrays
+------------------------------------------------
+9.1 What is an array?
+9.2 Array declaration
+9.3 Array creation
+9.4 Array initialization
+9.5 Accessing elements
+9.6 Traversing arrays
+9.7 Multidimensional arrays
+9.8 Jagged arrays
+9.9 Array of objects
+9.10 Arrays utility class
+9.11 Searching arrays
+9.12 Sorting arrays
+9.13 Common array problems
+
+
+CHAPTER 10 — Strings
+------------------------------------------------
+10.1 String
+10.2 String literals
+10.3 String objects
+10.4 String immutability
+10.5 String pool
+10.6 String comparison
+10.7 equals()
+10.8 equalsIgnoreCase()
+10.9 == vs equals()
+10.10 String methods
+10.11 substring()
+10.12 charAt()
+10.13 indexOf()
+10.14 contains()
+10.15 replace()
+10.16 split()
+10.17 trim()
+10.18 StringBuilder
+10.19 StringBuffer
+10.20 String vs StringBuilder vs StringBuffer
+10.21 Common string interview problems
+
+
+===============================================================
+PHASE 2 — OBJECT-ORIENTED PROGRAMMING
+===============================================================
+
+CHAPTER 11 — OOP Fundamentals
+------------------------------------------------
+11.1 What is OOP?
+11.2 Class
+11.3 Object
+11.4 State
+11.5 Behavior
+11.6 Identity
+11.7 Real-world modeling
+11.8 Four pillars of OOP
+
+    Encapsulation
+    Abstraction
+    Inheritance
+    Polymorphism
+
+
+CHAPTER 12 — Classes & Objects
+------------------------------------------------
+12.1 Creating classes
+12.2 Creating objects
+12.3 Fields
+12.4 Methods
+12.5 Object references
+12.6 new keyword
+12.7 Object memory concept
+12.8 Multiple objects
+12.9 Object interaction
+12.10 this keyword
+
+
+CHAPTER 13 — Constructors
+------------------------------------------------
+13.1 Constructor concept
+13.2 Default constructor
+13.3 Parameterized constructor
+13.4 Constructor overloading
+13.5 Constructor chaining
+13.6 this()
+13.7 super()
+13.8 Constructor execution order
+13.9 Constructor vs method
+
+
+CHAPTER 14 — Encapsulation
+------------------------------------------------
+14.1 Data hiding
+14.2 Access modifiers
+
+    public
+    private
+    protected
+    default
+
+14.3 Getters
+14.4 Setters
+14.5 Immutable objects
+14.6 JavaBeans concept
+
+
+CHAPTER 15 — Inheritance
+------------------------------------------------
+15.1 Inheritance concept
+15.2 extends
+15.3 Parent class
+15.4 Child class
+15.5 Single inheritance
+15.6 Multilevel inheritance
+15.7 Hierarchical inheritance
+15.8 Why Java doesn't support multiple class inheritance
+15.9 super keyword
+15.10 Method inheritance
+15.11 Constructor execution
+15.12 IS-A relationship
+15.13 HAS-A relationship
+
+
+CHAPTER 16 — Polymorphism
+------------------------------------------------
+16.1 Polymorphism
+16.2 Compile-time polymorphism
+16.3 Method overloading
+16.4 Runtime polymorphism
+16.5 Method overriding
+16.6 Dynamic method dispatch
+16.7 Upcasting
+16.8 Downcasting
+16.9 @Override
+16.10 Covariant return types
+
+
+CHAPTER 17 — Abstraction
+------------------------------------------------
+17.1 Abstraction
+17.2 Abstract classes
+17.3 Abstract methods
+17.4 Concrete methods
+17.5 Interfaces
+17.6 implements
+17.7 Multiple interfaces
+17.8 Default methods
+17.9 Static interface methods
+17.10 Functional interfaces
+17.11 Abstract class vs interface
+
+
+CHAPTER 18 — Object Class
+------------------------------------------------
+18.1 java.lang.Object
+18.2 toString()
+18.3 equals()
+18.4 hashCode()
+18.5 getClass()
+18.6 clone()
+18.7 equals/hashCode contract
+18.8 Object identity vs equality
+
+
+CHAPTER 19 — Packages & Access Control
+------------------------------------------------
+19.1 Package concept
+19.2 Creating packages
+19.3 Importing packages
+19.4 Static imports
+19.5 Built-in packages
+19.6 User-defined packages
+19.7 Access across packages
+19.8 Package naming conventions
+
+
+===============================================================
+PHASE 3 — CORE JAVA
+===============================================================
+
+CHAPTER 20 — Exception Handling
+------------------------------------------------
+20.1 Errors vs exceptions
+20.2 Exception hierarchy
+20.3 Checked exceptions
+20.4 Unchecked exceptions
+20.5 try
+20.6 catch
+20.7 finally
+20.8 throw
+20.9 throws
+20.10 Multiple catch
+20.11 Nested try
+20.12 Custom exceptions
+20.13 Exception propagation
+20.14 Try-with-resources
+20.15 Best practices
+20.16 Common interview questions
+
+
+CHAPTER 21 — Wrapper Classes
+------------------------------------------------
+21.1 Primitive vs object
+21.2 Integer
+21.3 Double
+21.4 Character
+21.5 Boolean
+21.6 Boxing
+21.7 Unboxing
+21.8 Autoboxing
+21.9 Utility methods
+
+
+CHAPTER 22 — Generics
+------------------------------------------------
+22.1 Why generics?
+22.2 Generic classes
+22.3 Generic methods
+22.4 Type parameters
+22.5 Multiple type parameters
+22.6 Bounded types
+22.7 Wildcards
+22.8 Upper bounds
+22.9 Lower bounds
+22.10 Type erasure
+22.11 Generic interfaces
+22.12 PECS principle
+
+
+CHAPTER 23 — Collections Framework
+------------------------------------------------
+23.1 Collection framework overview
+23.2 Iterable
+23.3 Collection
+23.4 List
+23.5 Set
+23.6 Queue
+23.7 Deque
+23.8 Map
+
+LIST:
+23.9 ArrayList
+23.10 LinkedList
+23.11 Vector
+23.12 Stack
+
+SET:
+23.13 HashSet
+23.14 LinkedHashSet
+23.15 TreeSet
+
+QUEUE:
+23.16 PriorityQueue
+23.17 ArrayDeque
+
+MAP:
+23.18 HashMap
+23.19 LinkedHashMap
+23.20 TreeMap
+23.21 Hashtable
+23.22 ConcurrentHashMap
+
+23.23 Iterator
+23.24 ListIterator
+23.25 Comparable
+23.26 Comparator
+23.27 Sorting collections
+23.28 Collections utility class
+23.29 Immutable collections
+23.30 Collection complexity
+23.31 Choosing the correct collection
+23.32 Internal working of HashMap
+23.33 Hashing
+23.34 hashCode()
+23.35 equals()
+23.36 Collision handling
+23.37 TreeMap internal concept
+
+
+CHAPTER 24 — Java I/O
+------------------------------------------------
+24.1 File handling
+24.2 File class
+24.3 Path
+24.4 Files
+24.5 InputStream
+24.6 OutputStream
+24.7 Reader
+24.8 Writer
+24.9 FileInputStream
+24.10 FileOutputStream
+24.11 FileReader
+24.12 FileWriter
+24.13 Buffered streams
+24.14 Serialization
+24.15 Deserialization
+24.16 transient
+24.17 Externalizable
+24.18 NIO
+24.19 Files API
+24.20 Directory operations
+
+
+CHAPTER 25 — Date & Time API
+------------------------------------------------
+25.1 Legacy Date
+25.2 Calendar
+25.3 java.time
+25.4 LocalDate
+25.5 LocalTime
+25.6 LocalDateTime
+25.7 ZonedDateTime
+25.8 Instant
+25.9 Duration
+25.10 Period
+25.11 Date formatting
+25.12 Date parsing
+25.13 Time zones
+
+
+===============================================================
+PHASE 4 — MODERN JAVA
+===============================================================
+
+CHAPTER 26 — Functional Programming
+------------------------------------------------
+26.1 Functional programming concepts
+26.2 Lambda expressions
+26.3 Lambda syntax
+26.4 Functional interfaces
+26.5 Predicate
+26.6 Consumer
+26.7 Supplier
+26.8 Function
+26.9 BiFunction
+26.10 UnaryOperator
+26.11 BinaryOperator
+26.12 Method references
+26.13 Constructor references
+
+
+CHAPTER 27 — Stream API
+------------------------------------------------
+27.1 What is Stream?
+27.2 Collection vs Stream
+27.3 Creating streams
+27.4 Intermediate operations
+    - filter()
+    - map()
+    - flatMap()
+    - sorted()
+    - distinct()
+    - limit()
+    - skip()
+27.5 Terminal operations
+    - forEach()
+    - collect()
+    - reduce()
+    - count()
+    - min()
+    - max()
+    - anyMatch()
+    - allMatch()
+    - noneMatch()
+27.6 Collectors
+27.7 groupingBy()
+27.8 partitioningBy()
+27.9 joining()
+27.10 Parallel streams
+27.11 Stream performance
+27.12 Stream interview problems
+
+
+CHAPTER 28 — Optional
+------------------------------------------------
+28.1 Null problems
+28.2 Optional
+28.3 Creating Optional
+28.4 isPresent()
+28.5 ifPresent()
+28.6 orElse()
+28.7 orElseGet()
+28.8 orElseThrow()
+28.9 map()
+28.10 flatMap()
+28.11 Optional best practices
+
+
+CHAPTER 29 — Modern Java Features
+------------------------------------------------
+29.1 Java 8 features
+29.2 Java 9 modules
+29.3 var
+29.4 Switch expressions
+29.5 Text blocks
+29.6 Records
+29.7 Sealed classes
+29.8 Pattern matching
+29.9 Modern Java coding style
+29.10 LTS versions and practical version selection
+
+
+===============================================================
+PHASE 5 — ADVANCED JAVA
+===============================================================
+
+CHAPTER 30 — Multithreading
+------------------------------------------------
+30.1 Process vs thread
+30.2 Thread lifecycle
+30.3 Creating threads
+30.4 Thread class
+30.5 Runnable
+30.6 Callable
+30.7 start()
+30.8 run()
+30.9 sleep()
+30.10 join()
+30.11 Thread priorities
+30.12 Daemon threads
+30.13 Race conditions
+30.14 Synchronization
+30.15 synchronized keyword
+30.16 Locks
+30.17 ReentrantLock
+30.18 Deadlock
+30.19 Livelock
+30.20 Starvation
+30.21 volatile
+30.22 Atomic classes
+
+
+CHAPTER 31 — Concurrency Utilities
+------------------------------------------------
+31.1 Executor Framework
+31.2 Executor
+31.3 ExecutorService
+31.4 ThreadPoolExecutor
+31.5 ScheduledExecutorService
+31.6 Future
+31.7 Callable
+31.8 CompletableFuture
+31.9 Concurrent collections
+31.10 BlockingQueue
+31.11 CountDownLatch
+31.12 CyclicBarrier
+31.13 Semaphore
+31.14 ConcurrentHashMap
+31.15 Parallel processing
+
+
+CHAPTER 32 — JVM Internals
+------------------------------------------------
+32.1 JVM architecture
+32.2 Class Loader
+32.3 Bytecode
+32.4 Runtime data areas
+32.5 Heap
+32.6 Stack
+32.7 Method area
+32.8 PC register
+32.9 Native method stack
+32.10 Execution engine
+32.11 JIT compiler
+32.12 Interpreter
+32.13 JNI
+32.14 JVM memory model
+
+
+CHAPTER 33 — Memory Management & Garbage Collection
+------------------------------------------------
+33.1 Stack memory
+33.2 Heap memory
+33.3 Object creation
+33.4 Object reachability
+33.5 Garbage collection
+33.6 Mark and Sweep
+33.7 Generational GC
+33.8 Young generation
+33.9 Old generation
+33.10 Minor GC
+33.11 Major/Full GC
+33.12 Common GC concepts
+33.13 Memory leaks
+33.14 OutOfMemoryError
+33.15 StackOverflowError
+
+
+CHAPTER 34 — Reflection & Annotations
+------------------------------------------------
+34.1 Reflection API
+34.2 Class object
+34.3 Inspecting classes
+34.4 Fields
+34.5 Methods
+34.6 Constructors
+34.7 Dynamic object creation
+34.8 Annotations
+34.9 Built-in annotations
+34.10 Custom annotations
+34.11 Runtime annotations
+
+
+===============================================================
+PHASE 6 — DATABASE & JAVA
+===============================================================
+
+CHAPTER 35 — SQL Fundamentals
+------------------------------------------------
+35.1 Database basics
+35.2 Relational databases
+35.3 Tables
+35.4 Rows
+35.5 Columns
+35.6 Primary key
+35.7 Foreign key
+35.8 Constraints
+35.9 SELECT
+35.10 INSERT
+35.11 UPDATE
+35.12 DELETE
+35.13 WHERE
+35.14 ORDER BY
+35.15 GROUP BY
+35.16 HAVING
+35.17 JOIN
+35.18 Subqueries
+35.19 Views
+35.20 Indexes
+35.21 Transactions
+
+
+CHAPTER 36 — JDBC
+------------------------------------------------
+36.1 What is JDBC?
+36.2 JDBC architecture
+36.3 JDBC drivers
+36.4 Connection
+36.5 Statement
+36.6 PreparedStatement
+36.7 CallableStatement
+36.8 ResultSet
+36.9 CRUD operations
+36.10 Transactions
+36.11 Commit
+36.12 Rollback
+36.13 Batch processing
+36.14 SQL injection
+36.15 PreparedStatement security
+36.16 Connection pooling
+
+
+===============================================================
+PHASE 7 — BUILD TOOLS & DEVELOPMENT PRACTICES
+===============================================================
+
+CHAPTER 37 — Maven
+------------------------------------------------
+37.1 Build automation
+37.2 Maven
+37.3 Maven installation
+37.4 Maven lifecycle
+37.5 pom.xml
+37.6 Dependencies
+37.7 Plugins
+37.8 Maven repositories
+37.9 Dependency scopes
+37.10 Maven project structure
+37.11 Packaging JAR
+37.12 Maven commands
+
+
+CHAPTER 38 — Git & GitHub
+------------------------------------------------
+38.1 Version control
+38.2 Git installation
+38.3 Repository
+38.4 git init
+38.5 git clone
+38.6 git status
+38.7 git add
+38.8 git commit
+38.9 git log
+38.10 Branches
+38.11 Merge
+38.12 Rebase
+38.13 Remote repositories
+38.14 Push
+38.15 Pull
+38.16 Pull requests
+38.17 .gitignore
+38.18 GitHub workflow
+
+
+===============================================================
+PHASE 8 — TESTING
+===============================================================
+
+CHAPTER 39 — Unit Testing
+------------------------------------------------
+39.1 Why testing?
+39.2 Unit testing
+39.3 JUnit
+39.4 Test cases
+39.5 Assertions
+39.6 @Test
+39.7 Before/After lifecycle
+39.8 Parameterized tests
+39.9 Exception testing
+39.10 Mockito basics
+39.11 Mocking
+39.12 Test coverage
+
+
+===============================================================
+PHASE 9 — WEB DEVELOPMENT FUNDAMENTALS
+===============================================================
+
+CHAPTER 40 — HTTP & Web Fundamentals
+------------------------------------------------
+40.1 Client-server architecture
+40.2 Web applications
+40.3 HTTP
+40.4 HTTPS
+40.5 HTTP request
+40.6 HTTP response
+40.7 HTTP methods
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+40.8 HTTP status codes
+40.9 Headers
+40.10 Cookies
+40.11 Sessions
+40.12 JSON
+40.13 REST API
+40.14 REST principles
+
+
+CHAPTER 41 — Servlets
+------------------------------------------------
+41.1 Servlet concept
+41.2 Servlet lifecycle
+41.3 HttpServlet
+41.4 Request
+41.5 Response
+41.6 GET
+41.7 POST
+41.8 Sessions
+41.9 Cookies
+41.10 Filters
+41.11 Servlet configuration
+
+
+===============================================================
+PHASE 10 — SPRING FRAMEWORK
+===============================================================
+
+CHAPTER 42 — Spring Core
+------------------------------------------------
+42.1 What is Spring?
+42.2 Spring ecosystem
+42.3 IoC
+42.4 Dependency Injection
+42.5 Bean
+42.6 ApplicationContext
+42.7 Bean lifecycle
+42.8 Component scanning
+42.9 @Component
+42.10 @Service
+42.11 @Repository
+42.12 @Configuration
+42.13 @Bean
+42.14 Constructor injection
+42.15 Field injection
+42.16 Setter injection
+
+
+CHAPTER 43 — Spring Boot
+------------------------------------------------
+43.1 What is Spring Boot?
+43.2 Spring Boot advantages
+43.3 Spring Initializr
+43.4 Project structure
+43.5 application.properties
+43.6 application.yml
+43.7 Auto-configuration
+43.8 Starter dependencies
+43.9 Embedded server
+43.10 Profiles
+43.11 Configuration
+
+
+CHAPTER 44 — REST API Development
+------------------------------------------------
+44.1 REST architecture
+44.2 @RestController
+44.3 @RequestMapping
+44.4 @GetMapping
+44.5 @PostMapping
+44.6 @PutMapping
+44.7 @DeleteMapping
+44.8 @PathVariable
+44.9 @RequestParam
+44.10 @RequestBody
+44.11 ResponseEntity
+44.12 HTTP status codes
+44.13 DTOs
+44.14 Validation
+44.15 Global exception handling
+44.16 @ControllerAdvice
+44.17 API design
+44.18 Pagination
+44.19 Sorting
+44.20 API documentation
+
+
+===============================================================
+PHASE 11 — ORM & DATABASE BACKEND
+===============================================================
+
+CHAPTER 45 — JPA & Hibernate
+------------------------------------------------
+45.1 ORM concept
+45.2 JPA
+45.3 Hibernate
+45.4 Entity
+45.5 @Entity
+45.6 @Id
+45.7 ID generation
+45.8 Repository
+45.9 Entity relationships
+
+    One-to-One
+    One-to-Many
+    Many-to-One
+    Many-to-Many
+
+45.10 Fetch types
+45.11 Lazy loading
+45.12 Eager loading
+45.13 Cascade
+45.14 JPQL
+45.15 Native queries
+45.16 Transactions
+45.17 Persistence context
+45.18 First-level cache
+45.19 N+1 problem
+
+
+CHAPTER 46 — Spring Data JPA
+------------------------------------------------
+46.1 Repository abstraction
+46.2 JpaRepository
+46.3 CRUD
+46.4 Query methods
+46.5 @Query
+46.6 Pagination
+46.7 Sorting
+46.8 Specifications
+46.9 Transactions
+46.10 Database relationships
+
+
+===============================================================
+PHASE 12 — SECURITY
+===============================================================
+
+CHAPTER 47 — Application Security
+------------------------------------------------
+47.1 Authentication
+47.2 Authorization
+47.3 Password hashing
+47.4 Sessions
+47.5 JWT
+47.6 OAuth2 fundamentals
+47.7 Spring Security
+47.8 Security filters
+47.9 Role-based authorization
+47.10 CORS
+47.11 CSRF
+47.12 SQL injection
+47.13 XSS
+47.14 Secure API development
+
+
+===============================================================
+PHASE 13 — SOFTWARE DESIGN
+===============================================================
+
+CHAPTER 48 — SOLID Principles
+------------------------------------------------
+48.1 Single Responsibility
+48.2 Open/Closed
+48.3 Liskov Substitution
+48.4 Interface Segregation
+48.5 Dependency Inversion
+
+
+CHAPTER 49 — Design Patterns
+------------------------------------------------
+49.1 Why design patterns?
+49.2 Creational patterns
+    - Singleton
+    - Factory
+    - Abstract Factory
+    - Builder
+
+49.3 Structural patterns
+    - Adapter
+    - Decorator
+    - Facade
+    - Proxy
+
+49.4 Behavioral patterns
+    - Strategy
+    - Observer
+    - Template Method
+    - Command
+
+49.5 Patterns used in Spring
+
+
+===============================================================
+PHASE 14 — DSA USING JAVA
+===============================================================
+
+CHAPTER 50 — Complexity Analysis
+------------------------------------------------
+50.1 Algorithm
+50.2 Time complexity
+50.3 Space complexity
+50.4 Big-O
+50.5 Big-Omega
+50.6 Big-Theta
+50.7 Best case
+50.8 Average case
+50.9 Worst case
+50.10 Complexity analysis of Java collections
+
+
+CHAPTER 51 — Arrays & Strings
+------------------------------------------------
+51.1 Array traversal
+51.2 Searching
+51.3 Sorting
+51.4 Prefix sum
+51.5 Sliding window
+51.6 Two pointers
+51.7 String manipulation
+51.8 Frequency counting
+
+
+CHAPTER 52 — Linked Lists
+------------------------------------------------
+52.1 Singly linked list
+52.2 Doubly linked list
+52.3 Circular linked list
+52.4 Insert
+52.5 Delete
+52.6 Search
+52.7 Reverse
+52.8 Fast and slow pointers
+
+
+CHAPTER 53 — Stack & Queue
+------------------------------------------------
+53.1 Stack
+53.2 Queue
+53.3 Deque
+53.4 Monotonic stack
+53.5 Priority queue
+53.6 Applications
+
+
+CHAPTER 54 — Hashing
+------------------------------------------------
+54.1 Hash function
+54.2 HashMap
+54.3 HashSet
+54.4 Frequency map
+54.5 Collision
+54.6 Hash-based problems
+
+
+CHAPTER 55 — Trees
+------------------------------------------------
+55.1 Binary tree
+55.2 Tree traversal
+    - Preorder
+    - Inorder
+    - Postorder
+    - Level order
+55.3 Binary Search Tree
+55.4 Balanced trees
+55.5 Heap
+55.6 PriorityQueue
+
+
+CHAPTER 56 — Graphs
+------------------------------------------------
+56.1 Graph terminology
+56.2 Adjacency matrix
+56.3 Adjacency list
+56.4 BFS
+56.5 DFS
+56.6 Connected components
+56.7 Shortest path
+56.8 Dijkstra
+56.9 Topological sorting
+56.10 Minimum spanning tree
+
+
+CHAPTER 57 — Algorithms
+------------------------------------------------
+57.1 Searching
+57.2 Sorting
+57.3 Recursion
+57.4 Backtracking
+57.5 Greedy
+57.6 Divide and conquer
+57.7 Dynamic programming
+57.8 Binary search patterns
+
+
+===============================================================
+PHASE 15 — SYSTEM DESIGN FOUNDATION
+===============================================================
+
+CHAPTER 58 — System Design Basics
+------------------------------------------------
+58.1 Scalability
+58.2 Availability
+58.3 Reliability
+58.4 Performance
+58.5 Latency
+58.6 Throughput
+58.7 Horizontal scaling
+58.8 Vertical scaling
+58.9 Load balancing
+58.10 Caching
+58.11 Database scaling
+58.12 Replication
+58.13 Sharding
+58.14 Message queues
+58.15 Microservices basics
+
+
+CHAPTER 59 — Java Backend Architecture
+------------------------------------------------
+59.1 Layered architecture
+59.2 Controller layer
+59.3 Service layer
+59.4 Repository layer
+59.5 DTO
+59.6 Entity
+59.7 Exception layer
+59.8 Configuration layer
+59.9 Clean code
+59.10 Separation of concerns
+
+
+===============================================================
+PHASE 16 — MICROSERVICES
+===============================================================
+
+CHAPTER 60 — Microservices with Spring Boot
+------------------------------------------------
+60.1 Monolith vs microservices
+60.2 Service-to-service communication
+60.3 REST communication
+60.4 Service discovery
+60.5 API Gateway
+60.6 Configuration management
+60.7 Circuit breaker
+60.8 Distributed tracing
+60.9 Centralized logging
+60.10 Docker basics
+60.11 Containerization
+
+
+===============================================================
+PHASE 17 — DEVOPS & DEPLOYMENT BASICS
+===============================================================
+
+CHAPTER 61 — Docker
+------------------------------------------------
+61.1 Containers
+61.2 Images
+61.3 Dockerfile
+61.4 Docker commands
+61.5 Ports
+61.6 Volumes
+61.7 Networks
+61.8 Docker Compose
+61.9 Java application containerization
+
+
+CHAPTER 62 — CI/CD
+------------------------------------------------
+62.1 CI/CD concepts
+62.2 Build pipeline
+62.3 Automated testing
+62.4 GitHub Actions/Jenkins concepts
+62.5 Build
+62.6 Test
+62.7 Package
+62.8 Deploy
+
+
+===============================================================
+PHASE 18 — PROJECT DEVELOPMENT
+===============================================================
+
+PROJECT 1 — Core Java
+------------------------------------------------
+Employee Management System
+
+Requirements:
+- Classes & Objects
+- OOP
+- Collections
+- Exception Handling
+- File Handling
+- Search
+- Sort
+- CRUD
+
+
+PROJECT 2 — Java + JDBC
+------------------------------------------------
+Bank Management System
+
+Features:
+- User registration
+- Login
+- Account creation
+- Deposit
+- Withdrawal
+- Balance
+- Transactions
+- SQL database
+- JDBC
+
+
+PROJECT 3 — Spring Boot
+------------------------------------------------
+Student Management REST API
+
+Features:
+- CRUD
+- REST API
+- MySQL/Oracle/PostgreSQL
+- JPA
+- Validation
+- Exception handling
+- Pagination
+- Swagger/OpenAPI
+
+
+PROJECT 4 — Full Backend Project
+------------------------------------------------
+E-Commerce Backend
+
+Features:
+- User management
+- Authentication
+- JWT
+- Product management
+- Categories
+- Cart
+- Orders
+- Payments concept
+- Database
+- REST API
+- Exception handling
+- Validation
+- Logging
+
+
+PROJECT 5 — Advanced Project
+------------------------------------------------
+Job Portal Backend
+
+Features:
+- Candidate registration
+- Recruiter registration
+- Authentication
+- Job posting
+- Job search
+- Resume/profile
+- Job application
+- Role-based authorization
+- Search/filter
+- Pagination
+- REST APIs
+- Database
+- Docker
+
+
+===============================================================
+PHASE 19 — DEBUGGING & PROFESSIONAL SKILLS
+===============================================================
+
+CHAPTER 63 — Debugging
+------------------------------------------------
+63.1 Debugging concepts
+63.2 Breakpoints
+63.3 Step over
+63.4 Step into
+63.5 Step out
+63.6 Variable inspection
+63.7 Stack trace
+63.8 Exception debugging
+63.9 Logging
+63.10 Common Java bugs
+
+
+CHAPTER 64 — Clean Code
+------------------------------------------------
+64.1 Naming
+64.2 Method design
+64.3 Class design
+64.4 DRY
+64.5 KISS
+64.6 SOLID
+64.7 Code smells
+64.8 Refactoring
+64.9 Documentation
+64.10 Maintainability
+
+
+===============================================================
+PHASE 20 — INTERVIEW PREPARATION
+===============================================================
+
+CHAPTER 65 — Core Java Interview
+------------------------------------------------
+65.1 JDK vs JRE vs JVM
+65.2 Java platform independence
+65.3 == vs equals()
+65.4 String immutability
+65.5 String pool
+65.6 final/finally/finalize
+65.7 static
+65.8 this vs super
+65.9 Overloading vs overriding
+65.10 Abstract class vs interface
+65.11 Composition vs inheritance
+
+
+CHAPTER 66 — Collections Interview
+------------------------------------------------
+66.1 ArrayList vs LinkedList
+66.2 HashMap
+66.3 HashSet
+66.4 TreeMap
+66.5 TreeSet
+66.6 Comparable vs Comparator
+66.7 HashMap internal working
+66.8 equals/hashCode
+66.9 Fail-fast vs fail-safe concepts
+
+
+CHAPTER 67 — Multithreading Interview
+------------------------------------------------
+67.1 Process vs thread
+67.2 Thread lifecycle
+67.3 synchronized
+67.4 volatile
+67.5 Lock
+67.6 Deadlock
+67.7 ExecutorService
+67.8 Callable vs Runnable
+67.9 Future
+67.10 CompletableFuture
+
+
+CHAPTER 68 — JVM Interview
+------------------------------------------------
+68.1 JVM architecture
+68.2 Heap
+68.3 Stack
+68.4 ClassLoader
+68.5 JIT
+68.6 Garbage collection
+68.7 Memory leaks
+68.8 OutOfMemoryError
+68.9 StackOverflowError
+
+
+CHAPTER 69 — Spring Boot Interview
+------------------------------------------------
+69.1 Spring vs Spring Boot
+69.2 IoC
+69.3 Dependency Injection
+69.4 Bean
+69.5 Bean scopes
+69.6 @Component
+69.7 @Service
+69.8 @Repository
+69.9 @RestController
+69.10 @Autowired
+69.11 Constructor injection
+69.12 Spring Boot auto-configuration
+69.13 REST API
+69.14 JPA
+69.15 Hibernate
+69.16 Transactions
+69.17 Spring Security
+
+
+CHAPTER 70 — SQL Interview
+------------------------------------------------
+70.1 Joins
+70.2 Subqueries
+70.3 Indexes
+70.4 Normalization
+70.5 Transactions
+70.6 ACID
+70.7 Primary/foreign keys
+70.8 Query optimization
+
+
+===============================================================
+PHASE 21 — JOB-READY PORTFOLIO
+===============================================================
+
+CHAPTER 71 — GitHub Portfolio
+------------------------------------------------
+71.1 Professional GitHub profile
+71.2 Repository structure
+71.3 README
+71.4 Project screenshots
+71.5 API documentation
+71.6 Commit messages
+71.7 Branch strategy
+
+
+CHAPTER 72 — Resume Preparation
+------------------------------------------------
+72.1 Java skills section
+72.2 Project descriptions
+72.3 Technical skills
+72.4 Achievement section
+72.5 GitHub links
+72.6 Project-based resume
+72.7 ATS-friendly resume
+
+
+CHAPTER 73 — Interview Preparation
+------------------------------------------------
+73.1 Java MCQs
+73.2 Java coding questions
+73.3 DSA problems
+73.4 SQL problems
+73.5 OOP questions
+73.6 JVM questions
+73.7 Spring Boot questions
+73.8 Project-based questions
+73.9 HR questions
+73.10 Mock interviews
+
+
+===============================================================
+FINAL JOB-READY STACK
+===============================================================
+
+                    JAVA
+                      │
+          ┌───────────┴───────────┐
+          ↓                       ↓
+       CORE JAVA                 DSA
+          │                       │
+          ↓                       ↓
+    Collections              Algorithms
+          │
+          ↓
+   Multithreading
+          │
+          ↓
+     JDBC + SQL
+          │
+          ↓
+       Maven
+          │
+          ↓
+      Spring Core
+          │
+          ↓
+     Spring Boot
+          │
+          ↓
+      REST API
+          │
+          ↓
+    JPA + Hibernate
+          │
+          ↓
+   Spring Security
+          │
+          ↓
+       Git/GitHub
+          │
+          ↓
+       Docker
+          │
+          ↓
+      Projects
+          │
+          ↓
+    Interview Prep
+          │
+          ↓
+       JOB READY
+===============================================================
+
