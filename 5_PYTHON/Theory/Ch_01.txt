@@ -1,0 +1,2741 @@
+===============================================================
+CHAPTER 1 — INTRODUCTION TO PROGRAMMING
+===============================================================
+
+Goal:
+    Understand programming, programming languages, Python,
+    how Python programs execute, and why Python is important
+    for a job-ready software developer.
+
+Prerequisite:
+    NONE — this chapter starts from absolute zero.
+
+
+===============================================================
+1.1 WHAT IS PROGRAMMING?
+===============================================================
+
+Programming means giving a computer a set of instructions
+that tells it:
+
+    - What to do
+    - How to do it
+    - When to do it
+    - What result to produce
+
+A computer does not automatically know how to solve a problem.
+We provide instructions using a programming language.
+
+Example:
+
+Problem:
+    Add two numbers.
+
+Human thinking:
+    1. Take first number.
+    2. Take second number.
+    3. Add them.
+    4. Display the result.
+
+Python program:
+
+    a = 10
+    b = 20
+    result = a + b
+    print(result)
+
+Output:
+
+    30
+
+
+Real-world analogy:
+
+    You want to order food.
+
+    You tell the delivery person:
+
+        1. Go to restaurant.
+        2. Order food.
+        3. Pay for food.
+        4. Bring food to me.
+
+    These are instructions.
+
+Similarly, a computer needs instructions.
+
+    Human Problem
+          ↓
+    Algorithm / Steps
+          ↓
+    Program
+          ↓
+    Computer Executes Program
+          ↓
+    Output
+
+
+IMPORTANT:
+
+Programming is NOT just writing code.
+
+Programming involves:
+
+    Problem
+       ↓
+    Understanding
+       ↓
+    Algorithm
+       ↓
+    Coding
+       ↓
+    Testing
+       ↓
+    Debugging
+       ↓
+    Final Solution
+
+
+===============================================================
+1.2 WHAT IS A PROGRAM?
+===============================================================
+
+A program is a collection of instructions written to solve
+a particular problem or perform a particular task.
+
+Example:
+
+    print("Hello World")
+
+This is a very small Python program.
+
+It tells Python:
+
+    "Display Hello World on the screen."
+
+Output:
+
+    Hello World
+
+
+Another example:
+
+    name = "Apoorv"
+    print(name)
+
+Output:
+
+    Apoorv
+
+
+A large application is also a collection of programs/modules.
+
+Examples:
+
+    WhatsApp
+    Google Chrome
+    Banking Applications
+    Operating Systems
+    E-commerce Websites
+    AI Applications
+
+All are built using many software components and programs.
+
+
+===============================================================
+1.3 WHAT IS A PROGRAMMING LANGUAGE?
+===============================================================
+
+A programming language is a formal language used by humans
+to write instructions that computers can execute.
+
+Examples:
+
+    C
+    C++
+    Java
+    Python
+    JavaScript
+    Go
+    Rust
+    C#
+
+Different languages have different syntax, features and
+typical use cases.
+
+Example:
+
+C:
+
+    printf("Hello World");
+
+C++:
+
+    cout << "Hello World";
+
+Java:
+
+    System.out.println("Hello World");
+
+Python:
+
+    print("Hello World")
+
+
+The task is the same:
+
+    Display "Hello World"
+
+But the way we express the instruction is different.
+
+
+===============================================================
+1.4 WHY DO WE NEED PROGRAMMING LANGUAGES?
+===============================================================
+
+Computers fundamentally work with electrical signals and
+machine-level instructions.
+
+Humans prefer readable instructions such as:
+
+    calculate salary
+    search student
+    sort numbers
+    open file
+
+Computers ultimately need machine-level instructions.
+
+Programming languages provide a bridge:
+
+    Human Thinking
+          ↓
+    Programming Language
+          ↓
+    Translator / Runtime System
+          ↓
+    Machine-Level Execution
+          ↓
+    Computer
+
+
+===============================================================
+1.5 LOW-LEVEL VS HIGH-LEVEL LANGUAGES
+===============================================================
+
+Programming languages can broadly be discussed as:
+
+    1. Low-level languages
+    2. High-level languages
+
+
+-------------------------
+1.5.1 LOW-LEVEL LANGUAGE
+-------------------------
+
+A low-level language is closer to the hardware.
+
+Examples:
+
+    Machine Language
+    Assembly Language
+
+Advantages:
+
+    - High hardware control
+    - Potentially very efficient
+    - Useful for system-level programming
+
+Disadvantages:
+
+    - Difficult for humans
+    - Hardware dependent in many cases
+    - More difficult to develop and maintain
+
+
+-------------------------
+1.5.2 HIGH-LEVEL LANGUAGE
+-------------------------
+
+A high-level language is designed to be easier for humans
+to read and write.
+
+Examples:
+
+    Python
+    Java
+    C++
+    JavaScript
+    C#
+
+Example:
+
+    x = 10
+    y = 20
+    print(x + y)
+
+This is much easier for a human to understand than raw
+machine instructions.
+
+
+IMPORTANT:
+
+"High-level" does NOT mean "better in every situation."
+
+The appropriate language depends on the problem.
+
+
+===============================================================
+1.6 WHAT IS MACHINE LANGUAGE?
+===============================================================
+
+Machine language consists of instructions represented in a
+form directly understood by the processor.
+
+It is commonly represented using binary values:
+
+    0 and 1
+
+Conceptually:
+
+    10110000
+    11001010
+    00010101
+
+The exact machine instructions depend on the processor's
+instruction set architecture (ISA).
+
+Examples of processor architectures include:
+
+    x86-64
+    ARM
+    RISC-V
+
+
+Problem with machine language:
+
+    It is extremely difficult for humans to write and
+    understand directly.
+
+
+===============================================================
+1.7 WHAT IS ASSEMBLY LANGUAGE?
+===============================================================
+
+Assembly language uses symbolic instructions instead of
+writing raw binary instructions.
+
+Example:
+
+    MOV AX, 10
+    ADD AX, 20
+
+Here:
+
+    MOV = move data
+    ADD = add data
+
+An assembler translates assembly language into machine code.
+
+Conceptually:
+
+    Assembly Code
+          ↓
+       Assembler
+          ↓
+    Machine Code
+
+
+===============================================================
+1.8 WHAT IS SOURCE CODE?
+===============================================================
+
+Source code is the human-readable program written by a
+programmer using a programming language.
+
+Example Python source code:
+
+    name = "Apoorv"
+    age = 22
+
+    print(name)
+    print(age)
+
+This is source code.
+
+It is stored in a Python file, normally with:
+
+    .py
+
+Example:
+
+    program.py
+
+
+===============================================================
+1.9 WHAT IS OBJECT CODE?
+===============================================================
+
+Object code is a machine-oriented representation produced
+during compilation.
+
+In traditional compiled languages such as C/C++, source code
+is commonly transformed into object files before linking.
+
+Conceptually:
+
+    Source Code
+          ↓
+       Compiler
+          ↓
+      Object Code
+          ↓
+       Linker
+          ↓
+      Executable
+
+
+Python's normal execution model is different and uses
+bytecode and a Python runtime.
+
+
+===============================================================
+1.10 WHAT IS BYTECODE?
+===============================================================
+
+Bytecode is an intermediate representation of a program.
+
+In CPython, Python source code is compiled into Python
+bytecode, which is then executed by the Python virtual machine
+inside the CPython interpreter.
+
+Conceptually:
+
+    Python Source Code
+           ↓
+      Python Compiler
+           ↓
+      Python Bytecode
+           ↓
+       Python Runtime
+           ↓
+        Execution
+
+
+You may see cached bytecode in files such as:
+
+    __pycache__/
+
+with files that commonly have a:
+
+    .pyc
+
+extension.
+
+IMPORTANT:
+
+Python bytecode is NOT the same thing as CPU machine code.
+
+It is intended for execution by the Python runtime.
+
+
+===============================================================
+1.11 COMPILER
+===============================================================
+
+A compiler is a program that translates source code from one
+form/language into another form, often before execution.
+
+For a traditional compiled language:
+
+    Source Code
+         ↓
+      Compiler
+         ↓
+    Machine/Object Code
+         ↓
+      Execution
+
+
+Examples of commonly compiled languages:
+
+    C
+    C++
+    Rust
+    Go
+
+
+Example C:
+
+    #include <stdio.h>
+
+    int main() {
+        printf("Hello");
+        return 0;
+    }
+
+A C compiler translates the source program into
+machine-oriented code that can be executed by the target
+system.
+
+
+===============================================================
+1.12 INTERPRETER
+===============================================================
+
+An interpreter is a program/runtime system that executes
+program instructions.
+
+The exact implementation model varies by language.
+
+A common simplified teaching model is:
+
+    Source Code
+         ↓
+      Interpreter
+         ↓
+      Execution
+
+
+For Python, it is more accurate to say:
+
+    Python Source
+         ↓
+    Compile to Bytecode
+         ↓
+    Python Runtime
+         ↓
+    Execute Bytecode
+
+
+IMPORTANT:
+
+Do not memorize:
+
+    "Python is only interpreted."
+
+That is an oversimplification.
+
+CPython first compiles Python source into bytecode and then
+executes that bytecode using its runtime.
+
+
+===============================================================
+1.13 COMPILER VS INTERPRETER
+===============================================================
+
+Compiler-oriented model:
+
+    Source Code
+         ↓
+      Compiler
+         ↓
+    Target Code
+         ↓
+      Execution
+
+Interpreter-oriented model:
+
+    Source Code
+         ↓
+    Interpreter
+         ↓
+      Execution
+
+
+Traditional comparison:
+
+    Compiler:
+        - Translation is generally performed before execution.
+        - Produces target/object/executable code.
+        - Errors are often reported during compilation.
+
+    Interpreter:
+        - Executes program instructions through a runtime.
+        - Usually does not produce a standalone native executable
+          in the same way as a traditional ahead-of-time compiler.
+
+
+Python:
+
+    Source Code
+         ↓
+    CPython Compiler
+         ↓
+      Bytecode
+         ↓
+    Python Virtual Machine
+         ↓
+      Execution
+
+
+===============================================================
+1.14 WHY IS PYTHON CALLED A HIGH-LEVEL LANGUAGE?
+===============================================================
+
+Python provides abstractions that allow programmers to focus
+on solving problems rather than managing hardware details.
+
+Example:
+
+    numbers = [10, 20, 30, 40]
+
+    print(sum(numbers))
+
+A programmer does not need to manually:
+
+    - allocate raw memory for every integer
+    - calculate memory addresses
+    - manually release memory
+    - write CPU instructions
+
+Python provides these abstractions.
+
+
+===============================================================
+1.15 WHAT IS PYTHON?
+===============================================================
+
+Python is a high-level, general-purpose programming language.
+
+It is widely used for:
+
+    - Software development
+    - Backend development
+    - Automation
+    - Data analysis
+    - Artificial Intelligence
+    - Machine Learning
+    - Scientific computing
+    - Testing
+    - DevOps
+    - Scripting
+    - Education
+
+
+Python emphasizes readable and relatively concise syntax.
+
+
+Example:
+
+    print("Hello World")
+
+This simplicity is one reason Python is popular among
+beginners and professionals.
+
+
+===============================================================
+1.16 HISTORY OF PYTHON
+===============================================================
+
+Python was created by:
+
+    Guido van Rossum
+
+Development began in:
+
+    1989
+
+Python's first public release appeared in:
+
+    1991
+
+Python was designed with an emphasis on:
+
+    - Readability
+    - Simplicity
+    - Developer productivity
+    - Powerful standard library
+
+
+Major versions:
+
+    Python 1.x
+         ↓
+    Python 2.x
+         ↓
+    Python 3.x
+
+Modern Python development uses:
+
+    Python 3.x
+
+
+IMPORTANT:
+
+Python 2 reached end-of-life in 2020.
+
+For learning and modern development:
+
+    Use Python 3.
+
+
+===============================================================
+1.17 FEATURES OF PYTHON
+===============================================================
+
+Important Python features include:
+
+
+1. SIMPLE SYNTAX
+
+Example:
+
+    name = "Apoorv"
+    print(name)
+
+The syntax is relatively easy to read.
+
+
+2. READABLE
+
+Python code often resembles structured English.
+
+Example:
+
+    if age >= 18:
+        print("Adult")
+
+
+3. HIGH-LEVEL
+
+Python hides many low-level hardware details.
+
+
+4. DYNAMICALLY TYPED
+
+You normally do not explicitly declare a variable's type.
+
+Example:
+
+    x = 10
+
+    x = "Hello"
+
+The name x can refer to objects of different types at
+different times.
+
+
+5. STRONGLY TYPED
+
+Python generally does not silently treat unrelated types as
+compatible merely because conversion might be convenient.
+
+Example:
+
+    age = 20
+    name = "Apoorv"
+
+    print(age + name)
+
+This produces a TypeError instead of automatically combining
+an integer and string.
+
+
+6. OBJECT-ORIENTED
+
+Python supports:
+
+    - Classes
+    - Objects
+    - Inheritance
+    - Encapsulation
+    - Polymorphism
+    - Abstraction
+
+
+7. MULTI-PARADIGM
+
+Python supports multiple programming styles, including:
+
+    - Procedural
+    - Object-oriented
+    - Functional programming techniques
+
+
+8. CROSS-PLATFORM
+
+Python programs can generally run on:
+
+    Windows
+    Linux
+    macOS
+
+provided the appropriate Python environment and dependencies
+are available.
+
+
+9. LARGE STANDARD LIBRARY
+
+Python provides many built-in modules.
+
+Examples:
+
+    math
+    os
+    sys
+    json
+    datetime
+    pathlib
+    re
+
+
+10. LARGE ECOSYSTEM
+
+Thousands of third-party packages are available through
+ecosystems such as PyPI.
+
+Examples:
+
+    NumPy
+    pandas
+    requests
+    FastAPI
+    Flask
+    Django
+    pytest
+
+
+11. AUTOMATIC MEMORY MANAGEMENT
+
+Python manages memory automatically using mechanisms including
+reference counting and garbage collection in CPython.
+
+
+12. EXTENSIBLE
+
+Python can interact with code written in other languages,
+including C/C++, through various mechanisms.
+
+
+===============================================================
+1.18 ADVANTAGES OF PYTHON
+===============================================================
+
+1. Easy to learn
+2. Readable syntax
+3. Large community
+4. Huge ecosystem
+5. Extensive standard library
+6. Cross-platform
+7. Excellent for automation
+8. Excellent for scripting
+9. Strong web-development ecosystem
+10. Strong data/AI ecosystem
+11. Rapid development
+12. Good for prototyping
+13. Strong testing ecosystem
+
+
+===============================================================
+1.19 LIMITATIONS OF PYTHON
+===============================================================
+
+Python is powerful, but it is not perfect.
+
+1. PERFORMANCE
+
+For some CPU-intensive workloads, Python can be slower than
+languages such as C/C++.
+
+2. MEMORY USAGE
+
+Python objects can have relatively high memory overhead.
+
+3. GIL IN CPYTHON
+
+The Global Interpreter Lock (GIL) has historically limited
+execution of multiple Python threads for CPU-bound Python code
+in standard CPython configurations.
+
+Python's threading is still very useful for many I/O-bound
+workloads.
+
+Modern Python versions also provide evolving options around
+free-threaded execution, so the exact behavior depends on the
+Python build/version being used.
+
+4. MOBILE/LOW-LEVEL SYSTEMS
+
+Python is generally not the first choice for many
+resource-constrained or low-level systems.
+
+5. RUNTIME DEPENDENCY
+
+Typical Python programs require an appropriate Python runtime
+and dependencies to be installed.
+
+
+===============================================================
+1.20 WHERE IS PYTHON USED?
+===============================================================
+
+Python is used in many domains.
+
+
+-------------------------
+A. WEB DEVELOPMENT
+-------------------------
+
+Frameworks:
+
+    Django
+    Flask
+    FastAPI
+
+Example applications:
+
+    - Websites
+    - REST APIs
+    - Backend services
+    - Authentication systems
+
+
+-------------------------
+B. DATA ANALYSIS
+-------------------------
+
+Libraries:
+
+    NumPy
+    pandas
+    Matplotlib
+
+Used for:
+
+    - Data cleaning
+    - Data processing
+    - Statistical analysis
+    - Visualization
+
+
+-------------------------
+C. ARTIFICIAL INTELLIGENCE
+-------------------------
+
+Libraries/ecosystem:
+
+    PyTorch
+    TensorFlow
+    scikit-learn
+
+Used for:
+
+    - Machine Learning
+    - Deep Learning
+    - Natural Language Processing
+    - Computer Vision
+
+
+-------------------------
+D. AUTOMATION
+-------------------------
+
+Python can automate repetitive tasks.
+
+Examples:
+
+    - Rename thousands of files
+    - Process Excel files
+    - Generate reports
+    - Send API requests
+    - Monitor systems
+
+
+-------------------------
+E. TESTING
+-------------------------
+
+Tools:
+
+    pytest
+    unittest
+
+Used for:
+
+    - Unit testing
+    - Integration testing
+    - Automation testing
+
+
+-------------------------
+F. DEVOPS
+-------------------------
+
+Python can be used for:
+
+    - Automation
+    - Deployment scripts
+    - Infrastructure tooling
+    - Monitoring
+    - CI/CD utilities
+
+
+-------------------------
+G. CYBERSECURITY
+-------------------------
+
+Python is commonly used for:
+
+    - Security automation
+    - Network scripting
+    - Log analysis
+    - Security testing tools
+
+
+===============================================================
+1.21 PYTHON VS C VS C++ VS JAVA
+===============================================================
+
+Python:
+
+    - High-level
+    - Dynamically typed
+    - Concise syntax
+    - Automatic memory management
+    - Excellent ecosystem
+    - Great for automation, web, data, AI
+
+C:
+
+    - Procedural
+    - Low-level control
+    - Manual memory management
+    - Very important for systems programming
+    - High performance
+
+C++:
+
+    - Multi-paradigm
+    - High performance
+    - Object-oriented
+    - Generic programming
+    - Manual/RAII-based resource management
+
+Java:
+
+    - Statically typed
+    - Object-oriented
+    - Automatic memory management
+    - Strong enterprise ecosystem
+    - Runs on JVM
+
+
+For a beginner:
+
+    Python → easier initial syntax
+
+For low-level/system programming:
+
+    C/C++ → commonly preferred
+
+For enterprise/backend ecosystems:
+
+    Java / C# / Python / JavaScript ecosystem
+    can all be relevant depending on the organization.
+
+
+===============================================================
+1.22 PYTHON IMPLEMENTATIONS
+===============================================================
+
+Python is a language specification/ecosystem with multiple
+implementations.
+
+Important implementations include:
+
+    CPython
+    PyPy
+    Jython
+    IronPython
+
+
+-------------------------
+CPYTHON
+-------------------------
+
+CPython is the reference implementation and the implementation
+most people mean when they simply say "Python".
+
+Written primarily in:
+
+    C
+
+Typical flow:
+
+    .py source
+        ↓
+    CPython compiler
+        ↓
+    Python bytecode
+        ↓
+    CPython runtime
+        ↓
+    Execution
+
+
+-------------------------
+PYPY
+-------------------------
+
+PyPy is another Python implementation.
+
+It uses techniques such as:
+
+    JIT (Just-In-Time) compilation
+
+to improve performance for suitable workloads.
+
+
+===============================================================
+1.23 WHAT HAPPENS WHEN YOU RUN A PYTHON PROGRAM?
+===============================================================
+
+Suppose we create:
+
+    hello.py
+
+Containing:
+
+    print("Hello World")
+
+
+When executed using CPython, conceptually:
+
+    Step 1:
+        Operating system starts Python.
+
+    Step 2:
+        Python reads the source code.
+
+    Step 3:
+        Python parses and compiles the source into
+        Python bytecode.
+
+    Step 4:
+        The Python runtime executes the bytecode.
+
+    Step 5:
+        print() writes the text to standard output.
+
+Result:
+
+    Hello World
+
+
+Simplified architecture:
+
+    hello.py
+       ↓
+    Python Parser / Compiler
+       ↓
+    Bytecode
+       ↓
+    CPython Runtime
+       ↓
+    Operating System
+       ↓
+    Hardware
+       ↓
+    Output
+
+
+===============================================================
+1.24 PYTHON FILE EXTENSION
+===============================================================
+
+Python source files generally use:
+
+    .py
+
+Examples:
+
+    main.py
+    calculator.py
+    student.py
+    app.py
+
+
+Python bytecode cache may use:
+
+    .pyc
+
+Example:
+
+    __pycache__/
+        module.cpython-XXX.pyc
+
+
+You normally write:
+
+    .py
+
+You generally do not manually create:
+
+    .pyc
+
+
+===============================================================
+1.25 FIRST PYTHON PROGRAM
+===============================================================
+
+Program:
+
+    print("Hello, World!")
+
+Output:
+
+    Hello, World!
+
+
+Explanation:
+
+    print()
+        ↓
+    Built-in Python function used to display output.
+
+    "Hello, World!"
+        ↓
+    String literal.
+
+    ()
+        ↓
+    Used to pass arguments to the function.
+
+
+===============================================================
+1.26 ANOTHER SIMPLE PROGRAM
+===============================================================
+
+Program:
+
+    name = "Apoorv"
+    age = 22
+
+    print("Name:", name)
+    print("Age:", age)
+
+Output:
+
+    Name: Apoorv
+    Age: 22
+
+
+Here:
+
+    name
+        = variable name
+
+    "Apoorv"
+        = string object
+
+    age
+        = variable name
+
+    22
+        = integer object
+
+
+===============================================================
+1.27 WHAT IS SYNTAX?
+===============================================================
+
+Syntax means the rules for writing valid programs in a
+programming language.
+
+Correct Python:
+
+    if age >= 18:
+        print("Adult")
+
+
+Incorrect Python:
+
+    if age >= 18
+        print("Adult")
+
+
+The second example is invalid because the syntax is incorrect.
+
+
+Think of syntax like grammar.
+
+English:
+
+    "I am going to college."
+
+Correct sentence structure.
+
+Programming:
+
+    if age >= 18:
+        print("Adult")
+
+Correct Python syntax.
+
+
+===============================================================
+1.28 WHAT IS SEMANTICS?
+===============================================================
+
+Semantics means the meaning/behavior of a valid program.
+
+Example:
+
+    x = 10
+    y = 20
+    print(x + y)
+
+Syntax:
+    Correct.
+
+Meaning:
+    Add x and y and display the result.
+
+
+Difference:
+
+    Syntax  = Is the program written correctly?
+    Semantics = What does the program mean/do?
+
+
+===============================================================
+1.29 SYNTAX ERROR
+===============================================================
+
+A syntax error occurs when Python cannot parse the program
+according to Python's grammar.
+
+Example:
+
+    if True
+        print("Hello")
+
+The colon is missing.
+
+Python reports a SyntaxError.
+
+
+===============================================================
+1.30 RUNTIME ERROR
+===============================================================
+
+A runtime error occurs while the program is executing.
+
+Example:
+
+    a = 10
+    b = 0
+
+    print(a / b)
+
+This causes:
+
+    ZeroDivisionError
+
+
+The program syntax is valid, but the operation cannot be
+performed as written.
+
+
+===============================================================
+1.31 LOGICAL ERROR
+===============================================================
+
+A logical error occurs when the program runs but produces an
+incorrect result because the algorithm or logic is wrong.
+
+Example:
+
+    length = 10
+    width = 5
+
+    area = length + width
+
+Correct formula:
+
+    area = length * width
+
+
+The program may execute successfully but give the wrong answer.
+
+This is why testing and problem-solving are important.
+
+
+===============================================================
+1.32 DEBUGGING
+===============================================================
+
+Debugging means finding and fixing errors in a program.
+
+Common categories:
+
+    Syntax errors
+    Runtime errors
+    Logical errors
+
+
+Example:
+
+    x = 10
+    y = 20
+
+    result = x - y
+
+If the requirement was addition, the code should be:
+
+    result = x + y
+
+
+Debugging process:
+
+    Identify problem
+         ↓
+    Reproduce problem
+         ↓
+    Find cause
+         ↓
+    Fix code
+         ↓
+    Test again
+
+
+===============================================================
+1.33 ALGORITHM
+===============================================================
+
+An algorithm is a finite sequence of well-defined steps used
+to solve a problem.
+
+Problem:
+
+    Find the larger of two numbers.
+
+Algorithm:
+
+    Step 1: Start
+    Step 2: Read A
+    Step 3: Read B
+    Step 4: Compare A and B
+    Step 5: If A > B, A is larger
+    Step 6: Otherwise B is larger
+    Step 7: Stop
+
+
+Python implementation:
+
+    a = 10
+    b = 20
+
+    if a > b:
+        print(a)
+    else:
+        print(b)
+
+
+Important:
+
+    Algorithm = solution procedure
+    Program = implementation of that procedure
+
+
+===============================================================
+1.34 FLOWCHART
+===============================================================
+
+A flowchart is a graphical representation of an algorithm.
+
+Common symbols:
+
+    Oval
+        ↓
+    Start / End
+
+    Rectangle
+        ↓
+    Process
+
+    Diamond
+        ↓
+    Decision
+
+    Parallelogram
+        ↓
+    Input / Output
+
+
+Example:
+
+    START
+      |
+      v
+    Read A, B
+      |
+      v
+    Is A > B?
+      |
+    +---+---+
+    |       |
+   YES      NO
+    |       |
+    v       v
+ Print A  Print B
+    |       |
+    +---+---+
+        |
+        v
+       END
+
+
+===============================================================
+1.35 WHAT IS A VARIABLE?
+===============================================================
+
+A variable is a name used to refer to an object/value.
+
+Example:
+
+    age = 22
+
+Here:
+
+    age
+        = variable name
+
+    22
+        = integer object/value
+
+
+Another example:
+
+    name = "Apoorv"
+
+Here:
+
+    name
+        = variable
+
+    "Apoorv"
+        = string object
+
+
+Important Python concept:
+
+    Python variables are names/references to objects.
+
+This becomes important later when learning:
+
+    - Mutable objects
+    - Immutable objects
+    - Memory
+    - References
+    - Shallow copy
+    - Deep copy
+
+
+===============================================================
+1.36 WHAT IS A DATA TYPE?
+===============================================================
+
+A data type describes the kind of value/object being handled
+and determines what operations are meaningful for it.
+
+Examples:
+
+    int
+    float
+    str
+    bool
+    list
+    tuple
+    set
+    dict
+
+
+Examples:
+
+    age = 22
+        → int
+
+    price = 99.50
+        → float
+
+    name = "Apoorv"
+        → str
+
+    is_student = True
+        → bool
+
+
+===============================================================
+1.37 WHAT IS AN OBJECT?
+===============================================================
+
+In Python, almost everything you work with is an object.
+
+Examples:
+
+    10
+    3.14
+    "Hello"
+    [1, 2, 3]
+    {"name": "Apoorv"}
+
+
+Objects have characteristics such as:
+
+    - Identity
+    - Type
+    - Value/state
+
+Example:
+
+    x = 10
+
+The name x refers to an integer object.
+
+
+You will study objects deeply in:
+
+    Chapter 19 — OOP
+
+
+===============================================================
+1.38 PYTHON IS DYNAMICALLY TYPED
+===============================================================
+
+Example:
+
+    x = 10
+
+Here x refers to an integer object.
+
+Later:
+
+    x = "Hello"
+
+Now x refers to a string object.
+
+The programmer did not write:
+
+    int x
+
+or:
+
+    string x
+
+
+This is one characteristic of Python's dynamic typing.
+
+
+===============================================================
+1.39 PYTHON IS STRONGLY TYPED
+===============================================================
+
+Consider:
+
+    age = 20
+    name = "Apoorv"
+
+    result = age + name
+
+Python does not automatically convert these unrelated objects
+into one value.
+
+It raises a TypeError.
+
+You must explicitly convert when appropriate.
+
+Example:
+
+    age = 20
+
+    print("Age: " + str(age))
+
+Output:
+
+    Age: 20
+
+
+===============================================================
+1.40 STANDARD LIBRARY
+===============================================================
+
+Python comes with a large standard library.
+
+Examples:
+
+    math
+        → mathematical functions
+
+    datetime
+        → dates and times
+
+    os
+        → operating-system interaction
+
+    pathlib
+        → filesystem paths
+
+    json
+        → JSON processing
+
+    re
+        → regular expressions
+
+Example:
+
+    import math
+
+    print(math.sqrt(25))
+
+Output:
+
+    5.0
+
+
+You will study modules and packages later.
+
+
+===============================================================
+1.41 THIRD-PARTY LIBRARIES
+===============================================================
+
+Third-party libraries are packages developed outside the
+Python standard library.
+
+Examples:
+
+    NumPy
+    pandas
+    requests
+    Flask
+    FastAPI
+    Django
+    pytest
+
+
+These can usually be installed using:
+
+    pip
+
+
+Example:
+
+    pip install requests
+
+
+Then:
+
+    import requests
+
+
+===============================================================
+1.42 WHAT IS pip?
+===============================================================
+
+pip is a package installer commonly used with Python.
+
+It allows you to install packages from package repositories
+such as PyPI.
+
+Examples:
+
+    pip install requests
+
+    pip install numpy
+
+    pip install pandas
+
+
+Other useful commands:
+
+    pip list
+
+    pip show requests
+
+    pip uninstall requests
+
+
+You will study package management in detail later.
+
+
+===============================================================
+1.43 WHAT IS PyPI?
+===============================================================
+
+PyPI means:
+
+    Python Package Index
+
+It is a major repository for Python packages.
+
+Developers can publish packages there.
+
+Users can install packages using tools such as pip.
+
+Conceptually:
+
+    Developer
+       ↓
+    Publish Package
+       ↓
+      PyPI
+       ↓
+      pip
+       ↓
+    Your Project
+
+
+===============================================================
+1.44 WHAT IS A PYTHON VIRTUAL ENVIRONMENT?
+===============================================================
+
+A virtual environment creates an isolated Python environment
+for a project.
+
+Why?
+
+Suppose:
+
+    Project A requires package version X.
+
+    Project B requires package version Y.
+
+Installing everything globally can cause dependency conflicts.
+
+Virtual environments isolate dependencies.
+
+Conceptually:
+
+    Computer
+       |
+       +---- Project A
+       |       |
+       |      venv
+       |
+       +---- Project B
+               |
+              venv
+
+
+Typical command:
+
+    python -m venv .venv
+
+
+Activation commands depend on the operating system/shell.
+
+This topic will be covered in detail later.
+
+
+===============================================================
+1.45 PYTHON IDE / CODE EDITOR
+===============================================================
+
+You can write Python using:
+
+    VS Code
+    PyCharm
+    IDLE
+    Jupyter Notebook
+    Other editors
+
+
+Recommended for job preparation:
+
+    VS Code
+
+
+Why?
+
+    - Extensions
+    - Debugger
+    - Git integration
+    - Terminal
+    - IntelliSense
+    - Project management
+
+
+===============================================================
+1.46 TERMINAL / COMMAND LINE
+===============================================================
+
+You should learn to run Python from a terminal because
+professional developers frequently use command-line tools.
+
+Example:
+
+    python --version
+
+or on some systems:
+
+    python3 --version
+
+
+Run a program:
+
+    python main.py
+
+
+Interactive Python:
+
+    python
+
+
+Then:
+
+    >>> print("Hello")
+    Hello
+
+
+Exit the interpreter using the appropriate exit command or
+keyboard shortcut for your terminal.
+
+
+===============================================================
+1.47 BASIC PYTHON PROGRAM STRUCTURE
+===============================================================
+
+Example:
+
+    # Student information
+
+    name = "Apoorv"
+    age = 22
+
+    print("Student Name:", name)
+    print("Student Age:", age)
+
+
+Structure:
+
+    Comment
+       ↓
+    Variables
+       ↓
+    Processing
+       ↓
+    Output
+
+
+As programs become larger:
+
+    Project
+       ↓
+    Packages
+       ↓
+    Modules
+       ↓
+    Classes / Functions
+       ↓
+    Statements
+
+
+===============================================================
+1.48 COMMENTS
+===============================================================
+
+Comments are notes written for humans and are ignored as
+normal executable Python statements.
+
+Single-line comment:
+
+    # This is a comment
+
+Example:
+
+    age = 22
+
+    # Display age
+    print(age)
+
+
+Comments should explain useful context, not obvious syntax.
+
+Good:
+
+    # Convert Celsius to Fahrenheit
+    fahrenheit = (celsius * 9/5) + 32
+
+
+Avoid unnecessary comments such as:
+
+    # Add 1 to x
+    x = x + 1
+
+
+===============================================================
+1.49 PEP 8
+===============================================================
+
+PEP means:
+
+    Python Enhancement Proposal
+
+PEP 8 is the major style guide for Python code.
+
+It provides recommendations for:
+
+    - Naming
+    - Indentation
+    - Spacing
+    - Line length
+    - Imports
+    - Code layout
+
+
+Example:
+
+    student_name = "Apoorv"
+
+Prefer:
+
+    student_name
+
+over:
+
+    studentName
+
+for typical Python variable naming.
+
+Python convention commonly uses:
+
+    snake_case
+
+
+Examples:
+
+    first_name
+    total_marks
+    calculate_salary
+
+
+Classes commonly use:
+
+    PascalCase
+
+Example:
+
+    StudentRecord
+
+
+Constants are commonly written as:
+
+    MAX_SIZE = 100
+
+
+===============================================================
+1.50 WHY PYTHON IS IMPORTANT FOR JOB READINESS
+===============================================================
+
+Python is particularly valuable because one language can be
+used across many technical domains.
+
+For your job-ready preparation, Python can support:
+
+    Programming
+        ↓
+    OOP
+        ↓
+    DSA
+        ↓
+    SQL
+        ↓
+    Backend Development
+        ↓
+    REST APIs
+        ↓
+    Automation
+        ↓
+    Testing
+        ↓
+    Data Processing
+        ↓
+    AI/ML
+
+
+For software-development interviews, Python can be used to
+practice:
+
+    - Arrays
+    - Strings
+    - Hashing
+    - Stack
+    - Queue
+    - Linked List
+    - Trees
+    - Graphs
+    - Recursion
+    - Dynamic Programming
+
+
+===============================================================
+1.51 PYTHON JOB ROLES
+===============================================================
+
+Python can be relevant to roles such as:
+
+    1. Python Developer
+    2. Backend Developer
+    3. Software Developer
+    4. Automation Engineer
+    5. QA Automation Engineer
+    6. Data Analyst
+    7. Data Engineer
+    8. Machine Learning Engineer
+    9. DevOps Engineer
+    10. AI Engineer
+
+
+The required Python depth differs by role.
+
+For a general software/backend role:
+
+    Python
+      +
+    OOP
+      +
+    DSA
+      +
+    SQL
+      +
+    APIs
+      +
+    Git
+      +
+    Testing
+      +
+    Projects
+
+
+===============================================================
+1.52 IMPORTANT TERMINOLOGY — CHAPTER 1
+===============================================================
+
+Programming
+    → Writing instructions to solve problems.
+
+Program
+    → A set of instructions executed to perform a task.
+
+Programming Language
+    → A formal language used to write programs.
+
+Source Code
+    → Human-readable program code.
+
+Machine Code
+    → Processor-level instructions.
+
+Assembly Language
+    → Symbolic low-level language.
+
+Compiler
+    → Translates source code into another form, commonly
+      target/machine-oriented code.
+
+Interpreter
+    → Executes program instructions through a runtime.
+
+Bytecode
+    → Intermediate code used by some language runtimes.
+
+Python
+    → High-level, general-purpose programming language.
+
+CPython
+    → Reference implementation of Python.
+
+Algorithm
+    → Step-by-step procedure for solving a problem.
+
+Syntax
+    → Rules for writing valid code.
+
+Semantics
+    → Meaning/behavior of code.
+
+Variable
+    → Name referring to an object.
+
+Object
+    → Runtime entity containing data/behavior.
+
+Data Type
+    → Classification describing values/objects and operations.
+
+Debugging
+    → Finding and fixing program errors.
+
+Library
+    → Reusable code made available for programmers.
+
+Package
+    → Distributable collection of Python modules/code.
+
+pip
+    → Package installation tool.
+
+PyPI
+    → Python Package Index.
+
+Virtual Environment
+    → Isolated environment for project dependencies.
+
+
+===============================================================
+1.53 COMPLETE PYTHON EXECUTION MODEL
+===============================================================
+
+Keep this mental model:
+
+    YOU
+     |
+     | Write
+     v
+    Python Source Code
+        (.py)
+     |
+     v
+    Python Parser / Compiler
+     |
+     v
+    Python Bytecode
+     |
+     v
+    Python Runtime
+     |
+     v
+    Operating System
+     |
+     v
+    CPU / Memory / Hardware
+     |
+     v
+    Program Output
+
+
+This is a simplified conceptual model of CPython execution.
+
+
+===============================================================
+1.54 COMPLETE PROGRAMMING MENTAL MODEL
+===============================================================
+
+Whenever you receive a programming problem, think:
+
+    1. UNDERSTAND
+           ↓
+    2. IDENTIFY INPUT
+           ↓
+    3. IDENTIFY OUTPUT
+           ↓
+    4. FIND LOGIC
+           ↓
+    5. DESIGN ALGORITHM
+           ↓
+    6. WRITE PSEUDOCODE
+           ↓
+    7. WRITE PYTHON CODE
+           ↓
+    8. TEST
+           ↓
+    9. DEBUG
+           ↓
+    10. OPTIMIZE
+           ↓
+    11. DOCUMENT
+           ↓
+    12. DEPLOY / USE
+
+
+This problem-solving process is more important than simply
+memorizing Python syntax.
+
+
+===============================================================
+1.55 MINI PRACTICE PROGRAMS
+===============================================================
+
+PROGRAM 1 — HELLO WORLD
+
+    print("Hello World")
+
+
+PROGRAM 2 — PERSONAL INFORMATION
+
+    name = "Apoorv"
+    age = 22
+
+    print("Name:", name)
+    print("Age:", age)
+
+
+PROGRAM 3 — ADD TWO NUMBERS
+
+    a = 10
+    b = 20
+
+    result = a + b
+
+    print("Result:", result)
+
+
+PROGRAM 4 — SIMPLE DECISION
+
+    age = 20
+
+    if age >= 18:
+        print("Eligible")
+    else:
+        print("Not Eligible")
+
+
+PROGRAM 5 — SIMPLE LOOP
+
+    for i in range(1, 6):
+        print(i)
+
+Output:
+
+    1
+    2
+    3
+    4
+    5
+
+
+===============================================================
+1.56 CHAPTER 1 INTERVIEW QUESTIONS
+===============================================================
+
+Q1. What is programming?
+
+Answer:
+    Programming is the process of creating instructions that
+    a computer can execute to solve a problem or perform a task.
+
+
+Q2. What is Python?
+
+Answer:
+    Python is a high-level, general-purpose programming
+    language known for readable syntax and a large ecosystem.
+
+
+Q3. Who created Python?
+
+Answer:
+    Guido van Rossum.
+
+
+Q4. When was Python first publicly released?
+
+Answer:
+    1991.
+
+
+Q5. Is Python compiled or interpreted?
+
+Answer:
+    The common "compiled vs interpreted" distinction is
+    oversimplified for Python. In CPython, source code is
+    compiled to bytecode and that bytecode is executed by
+    the Python runtime.
+
+
+Q6. What is bytecode?
+
+Answer:
+    Bytecode is an intermediate representation produced from
+    Python source code and executed by the Python runtime.
+
+
+Q7. What is CPython?
+
+Answer:
+    CPython is the reference implementation of Python and
+    is primarily implemented in C.
+
+
+Q8. What is a high-level language?
+
+Answer:
+    A language that provides abstractions closer to human
+    problem-solving and hides many hardware-level details.
+
+
+Q9. What is source code?
+
+Answer:
+    Human-readable code written by a programmer.
+
+
+Q10. What is an algorithm?
+
+Answer:
+    A finite sequence of well-defined steps for solving a
+    problem.
+
+
+Q11. What is debugging?
+
+Answer:
+    The process of identifying and fixing errors in software.
+
+
+Q12. What is dynamic typing?
+
+Answer:
+    A variable name does not need a fixed declared type;
+    it can refer to objects of different types at different
+    times.
+
+
+Q13. Is Python strongly typed?
+
+Answer:
+    Yes. Python generally enforces type rules rather than
+    automatically performing arbitrary implicit conversions
+    between unrelated types.
+
+
+Q14. What is pip?
+
+Answer:
+    A package installation tool commonly used for Python.
+
+
+Q15. What is PyPI?
+
+Answer:
+    Python Package Index, a major repository for Python
+    packages.
+
+
+===============================================================
+1.57 COMMON BEGINNER MISTAKES
+===============================================================
+
+MISTAKE 1:
+
+    Thinking Python is "just an easy language."
+
+CORRECT IDEA:
+
+    Python is easy to start but has deep topics such as:
+
+        - Memory management
+        - OOP
+        - Iterators
+        - Generators
+        - Decorators
+        - Concurrency
+        - Async programming
+        - Internals
+
+
+MISTAKE 2:
+
+    Memorizing syntax without solving problems.
+
+CORRECT:
+
+    Learn concept
+        ↓
+    Write code
+        ↓
+    Solve problem
+        ↓
+    Debug
+        ↓
+    Repeat
+
+
+MISTAKE 3:
+
+    Thinking coding = programming.
+
+CORRECT:
+
+    Programming =
+        Problem solving
+        +
+        Algorithms
+        +
+        Coding
+        +
+        Testing
+        +
+        Debugging
+        +
+        Design
+
+
+MISTAKE 4:
+
+    Ignoring errors.
+
+CORRECT:
+
+    Errors are part of learning programming.
+
+
+MISTAKE 5:
+
+    Learning too many libraries before learning core Python.
+
+CORRECT ORDER:
+
+    Core Python
+        ↓
+    OOP
+        ↓
+    DSA
+        ↓
+    SQL
+        ↓
+    Libraries / Frameworks
+        ↓
+    Projects
+
+
+===============================================================
+1.58 CHAPTER 1 KNOWLEDGE MAP
+===============================================================
+
+                    PROGRAMMING
+                         |
+             +-----------+-----------+
+             |                       |
+         PROBLEM                  PROGRAM
+             |                       |
+         ALGORITHM                   |
+             |                       |
+         SOURCE CODE                 |
+             |                       |
+       PROGRAMMING LANGUAGE          |
+             |                       |
+          PYTHON --------------------+
+             |
+       +-----+------+----------------+
+       |            |                |
+     Syntax       Objects          Libraries
+       |            |                |
+     Types       Variables          pip/PyPI
+     Control     Functions
+     Flow        Classes
+                 |
+                 OOP
+                 |
+                 DSA
+                 |
+                 SQL
+                 |
+                 APIs
+                 |
+               Projects
+                 |
+              JOB READY
+
+
+===============================================================
+1.59 WHAT YOU MUST REMEMBER FROM CHAPTER 1
+===============================================================
+
+1. Programming means giving instructions to a computer.
+
+2. A program is a collection of instructions.
+
+3. A programming language allows humans to express
+   computational instructions.
+
+4. Machine language is closest to the processor.
+
+5. High-level languages provide more human-friendly
+   abstractions.
+
+6. Python is a high-level, general-purpose language.
+
+7. Python was created by Guido van Rossum.
+
+8. Python's first public release was in 1991.
+
+9. Modern development uses Python 3.
+
+10. CPython is the reference implementation.
+
+11. CPython compiles Python source into bytecode.
+
+12. Python bytecode is executed by the Python runtime.
+
+13. Python is dynamically typed.
+
+14. Python is strongly typed.
+
+15. Python supports procedural, object-oriented and
+    functional programming techniques.
+
+16. Python has a large standard library and ecosystem.
+
+17. pip is used to install Python packages.
+
+18. PyPI is the Python Package Index.
+
+19. Algorithms describe how to solve problems.
+
+20. Syntax defines how code is written.
+
+21. Semantics concerns what valid code means/does.
+
+22. Debugging means finding and fixing errors.
+
+23. Python is used in web development, automation,
+    data, AI/ML, testing, DevOps and many other areas.
+
+24. For job readiness, Python should be combined with:
+
+        OOP
+        DSA
+        SQL
+        Git/GitHub
+        APIs
+        Testing
+        Projects
+
+
+===============================================================
+1.60 CHAPTER 1 PRACTICE TASK
+===============================================================
+
+Write Python programs for the following:
+
+1. Print your name.
+
+2. Print your M.Tech branch.
+
+3. Store your name, age and college in variables and print them.
+
+4. Add two numbers.
+
+5. Calculate the area of a rectangle.
+
+6. Calculate the area of a circle.
+
+7. Check whether a number is even or odd.
+
+8. Check whether a person is eligible based on age.
+
+9. Print numbers from 1 to 10.
+
+10. Print your name 5 times.
+
+11. Find the largest of two numbers.
+
+12. Find the largest of three numbers.
+
+13. Calculate simple interest.
+
+14. Convert Celsius to Fahrenheit.
+
+15. Calculate the average of three numbers.
+
+
+===============================================================
+CHAPTER 1 COMPLETION CRITERIA
+===============================================================
+
+Before moving to Chapter 2, you should be able to explain:
+
+[ ] What is programming?
+[ ] What is a program?
+[ ] What is a programming language?
+[ ] Low-level vs high-level language
+[ ] Machine language
+[ ] Assembly language
+[ ] Compiler
+[ ] Interpreter
+[ ] Source code
+[ ] Bytecode
+[ ] CPython
+[ ] Python execution model
+[ ] Why Python is high-level
+[ ] Python's history
+[ ] Python's major features
+[ ] Python's advantages
+[ ] Python's limitations
+[ ] Python use cases
+[ ] Syntax
+[ ] Semantics
+[ ] Syntax error
+[ ] Runtime error
+[ ] Logical error
+[ ] Debugging
+[ ] Algorithm
+[ ] Variable
+[ ] Object
+[ ] Data type
+[ ] Dynamic typing
+[ ] Strong typing
+[ ] Standard library
+[ ] Third-party package
+[ ] pip
+[ ] PyPI
+[ ] Virtual environment
+[ ] Basic Python program structure
+
+
+===============================================================
+FINAL MENTAL MODEL
+===============================================================
+
+                    PROBLEM
+                       ↓
+                    ALGORITHM
+                       ↓
+                  PYTHON CODE
+                       ↓
+                 SOURCE (.py)
+                       ↓
+             CPYTHON COMPILATION
+                       ↓
+                   BYTECODE
+                       ↓
+               PYTHON RUNTIME
+                       ↓
+                OPERATING SYSTEM
+                       ↓
+                  HARDWARE
+                       ↓
+                    OUTPUT
+
+
+                    PYTHON
+                       |
+       +---------------+---------------+
+       |               |               |
+    FUNDAMENTALS      OOP             DSA
+       |               |               |
+    Functions       Classes         Algorithms
+    Collections     Objects         Data Structures
+    Exceptions      Inheritance     Problem Solving
+       |               |               |
+       +---------------+---------------+
+                       |
+                     SQL
+                       |
+                    APIs
+                       |
+                    Git/GitHub
+                       |
+                    Testing
+                       |
+                   PROJECTS
+                       |
+                  INTERVIEWS
+                       |
+                  JOB READY
+
+
+END OF CHAPTER 1
+===============================================================

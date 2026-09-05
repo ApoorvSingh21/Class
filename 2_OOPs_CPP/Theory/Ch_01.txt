@@ -1,0 +1,1943 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║           OBJECT-ORIENTED PROGRAMMING USING C++                     ║
+║           CHAPTER 1 — INTRODUCTION TO OOP                           ║
+║           Level: M.Tech 1st Year | Beginner → Job Ready            ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.1 WHAT IS PROGRAMMING?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Programming means writing instructions that tell a computer what to do.
+
+A computer does not understand human language directly. We write programs
+using programming languages such as:
+
+    C
+    C++
+    Java
+    Python
+    JavaScript
+
+Example:
+
+    int a = 10;
+    int b = 20;
+    int sum = a + b;
+
+Here we are giving instructions to the computer to:
+
+    1. Store 10 in a
+    2. Store 20 in b
+    3. Add a and b
+    4. Store the result in sum
+
+
+REAL-WORLD ANALOGY:
+
+Imagine a person making tea.
+
+Instructions:
+
+    1. Take water
+    2. Boil water
+    3. Add tea
+    4. Add milk
+    5. Add sugar
+    6. Serve tea
+
+A computer program works similarly.
+
+    Input → Processing → Output
+
+
+Example:
+
+    Input:
+        10, 20
+
+    Processing:
+        Addition
+
+    Output:
+        30
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.2 WHAT IS PROCEDURAL PROGRAMMING?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Procedural programming is a programming approach in which a program
+is organized mainly around procedures/functions.
+
+A procedure is a block of instructions that performs a particular task.
+
+Examples of procedural languages:
+
+    C
+    Pascal
+    FORTRAN
+
+C is a famous procedural programming language.
+
+
+Example in C:
+
+    int calculateSalary(int basic, int allowance)
+    {
+        return basic + allowance;
+    }
+
+The program focuses mainly on:
+
+    DATA
+      +
+    FUNCTIONS/PROCEDURES
+
+
+Basic structure:
+
+             ┌─────────────┐
+             │    DATA     │
+             └──────┬──────┘
+                    │
+                    ▼
+             ┌─────────────┐
+             │  FUNCTIONS  │
+             └──────┬──────┘
+                    │
+                    ▼
+             ┌─────────────┐
+             │   OUTPUT    │
+             └─────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.3 LIMITATIONS OF PROCEDURAL PROGRAMMING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Procedural programming works very well for small programs.
+
+However, as software becomes large, several problems can occur.
+
+Major problems:
+
+    1. Data is often separated from functions.
+    2. Data can be exposed to many functions.
+    3. Large programs become difficult to maintain.
+    4. Code reuse can become difficult.
+    5. Changes in one part may affect other parts.
+    6. Large systems become difficult to understand.
+    7. Security of data becomes harder to manage.
+
+
+Example:
+
+    int balance = 50000;
+
+    void withdraw(int amount)
+    {
+        balance = balance - amount;
+    }
+
+    void deposit(int amount)
+    {
+        balance = balance + amount;
+    }
+
+Here balance is separate from the functions.
+
+Other parts of a large program may accidentally modify balance:
+
+    balance = -100000;
+
+
+This can create problems.
+
+OOP attempts to solve such problems by combining related data
+and functions into a single unit called an OBJECT.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.4 WHAT IS OBJECT-ORIENTED PROGRAMMING?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Object-Oriented Programming (OOP) is a programming paradigm in which
+software is designed using OBJECTS and CLASSES.
+
+A paradigm means a general approach or style of solving programming
+problems.
+
+OOP models software around entities/objects.
+
+Examples of real-world objects:
+
+    Student
+    Teacher
+    Car
+    Bank Account
+    Employee
+    Product
+    Customer
+    ATM
+    Book
+
+Each object generally has:
+
+    1. STATE
+    2. BEHAVIOR
+
+
+For example:
+
+    STUDENT
+
+    State:
+        name
+        rollNumber
+        age
+        marks
+
+    Behavior:
+        study()
+        attendClass()
+        displayResult()
+
+
+Therefore:
+
+             OBJECT
+                │
+          ┌─────┴─────┐
+          │           │
+        STATE       BEHAVIOR
+          │           │
+       Data        Functions
+
+
+In C++:
+
+    class Student
+    {
+    private:
+        string name;
+        int rollNumber;
+        float marks;
+
+    public:
+        void study()
+        {
+            // study operation
+        }
+
+        void displayResult()
+        {
+            // display result
+        }
+    };
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.5 WHY DO WE NEED OOP?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OOP is useful for designing large, complex and maintainable software.
+
+Suppose we are creating a banking application.
+
+Without proper organization, we may have:
+
+    customer data
+    account data
+    transaction functions
+    loan functions
+    payment functions
+    authentication functions
+
+all spread across a large codebase.
+
+OOP allows us to model these as separate objects/classes:
+
+    Customer
+    Account
+    Transaction
+    Loan
+    Payment
+    Authentication
+
+
+For example:
+
+    Account
+    ├── accountNumber
+    ├── holderName
+    ├── balance
+    │
+    ├── deposit()
+    ├── withdraw()
+    └── checkBalance()
+
+
+This makes the system easier to:
+
+    • Understand
+    • Maintain
+    • Extend
+    • Test
+    • Reuse
+    • Debug
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.6 PROCEDURAL PROGRAMMING vs OOP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROCEDURAL PROGRAMMING
+
+    Main focus:
+        Functions / procedures
+
+    Data and functions:
+        Often treated separately
+
+    Approach:
+        Top-down
+
+    Data security:
+        Comparatively weaker
+
+    Reusability:
+        Function-based reuse
+
+    Large systems:
+        Can become difficult to maintain
+
+
+OBJECT-ORIENTED PROGRAMMING
+
+    Main focus:
+        Objects and classes
+
+    Data and functions:
+        Combined inside classes
+
+    Approach:
+        Object-oriented / commonly modeled from entities and
+        responsibilities
+
+    Data security:
+        Encapsulation provides controlled access
+
+    Reusability:
+        Inheritance, composition, templates, etc.
+
+    Large systems:
+        Easier to organize when designed properly
+
+
+IMPORTANT:
+
+OOP does NOT automatically make every program better.
+
+Bad OOP design can also create:
+
+    • unnecessary complexity
+    • excessive inheritance
+    • tightly coupled code
+    • difficult maintenance
+
+Therefore, the goal is not simply "use classes everywhere".
+
+The goal is:
+
+    DESIGN SOFTWARE WITH CLEAR RESPONSIBILITIES AND RELATIONSHIPS.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.7 WHAT IS A CLASS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A CLASS is a blueprint/template for creating objects.
+
+Think of a class as a design.
+
+Example:
+
+    Car Class
+
+    ┌──────────────────────────────┐
+    │            CAR               │
+    ├──────────────────────────────┤
+    │ Data:                        │
+    │   brand                      │
+    │   model                      │
+    │   speed                      │
+    ├──────────────────────────────┤
+    │ Functions:                   │
+    │   start()                    │
+    │   accelerate()               │
+    │   brake()                    │
+    └──────────────────────────────┘
+
+
+C++ example:
+
+    class Car
+    {
+    public:
+        string brand;
+        string model;
+        int speed;
+
+        void start()
+        {
+            cout << "Car started";
+        }
+
+        void accelerate()
+        {
+            speed += 10;
+        }
+    };
+
+
+A class itself is a user-defined type.
+
+It defines:
+
+    • What data an object will contain
+    • What operations the object can perform
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.8 WHAT IS AN OBJECT?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+An OBJECT is an instance of a class.
+
+Class = Blueprint
+Object = Actual entity created from that blueprint
+
+
+Example:
+
+    class Student
+    {
+    public:
+        string name;
+        int age;
+    };
+
+
+Objects:
+
+    Student s1;
+    Student s2;
+    Student s3;
+
+
+Here:
+
+    Student = Class
+
+    s1 = Object
+    s2 = Object
+    s3 = Object
+
+
+Each object has its own state.
+
+    s1.name = "Apoorv";
+    s1.age = 23;
+
+    s2.name = "Rahul";
+    s2.age = 24;
+
+
+Conceptually:
+
+    Student
+       │
+       ├── s1
+       │    ├── name = Apoorv
+       │    └── age  = 23
+       │
+       ├── s2
+       │    ├── name = Rahul
+       │    └── age  = 24
+       │
+       └── s3
+            ├── name = Neha
+            └── age  = 22
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.9 CLASS vs OBJECT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CLASS:
+
+    • Blueprint
+    • Template
+    • Logical definition
+    • Defines data and behavior
+
+OBJECT:
+
+    • Instance of a class
+    • Actual entity
+    • Occupies memory when created
+    • Has its own state
+
+
+Example:
+
+    class Car
+    {
+        // blueprint
+    };
+
+
+    Car car1;
+    Car car2;
+
+
+Here:
+
+    Car  → Class
+    car1 → Object
+    car2 → Object
+
+
+REAL-WORLD ANALOGY:
+
+    House design      → Class
+    Actual house      → Object
+
+    Student template  → Class
+    Actual student    → Object
+
+    Car design        → Class
+    Actual car        → Object
+
+
+IMPORTANT INTERVIEW QUESTION:
+
+Q: Is a class an object?
+
+A:
+
+A class is a user-defined type/blueprint. An object is an instance
+of that class. In C++, a class definition itself is not simply
+the same thing as an object.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.10 STATE AND BEHAVIOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every object can be understood through:
+
+    STATE
+    BEHAVIOR
+
+
+STATE:
+
+State represents the current data/properties of an object.
+
+Example:
+
+    Bank Account
+
+    accountNumber = 1001
+    holderName    = "Apoorv"
+    balance       = 50000
+
+
+BEHAVIOR:
+
+Behavior represents what the object can do.
+
+    deposit()
+    withdraw()
+    checkBalance()
+
+
+Therefore:
+
+    BankAccount
+
+    State:
+        accountNumber
+        holderName
+        balance
+
+    Behavior:
+        deposit()
+        withdraw()
+        checkBalance()
+
+
+This relationship is fundamental to OOP.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.11 THE FOUR PILLARS OF OOP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The four commonly taught fundamental principles of OOP are:
+
+    1. ENCAPSULATION
+    2. ABSTRACTION
+    3. INHERITANCE
+    4. POLYMORPHISM
+
+
+                 OOP
+                  │
+        ┌─────────┼─────────┐
+        │         │         │
+        ▼         ▼         ▼
+   Encapsulation Abstraction
+        │
+        ├───────────────┐
+        │               │
+        ▼               ▼
+   Inheritance     Polymorphism
+
+
+We will study each in detail later.
+
+For now, understand the basic meaning.
+
+
+1. ENCAPSULATION
+
+    Combining data and functions into a class and controlling
+    access to the internal data.
+
+Example:
+
+    class BankAccount
+    {
+    private:
+        double balance;
+
+    public:
+        void deposit(double amount);
+        void withdraw(double amount);
+    };
+
+
+The balance is protected from direct external modification.
+
+
+2. ABSTRACTION
+
+    Showing essential information while hiding unnecessary
+    implementation details.
+
+Example:
+
+    When you use an ATM:
+
+        Insert card
+        Enter PIN
+        Select withdrawal
+        Enter amount
+
+    You do not need to know the internal implementation of
+    the banking server, database, cryptography, etc.
+
+
+3. INHERITANCE
+
+    Creating a new class based on an existing class.
+
+Example:
+
+    Vehicle
+       │
+       ├── Car
+       ├── Bike
+       └── Bus
+
+
+Car can inherit common properties/behavior from Vehicle.
+
+
+4. POLYMORPHISM
+
+    "Many forms."
+
+    The same interface/operation can behave differently depending
+    on the object or context.
+
+Example:
+
+    Animal
+       │
+       ├── Dog → sound() → Bark
+       └── Cat → sound() → Meow
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.12 ENCAPSULATION IN SIMPLE TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Encapsulation =
+
+    DATA
+      +
+    METHODS
+      +
+    ACCESS CONTROL
+
+
+Example:
+
+    class BankAccount
+    {
+    private:
+        double balance;
+
+    public:
+
+        void deposit(double amount)
+        {
+            if (amount > 0)
+                balance += amount;
+        }
+
+        double getBalance()
+        {
+            return balance;
+        }
+    };
+
+
+Outside code cannot directly do:
+
+    account.balance = -50000;
+
+
+because balance is private.
+
+Instead:
+
+    account.deposit(5000);
+
+This gives the class control over how its data changes.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.13 ABSTRACTION IN SIMPLE TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Abstraction means focusing on WHAT an object does rather than
+exposing all details of HOW it does it.
+
+Example:
+
+    cout << "Hello";
+
+
+You use cout without needing to understand every internal operation
+of the C++ standard library and operating system.
+
+Another example:
+
+    car.start();
+
+You tell the car to start.
+
+You do not manually control:
+
+    fuel injection
+    ignition timing
+    starter motor
+    engine control unit
+    combustion
+
+
+The implementation is hidden behind an interface.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.14 INHERITANCE IN SIMPLE TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Inheritance allows one class to derive from another class.
+
+Example:
+
+    class Vehicle
+    {
+    public:
+        void start()
+        {
+            cout << "Vehicle started";
+        }
+    };
+
+
+    class Car : public Vehicle
+    {
+    };
+
+
+Now:
+
+    Car c;
+
+    c.start();
+
+
+Car receives accessible functionality from Vehicle.
+
+Relationship:
+
+    Car IS-A Vehicle
+
+
+Other examples:
+
+    Dog IS-A Animal
+    Manager IS-A Employee
+    SavingsAccount IS-A BankAccount
+
+
+Inheritance should represent a meaningful "IS-A" relationship.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.15 POLYMORPHISM IN SIMPLE TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Polymorphism means "many forms".
+
+Consider:
+
+    Animal
+       │
+       ├── Dog
+       └── Cat
+
+
+Both can have:
+
+    sound()
+
+
+But:
+
+    Dog → Bark
+    Cat → Meow
+
+
+Example conceptually:
+
+    animal.sound();
+
+Depending on the actual object, the behavior can differ.
+
+Polymorphism is one of the most important topics in C++ interviews.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.16 OOP AND REAL-WORLD MODELING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Suppose we need to build a UNIVERSITY MANAGEMENT SYSTEM.
+
+We can identify objects such as:
+
+    Student
+    Teacher
+    Course
+    Department
+    Examination
+    Result
+    Attendance
+
+
+Student may contain:
+
+    studentId
+    name
+    age
+    courses
+
+
+Student behavior:
+
+    registerCourse()
+    attendClass()
+    viewResult()
+
+
+Teacher may contain:
+
+    teacherId
+    name
+    department
+
+
+Teacher behavior:
+
+    teach()
+    evaluate()
+    markAttendance()
+
+
+This is called modeling the problem domain.
+
+We identify:
+
+    Entities
+    Properties
+    Behaviors
+    Relationships
+
+
+This is an important software-engineering skill.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.17 OOP EXAMPLE — BANK ACCOUNT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class BankAccount
+{
+private:
+    string accountHolder;
+    double balance;
+
+public:
+
+    BankAccount(string name, double initialBalance)
+    {
+        accountHolder = name;
+        balance = initialBalance;
+    }
+
+    void deposit(double amount)
+    {
+        if (amount > 0)
+        {
+            balance += amount;
+        }
+    }
+
+    void withdraw(double amount)
+    {
+        if (amount > 0 && amount <= balance)
+        {
+            balance -= amount;
+        }
+    }
+
+    double getBalance()
+    {
+        return balance;
+    }
+
+    void display()
+    {
+        cout << "Account Holder: " << accountHolder << endl;
+        cout << "Balance: " << balance << endl;
+    }
+};
+
+
+int main()
+{
+    BankAccount account("Apoorv", 10000);
+
+    account.deposit(5000);
+    account.withdraw(2000);
+
+    account.display();
+
+    return 0;
+}
+
+
+OUTPUT:
+
+    Account Holder: Apoorv
+    Balance: 13000
+
+
+What did we learn?
+
+    BankAccount → Class
+
+    account → Object
+
+    accountHolder → Data
+
+    balance → Data
+
+    deposit() → Behavior
+
+    withdraw() → Behavior
+
+    display() → Behavior
+
+    private → Data protection
+
+    public → Controlled interface
+
+
+This is a simple example of encapsulation.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.18 WHY PRIVATE DATA IS IMPORTANT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Consider this BAD design:
+
+    class BankAccount
+    {
+    public:
+        double balance;
+    };
+
+
+Then someone could write:
+
+    account.balance = -1000000;
+
+
+This could violate business rules.
+
+Better:
+
+    class BankAccount
+    {
+    private:
+        double balance;
+
+    public:
+
+        void withdraw(double amount)
+        {
+            if (amount > 0 && amount <= balance)
+            {
+                balance -= amount;
+            }
+        }
+    };
+
+
+Now the class controls the modification of balance.
+
+This is the basic idea behind data hiding and encapsulation.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.19 OOP ADVANTAGES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. CODE ORGANIZATION
+
+   Related data and operations can be grouped together.
+
+2. ENCAPSULATION
+
+   Internal data can be protected through access control.
+
+3. REUSABILITY
+
+   Existing classes/components can be reused.
+
+4. MAINTAINABILITY
+
+   Well-designed classes can make changes easier.
+
+5. EXTENSIBILITY
+
+   New functionality can be added with appropriate designs.
+
+6. ABSTRACTION
+
+   Complex implementation details can be hidden behind interfaces.
+
+7. POLYMORPHISM
+
+   Common interfaces can support different implementations.
+
+8. MODULARITY
+
+   Large systems can be divided into manageable components.
+
+9. TESTABILITY
+
+   Properly designed classes can be tested independently.
+
+10. REAL-WORLD MODELING
+
+   Many problem domains can naturally be modeled using objects.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.20 DISADVANTAGES OF OOP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OOP is not perfect.
+
+Potential disadvantages:
+
+    1. More initial design effort
+    2. More classes and abstractions
+    3. Can become over-engineered
+    4. Poor inheritance can create complexity
+    5. Some abstractions introduce overhead
+    6. Small programs may not need extensive OOP
+    7. Learning curve can be significant
+    8. Poor class design can produce tightly coupled systems
+
+
+IMPORTANT:
+
+    OOP is a tool, not a requirement for every problem.
+
+Good programmers choose the appropriate design for the problem.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.21 APPLICATIONS OF OOP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OOP is widely used in:
+
+    • Banking systems
+    • E-commerce
+    • Enterprise software
+    • Games
+    • GUI applications
+    • Operating-system components
+    • Embedded software
+    • Automotive software
+    • Simulation software
+    • Scientific software
+    • Desktop applications
+    • Backend systems
+    • Large-scale business applications
+
+
+Languages supporting object-oriented programming include:
+
+    C++
+    Java
+    C#
+    Python
+    Kotlin
+    Swift
+    Ruby
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.22 OOP IN C++
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+C++ supports multiple programming styles.
+
+It can be used for:
+
+    Procedural Programming
+    Object-Oriented Programming
+    Generic Programming
+    Functional-style programming
+    Low-level/system programming
+
+
+Important C++ OOP features include:
+
+    class
+    object
+    encapsulation
+    inheritance
+    polymorphism
+    abstraction
+    constructors
+    destructors
+    operator overloading
+    virtual functions
+    templates
+    exception handling
+    RAII
+    smart pointers
+
+
+Therefore C++ is a powerful language for learning OOP deeply.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.23 C++ CLASS BASIC STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+General structure:
+
+    class ClassName
+    {
+    private:
+
+        // data members
+        // private functions
+
+    protected:
+
+        // members available to derived classes
+
+    public:
+
+        // public interface
+        // member functions
+    };
+
+
+Example:
+
+    class Student
+    {
+    private:
+        string name;
+        int marks;
+
+    public:
+
+        void setData(string n, int m)
+        {
+            name = n;
+            marks = m;
+        }
+
+        void display()
+        {
+            cout << name << endl;
+            cout << marks << endl;
+        }
+    };
+
+
+Create object:
+
+    Student s1;
+
+Call public functions:
+
+    s1.setData("Apoorv", 90);
+    s1.display();
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.24 OBJECT CREATION IN C++
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Example:
+
+    class Student
+    {
+    public:
+        string name;
+    };
+
+
+Create object:
+
+    Student s1;
+
+
+Multiple objects:
+
+    Student s1;
+    Student s2;
+    Student s3;
+
+
+Dynamic object:
+
+    Student* ptr = new Student;
+
+    delete ptr;
+
+
+Modern C++ generally prefers RAII and smart pointers for owning
+dynamic objects rather than manually managing raw pointers.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.25 OOP OBJECT MODEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Consider:
+
+    Student s1;
+    Student s2;
+
+
+Both objects are instances of Student.
+
+Conceptually:
+
+                 Student Class
+                       │
+              ┌────────┴────────┐
+              │                 │
+              ▼                 ▼
+             s1                s2
+              │                 │
+        ┌─────┴─────┐     ┌─────┴─────┐
+        │           │     │           │
+      name        marks  name        marks
+      Apoorv       90    Rahul        85
+
+
+Each object has its own non-static data state.
+
+Member functions are associated with the class and operate on
+the particular object through the implicit object context.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.26 MESSAGE PASSING CONCEPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+In OOP terminology, objects can communicate by calling methods/
+operations on objects.
+
+Example:
+
+    account.deposit(5000);
+
+Here:
+
+    account → object
+    deposit → operation/method
+    5000    → argument
+
+
+Conceptually:
+
+    Object A
+       │
+       │ calls operation
+       ▼
+    Object B
+
+
+In a large software system, objects collaborate to perform tasks.
+
+
+Example:
+
+    Customer
+        │
+        ▼
+    Order
+        │
+        ▼
+    Payment
+        │
+        ▼
+    Bank
+
+
+This object collaboration is a major part of object-oriented design.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.27 CLASS RESPONSIBILITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A class should have a clear responsibility.
+
+BAD DESIGN:
+
+    class Everything
+    {
+        // login
+        // database
+        // payment
+        // email
+        // report
+        // file handling
+        // employee management
+        // UI
+    };
+
+
+This class has too many responsibilities.
+
+Better design:
+
+    Authentication
+    Payment
+    EmailService
+    ReportGenerator
+    Employee
+
+
+Each class has a more focused responsibility.
+
+This idea becomes extremely important later when studying:
+
+    SOLID principles
+    Clean Code
+    Low-Level Design
+    Design Patterns
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.28 IS-A vs HAS-A
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Two very important relationships.
+
+
+IS-A:
+
+    Represents inheritance.
+
+Examples:
+
+    Dog IS-A Animal
+    Car IS-A Vehicle
+    Manager IS-A Employee
+
+
+HAS-A:
+
+    Represents composition/aggregation.
+
+Examples:
+
+    Car HAS-A Engine
+    University HAS-A Department
+    Library HAS-A Book Collection
+
+
+Diagram:
+
+    IS-A:
+
+    Animal
+       ▲
+       │
+      Dog
+
+
+    HAS-A:
+
+    Car ─────── HAS-A ───────> Engine
+
+
+Remember:
+
+    IS-A  → Inheritance relationship
+
+    HAS-A → Composition/Aggregation relationship
+
+
+Choosing between these relationships is an important
+object-oriented design skill.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.29 OOP DESIGN THINKING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When given a software problem, do not immediately start writing code.
+
+First ask:
+
+    1. What are the important entities?
+    2. What data does each entity have?
+    3. What can each entity do?
+    4. Which entities are related?
+    5. Which data should be private?
+    6. Which behavior belongs to which class?
+    7. Is the relationship IS-A or HAS-A?
+    8. Can responsibilities be separated?
+    9. Where is inheritance actually useful?
+   10. Where is polymorphism useful?
+
+
+Example:
+
+    Problem:
+        Design a parking lot system.
+
+
+Possible entities:
+
+    ParkingLot
+    ParkingSpot
+    Vehicle
+    Car
+    Bike
+    Ticket
+    Payment
+
+
+Possible relationships:
+
+    Car IS-A Vehicle
+
+    ParkingLot HAS-A ParkingSpot
+
+    ParkingSpot HAS-A / contains information about Vehicle
+
+
+This is the beginning of Low-Level Design.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.30 COMPLETE OOP MENTAL MODEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Think about OOP like this:
+
+                    REAL WORLD
+                        │
+                        ▼
+                    ENTITIES
+                        │
+                        ▼
+                     OBJECTS
+                        │
+              ┌─────────┴─────────┐
+              ▼                   ▼
+            STATE              BEHAVIOR
+              │                   │
+              ▼                   ▼
+             DATA             FUNCTIONS
+              │                   │
+              └─────────┬─────────┘
+                        ▼
+                      CLASS
+                        │
+                        ▼
+                 OBJECT DESIGN
+                        │
+        ┌───────────────┼────────────────┐
+        ▼               ▼                ▼
+ Encapsulation      Abstraction      Relationships
+                                           │
+                              ┌────────────┼────────────┐
+                              ▼            ▼            ▼
+                            IS-A        HAS-A       Association
+                              │            │
+                         Inheritance   Composition
+                              │
+                              ▼
+                         Polymorphism
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.31 IMPORTANT TERMINOLOGY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TERM                  MEANING
+
+Programming           Writing instructions for a computer.
+
+Paradigm              A general style/approach to programming.
+
+Procedural Programming
+                      Programming organized mainly around procedures
+                      or functions.
+
+OOP                   Programming using objects/classes and their
+                      relationships.
+
+Class                 A user-defined type/blueprint for objects.
+
+Object                An instance of a class.
+
+State                 Current data/properties of an object.
+
+Behavior              Operations an object can perform.
+
+Method                A member function associated with a class.
+
+Encapsulation         Combining data/behavior and controlling access.
+
+Data Hiding           Restricting direct access to internal data.
+
+Abstraction           Exposing essential interface while hiding
+                      implementation details.
+
+Inheritance           Deriving a class from another class.
+
+Polymorphism          Ability to represent/use different forms through
+                      a common interface or operation.
+
+IS-A                  Inheritance-type relationship.
+
+HAS-A                 Composition/aggregation-type relationship.
+
+Interface             The operations through which other code
+                      interacts with a component.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.32 INTERVIEW QUESTIONS — BASIC
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q1. What is OOP?
+
+ANSWER:
+
+Object-Oriented Programming is a programming paradigm that organizes
+software around objects and classes. Objects contain state and expose
+behavior, and OOP provides mechanisms such as encapsulation,
+abstraction, inheritance and polymorphism.
+
+
+Q2. What are the four pillars of OOP?
+
+ANSWER:
+
+    1. Encapsulation
+    2. Abstraction
+    3. Inheritance
+    4. Polymorphism
+
+
+Q3. What is a class?
+
+ANSWER:
+
+A class is a user-defined type that defines the data and operations
+that its objects can have.
+
+
+Q4. What is an object?
+
+ANSWER:
+
+An object is an instance of a class.
+
+
+Q5. Difference between class and object?
+
+ANSWER:
+
+    Class → Blueprint/type
+    Object → Instance of the class
+
+
+Q6. What is encapsulation?
+
+ANSWER:
+
+Encapsulation is the organization of related data and operations
+inside a class together with controlled access to the internal state.
+
+
+Q7. What is abstraction?
+
+ANSWER:
+
+Abstraction focuses on exposing essential operations while hiding
+unnecessary implementation details.
+
+
+Q8. What is inheritance?
+
+ANSWER:
+
+Inheritance allows a derived class to acquire accessible members
+and characteristics from a base class.
+
+
+Q9. What is polymorphism?
+
+ANSWER:
+
+Polymorphism allows a common interface or operation to represent
+different behaviors/forms depending on context or object type.
+
+
+Q10. What is the difference between IS-A and HAS-A?
+
+ANSWER:
+
+    IS-A  → inheritance/generalization
+
+    HAS-A → composition/aggregation/containment relationship
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.33 INTERVIEW TRAPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TRAP 1:
+
+"Encapsulation and abstraction are exactly the same."
+
+FALSE.
+
+Encapsulation:
+    Concerned with organizing state/behavior and controlling access.
+
+Abstraction:
+    Concerned with exposing essential concepts/interfaces while
+    hiding unnecessary implementation details.
+
+
+TRAP 2:
+
+"Inheritance is always the best way to reuse code."
+
+FALSE.
+
+Composition is often preferable when there is a HAS-A relationship.
+
+
+TRAP 3:
+
+"OOP means everything must be a class."
+
+FALSE.
+
+C++ supports multiple programming paradigms.
+
+
+TRAP 4:
+
+"Object and class are the same."
+
+FALSE.
+
+Class = type/blueprint.
+
+Object = instance.
+
+
+TRAP 5:
+
+"Polymorphism means only function overloading."
+
+FALSE.
+
+Overloading is one form of compile-time polymorphism.
+
+C++ also supports runtime polymorphism through mechanisms such
+as virtual functions.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.34 EXAM-READY SHORT NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OOP:
+
+    Object-Oriented Programming is a programming paradigm based on
+    objects and classes.
+
+CLASS:
+
+    A user-defined type/blueprint used to create objects.
+
+OBJECT:
+
+    An instance of a class.
+
+FOUR PILLARS:
+
+    Encapsulation
+    Abstraction
+    Inheritance
+    Polymorphism
+
+ENCAPSULATION:
+
+    Data + operations + controlled access.
+
+ABSTRACTION:
+
+    Hide unnecessary implementation details and expose essential
+    functionality.
+
+INHERITANCE:
+
+    Mechanism for deriving a new class from an existing class.
+
+POLYMORPHISM:
+
+    Ability to work with different forms through a common interface
+    or operation.
+
+IS-A:
+
+    Inheritance relationship.
+
+HAS-A:
+
+    Composition/aggregation relationship.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.35 CHAPTER 1 PRACTICE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK 1:
+
+Create a class Student containing:
+
+    name
+    rollNumber
+    marks
+
+and a function:
+
+    display()
+
+
+TASK 2:
+
+Create a class Employee containing:
+
+    employeeId
+    name
+    salary
+
+Add functions:
+
+    setData()
+    display()
+
+
+TASK 3:
+
+Create a class BankAccount containing:
+
+    accountHolder
+    balance
+
+Add:
+
+    deposit()
+    withdraw()
+    getBalance()
+
+
+TASK 4:
+
+Identify classes and objects in:
+
+    A Library Management System
+
+
+TASK 5:
+
+Identify IS-A and HAS-A relationships:
+
+    Car
+    Vehicle
+    Engine
+    Driver
+
+
+TASK 6:
+
+Explain in your own words:
+
+    Encapsulation
+    Abstraction
+    Inheritance
+    Polymorphism
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.36 CHAPTER 1 FINAL SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Programming
+    ↓
+Writing instructions for computers
+    ↓
+Procedural Programming
+    ↓
+Functions/procedures are the primary organizing mechanism
+    ↓
+Large systems create organization/maintenance challenges
+    ↓
+Object-Oriented Programming
+    ↓
+Model software using objects/classes
+    ↓
+Object
+    ↓
+State + Behavior
+    ↓
+Class
+    ↓
+Blueprint/user-defined type
+    ↓
+Four major OOP principles
+    ├── Encapsulation
+    ├── Abstraction
+    ├── Inheritance
+    └── Polymorphism
+    ↓
+Relationships
+    ├── IS-A
+    └── HAS-A
+    ↓
+Good Object-Oriented Design
+    ↓
+Maintainable + Reusable + Extensible Software
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MASTERY CHECK — CHAPTER 1
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before moving to Chapter 2, you should be able to explain:
+
+[ ] What programming is
+[ ] What procedural programming is
+[ ] Limitations of procedural programming
+[ ] What OOP is
+[ ] Why OOP is useful
+[ ] What a class is
+[ ] What an object is
+[ ] Class vs object
+[ ] State vs behavior
+[ ] Encapsulation
+[ ] Abstraction
+[ ] Inheritance
+[ ] Polymorphism
+[ ] IS-A relationship
+[ ] HAS-A relationship
+[ ] Advantages of OOP
+[ ] Disadvantages of OOP
+[ ] OOP applications
+[ ] Basic C++ class syntax
+[ ] How to create an object
+[ ] How objects communicate through operations
+[ ] Basic OOP design thinking
+
+
+IMPORTANT LEARNING RULE:
+
+Do NOT move to the next chapter until these concepts are clear.
+
+Next major chapter:
+
+    CHAPTER 2 — C++ FUNDAMENTALS REQUIRED FOR OOP
+
+It will cover the C++ concepts required before going deeply into
+classes, constructors, destructors, inheritance and polymorphism.

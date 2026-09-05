@@ -1,0 +1,1992 @@
+====================================================================
+        JAVASCRIPT — CHAPTER 1: JAVASCRIPT BASICS
+====================================================================
+
+LEVEL:
+    M.Tech 1st Year | Absolute Beginner → Job Ready Foundation
+
+CHAPTER OBJECTIVES
+--------------------------------------------------------------------
+After completing this chapter, you will understand:
+
+    ✓ What a JavaScript program is
+    ✓ How JavaScript is added to HTML
+    ✓ Inline, Internal, and External JavaScript
+    ✓ Statements and expressions
+    ✓ Comments
+    ✓ Variables
+    ✓ var, let, and const
+    ✓ Declaration, initialization, and assignment
+    ✓ Identifiers and naming rules
+    ✓ Reserved keywords
+    ✓ Constants
+    ✓ console.log()
+    ✓ console.error()
+    ✓ console.warn()
+    ✓ console.table()
+    ✓ console.clear()
+    ✓ Basic debugging using the browser console
+
+
+====================================================================
+1.1 WHAT IS JAVASCRIPT?
+====================================================================
+
+JavaScript is a high-level, dynamically typed programming language
+mainly used to make web pages interactive and to build applications.
+
+Simple definition:
+
+    JavaScript = A programming language used to add behavior and
+                 logic to applications.
+
+Example:
+
+    HTML       → Structure
+    CSS        → Appearance
+    JavaScript → Behavior / Logic
+
+Real-world analogy:
+
+    Imagine a car:
+
+        HTML       → Body of the car
+        CSS        → Color, design, seats, appearance
+        JavaScript → Engine and controls
+
+Example:
+
+    HTML can create a button:
+
+        [ Click Me ]
+
+    CSS can make the button beautiful.
+
+    JavaScript can make the button perform an action when clicked.
+
+
+====================================================================
+1.2 WHY DO WE NEED JAVASCRIPT?
+====================================================================
+
+Without JavaScript, most web pages would primarily be static.
+
+JavaScript allows us to:
+
+    • Respond to button clicks
+    • Validate forms
+    • Change webpage content
+    • Create animations
+    • Make API requests
+    • Communicate with servers
+    • Store data in browsers
+    • Create interactive applications
+    • Build frontend applications
+    • Build backend applications using Node.js
+    • Create real-time applications
+    • Build full-stack applications
+
+
+Example:
+
+    User clicks:
+
+        [ Login ]
+
+    JavaScript can:
+
+        1. Read username
+        2. Read password
+        3. Validate input
+        4. Send request to server
+        5. Receive response
+        6. Show success/error message
+
+
+====================================================================
+1.3 FIRST JAVASCRIPT PROGRAM
+====================================================================
+
+The simplest JavaScript program:
+
+    console.log("Hello, World!");
+
+Explanation:
+
+    console
+        ↓
+    An object provided by the runtime/environment.
+
+    log()
+        ↓
+    A method used to print information to the console.
+
+    "Hello, World!"
+        ↓
+    A string value.
+
+Example:
+
+    console.log("Hello, World!");
+
+Output:
+
+    Hello, World!
+
+
+You can run this inside:
+
+    Browser → Developer Tools → Console
+
+or in a JavaScript file using Node.js.
+
+
+====================================================================
+1.4 JAVASCRIPT FILE
+====================================================================
+
+JavaScript files normally use:
+
+    .js
+
+Example:
+
+    app.js
+    main.js
+    script.js
+    index.js
+
+Example file:
+
+    console.log("Hello JavaScript");
+
+
+====================================================================
+1.5 THREE WAYS TO ADD JAVASCRIPT TO HTML
+====================================================================
+
+JavaScript can be added to an HTML page in three common ways:
+
+    1. Inline JavaScript
+    2. Internal JavaScript
+    3. External JavaScript
+
+
+--------------------------------------------------------------------
+1.5.1 INLINE JAVASCRIPT
+--------------------------------------------------------------------
+
+JavaScript is written directly inside an HTML element.
+
+Example:
+
+    <button onclick="alert('Hello')">
+        Click Me
+    </button>
+
+Here:
+
+    onclick
+        ↓
+    An event attribute.
+
+When the button is clicked:
+
+    alert("Hello")
+
+executes.
+
+Advantages:
+
+    • Very simple
+    • Useful for tiny demonstrations
+
+Disadvantages:
+
+    • Poor maintainability
+    • Mixes HTML and JavaScript
+    • Difficult to manage in large applications
+
+Therefore:
+
+    Avoid inline JavaScript in professional projects whenever
+    possible.
+
+
+--------------------------------------------------------------------
+1.5.2 INTERNAL JAVASCRIPT
+--------------------------------------------------------------------
+
+JavaScript is written inside the HTML document using:
+
+    <script>
+
+Example:
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>JavaScript</title>
+    </head>
+
+    <body>
+
+        <h1>Hello</h1>
+
+        <script>
+            console.log("Hello from JavaScript");
+        </script>
+
+    </body>
+    </html>
+
+The JavaScript is inside the same HTML file.
+
+
+--------------------------------------------------------------------
+1.5.3 EXTERNAL JAVASCRIPT
+--------------------------------------------------------------------
+
+JavaScript is stored in a separate .js file.
+
+HTML:
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>JavaScript</title>
+    </head>
+
+    <body>
+
+        <h1>Hello JavaScript</h1>
+
+        <script src="app.js"></script>
+
+    </body>
+    </html>
+
+
+app.js:
+
+    console.log("Hello from external JavaScript");
+
+
+This is the recommended approach for most real-world projects.
+
+Advantages:
+
+    ✓ Cleaner HTML
+    ✓ Better organization
+    ✓ Easier maintenance
+    ✓ Reusable JavaScript
+    ✓ Better separation of concerns
+    ✓ Suitable for large applications
+
+
+====================================================================
+1.6 SCRIPT TAG
+====================================================================
+
+The HTML:
+
+    <script>
+
+element is used to include JavaScript.
+
+Example:
+
+    <script>
+        console.log("Hello");
+    </script>
+
+External JavaScript:
+
+    <script src="app.js"></script>
+
+
+The src attribute means:
+
+    src = source
+
+It tells the browser where the JavaScript file is located.
+
+
+Example:
+
+    <script src="./js/app.js"></script>
+
+
+Meaning:
+
+    HTML file
+        ↓
+    js folder
+        ↓
+    app.js
+
+
+====================================================================
+1.7 defer ATTRIBUTE
+====================================================================
+
+A script can use:
+
+    defer
+
+Example:
+
+    <script src="app.js" defer></script>
+
+It tells the browser to download the script while parsing the HTML
+and execute it after the HTML has been parsed.
+
+For many frontend applications, this is a useful way to load
+scripts placed in the <head>.
+
+Example:
+
+    <head>
+        <script src="app.js" defer></script>
+    </head>
+
+
+====================================================================
+1.8 async ATTRIBUTE
+====================================================================
+
+Another script-loading option is:
+
+    async
+
+Example:
+
+    <script src="analytics.js" async></script>
+
+The browser downloads the script asynchronously and executes it as
+soon as it is ready.
+
+Important difference:
+
+    defer
+        → Download in parallel
+        → Execute after HTML parsing
+        → Preserves script order
+
+    async
+        → Download in parallel
+        → Execute as soon as ready
+        → Order is not guaranteed
+
+For dependent scripts, defer is often more appropriate.
+
+
+====================================================================
+1.9 JAVASCRIPT STATEMENTS
+====================================================================
+
+A statement is an instruction that tells JavaScript to perform
+an operation.
+
+Example:
+
+    let age = 22;
+
+This is a statement.
+
+Another example:
+
+    console.log(age);
+
+This is also a statement.
+
+
+Multiple statements:
+
+    let name = "Apoorv";
+    let age = 22;
+    console.log(name);
+    console.log(age);
+
+
+JavaScript executes statements according to its execution rules.
+
+
+====================================================================
+1.10 SEMICOLON
+====================================================================
+
+JavaScript commonly uses:
+
+    ;
+
+to terminate statements.
+
+Example:
+
+    let x = 10;
+    let y = 20;
+    console.log(x + y);
+
+
+JavaScript has Automatic Semicolon Insertion (ASI), so semicolons
+can sometimes be omitted.
+
+Example:
+
+    let x = 10
+    let y = 20
+
+However, for beginners and professional consistency, it is useful
+to understand and follow one consistent code style.
+
+
+====================================================================
+1.11 EXPRESSION
+====================================================================
+
+An expression is code that produces a value.
+
+Example:
+
+    10 + 20
+
+Result:
+
+    30
+
+
+Another example:
+
+    5 * 4
+
+Result:
+
+    20
+
+
+Another:
+
+    age > 18
+
+Result:
+
+    true or false
+
+
+Example:
+
+    let result = 10 + 20;
+
+Here:
+
+    10 + 20
+       ↓
+    Expression
+
+    let result = 10 + 20;
+       ↓
+    Complete statement
+
+
+Important:
+
+    Expression → produces a value
+    Statement  → performs an instruction/action
+
+A statement can contain expressions.
+
+
+====================================================================
+1.12 COMMENTS
+====================================================================
+
+Comments are notes written in code for humans.
+
+JavaScript ignores comments during normal execution.
+
+
+--------------------------------------------------------------------
+SINGLE-LINE COMMENT
+--------------------------------------------------------------------
+
+Use:
+
+    //
+
+Example:
+
+    // This is a comment
+    console.log("Hello");
+
+
+--------------------------------------------------------------------
+MULTI-LINE COMMENT
+--------------------------------------------------------------------
+
+Use:
+
+    /*
+       This is a
+       multi-line comment
+    */
+
+Example:
+
+    /*
+       This program
+       prints a message.
+    */
+
+    console.log("Hello");
+
+
+Why use comments?
+
+    • Explain complicated logic
+    • Document code
+    • Help teammates understand code
+    • Temporarily disable code while debugging
+
+Avoid unnecessary comments such as:
+
+    // Create variable x
+    let x = 10;
+
+The code is already obvious.
+
+Prefer comments that explain WHY something is done when the reason
+isn't obvious from the code.
+
+
+====================================================================
+1.13 VARIABLES
+====================================================================
+
+A variable is a named location/reference used by a program to
+work with a value.
+
+Simple analogy:
+
+    Variable = A labeled box containing a value.
+
+Example:
+
+    let age = 22;
+
+
+Think:
+
+        age
+         ↓
+       [ 22 ]
+
+Another example:
+
+    let name = "Apoorv";
+
+        name
+         ↓
+      ["Apoorv"]
+
+
+Variables allow programs to store and work with data.
+
+
+====================================================================
+1.14 VARIABLE DECLARATION
+====================================================================
+
+Declaration means telling JavaScript that a variable exists.
+
+Example:
+
+    let age;
+
+Here:
+
+    age
+
+has been declared.
+
+At this point, it has not been explicitly assigned a value.
+
+
+====================================================================
+1.15 VARIABLE INITIALIZATION
+====================================================================
+
+Initialization means giving a variable its initial value.
+
+Example:
+
+    let age = 22;
+
+Here:
+
+    let age
+        ↓
+    declaration
+
+    = 22
+        ↓
+    initialization
+
+
+====================================================================
+1.16 ASSIGNMENT
+====================================================================
+
+Assignment means giving or changing the value of a variable.
+
+Example:
+
+    let age = 22;
+
+Later:
+
+    age = 23;
+
+The value changes:
+
+    Before:
+
+        age → 22
+
+    After:
+
+        age → 23
+
+
+Important:
+
+    =
+
+is the assignment operator.
+
+It does NOT mean mathematical equality.
+
+Example:
+
+    let x = 10;
+
+means:
+
+    Store 10 in x.
+
+
+====================================================================
+1.17 var
+====================================================================
+
+Before modern JavaScript, variables were commonly declared using:
+
+    var
+
+Example:
+
+    var age = 22;
+
+The value can be changed:
+
+    var age = 22;
+    age = 23;
+
+
+var is function-scoped rather than block-scoped and has historical
+behavior around hoisting and redeclaration.
+
+Example:
+
+    var x = 10;
+
+    if (true) {
+        var x = 20;
+    }
+
+    console.log(x);
+
+Output:
+
+    20
+
+This behavior can cause bugs in larger programs.
+
+
+====================================================================
+1.18 let
+====================================================================
+
+Modern JavaScript provides:
+
+    let
+
+Example:
+
+    let age = 22;
+
+The value can be changed:
+
+    let age = 22;
+
+    age = 23;
+
+    console.log(age);
+
+Output:
+
+    23
+
+
+let is block-scoped.
+
+Example:
+
+    let x = 10;
+
+    if (true) {
+        let x = 20;
+        console.log(x);
+    }
+
+    console.log(x);
+
+Output:
+
+    20
+    10
+
+There are two different block-scoped variables.
+
+
+====================================================================
+1.19 const
+====================================================================
+
+const is used when a variable binding should not be reassigned.
+
+Example:
+
+    const PI = 3.14159;
+
+This is not allowed:
+
+    const PI = 3.14159;
+
+    PI = 3.14;
+
+This causes an error because the binding cannot be reassigned.
+
+
+Example:
+
+    const name = "Apoorv";
+
+    name = "Rahul";
+
+Not allowed.
+
+
+====================================================================
+1.20 var vs let vs const
+====================================================================
+
+                    var         let          const
+                    ------------------------------------
+Scope               Function     Block        Block
+
+Reassign            Yes          Yes          No
+
+Redeclare same
+scope               Yes          No           No
+
+Hoisting behavior   Yes          Yes*         Yes*
+
+Initialization
+required            No           No           Yes
+
+Recommended today   Rarely       Yes          Yes
+
+
+* let and const are hoisted but cannot be accessed before their
+  declaration because of the Temporal Dead Zone.
+
+
+Recommended rule:
+
+    Use const by default.
+
+    Use let when reassignment is required.
+
+    Avoid var in modern code unless you specifically need its
+    historical/function-scoped behavior.
+
+
+====================================================================
+1.21 const DOES NOT MEAN IMMUTABLE OBJECT
+====================================================================
+
+This is a very important concept.
+
+Example:
+
+    const user = {
+        name: "Apoorv"
+    };
+
+You cannot do:
+
+    user = {};
+
+because the variable binding cannot be reassigned.
+
+But you can modify the object's property:
+
+    user.name = "Rahul";
+
+This is allowed.
+
+Therefore:
+
+    const
+        ↓
+    prevents reassignment of the binding
+
+It does NOT automatically make the referenced object immutable.
+
+
+Similarly:
+
+    const numbers = [1, 2, 3];
+
+    numbers.push(4);
+
+is allowed.
+
+But:
+
+    numbers = [5, 6, 7];
+
+is not allowed.
+
+
+====================================================================
+1.22 IDENTIFIERS
+====================================================================
+
+An identifier is a name used for program entities such as:
+
+    • Variables
+    • Functions
+    • Classes
+    • Parameters
+
+Example:
+
+    let studentName = "Apoorv";
+
+Here:
+
+    studentName
+
+is an identifier.
+
+
+====================================================================
+1.23 IDENTIFIER RULES
+====================================================================
+
+JavaScript identifiers generally:
+
+    ✓ Can contain letters
+    ✓ Can contain digits
+    ✓ Can contain _
+    ✓ Can contain $
+    ✓ Cannot begin with a digit
+    ✓ Are case-sensitive
+    ✓ Cannot be reserved keywords
+
+
+Valid:
+
+    name
+    studentName
+    student_name
+    student1
+    $price
+    _count
+
+
+Invalid:
+
+    1student
+    student-name
+    let
+    class
+
+
+Why is:
+
+    student-name
+
+problematic?
+
+Because JavaScript interprets:
+
+    student - name
+
+as subtraction rather than a single identifier.
+
+
+====================================================================
+1.24 CASE SENSITIVITY
+====================================================================
+
+JavaScript is case-sensitive.
+
+These are different:
+
+    name
+    Name
+    NAME
+    nAME
+
+
+Example:
+
+    let name = "Apoorv";
+    let Name = "Rahul";
+
+These are two different variables.
+
+
+====================================================================
+1.25 NAMING CONVENTIONS
+====================================================================
+
+JavaScript commonly uses camelCase.
+
+Example:
+
+    firstName
+    lastName
+    studentAge
+    totalMarks
+    employeeSalary
+
+
+Avoid unclear names:
+
+    let x = 25;
+
+Prefer:
+
+    let studentAge = 25;
+
+
+Bad:
+
+    let a = 100;
+    let b = 200;
+    let c = a + b;
+
+
+Better:
+
+    let firstNumber = 100;
+    let secondNumber = 200;
+    let total = firstNumber + secondNumber;
+
+
+Good naming improves readability and maintainability.
+
+
+====================================================================
+1.26 CONSTANT NAMING CONVENTION
+====================================================================
+
+Constants that represent fixed configuration-like values are often
+written in UPPER_SNAKE_CASE.
+
+Example:
+
+    const MAX_USERS = 100;
+    const API_URL = "https://example.com";
+
+
+But not every const variable needs uppercase naming.
+
+Example:
+
+    const userName = "Apoorv";
+
+This is perfectly normal.
+
+Convention depends on the meaning and project style.
+
+
+====================================================================
+1.27 RESERVED KEYWORDS
+====================================================================
+
+JavaScript has reserved words that have special meanings.
+
+Examples:
+
+    let
+    const
+    var
+    if
+    else
+    for
+    while
+    function
+    return
+    class
+    new
+    this
+    switch
+    case
+    break
+    continue
+    try
+    catch
+    finally
+    throw
+    import
+    export
+    extends
+    super
+
+
+You should not use reserved keywords as ordinary identifiers.
+
+Invalid:
+
+    let class = "M.Tech";
+
+
+====================================================================
+1.28 JAVASCRIPT CONSTANTS
+====================================================================
+
+A constant is generally represented using:
+
+    const
+
+Example:
+
+    const COLLEGE_NAME = "ABC University";
+
+You cannot reassign it:
+
+    COLLEGE_NAME = "XYZ University";
+
+This produces an error.
+
+
+Example:
+
+    const DAYS_IN_WEEK = 7;
+    const MONTHS_IN_YEAR = 12;
+
+
+====================================================================
+1.29 console.log()
+====================================================================
+
+The most commonly used debugging/output method is:
+
+    console.log()
+
+Example:
+
+    console.log("Hello");
+
+Output:
+
+    Hello
+
+
+Multiple values:
+
+    let name = "Apoorv";
+    let age = 22;
+
+    console.log(name, age);
+
+Output:
+
+    Apoorv 22
+
+
+Expression:
+
+    console.log(10 + 20);
+
+Output:
+
+    30
+
+
+====================================================================
+1.30 console.error()
+====================================================================
+
+Used to display an error message.
+
+Example:
+
+    console.error("Something went wrong!");
+
+Useful during debugging.
+
+
+====================================================================
+1.31 console.warn()
+====================================================================
+
+Used for warnings.
+
+Example:
+
+    console.warn("Password is weak!");
+
+
+====================================================================
+1.32 console.table()
+====================================================================
+
+Useful for displaying arrays and objects in table form.
+
+Example:
+
+    const students = [
+        {
+            id: 1,
+            name: "Apoorv",
+            marks: 85
+        },
+        {
+            id: 2,
+            name: "Rahul",
+            marks: 90
+        }
+    ];
+
+    console.table(students);
+
+
+This makes structured data easier to inspect.
+
+
+====================================================================
+1.33 console.clear()
+====================================================================
+
+Clears the browser console.
+
+Example:
+
+    console.clear();
+
+
+Useful when the console has accumulated too many messages.
+
+
+====================================================================
+1.34 PRACTICAL PROGRAM — STUDENT INFORMATION
+====================================================================
+
+Code:
+
+    const studentName = "Apoorv";
+    let age = 22;
+    const course = "M.Tech";
+    let year = 1;
+
+    console.log("Student Name:", studentName);
+    console.log("Age:", age);
+    console.log("Course:", course);
+    console.log("Year:", year);
+
+Output:
+
+    Student Name: Apoorv
+    Age: 22
+    Course: M.Tech
+    Year: 1
+
+
+Notice:
+
+    const → used when the binding should not be reassigned
+    let   → used when reassignment may be required
+
+
+====================================================================
+1.35 PRACTICAL PROGRAM — CHANGING A VARIABLE
+====================================================================
+
+    let marks = 70;
+
+    console.log("Before:", marks);
+
+    marks = 85;
+
+    console.log("After:", marks);
+
+Output:
+
+    Before: 70
+    After: 85
+
+
+Flow:
+
+    marks
+      ↓
+     70
+      ↓
+    reassignment
+      ↓
+     85
+
+
+====================================================================
+1.36 PRACTICAL PROGRAM — BASIC CALCULATION
+====================================================================
+
+    const firstNumber = 20;
+    const secondNumber = 10;
+
+    const sum = firstNumber + secondNumber;
+    const difference = firstNumber - secondNumber;
+    const product = firstNumber * secondNumber;
+    const quotient = firstNumber / secondNumber;
+
+    console.log("Sum:", sum);
+    console.log("Difference:", difference);
+    console.log("Product:", product);
+    console.log("Quotient:", quotient);
+
+Output:
+
+    Sum: 30
+    Difference: 10
+    Product: 200
+    Quotient: 2
+
+
+====================================================================
+1.37 PRACTICAL PROGRAM — USER PROFILE
+====================================================================
+
+    const firstName = "Apoorv";
+    const lastName = "Singh";
+    let age = 22;
+
+    console.log("First Name:", firstName);
+    console.log("Last Name:", lastName);
+    console.log("Age:", age);
+
+
+This demonstrates:
+
+    • const
+    • let
+    • strings
+    • numbers
+    • console.log()
+
+
+====================================================================
+1.38 COMMON BEGINNER MISTAKES
+====================================================================
+
+MISTAKE 1:
+
+    let 1name = "Apoorv";
+
+Wrong.
+
+Correct:
+
+    let name1 = "Apoorv";
+
+
+MISTAKE 2:
+
+    const age;
+    age = 22;
+
+A const declaration must be initialized.
+
+Correct:
+
+    const age = 22;
+
+
+MISTAKE 3:
+
+    const age = 22;
+    age = 23;
+
+Wrong because const cannot be reassigned.
+
+
+MISTAKE 4:
+
+    let student-name = "Apoorv";
+
+Wrong.
+
+Use:
+
+    let studentName = "Apoorv";
+
+
+MISTAKE 5:
+
+    let Name = "Apoorv";
+
+    console.log(name);
+
+Wrong because JavaScript is case-sensitive.
+
+
+MISTAKE 6:
+
+    var x = 10;
+
+    if (true) {
+        var x = 20;
+    }
+
+    console.log(x);
+
+Beginners may expect 10, but var is function-scoped and the same
+binding is affected here.
+
+
+====================================================================
+1.39 PROFESSIONAL JAVASCRIPT STYLE
+====================================================================
+
+Prefer:
+
+    const userName = "Apoorv";
+    let score = 0;
+
+    score = score + 10;
+
+Instead of unnecessarily using:
+
+    var userName = "Apoorv";
+
+
+Use meaningful names:
+
+    const studentName = "Apoorv";
+    const totalMarks = 450;
+
+
+Instead of:
+
+    const s = "Apoorv";
+    const t = 450;
+
+
+Professional code should be:
+
+    • Readable
+    • Consistent
+    • Maintainable
+    • Meaningful
+    • Simple
+
+
+====================================================================
+1.40 COMPLETE FIRST PROGRAM
+====================================================================
+
+    // Student information
+
+    const studentName = "Apoorv";
+    const course = "M.Tech Computer Science";
+    let semester = 1;
+    let marks = 80;
+
+    console.log("===== STUDENT INFORMATION =====");
+
+    console.log("Name:", studentName);
+    console.log("Course:", course);
+    console.log("Semester:", semester);
+    console.log("Marks:", marks);
+
+    marks = 90;
+
+    console.log("Updated Marks:", marks);
+
+
+Output:
+
+    ===== STUDENT INFORMATION =====
+    Name: Apoorv
+    Course: M.Tech Computer Science
+    Semester: 1
+    Marks: 80
+    Updated Marks: 90
+
+
+====================================================================
+1.41 JAVASCRIPT EXECUTION — BASIC VIEW
+====================================================================
+
+When JavaScript code runs, conceptually:
+
+    JavaScript Source Code
+             ↓
+        JavaScript Engine
+             ↓
+          Parsing
+             ↓
+        Execution
+             ↓
+           Output
+
+
+Example:
+
+    const x = 10;
+    const y = 20;
+    console.log(x + y);
+
+
+Conceptually:
+
+    x → 10
+    y → 20
+
+    x + y
+      ↓
+     30
+
+    console.log(30)
+      ↓
+    Console output
+
+
+You will study the JavaScript engine, execution context,
+call stack, and event loop deeply in later chapters.
+
+
+====================================================================
+1.42 BROWSER CONSOLE — HOW TO PRACTICE
+====================================================================
+
+In a browser such as Chrome:
+
+    1. Open a webpage.
+    2. Open Developer Tools.
+    3. Open the Console tab.
+    4. Type:
+
+           console.log("Hello JavaScript");
+
+    5. Press Enter.
+
+You should see:
+
+    Hello JavaScript
+
+
+Try:
+
+    10 + 20
+
+Output:
+
+    30
+
+
+Try:
+
+    const name = "Apoorv";
+
+    console.log(name);
+
+Output:
+
+    Apoorv
+
+
+====================================================================
+1.43 IMPORTANT DIFFERENCE:
+     console.log() vs alert()
+====================================================================
+
+console.log():
+
+    console.log("Hello");
+
+Displays information in the developer console.
+
+alert():
+
+    alert("Hello");
+
+Displays a browser alert dialog.
+
+For development/debugging:
+
+    console.log()
+
+is generally much more useful than repeatedly using alert().
+
+
+====================================================================
+1.44 CHAPTER 1 — CORE TERMINOLOGY
+====================================================================
+
+JavaScript
+    → Programming language.
+
+Script
+    → JavaScript code executed by an environment.
+
+Statement
+    → An instruction.
+
+Expression
+    → Code that produces a value.
+
+Variable
+    → Named binding used to work with a value.
+
+Declaration
+    → Introducing a variable.
+
+Initialization
+    → Giving a variable its initial value.
+
+Assignment
+    → Giving/changing a variable's value.
+
+Identifier
+    → Name used for variables, functions, classes, etc.
+
+Keyword
+    → Reserved word with special meaning.
+
+Constant
+    → A binding declared using const that cannot be reassigned.
+
+Console
+    → Developer interface used for output/debugging.
+
+
+====================================================================
+1.45 INTERVIEW-IMPORTANT QUESTIONS
+====================================================================
+
+Q1. What is JavaScript?
+
+Answer:
+
+    JavaScript is a high-level programming language widely used
+    for web development and also for server-side and other
+    application environments.
+
+
+Q2. What are the ways to include JavaScript in HTML?
+
+Answer:
+
+    1. Inline
+    2. Internal
+    3. External
+
+
+Q3. What is the difference between let and const?
+
+Answer:
+
+    let allows reassignment.
+
+    const does not allow reassignment of its binding.
+
+
+Q4. What is the difference between var and let?
+
+Answer:
+
+    var is function-scoped.
+
+    let is block-scoped.
+
+    var also has different redeclaration and hoisting behavior.
+
+
+Q5. Is JavaScript case-sensitive?
+
+Answer:
+
+    Yes.
+
+    name and Name are different identifiers.
+
+
+Q6. What is an identifier?
+
+Answer:
+
+    An identifier is a name used to identify program entities such
+    as variables, functions, and classes.
+
+
+Q7. What is a statement?
+
+Answer:
+
+    A statement is an instruction executed by the JavaScript
+    program.
+
+
+Q8. What is an expression?
+
+Answer:
+
+    An expression is code that evaluates to a value.
+
+
+Q9. What is console.log()?
+
+Answer:
+
+    console.log() is a console method used to display information,
+    values, and debugging output.
+
+
+Q10. Can a const object be modified?
+
+Answer:
+
+    Its binding cannot be reassigned, but its properties can
+    generally be modified unless the object is made immutable.
+
+
+====================================================================
+1.46 QUICK REVISION
+====================================================================
+
+JavaScript:
+
+    Programming language
+          ↓
+    Used for application behavior and logic
+
+
+Three ways to add JS:
+
+    Inline
+       ↓
+    Internal
+       ↓
+    External
+
+
+Variables:
+
+    var
+    let
+    const
+
+
+Modern recommendation:
+
+    const → default choice
+    let   → when reassignment is needed
+    var   → generally avoid in modern code
+
+
+Scope:
+
+    var   → function scope
+    let   → block scope
+    const → block scope
+
+
+Comments:
+
+    // single line
+
+    /*
+       multi-line
+    */
+
+
+Output/debugging:
+
+    console.log()
+    console.error()
+    console.warn()
+    console.table()
+    console.clear()
+
+
+Identifiers:
+
+    ✓ camelCase
+    ✓ meaningful names
+    ✓ cannot start with digit
+    ✓ case-sensitive
+    ✓ cannot use reserved keywords
+
+
+====================================================================
+1.47 PRACTICE QUESTIONS
+====================================================================
+
+BEGINNER LEVEL
+--------------------------------------------------------------------
+
+1. Create a variable named studentName and store your name.
+
+2. Create a variable named age and store your age.
+
+3. Create a constant named collegeName.
+
+4. Print all three values using console.log().
+
+5. Create two numbers and print their:
+       • sum
+       • difference
+       • product
+       • quotient
+
+6. Create a let variable score = 50.
+   Change it to 100 and print both values.
+
+7. Write a program that stores:
+       name
+       age
+       course
+       semester
+   and prints them.
+
+
+INTERMEDIATE LEVEL
+--------------------------------------------------------------------
+
+8. Identify which declarations are valid:
+
+       let student1 = "A";
+       let 1student = "B";
+       const course = "M.Tech";
+       var student-name = "C";
+       let _count = 10;
+       let $price = 100;
+
+
+9. Predict the output:
+
+       let x = 10;
+
+       if (true) {
+           let x = 20;
+           console.log(x);
+       }
+
+       console.log(x);
+
+
+10. Predict whether the following is valid:
+
+       const user = {
+           name: "Apoorv"
+       };
+
+       user.name = "Rahul";
+
+
+11. Explain why this fails:
+
+       const age;
+       age = 22;
+
+
+12. Explain the difference between:
+
+       let x = 10;
+
+       and
+
+       let x;
+       x = 10;
+
+
+====================================================================
+1.48 MINI PROJECT — STUDENT MARKS CALCULATOR
+====================================================================
+
+Create a JavaScript program containing:
+
+    studentName
+    subject1
+    subject2
+    subject3
+
+Calculate:
+
+    totalMarks
+    averageMarks
+
+Print:
+
+    =========================
+       STUDENT RESULT
+    =========================
+
+    Name:
+    Subject 1:
+    Subject 2:
+    Subject 3:
+    Total:
+    Average:
+
+
+Example:
+
+    const studentName = "Apoorv";
+
+    const subject1 = 80;
+    const subject2 = 85;
+    const subject3 = 90;
+
+    const totalMarks = subject1 + subject2 + subject3;
+    const averageMarks = totalMarks / 3;
+
+    console.log("===== STUDENT RESULT =====");
+    console.log("Name:", studentName);
+    console.log("Subject 1:", subject1);
+    console.log("Subject 2:", subject2);
+    console.log("Subject 3:", subject3);
+    console.log("Total:", totalMarks);
+    console.log("Average:", averageMarks);
+
+
+====================================================================
+1.49 CHAPTER 1 MASTERY CHECKLIST
+====================================================================
+
+Before moving to Chapter 2, you should be able to explain:
+
+    □ What JavaScript is
+    □ Why JavaScript is used
+    □ JavaScript vs HTML vs CSS
+    □ Inline JavaScript
+    □ Internal JavaScript
+    □ External JavaScript
+    □ <script> tag
+    □ defer
+    □ async
+    □ Statement
+    □ Expression
+    □ Comments
+    □ Variable
+    □ Declaration
+    □ Initialization
+    □ Assignment
+    □ var
+    □ let
+    □ const
+    □ Scope difference between var and let/const
+    □ Identifier
+    □ Naming rules
+    □ Reserved keywords
+    □ Case sensitivity
+    □ console.log()
+    □ console.error()
+    □ console.warn()
+    □ console.table()
+    □ console.clear()
+
+
+====================================================================
+1.50 MOST IMPORTANT TAKEAWAYS
+====================================================================
+
+1. JavaScript is a programming language used to add logic and
+   interactivity to applications.
+
+2. JavaScript can run in browsers and environments such as Node.js.
+
+3. JavaScript can be added to HTML using:
+       Inline
+       Internal
+       External
+
+4. Prefer external JavaScript for organized applications.
+
+5. A variable allows a program to work with stored values.
+
+6. Modern JavaScript generally prefers:
+       const
+       let
+
+7. Use const by default when reassignment is not required.
+
+8. Use let when reassignment is required.
+
+9. var is function-scoped and has historical behavior that can
+   make large codebases harder to reason about.
+
+10. JavaScript identifiers are case-sensitive.
+
+11. Statements represent instructions.
+
+12. Expressions produce values.
+
+13. Comments are ignored by JavaScript during normal execution.
+
+14. console.log() is one of the most important tools for learning
+    and debugging JavaScript.
+
+15. Do not memorize syntax only.
+    Write programs and predict outputs yourself.
+
+
+====================================================================
+END OF CHAPTER 1
+====================================================================
+
+NEXT CHAPTER:
+    CHAPTER 2 — DATA TYPES
+
+Topics:
+    • Primitive Data Types
+    • Number
+    • String
+    • Boolean
+    • Undefined
+    • Null
+    • BigInt
+    • Symbol
+    • Object
+    • Array
+    • Function
+    • typeof
+    • Type Conversion
+    • Type Coercion
+    • Truthy/Falsy
+    • NaN
+    • null vs undefined
+    • Primitive vs Reference Values
+
+IMPORTANT:
+    Do not move to Chapter 2 until you are comfortable with
+    Chapter 1.
+
+    Type NEXT to continue.
+====================================================================

@@ -1,0 +1,2156 @@
+Below is Chapter 1 — Introduction to Programming & C, explained from absolute beginner level to job-ready foundation. I’ve kept the entire study material in one code block as requested.
+
+======================================================================
+              C PROGRAMMING — CHAPTER 01
+         INTRODUCTION TO PROGRAMMING & C
+======================================================================
+
+LEVEL:
+    Absolute Beginner → First-Year Foundation
+
+OBJECTIVES:
+    After completing this chapter, you should be able to:
+
+    ✓ Understand what programming is
+    ✓ Understand what a program is
+    ✓ Understand source code and machine code
+    ✓ Understand how computers execute programs
+    ✓ Understand algorithms
+    ✓ Understand flowcharts
+    ✓ Understand pseudocode
+    ✓ Understand what C language is
+    ✓ Understand the history and features of C
+    ✓ Understand where C is used
+    ✓ Write your first C program
+    ✓ Understand the basic structure of a C program
+    ✓ Understand compiler, linker and executable files
+    ✓ Compile and run a C program using GCC
+
+
+======================================================================
+1.1 WHAT IS A COMPUTER?
+======================================================================
+
+A computer is an electronic machine that:
+
+    INPUT
+       ↓
+    PROCESSING
+       ↓
+    OUTPUT
+
+Example:
+
+    You enter:
+        10 + 20
+
+    Computer processes:
+        Addition
+
+    Computer produces:
+        30
+
+
+A computer fundamentally works with binary values:
+
+    0 and 1
+
+These are called BITS.
+
+BIT = Binary Digit
+
+Examples:
+
+    0
+    1
+    1010
+    11001101
+
+
+Important:
+
+    A computer does NOT naturally understand C, C++, Python,
+    Java, etc.
+
+    The processor ultimately executes machine instructions
+    represented in binary form.
+
+
+======================================================================
+1.2 WHAT IS A PROGRAM?
+======================================================================
+
+A PROGRAM is a set of instructions given to a computer
+to perform a particular task.
+
+Example:
+
+    Task:
+        Add two numbers.
+
+    Instructions:
+
+        1. Take first number.
+        2. Take second number.
+        3. Add them.
+        4. Display the result.
+
+
+Real-world analogy:
+
+    Recipe = Instructions for a human
+
+    Program = Instructions for a computer
+
+
+Example program idea:
+
+    Input:
+        A = 10
+        B = 20
+
+    Processing:
+        C = A + B
+
+    Output:
+        30
+
+
+======================================================================
+1.3 WHAT IS PROGRAMMING?
+======================================================================
+
+Programming is the process of:
+
+    1. Understanding a problem
+    2. Designing a solution
+    3. Writing instructions
+    4. Testing the solution
+    5. Finding and fixing errors
+    6. Improving the solution
+
+
+In simple words:
+
+    Programming = Telling a computer HOW to solve a problem.
+
+
+Example:
+
+    Problem:
+        Find the largest of two numbers.
+
+    Programming process:
+
+        Problem
+           ↓
+        Logic
+           ↓
+        Algorithm
+           ↓
+        Code
+           ↓
+        Compile
+           ↓
+        Run
+           ↓
+        Test
+           ↓
+        Correct result
+
+
+======================================================================
+1.4 WHAT IS A PROGRAMMING LANGUAGE?
+======================================================================
+
+A programming language is a language used by humans
+to write instructions that can be translated into
+instructions executable by a computer.
+
+Examples:
+
+    C
+    C++
+    Java
+    Python
+    JavaScript
+    Go
+    Rust
+
+
+Programming languages provide:
+
+    • Syntax
+    • Keywords
+    • Operators
+    • Data types
+    • Control structures
+    • Functions
+    • Libraries
+
+
+Think of it like this:
+
+    Human language:
+        English / Hindi
+
+    Programming language:
+        C / C++ / Java / Python
+
+    Computer's native instruction level:
+        Machine code
+
+
+======================================================================
+1.5 HIGH-LEVEL vs LOW-LEVEL LANGUAGES
+======================================================================
+
+Programming languages can be broadly viewed as:
+
+                    PROGRAMMING LANGUAGES
+                           |
+              +------------+------------+
+              |                         |
+          Low-Level                 High-Level
+              |                         |
+        +-----+-----+              C, C++, Java,
+        |           |              Python, etc.
+     Machine      Assembly
+      Code        Language
+
+
+LOW-LEVEL LANGUAGE:
+
+    Closer to hardware.
+
+    Examples:
+        Machine code
+        Assembly language
+
+
+HIGH-LEVEL LANGUAGE:
+
+    Closer to human-readable programming.
+
+    Examples:
+        C
+        C++
+        Java
+        Python
+
+
+IMPORTANT:
+
+    C is generally classified as a high-level language,
+    but it also provides low-level capabilities such as:
+
+        • Pointers
+        • Direct memory access
+        • Bit manipulation
+        • Manual memory management
+        • Hardware-oriented programming
+
+
+Therefore C is often described as:
+
+    "A middle-level language"
+
+This is an informal classification rather than a formal
+language standard category.
+
+
+======================================================================
+1.6 WHAT IS MACHINE CODE?
+======================================================================
+
+Machine code consists of instructions that the processor
+can execute directly.
+
+Conceptually:
+
+    10110000
+    11000001
+    01010110
+
+Actual machine instructions depend on the CPU architecture.
+
+
+For example:
+
+    C code
+       ↓
+    Compiler
+       ↓
+    Machine instructions
+       ↓
+    CPU
+
+
+The CPU executes machine instructions.
+
+
+======================================================================
+1.7 WHAT IS ASSEMBLY LANGUAGE?
+======================================================================
+
+Assembly language is a human-readable representation
+of processor instructions.
+
+Instead of writing only binary:
+
+    10110000 ...
+
+assembly may use instructions such as:
+
+    MOV
+    ADD
+    SUB
+    JMP
+
+
+Example concept:
+
+    ADD R1, R2
+
+
+This is much easier for humans to read than raw binary,
+but it is still closely connected to a specific CPU architecture.
+
+
+======================================================================
+1.8 WHAT IS SOURCE CODE?
+======================================================================
+
+Source code is the program written by a programmer
+using a programming language.
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Hello World\n");
+        return 0;
+    }
+
+
+This is SOURCE CODE.
+
+
+The programmer writes:
+
+    Human-readable source code
+
+The compiler translates it into:
+
+    Machine-level/object instructions
+
+
+======================================================================
+1.9 WHAT IS OBJECT CODE?
+======================================================================
+
+Object code is the machine-oriented code produced from
+source code during compilation.
+
+Conceptually:
+
+    source.c
+       ↓
+    Compiler
+       ↓
+    source.o
+
+The object file may still contain unresolved references,
+such as references to library functions.
+
+The linker can resolve those references and create
+the final executable.
+
+
+======================================================================
+1.10 WHAT IS AN EXECUTABLE?
+======================================================================
+
+An executable is a file containing a program that the
+operating system can load and execute.
+
+Conceptually:
+
+    Source Code
+        ↓
+    Compilation
+        ↓
+    Object Code
+        ↓
+    Linking
+        ↓
+    Executable
+        ↓
+    Operating System
+        ↓
+    CPU executes instructions
+
+
+On Linux, an executable may have any suitable filename
+and does not require a particular extension.
+
+On Windows, executable programs commonly use:
+
+    .exe
+
+
+======================================================================
+1.11 WHAT IS A COMPILER?
+======================================================================
+
+A COMPILER is software that translates source code written
+in a programming language into lower-level code suitable
+for execution.
+
+For C:
+
+    C Source Code
+          ↓
+       Compiler
+          ↓
+    Object/Machine Code
+          ↓
+       Linker
+          ↓
+      Executable
+
+
+Examples of C compilers:
+
+    • GCC
+    • Clang
+    • MSVC
+
+
+======================================================================
+1.12 WHY DO WE NEED A COMPILER?
+======================================================================
+
+The processor cannot directly execute C source code.
+
+Suppose we write:
+
+    int a = 10;
+    int b = 20;
+    int c = a + b;
+
+
+The CPU does not execute those C statements directly.
+
+The compiler translates them into lower-level instructions
+appropriate for the target CPU.
+
+
+Therefore:
+
+    Programmer
+        ↓
+    C Source Code
+        ↓
+    Compiler Toolchain
+        ↓
+    Machine Instructions
+        ↓
+    CPU
+
+
+======================================================================
+1.13 COMPILER vs INTERPRETER
+======================================================================
+
+COMPILER:
+
+    Generally translates source code into executable/object
+    code before program execution.
+
+    Examples:
+        C
+        C++
+        Rust
+
+INTERPRETER:
+
+    Generally executes source code or an intermediate
+    representation through an interpreter at runtime.
+
+    Examples:
+        Python implementations commonly use an interpreter
+        for bytecode execution.
+
+
+IMPORTANT:
+
+    The compiler/interpreter distinction is a simplification.
+
+    Modern language implementations may use:
+        • Compilation
+        • Interpretation
+        • JIT compilation
+        • Intermediate representations
+
+For learning C, remember:
+
+    C → compiled language
+
+
+======================================================================
+1.14 WHAT IS AN ALGORITHM?
+======================================================================
+
+An ALGORITHM is a finite, ordered sequence of steps
+used to solve a problem.
+
+Example:
+
+    Problem:
+        Add two numbers.
+
+    Algorithm:
+
+        Step 1:
+            Start
+
+        Step 2:
+            Read A
+
+        Step 3:
+            Read B
+
+        Step 4:
+            Calculate SUM = A + B
+
+        Step 5:
+            Display SUM
+
+        Step 6:
+            Stop
+
+
+Good algorithms generally have:
+
+    • Clear steps
+    • Finite execution
+    • Well-defined inputs
+    • Well-defined outputs
+    • Unambiguous instructions
+
+
+======================================================================
+1.15 ALGORITHM EXAMPLE — FIND LARGER NUMBER
+======================================================================
+
+Problem:
+
+    Find the larger of two numbers A and B.
+
+
+Algorithm:
+
+    Step 1: Start
+    Step 2: Read A and B
+    Step 3: If A > B
+                print A
+            otherwise
+                print B
+    Step 4: Stop
+
+
+Logic:
+
+            A > B ?
+           /     \
+         YES      NO
+          |        |
+        Print A  Print B
+
+
+======================================================================
+1.16 WHAT IS A FLOWCHART?
+======================================================================
+
+A FLOWCHART is a graphical representation of an algorithm.
+
+Common symbols:
+
+    +----------------------+
+    |      START/END       |
+    +----------------------+
+
+    Usually represented by an oval.
+
+
+    +----------------------+
+    |       PROCESS        |
+    +----------------------+
+
+    Usually represented by a rectangle.
+
+
+    /----------------------\
+   /         INPUT          \
+   \       / OUTPUT         /
+    \----------------------/
+
+    Usually represented by a parallelogram.
+
+
+            /\
+           /  \
+          / ?  \
+          \    /
+           \  /
+            \/
+
+    Decision is usually represented by a diamond.
+
+
+Example:
+
+    START
+      |
+      v
+    Read A, B
+      |
+      v
+    Is A > B?
+      |
+     / \
+   YES  NO
+    |    |
+    v    v
+ Print A Print B
+    \    /
+     \  /
+      v
+     END
+
+
+======================================================================
+1.17 WHAT IS PSEUDOCODE?
+======================================================================
+
+Pseudocode is an informal way of describing an algorithm
+using simple language that resembles programming logic.
+
+It is NOT a programming language.
+
+Example:
+
+    BEGIN
+
+        READ A
+        READ B
+
+        IF A > B THEN
+            PRINT A
+        ELSE
+            PRINT B
+        END IF
+
+    END
+
+
+Advantages:
+
+    • Easy to understand
+    • Language independent
+    • Helps design logic
+    • Easy to convert into C code
+
+
+======================================================================
+1.18 ALGORITHM vs FLOWCHART vs PSEUDOCODE vs PROGRAM
+======================================================================
+
+ALGORITHM:
+
+    Step-by-step solution.
+
+FLOWCHART:
+
+    Graphical representation of the solution.
+
+PSEUDOCODE:
+
+    Structured textual representation of the solution.
+
+PROGRAM:
+
+    Actual implementation written in a programming language.
+
+
+Example:
+
+    Problem
+       ↓
+    Algorithm
+       ↓
+    Pseudocode / Flowchart
+       ↓
+    C Program
+       ↓
+    Compilation
+       ↓
+    Execution
+
+
+======================================================================
+1.19 INTRODUCTION TO C
+======================================================================
+
+C is a general-purpose programming language.
+
+C was developed in the early 1970s at Bell Labs,
+primarily by Dennis Ritchie.
+
+C became highly influential because it provides:
+
+    • Structured programming
+    • Efficient execution
+    • Portability
+    • Direct memory manipulation through pointers
+    • Low-level hardware access capabilities
+    • A powerful standard library
+    • Small core language
+
+
+======================================================================
+1.20 HISTORY OF C
+======================================================================
+
+Important historical development:
+
+    BCPL
+      ↓
+      B
+      ↓
+      C
+
+
+BCPL:
+
+    Developed by Martin Richards.
+
+
+B:
+
+    Developed at Bell Labs by Ken Thompson,
+    based on earlier systems-language work.
+
+
+C:
+
+    Developed by Dennis Ritchie at Bell Labs
+    in the early 1970s.
+
+
+C was heavily used in the development and rewriting
+of the UNIX operating system.
+
+
+Important people:
+
+    Ken Thompson
+        → Major contributor to UNIX and B
+
+    Dennis Ritchie
+        → Creator of C and major UNIX contributor
+
+
+======================================================================
+1.21 WHY WAS C CREATED?
+======================================================================
+
+C was designed to provide a good balance between:
+
+    High-level programming features
+                 +
+    Low-level hardware control
+                 +
+    Efficient execution
+
+
+This made C particularly useful for:
+
+    • Operating systems
+    • System software
+    • Compilers
+    • Embedded systems
+    • Hardware-oriented software
+
+
+======================================================================
+1.22 FEATURES OF C
+======================================================================
+
+1. SIMPLE
+
+    C has a relatively small core language.
+
+2. PROCEDURAL
+
+    Programs can be organized as functions and procedures
+    that operate on data.
+
+3. STRUCTURED
+
+    Supports:
+
+        • if
+        • switch
+        • loops
+        • functions
+        • blocks
+
+4. PORTABLE
+
+    Well-written C programs can often be moved between
+    different platforms with limited changes.
+
+5. EFFICIENT
+
+    C allows programmers to write programs with relatively
+    low runtime overhead.
+
+6. LOW-LEVEL ACCESS
+
+    Pointers and bit operations allow close interaction
+    with memory and hardware.
+
+7. MODULAR
+
+    Programs can be divided into functions and source files.
+
+8. EXTENSIBLE
+
+    Programs can use libraries and programmer-defined
+    functions.
+
+9. FAST
+
+    Compiled C programs can be highly efficient.
+
+10. MANUAL MEMORY MANAGEMENT
+
+    Dynamic memory can be managed using:
+
+        malloc()
+        calloc()
+        realloc()
+        free()
+
+
+======================================================================
+1.23 APPLICATIONS OF C
+======================================================================
+
+C is widely used in areas where performance,
+portability, and hardware control matter.
+
+1. OPERATING SYSTEMS
+
+    Examples:
+        UNIX
+        Linux kernel components
+        Embedded operating systems
+
+2. EMBEDDED SYSTEMS
+
+    Examples:
+        Microcontrollers
+        Automotive systems
+        IoT devices
+        Consumer electronics
+
+3. COMPILERS
+
+    C is used in many compiler and language-tool projects.
+
+4. SYSTEM SOFTWARE
+
+    Examples:
+        Device software
+        Utilities
+        Runtime components
+
+5. NETWORKING
+
+    C is used in:
+        Network software
+        Protocol implementations
+        Performance-critical systems
+
+6. DATABASE SYSTEMS
+
+    Parts of major database systems use C/C++.
+
+7. GAME ENGINES
+
+    C/C++ are widely used in performance-critical
+    game and graphics software.
+
+8. SECURITY SOFTWARE
+
+    C is important in:
+        Cryptographic libraries
+        Security tools
+        Operating-system security components
+
+9. HIGH-PERFORMANCE SOFTWARE
+
+    C is useful where:
+        Performance
+        Memory control
+        Predictable execution
+
+    are important.
+
+
+======================================================================
+1.24 C STANDARDIZATION
+======================================================================
+
+C has been standardized by ISO.
+
+Important versions include:
+
+    C89 / C90
+    C99
+    C11
+    C17
+    C23
+
+
+Important idea:
+
+    The C standard defines the language and standard library
+    behavior.
+
+Compiler implementations provide actual implementations
+of that standard.
+
+
+Examples:
+
+    GCC
+    Clang
+    MSVC
+
+may support different C standards/features to different
+degrees.
+
+
+======================================================================
+1.25 YOUR FIRST C PROGRAM
+======================================================================
+
+Program:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Hello, World!\n");
+        return 0;
+    }
+
+
+Output:
+
+    Hello, World!
+
+
+Now understand every part.
+
+
+======================================================================
+1.26 #include <stdio.h>
+======================================================================
+
+Code:
+
+    #include <stdio.h>
+
+
+#include is a preprocessor directive.
+
+It tells the preprocessor to include declarations from
+the specified header file.
+
+stdio.h means:
+
+    Standard Input/Output Header
+
+
+It contains declarations for functions such as:
+
+    printf()
+    scanf()
+    getchar()
+    putchar()
+    fgets()
+    puts()
+
+
+Therefore, when we use:
+
+    printf()
+
+we normally include:
+
+    #include <stdio.h>
+
+
+IMPORTANT:
+
+    #include is processed before the actual compilation
+    of the C source file.
+
+
+======================================================================
+1.27 int main(void)
+======================================================================
+
+Code:
+
+    int main(void)
+
+
+main() is the function where program execution begins
+in a hosted C environment.
+
+    int
+        → return type
+
+    main
+        → function name
+
+    (void)
+        → explicitly indicates that main takes no arguments
+
+
+Why int?
+
+    main returns an integer status to the operating system.
+
+Example:
+
+    return 0;
+
+
+Conventionally means:
+
+    Successful termination.
+
+
+======================================================================
+1.28 { AND }
+======================================================================
+
+Code:
+
+    {
+        ...
+    }
+
+
+Curly braces define a block.
+
+Example:
+
+    int main(void)
+    {
+        printf("Hello");
+        return 0;
+    }
+
+
+Everything between { and } belongs to the body of main.
+
+
+======================================================================
+1.29 printf()
+======================================================================
+
+Code:
+
+    printf("Hello, World!\n");
+
+
+printf() is a standard library function used
+to produce formatted output.
+
+Example:
+
+    printf("Hello");
+
+
+Output:
+
+    Hello
+
+
+Another example:
+
+    printf("Age = %d", 25);
+
+
+Output:
+
+    Age = 25
+
+
+We will study printf() in detail in Chapter 4.
+
+
+======================================================================
+1.30 "\n"
+======================================================================
+
+Code:
+
+    "\n"
+
+
+\n is an escape sequence representing a newline.
+
+Example:
+
+    printf("Hello\nWorld");
+
+
+Output:
+
+    Hello
+    World
+
+
+Other common escape sequences:
+
+    \n      Newline
+    \t      Horizontal tab
+    \\      Backslash
+    \"      Double quote
+    \'      Single quote
+    \0      Null character
+
+
+======================================================================
+1.31 return 0;
+======================================================================
+
+Code:
+
+    return 0;
+
+
+This terminates main() and returns the value 0
+to the operating environment.
+
+Convention:
+
+    0
+      →
+    successful termination
+
+
+Non-zero values are commonly used to indicate
+some kind of failure or special status.
+
+
+======================================================================
+1.32 SEMICOLON ;
+======================================================================
+
+Example:
+
+    printf("Hello");
+
+The semicolon generally terminates a C statement.
+
+Example:
+
+    int age = 25;
+
+    printf("%d", age);
+
+    return 0;
+
+
+Missing semicolons commonly produce compilation errors.
+
+
+======================================================================
+1.33 COMMENTS
+======================================================================
+
+Comments are notes written for programmers.
+
+The compiler does not treat normal comments as executable
+program instructions.
+
+
+Single-line comment:
+
+    // This is a comment
+
+
+Multi-line comment:
+
+    /*
+       This is
+       a multi-line comment
+    */
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        // Print message
+        printf("Hello\n");
+
+        return 0;
+    }
+
+
+======================================================================
+1.34 BASIC STRUCTURE OF A C PROGRAM
+======================================================================
+
+General structure:
+
+    #include <header.h>
+
+    global declarations
+
+    return_type function_name(parameters)
+    {
+        declarations;
+
+        statements;
+
+        return value;
+    }
+
+
+Simple example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 10;
+        int b = 20;
+
+        int sum = a + b;
+
+        printf("Sum = %d\n", sum);
+
+        return 0;
+    }
+
+
+Program flow:
+
+    Start
+      ↓
+    main()
+      ↓
+    a = 10
+      ↓
+    b = 20
+      ↓
+    sum = a + b
+      ↓
+    printf()
+      ↓
+    return 0
+      ↓
+    End
+
+
+======================================================================
+1.35 HOW A C PROGRAM IS EXECUTED
+======================================================================
+
+Suppose the file is:
+
+    hello.c
+
+
+The overall process is approximately:
+
+    hello.c
+       |
+       v
+    PREPROCESSING
+       |
+       v
+    Expanded source
+       |
+       v
+    COMPILATION
+       |
+       v
+    Assembly/object representation
+       |
+       v
+    ASSEMBLY
+       |
+       v
+    Object file
+       |
+       v
+    LINKING
+       |
+       v
+    EXECUTABLE
+       |
+       v
+    LOADING
+       |
+       v
+    EXECUTION
+       |
+       v
+    CPU
+
+
+======================================================================
+1.36 PREPROCESSING
+======================================================================
+
+The preprocessor handles directives such as:
+
+    #include
+    #define
+    #if
+    #ifdef
+    #ifndef
+
+
+Example:
+
+    #include <stdio.h>
+
+
+The preprocessor processes the inclusion directive
+before compilation.
+
+Output is conceptually an expanded source file.
+
+
+======================================================================
+1.37 COMPILATION
+======================================================================
+
+The compiler analyzes C source code and translates it
+into a lower-level representation.
+
+It performs tasks such as:
+
+    • Syntax checking
+    • Semantic analysis
+    • Type checking
+    • Code generation/translation
+
+
+If the program contains an invalid C statement,
+the compiler may report an error.
+
+
+Example:
+
+    int main(void)
+    {
+        int x = ;
+        return 0;
+    }
+
+
+This is invalid C and should produce a diagnostic.
+
+
+======================================================================
+1.38 ASSEMBLY
+======================================================================
+
+The compiler may produce assembly code or an equivalent
+lower-level representation.
+
+The assembler then converts assembly instructions
+into object code.
+
+Conceptually:
+
+    Assembly
+       ↓
+    Assembler
+       ↓
+    Object file
+
+
+======================================================================
+1.39 LINKING
+======================================================================
+
+A C program often uses functions from libraries.
+
+Example:
+
+    printf()
+
+
+The compiler processes the call, while the linker resolves
+references between object files and libraries.
+
+Conceptually:
+
+    Your object file
+          +
+    Library/object files
+          ↓
+       Linker
+          ↓
+      Executable
+
+
+This is why linker errors are different from compiler errors.
+
+
+======================================================================
+1.40 LOADING
+======================================================================
+
+After compilation and linking:
+
+    Executable
+        ↓
+    Operating System
+
+
+The operating system loads the program into memory
+and prepares it for execution.
+
+The CPU then begins executing the program according
+to the platform's execution model.
+
+
+======================================================================
+1.41 GCC
+======================================================================
+
+GCC = GNU Compiler Collection
+
+GCC supports C and several other languages.
+
+Example:
+
+    gcc hello.c -o hello
+
+
+Meaning:
+
+    gcc
+        → invoke GCC
+
+    hello.c
+        → input source file
+
+    -o hello
+        → name the output executable "hello"
+
+
+Run on Linux/macOS:
+
+    ./hello
+
+
+Output:
+
+    Hello, World!
+
+
+======================================================================
+1.42 SIMPLE GCC WORKFLOW
+======================================================================
+
+Create file:
+
+    hello.c
+
+
+Write:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Hello, World!\n");
+        return 0;
+    }
+
+
+Compile:
+
+    gcc hello.c -o hello
+
+
+Run:
+
+    ./hello
+
+
+Complete workflow:
+
+    Write
+      ↓
+    Save
+      ↓
+    Compile
+      ↓
+    Fix errors if any
+      ↓
+    Run
+      ↓
+    Check output
+
+
+======================================================================
+1.43 GCC WITH WARNINGS
+======================================================================
+
+Recommended basic compilation:
+
+    gcc -Wall -Wextra -std=c17 hello.c -o hello
+
+
+Meaning:
+
+    -Wall
+        → enable many useful warnings
+
+    -Wextra
+        → enable additional warnings
+
+    -std=c17
+        → compile according to the C17 language standard
+
+    -o hello
+        → output executable name
+
+
+For learning and professional development,
+pay attention to compiler warnings instead of ignoring them.
+
+
+======================================================================
+1.44 ERRORS IN PROGRAMMING
+======================================================================
+
+There are several important types of errors.
+
+
+1. SYNTAX ERROR
+
+    Code violates language syntax.
+
+Example:
+
+    int main(void)
+    {
+        printf("Hello")
+        return 0;
+    }
+
+    Missing semicolon after printf().
+
+
+2. COMPILATION ERROR
+
+    The compiler cannot successfully translate the program.
+
+    Causes may include:
+        • Syntax errors
+        • Invalid declarations
+        • Type-related errors
+        • Missing declarations
+
+
+3. LINKER ERROR
+
+    Compilation may succeed, but required symbols
+    cannot be resolved during linking.
+
+Example concept:
+
+    Calling a function whose required definition/library
+    is unavailable.
+
+
+4. RUNTIME ERROR
+
+    Error occurs while program is running.
+
+Examples:
+
+    • Invalid memory access
+    • Division by zero in applicable situations
+    • File operation failure
+
+
+5. LOGICAL ERROR
+
+    Program runs but produces the wrong result.
+
+Example:
+
+    Expected:
+        10 + 20 = 30
+
+    Programmer accidentally writes logic that performs:
+
+        10 - 20 = -10
+
+
+======================================================================
+1.45 DEBUGGING
+======================================================================
+
+DEBUGGING means finding and fixing problems in a program.
+
+Basic debugging process:
+
+    Problem
+       ↓
+    Reproduce
+       ↓
+    Identify
+       ↓
+    Inspect
+       ↓
+    Fix
+       ↓
+    Test
+       ↓
+    Verify
+
+
+Example:
+
+    Program gives:
+
+        Expected: 30
+        Actual:   20
+
+
+You investigate:
+
+    Input
+      ↓
+    Variables
+      ↓
+    Calculation
+      ↓
+    Output
+
+
+Debugging tools include:
+
+    • Compiler warnings
+    • Debuggers
+    • Breakpoints
+    • Logging/printf debugging
+    • Static analysis tools
+
+
+======================================================================
+1.46 WHY SHOULD YOU LEARN C FOR A JOB?
+======================================================================
+
+C is particularly valuable if you want to understand
+how software interacts with computers.
+
+C helps you understand:
+
+    • Memory
+    • Pointers
+    • Stack
+    • Heap
+    • CPU-oriented programming
+    • Data representation
+    • Compilation
+    • Operating systems
+    • Data structures
+    • Embedded systems
+
+
+C is especially useful for careers involving:
+
+    • Systems programming
+    • Embedded programming
+    • Firmware
+    • Operating systems
+    • Networking
+    • Cybersecurity
+    • Compilers
+    • Performance-critical software
+
+
+Even when a job uses another language,
+C knowledge can strengthen your understanding
+of fundamental computer concepts.
+
+
+======================================================================
+1.47 C PROGRAMMING MINDSET
+======================================================================
+
+Do not learn C by memorizing syntax only.
+
+Follow this process:
+
+    PROBLEM
+       ↓
+    UNDERSTAND
+       ↓
+    BREAK INTO SMALL PARTS
+       ↓
+    DESIGN ALGORITHM
+       ↓
+    WRITE PSEUDOCODE
+       ↓
+    WRITE C CODE
+       ↓
+    COMPILE
+       ↓
+    TEST
+       ↓
+    DEBUG
+       ↓
+    OPTIMIZE
+       ↓
+    DOCUMENT
+
+
+Example:
+
+    Problem:
+        Calculate area of a rectangle.
+
+    Input:
+        length
+        width
+
+    Formula:
+        area = length × width
+
+    Pseudocode:
+
+        BEGIN
+            READ length
+            READ width
+            area = length * width
+            PRINT area
+        END
+
+    C implementation will be studied after
+    learning variables and input/output.
+
+
+======================================================================
+1.48 FIRST CHAPTER PRACTICE
+======================================================================
+
+Practice Task 01:
+
+    Write a C program that prints:
+
+        Hello
+        My name is Apoorv
+        I am learning C
+
+
+Practice Task 02:
+
+    Print:
+
+        ********************
+        Welcome to C
+        ********************
+
+
+Practice Task 03:
+
+    Print your:
+
+        Name
+        Course
+        Year
+        Goal
+
+
+Practice Task 04:
+
+    Write the algorithm for:
+
+        Find the sum of two numbers.
+
+
+Practice Task 05:
+
+    Write pseudocode for:
+
+        Find the largest of two numbers.
+
+
+Practice Task 06:
+
+    Draw a flowchart for:
+
+        Check whether a number is positive or negative.
+
+
+Practice Task 07:
+
+    Explain the difference between:
+
+        Source code
+        Object code
+        Executable code
+
+
+Practice Task 08:
+
+    Explain:
+
+        Compiler
+        Linker
+        Loader
+
+
+Practice Task 09:
+
+    Explain the complete process:
+
+        hello.c
+          ↓
+        preprocessing
+          ↓
+        compilation
+          ↓
+        assembly
+          ↓
+        linking
+          ↓
+        executable
+          ↓
+        execution
+
+
+======================================================================
+1.49 JOB/INTERVIEW QUESTIONS
+======================================================================
+
+BEGINNER QUESTIONS:
+
+    Q1. What is a program?
+
+    Q2. What is programming?
+
+    Q3. What is a programming language?
+
+    Q4. What is C?
+
+    Q5. Who developed C?
+
+    Q6. When was C developed?
+
+    Q7. Why was C developed?
+
+    Q8. What is source code?
+
+    Q9. What is machine code?
+
+    Q10. What is object code?
+
+    Q11. What is an executable?
+
+    Q12. What is a compiler?
+
+    Q13. What is a linker?
+
+    Q14. What is an algorithm?
+
+    Q15. What is a flowchart?
+
+    Q16. What is pseudocode?
+
+    Q17. What is the difference between an algorithm
+        and a program?
+
+    Q18. Why is C considered efficient?
+
+    Q19. Why is C sometimes called a middle-level language?
+
+    Q20. Where is C used?
+
+
+======================================================================
+1.50 IMPORTANT INTERVIEW QUESTIONS
+======================================================================
+
+Q1:
+    Why is C called a procedural language?
+
+ANSWER IDEA:
+
+    C supports organizing programs around functions,
+    statements, data, and structured control flow.
+
+
+Q2:
+    Why is C considered portable?
+
+ANSWER IDEA:
+
+    C source code can often be compiled for different
+    platforms with relatively small modifications,
+    provided suitable compiler and platform support exist.
+
+
+Q3:
+    Why is C still important?
+
+ANSWER IDEA:
+
+    C provides efficient execution, low-level memory
+    control, portability, and is widely used in systems,
+    embedded software, operating-system components,
+    libraries, and performance-sensitive applications.
+
+
+Q4:
+    Is C a low-level or high-level language?
+
+ANSWER:
+
+    C is generally classified as a high-level programming
+    language, but it provides low-level capabilities.
+    It is also informally called a middle-level language.
+
+
+Q5:
+    What is the difference between compiler and linker?
+
+ANSWER:
+
+    Compiler:
+        Translates and analyzes source code.
+
+    Linker:
+        Combines object files and libraries and resolves
+        external references to produce an executable.
+
+
+Q6:
+    What is the role of #include?
+
+ANSWER:
+
+    It is a preprocessor directive used to include the
+    contents/declarations of a header file in the source
+    translation process.
+
+
+Q7:
+    Why do we write int main(void)?
+
+ANSWER:
+
+    main is the program's entry function in a hosted C
+    environment. int specifies its return type, and void
+    explicitly specifies that it takes no arguments.
+
+
+======================================================================
+1.51 VERY IMPORTANT CONCEPT MAP
+======================================================================
+
+                         COMPUTER
+                            |
+                            v
+                      UNDERSTANDS
+                    MACHINE INSTRUCTIONS
+                            |
+                            ^
+                            |
+                    COMPILER / TOOLCHAIN
+                            |
+                            ^
+                            |
+                       C PROGRAM
+                            |
+                +-----------+-----------+
+                |                       |
+             ALGORITHM              SOURCE CODE
+                |                       |
+                v                       v
+            PSEUDOCODE             hello.c
+                |                       |
+                +-----------+-----------+
+                            |
+                            v
+                       PREPROCESSING
+                            |
+                            v
+                        COMPILATION
+                            |
+                            v
+                         ASSEMBLY
+                            |
+                            v
+                       OBJECT FILE
+                            |
+                            v
+                         LINKING
+                            |
+                            v
+                       EXECUTABLE
+                            |
+                            v
+                          LOADER
+                            |
+                            v
+                         MEMORY
+                            |
+                            v
+                           CPU
+                            |
+                            v
+                          OUTPUT
+
+
+======================================================================
+1.52 CHAPTER 1 — WHAT YOU MUST REMEMBER
+======================================================================
+
+1.
+    Program = Set of instructions for a computer.
+
+2.
+    Programming = Process of creating instructions
+    to solve problems.
+
+3.
+    Algorithm = Step-by-step solution to a problem.
+
+4.
+    Flowchart = Graphical representation of an algorithm.
+
+5.
+    Pseudocode = Structured textual description of an algorithm.
+
+6.
+    Source code = Human-readable program written in C.
+
+7.
+    Compiler = Translates/analyzes C source code and
+    produces lower-level output.
+
+8.
+    Linker = Combines object files/libraries and resolves
+    external references.
+
+9.
+    Executable = Program file prepared for execution.
+
+10.
+    C was developed at Bell Labs in the early 1970s,
+    primarily by Dennis Ritchie.
+
+11.
+    C is general-purpose and provides both high-level
+    programming constructs and low-level capabilities.
+
+12.
+    C is widely used in systems, embedded, operating-system,
+    networking, compiler, and performance-sensitive software.
+
+13.
+    main() is the entry function in a hosted C program.
+
+14.
+    printf() is used for formatted output.
+
+15.
+    return 0; conventionally indicates successful termination
+    from main.
+
+
+======================================================================
+1.53 CHAPTER 1 — LEARNING CHECKPOINT
+======================================================================
+
+Before moving to Chapter 2, you should be able to explain
+WITHOUT looking at notes:
+
+    [ ] What is a computer?
+    [ ] What is a program?
+    [ ] What is programming?
+    [ ] What is a programming language?
+    [ ] What is source code?
+    [ ] What is machine code?
+    [ ] What is object code?
+    [ ] What is an executable?
+    [ ] What is a compiler?
+    [ ] What is a linker?
+    [ ] What is a loader?
+    [ ] What is an algorithm?
+    [ ] What is a flowchart?
+    [ ] What is pseudocode?
+    [ ] What is C?
+    [ ] Who developed C?
+    [ ] Why is C important?
+    [ ] What are the major applications of C?
+    [ ] What does #include do?
+    [ ] What is main()?
+    [ ] What does printf() do?
+    [ ] What does return 0 mean?
+    [ ] What is the C compilation process?
+
+
+======================================================================
+CHAPTER 1 STATUS
+======================================================================
+
+CHAPTER:
+    01 — Introduction to Programming & C
+
+STATUS:
+    FOUNDATION
+
+NEXT CHAPTER:
+    Chapter 2 — C Language Syntax & Basic Building Blocks
+
+IMPORTANT RULE:
+    Do NOT move to Chapter 2 until you are comfortable
+    with Chapter 1.
+
+    When you are ready, type:
+
+        NEXT
+
+======================================================================
+END OF CHAPTER 01
+======================================================================

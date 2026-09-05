@@ -1,0 +1,2269 @@
+====================================================================
+CHAPTER 1 — INTRODUCTION TO ALGORITHMS
+====================================================================
+
+Level:
+M.Tech 1st Year | Beginner → Job Ready
+
+Goal of this chapter:
+By the end of this chapter, you should be able to:
+    1. Define an algorithm.
+    2. Explain why algorithms are needed.
+    3. Differentiate an algorithm from a program.
+    4. Explain the characteristics/properties of an algorithm.
+    5. Represent algorithms using natural language, pseudocode,
+       and flowcharts.
+    6. Design an algorithm systematically.
+    7. Understand algorithmic thinking.
+    8. Solve simple problems using algorithms.
+    9. Identify input, output, constraints, and processing steps.
+   10. Understand correctness, efficiency, and termination.
+
+====================================================================
+1.1 WHAT IS AN ALGORITHM?
+====================================================================
+
+Definition:
+
+An algorithm is a finite, well-defined sequence of steps used to
+solve a problem or perform a computation.
+
+In simple words:
+
+    Algorithm = Step-by-step procedure to solve a problem.
+
+Real-world analogy:
+
+Suppose you want to make tea.
+
+You may follow these steps:
+
+    1. Take a pan.
+    2. Add water.
+    3. Heat the water.
+    4. Add tea leaves.
+    5. Add milk.
+    6. Add sugar.
+    7. Boil the mixture.
+    8. Filter the tea.
+    9. Serve.
+
+This is an algorithm for making tea.
+
+The computer works in a similar way.
+
+A computer does not understand vague instructions such as:
+
+    "Calculate the average somehow."
+
+Instead, we give precise steps:
+
+    1. Read three numbers.
+    2. Add the numbers.
+    3. Divide the sum by 3.
+    4. Display the result.
+
+That is an algorithm.
+
+--------------------------------------------------------------------
+Formal Definition
+--------------------------------------------------------------------
+
+An algorithm is a finite sequence of unambiguous instructions that
+takes some input, processes it, produces output, and terminates after
+a finite number of steps.
+
+Important words:
+
+    Finite
+        → Must eventually stop.
+
+    Unambiguous
+        → Every instruction must have a clear meaning.
+
+    Input
+        → Data supplied to the algorithm.
+
+    Processing
+        → Operations performed on the data.
+
+    Output
+        → Result produced by the algorithm.
+
+--------------------------------------------------------------------
+Example
+--------------------------------------------------------------------
+
+Problem:
+Find the sum of two numbers.
+
+Algorithm:
+
+    Step 1: Start
+    Step 2: Read A
+    Step 3: Read B
+    Step 4: Calculate SUM = A + B
+    Step 5: Display SUM
+    Step 6: Stop
+
+Example:
+
+    A = 10
+    B = 20
+
+    SUM = 10 + 20
+        = 30
+
+Output:
+
+    30
+
+====================================================================
+1.2 WHY DO WE NEED ALGORITHMS?
+====================================================================
+
+Algorithms are the foundation of computer science.
+
+Whenever a computer solves a problem, some algorithm is being used.
+
+Examples:
+
+    Google Search
+        → Search algorithms
+
+    Google Maps
+        → Shortest-path algorithms
+
+    Instagram/Facebook
+        → Recommendation and ranking algorithms
+
+    Banking systems
+        → Searching, sorting, security algorithms
+
+    Operating Systems
+        → Scheduling algorithms
+
+    Databases
+        → Searching, indexing, query-processing algorithms
+
+    Compilers
+        → Parsing, optimization, code-generation algorithms
+
+    Artificial Intelligence
+        → Machine-learning and optimization algorithms
+
+--------------------------------------------------------------------
+Without an algorithm
+--------------------------------------------------------------------
+
+Suppose you have 1,000,000 numbers and want to find a particular
+number.
+
+A simple approach may check every number one by one.
+
+Another algorithm may repeatedly divide the search area in half.
+
+Both may produce the same answer, but their performance can be
+dramatically different.
+
+Therefore:
+
+    Correct solution
+          +
+    Efficient algorithm
+          =
+    Good software
+
+====================================================================
+1.3 ALGORITHM VS PROGRAM
+====================================================================
+
+These terms are related but NOT identical.
+
+Algorithm:
+    A logical step-by-step solution to a problem.
+
+Program:
+    An implementation of an algorithm in a programming language.
+
+Example:
+
+Problem:
+Add two numbers.
+
+Algorithm:
+
+    1. Read A and B.
+    2. SUM = A + B.
+    3. Display SUM.
+
+C++ Program:
+
+    #include <iostream>
+    using namespace std;
+
+    int main()
+    {
+        int A, B;
+
+        cin >> A >> B;
+
+        int SUM = A + B;
+
+        cout << SUM;
+
+        return 0;
+    }
+
+The algorithm explains:
+
+    WHAT should be done.
+
+The program explains:
+
+    HOW the computer will execute it using a programming language.
+
+--------------------------------------------------------------------
+Difference
+--------------------------------------------------------------------
+
+Algorithm:
+    - Language independent
+    - Describes logic
+    - Human-readable
+    - Can be implemented in many languages
+
+Program:
+    - Written in a programming language
+    - Executable by a computer after appropriate translation/runtime
+    - Contains syntax
+    - Depends on language
+
+Example:
+
+One algorithm can be implemented in:
+
+    C
+    C++
+    Java
+    Python
+    JavaScript
+    etc.
+
+Therefore:
+
+    ONE ALGORITHM
+          ↓
+    MANY PROGRAMS
+
+====================================================================
+1.4 ALGORITHM VS PROGRAM VS PSEUDOCODE
+====================================================================
+
+Consider the problem:
+
+    Find the larger of two numbers.
+
+Algorithm:
+
+    1. Start.
+    2. Read A and B.
+    3. If A > B, display A.
+    4. Otherwise, display B.
+    5. Stop.
+
+Pseudocode:
+
+    BEGIN
+        READ A, B
+
+        IF A > B THEN
+            PRINT A
+        ELSE
+            PRINT B
+        END IF
+
+    END
+
+C++:
+
+    #include <iostream>
+    using namespace std;
+
+    int main()
+    {
+        int A, B;
+        cin >> A >> B;
+
+        if (A > B)
+            cout << A;
+        else
+            cout << B;
+
+        return 0;
+    }
+
+Relationship:
+
+    Problem
+       ↓
+    Algorithm
+       ↓
+    Pseudocode
+       ↓
+    Program
+       ↓
+    Execution
+       ↓
+    Output
+
+====================================================================
+1.5 CHARACTERISTICS OF AN ALGORITHM
+====================================================================
+
+A good algorithm generally has the following fundamental
+characteristics.
+
+1. INPUT
+2. OUTPUT
+3. DEFINITENESS
+4. FINITENESS
+5. EFFECTIVENESS
+
+Additional practical properties include:
+
+6. CORRECTNESS
+7. GENERALITY
+8. EFFICIENCY
+
+Let's understand each one.
+
+====================================================================
+1.5.1 INPUT
+====================================================================
+
+An algorithm may accept zero or more inputs.
+
+Input is the data provided to the algorithm.
+
+Example:
+
+    Problem:
+    Add two numbers.
+
+    Input:
+        A = 10
+        B = 20
+
+The algorithm receives:
+
+    10
+    20
+
+Then processes them.
+
+--------------------------------------------------------------------
+Example
+--------------------------------------------------------------------
+
+Algorithm to calculate area of a rectangle:
+
+    Step 1: Read length L.
+    Step 2: Read width W.
+    Step 3: Calculate AREA = L × W.
+    Step 4: Display AREA.
+
+Inputs:
+
+    L
+    W
+
+Example:
+
+    L = 5
+    W = 4
+
+====================================================================
+1.5.2 OUTPUT
+====================================================================
+
+An algorithm must produce one or more outputs.
+
+Output is the result generated by the algorithm.
+
+Example:
+
+    Input:
+        A = 10
+        B = 20
+
+    Algorithm:
+        SUM = A + B
+
+    Output:
+        30
+
+Therefore:
+
+    Input → Processing → Output
+
+--------------------------------------------------------------------
+Example
+--------------------------------------------------------------------
+
+Problem:
+Find the square of a number.
+
+Input:
+    N = 5
+
+Processing:
+    SQUARE = N × N
+
+Output:
+    25
+
+====================================================================
+1.5.3 DEFINITENESS
+====================================================================
+
+Every step of an algorithm must be clear and unambiguous.
+
+Unambiguous means:
+
+    There should be only one reasonable interpretation.
+
+Bad instruction:
+
+    "Add some numbers."
+
+Problem:
+
+    How many numbers?
+    Which numbers?
+    What should be done with the result?
+
+Better:
+
+    "Read two integers A and B and calculate A + B."
+
+Every instruction should be precise.
+
+--------------------------------------------------------------------
+Bad algorithm
+--------------------------------------------------------------------
+
+    1. Take some numbers.
+    2. Do the calculation.
+    3. Show the answer.
+
+This is ambiguous.
+
+--------------------------------------------------------------------
+Good algorithm
+--------------------------------------------------------------------
+
+    1. Read A.
+    2. Read B.
+    3. Calculate SUM = A + B.
+    4. Display SUM.
+
+This is definite.
+
+====================================================================
+1.5.4 FINITENESS
+====================================================================
+
+An algorithm must terminate after a finite number of steps.
+
+Example:
+
+    1. Read A.
+    2. Read B.
+    3. Calculate A + B.
+    4. Display result.
+    5. Stop.
+
+It terminates.
+
+--------------------------------------------------------------------
+Incorrect example
+--------------------------------------------------------------------
+
+    1. Print "Hello".
+    2. Repeat forever.
+
+This does not terminate.
+
+Therefore it is not considered a proper terminating algorithm for
+a finite computational task.
+
+--------------------------------------------------------------------
+Important
+--------------------------------------------------------------------
+
+A program may intentionally run forever.
+
+Examples:
+
+    Operating system
+    Web server
+    Embedded controller
+
+But when discussing the classical property of an algorithm,
+finiteness means the algorithm should terminate after a finite
+number of steps for valid input.
+
+====================================================================
+1.5.5 EFFECTIVENESS
+====================================================================
+
+Every operation in an algorithm should be basic enough that it can
+actually be carried out.
+
+Example:
+
+    1. Read A.
+    2. Read B.
+    3. Add A and B.
+    4. Display result.
+
+These are executable operations.
+
+An algorithm should not depend on an impossible operation such as:
+
+    "Find the answer using magic."
+
+Every step must be practically executable.
+
+====================================================================
+1.5.6 CORRECTNESS
+====================================================================
+
+An algorithm should produce the correct result for every valid input.
+
+Example:
+
+Problem:
+Calculate the area of a rectangle.
+
+Correct formula:
+
+    Area = Length × Width
+
+Algorithm:
+
+    1. Read L.
+    2. Read W.
+    3. Area = L × W.
+    4. Display Area.
+
+Input:
+
+    L = 10
+    W = 5
+
+Output:
+
+    50
+
+The algorithm is correct.
+
+--------------------------------------------------------------------
+Incorrect algorithm
+--------------------------------------------------------------------
+
+    Area = L + W
+
+For:
+
+    L = 10
+    W = 5
+
+It gives:
+
+    15
+
+Correct answer:
+
+    50
+
+Therefore the algorithm is incorrect.
+
+====================================================================
+1.5.7 GENERALITY
+====================================================================
+
+A good algorithm should solve a class of problems, not just one
+specific example.
+
+For example:
+
+    Algorithm:
+    Add two numbers.
+
+It should work for:
+
+    2 + 3
+    10 + 20
+    -5 + 7
+    1000 + 2000
+
+not just:
+
+    10 + 20
+
+Therefore an algorithm should be general enough for all valid inputs.
+
+====================================================================
+1.5.8 EFFICIENCY
+====================================================================
+
+An algorithm should use reasonable:
+
+    Time
+    Memory
+
+Example:
+
+Suppose we need to search for an element in a sorted array.
+
+Algorithm A:
+    Linear Search
+    Time ≈ O(n)
+
+Algorithm B:
+    Binary Search
+    Time ≈ O(log n)
+
+For a very large dataset, Binary Search can be dramatically faster.
+
+Efficiency becomes extremely important in:
+
+    Large applications
+    Databases
+    Search engines
+    AI systems
+    Operating systems
+    Distributed systems
+    Competitive programming
+    Technical interviews
+
+Detailed complexity analysis will be covered in Chapter 3.
+
+====================================================================
+1.6 ALGORITHM INPUT-PROCESSING-OUTPUT MODEL
+====================================================================
+
+A very useful way to understand algorithms is:
+
+             INPUT
+               |
+               ↓
+        +---------------+
+        |   ALGORITHM   |
+        |               |
+        |   Processing  |
+        +---------------+
+               |
+               ↓
+             OUTPUT
+
+Example:
+
+Problem:
+Calculate average of three numbers.
+
+Input:
+
+    A = 10
+    B = 20
+    C = 30
+
+Processing:
+
+    SUM = A + B + C
+    AVG = SUM / 3
+
+Output:
+
+    AVG = 20
+
+Therefore:
+
+    Input
+      ↓
+    Processing
+      ↓
+    Output
+
+====================================================================
+1.7 TYPES OF ALGORITHMS
+====================================================================
+
+Algorithms can be classified in different ways.
+
+Major categories include:
+
+    1. Brute Force
+    2. Divide and Conquer
+    3. Greedy
+    4. Dynamic Programming
+    5. Backtracking
+    6. Branch and Bound
+    7. Randomized Algorithms
+    8. Recursive Algorithms
+    9. Iterative Algorithms
+
+These will be studied deeply in later chapters.
+
+--------------------------------------------------------------------
+1. Brute Force
+--------------------------------------------------------------------
+
+Try all possible solutions and choose the appropriate one.
+
+Example:
+
+    Linear Search
+
+Search:
+
+    [10, 20, 30, 40, 50]
+
+Find 40.
+
+Check:
+
+    10 → No
+    20 → No
+    30 → No
+    40 → Yes
+
+--------------------------------------------------------------------
+Divide and Conquer
+--------------------------------------------------------------------
+
+Break a problem into smaller subproblems.
+
+General structure:
+
+    Problem
+       ↓
+    Divide
+       ↓
+    Smaller Problems
+       ↓
+    Solve
+       ↓
+    Combine
+       ↓
+    Final Answer
+
+Examples:
+
+    Merge Sort
+    Quick Sort
+    Binary Search
+
+--------------------------------------------------------------------
+Greedy Algorithm
+--------------------------------------------------------------------
+
+Make the best-looking choice at each step according to a specific
+greedy strategy.
+
+Examples:
+
+    Activity Selection
+    Fractional Knapsack
+    Kruskal
+    Prim
+    Dijkstra
+
+--------------------------------------------------------------------
+Dynamic Programming
+--------------------------------------------------------------------
+
+Solve overlapping subproblems and store their results to avoid
+repeating work.
+
+Examples:
+
+    Fibonacci
+    0/1 Knapsack
+    LCS
+    Coin Change
+
+--------------------------------------------------------------------
+Backtracking
+--------------------------------------------------------------------
+
+Build a solution step by step and undo a choice when it cannot lead
+to a valid solution.
+
+Examples:
+
+    N-Queens
+    Sudoku
+    Rat in a Maze
+    Permutations
+
+====================================================================
+1.8 ALGORITHM REPRESENTATION
+====================================================================
+
+There are several ways to represent an algorithm.
+
+1. Natural Language
+2. Pseudocode
+3. Flowchart
+4. Programming Language
+
+====================================================================
+1.8.1 NATURAL LANGUAGE
+====================================================================
+
+We describe the solution using ordinary human language.
+
+Example:
+
+Problem:
+Find the largest of two numbers.
+
+    1. Read two numbers.
+    2. Compare them.
+    3. If the first number is greater, select it.
+    4. Otherwise select the second number.
+    5. Display the selected number.
+
+Advantages:
+
+    - Easy to understand
+    - Beginner friendly
+
+Disadvantages:
+
+    - Can become ambiguous
+    - Difficult for complex algorithms
+
+====================================================================
+1.8.2 PSEUDOCODE
+====================================================================
+
+Pseudocode is an informal, programming-like representation of an
+algorithm.
+
+It is NOT a specific programming language.
+
+Example:
+
+    ALGORITHM FindMaximum(A, B)
+
+        IF A > B THEN
+            RETURN A
+        ELSE
+            RETURN B
+        END IF
+
+Pseudocode focuses on logic rather than programming-language syntax.
+
+--------------------------------------------------------------------
+Common pseudocode keywords
+--------------------------------------------------------------------
+
+    BEGIN
+    END
+    INPUT
+    READ
+    OUTPUT
+    PRINT
+    IF
+    ELSE
+    ELSE IF
+    WHILE
+    FOR
+    REPEAT
+    RETURN
+    FUNCTION
+    PROCEDURE
+
+====================================================================
+1.8.3 FLOWCHART
+====================================================================
+
+A flowchart represents an algorithm graphically.
+
+Common symbols:
+
+    Oval
+        → Start / End
+
+    Rectangle
+        → Process
+
+    Parallelogram
+        → Input / Output
+
+    Diamond
+        → Decision
+
+    Arrow
+        → Flow direction
+
+--------------------------------------------------------------------
+Example: Check whether a number is positive
+--------------------------------------------------------------------
+
+Conceptual flow:
+
+       START
+         |
+         ↓
+      Read N
+         |
+         ↓
+      Is N > 0?
+       /      \
+     YES      NO
+      |        |
+      ↓        ↓
+   Print      Print
+  "Positive" "Not Positive"
+       \       /
+         \   /
+          ↓
+         END
+
+The diamond represents a decision.
+
+====================================================================
+1.9 EXAMPLE — ALGORITHM TO ADD TWO NUMBERS
+====================================================================
+
+Problem:
+
+    Given two numbers A and B, find their sum.
+
+Step 1:
+    Identify inputs.
+
+    Input:
+        A
+        B
+
+Step 2:
+    Identify processing.
+
+    SUM = A + B
+
+Step 3:
+    Identify output.
+
+    SUM
+
+Algorithm:
+
+    1. Start
+    2. Read A
+    3. Read B
+    4. SUM = A + B
+    5. Display SUM
+    6. Stop
+
+Pseudocode:
+
+    BEGIN
+
+        READ A
+        READ B
+
+        SUM ← A + B
+
+        PRINT SUM
+
+    END
+
+C++ implementation:
+
+    #include <iostream>
+    using namespace std;
+
+    int main()
+    {
+        int A, B;
+
+        cin >> A >> B;
+
+        int SUM = A + B;
+
+        cout << SUM;
+
+        return 0;
+    }
+
+====================================================================
+1.10 EXAMPLE — FIND THE LARGER OF TWO NUMBERS
+====================================================================
+
+Problem:
+
+    Find the maximum of two numbers.
+
+Input:
+
+    A
+    B
+
+Logic:
+
+    If A > B:
+        A is maximum.
+
+    Otherwise:
+        B is maximum.
+
+Algorithm:
+
+    1. Start
+    2. Read A
+    3. Read B
+    4. If A > B:
+           MAX = A
+       Otherwise:
+           MAX = B
+    5. Display MAX
+    6. Stop
+
+Pseudocode:
+
+    BEGIN
+
+        READ A, B
+
+        IF A > B THEN
+            MAX ← A
+        ELSE
+            MAX ← B
+        END IF
+
+        PRINT MAX
+
+    END
+
+Example:
+
+    A = 25
+    B = 40
+
+    25 > 40 → FALSE
+
+Therefore:
+
+    MAX = 40
+
+Output:
+
+    40
+
+====================================================================
+1.11 EXAMPLE — CHECK EVEN OR ODD
+====================================================================
+
+Problem:
+
+    Determine whether an integer is even or odd.
+
+Important mathematical concept:
+
+    If N % 2 == 0
+        → Even
+
+    Otherwise
+        → Odd
+
+Algorithm:
+
+    1. Start
+    2. Read N
+    3. Calculate N % 2
+    4. If remainder = 0:
+           Print "Even"
+       Otherwise:
+           Print "Odd"
+    5. Stop
+
+Pseudocode:
+
+    BEGIN
+
+        READ N
+
+        IF N MOD 2 = 0 THEN
+            PRINT "Even"
+        ELSE
+            PRINT "Odd"
+        END IF
+
+    END
+
+Example:
+
+    N = 14
+
+    14 MOD 2 = 0
+
+Output:
+
+    Even
+
+Example:
+
+    N = 17
+
+    17 MOD 2 = 1
+
+Output:
+
+    Odd
+
+====================================================================
+1.12 EXAMPLE — FIND SUM FROM 1 TO N
+====================================================================
+
+Problem:
+
+    Calculate:
+
+        1 + 2 + 3 + ... + N
+
+Example:
+
+    N = 5
+
+    Sum = 1 + 2 + 3 + 4 + 5
+        = 15
+
+Algorithm using iteration:
+
+    1. Start
+    2. Read N
+    3. Set SUM = 0
+    4. For i = 1 to N:
+           SUM = SUM + i
+    5. Display SUM
+    6. Stop
+
+Pseudocode:
+
+    BEGIN
+
+        READ N
+
+        SUM ← 0
+
+        FOR i ← 1 TO N DO
+            SUM ← SUM + i
+        END FOR
+
+        PRINT SUM
+
+    END
+
+For:
+
+    N = 5
+
+Execution:
+
+    SUM = 0
+
+    i = 1 → SUM = 1
+    i = 2 → SUM = 3
+    i = 3 → SUM = 6
+    i = 4 → SUM = 10
+    i = 5 → SUM = 15
+
+Output:
+
+    15
+
+There is also a mathematical solution:
+
+    SUM = N(N + 1) / 2
+
+For N = 5:
+
+    SUM = 5 × 6 / 2
+        = 15
+
+The iterative algorithm performs N iterations.
+
+The formula performs a constant number of operations.
+
+This introduces an important idea:
+
+    Two algorithms can solve the same problem
+    but have different efficiency.
+
+Complexity analysis will be studied in Chapter 3.
+
+====================================================================
+1.13 ALGORITHM DESIGN PROCESS
+====================================================================
+
+When solving a new programming problem, follow this process.
+
+                PROBLEM
+                   ↓
+          Understand Problem
+                   ↓
+          Identify Input/Output
+                   ↓
+          Analyze Constraints
+                   ↓
+          Think of Simple Solution
+                   ↓
+          Design Algorithm
+                   ↓
+          Check Correctness
+                   ↓
+          Analyze Complexity
+                   ↓
+          Implement
+                   ↓
+          Test
+                   ↓
+          Optimize
+                   ↓
+               FINAL SOLUTION
+
+Let's understand every step.
+
+--------------------------------------------------------------------
+STEP 1 — Understand the Problem
+--------------------------------------------------------------------
+
+Read the problem carefully.
+
+Ask:
+
+    What is being asked?
+
+Example:
+
+    "Find the largest element in an array."
+
+You need to understand:
+
+    Input:
+        Array
+
+    Output:
+        Largest element
+
+--------------------------------------------------------------------
+STEP 2 — Identify Input and Output
+--------------------------------------------------------------------
+
+Example:
+
+    Input:
+        A = [10, 5, 20, 8]
+
+    Output:
+        20
+
+--------------------------------------------------------------------
+STEP 3 — Analyze Constraints
+--------------------------------------------------------------------
+
+Constraints tell you how large the input can be.
+
+Example:
+
+    1 <= N <= 100
+
+and:
+
+    1 <= N <= 1,000,000
+
+are very different.
+
+For small N, a simple algorithm may work.
+
+For large N, you may need an optimized algorithm.
+
+This is extremely important in coding interviews.
+
+--------------------------------------------------------------------
+STEP 4 — Start With a Simple Solution
+--------------------------------------------------------------------
+
+Do not immediately search for the most complicated algorithm.
+
+First ask:
+
+    "Can I solve this using a straightforward approach?"
+
+Then improve it.
+
+--------------------------------------------------------------------
+STEP 5 — Design the Algorithm
+--------------------------------------------------------------------
+
+For largest element:
+
+    1. Assume first element is maximum.
+    2. Traverse remaining elements.
+    3. Compare each element with maximum.
+    4. Update maximum when necessary.
+    5. Return maximum.
+
+--------------------------------------------------------------------
+STEP 6 — Check Correctness
+--------------------------------------------------------------------
+
+Ask:
+
+    Does this work for every valid input?
+
+Test:
+
+    [10, 5, 20, 8]
+
+    [5]
+
+    [-10, -5, -20]
+
+    [10, 10, 10]
+
+--------------------------------------------------------------------
+STEP 7 — Analyze Complexity
+--------------------------------------------------------------------
+
+If an array has N elements and you inspect every element once:
+
+    Time Complexity = O(N)
+
+Extra memory:
+
+    O(1)
+
+Complexity will be studied deeply in Chapter 3.
+
+--------------------------------------------------------------------
+STEP 8 — Implement
+--------------------------------------------------------------------
+
+Convert the algorithm into C++, Java, Python, etc.
+
+--------------------------------------------------------------------
+STEP 9 — Test
+--------------------------------------------------------------------
+
+Test:
+
+    Normal cases
+    Boundary cases
+    Minimum input
+    Maximum input
+    Duplicate values
+    Negative values
+    Empty input where applicable
+
+--------------------------------------------------------------------
+STEP 10 — Optimize
+--------------------------------------------------------------------
+
+Ask:
+
+    Can I reduce time?
+    Can I reduce memory?
+    Is there a better data structure?
+    Can I use sorting?
+    Can I use hashing?
+    Can I use binary search?
+    Can I use dynamic programming?
+
+====================================================================
+1.14 EXAMPLE — DESIGN AN ALGORITHM FOR MAXIMUM ARRAY ELEMENT
+====================================================================
+
+Problem:
+
+    Given an array of N integers, find the largest element.
+
+Example:
+
+    A = [10, 25, 7, 50, 18]
+
+Expected output:
+
+    50
+
+--------------------------------------------------------------------
+Step 1: Input
+--------------------------------------------------------------------
+
+    N
+    Array A
+
+--------------------------------------------------------------------
+Step 2: Output
+--------------------------------------------------------------------
+
+    Maximum element
+
+--------------------------------------------------------------------
+Step 3: Observation
+--------------------------------------------------------------------
+
+We need to inspect all elements because any element could be the
+maximum.
+
+--------------------------------------------------------------------
+Step 4: Algorithm
+--------------------------------------------------------------------
+
+    1. Start.
+    2. Read N.
+    3. Read array A.
+    4. Set MAX = A[0].
+    5. For every remaining element:
+           If A[i] > MAX:
+               MAX = A[i]
+    6. Display MAX.
+    7. Stop.
+
+--------------------------------------------------------------------
+Pseudocode
+--------------------------------------------------------------------
+
+    BEGIN
+
+        READ N
+        READ A[0 ... N-1]
+
+        MAX ← A[0]
+
+        FOR i ← 1 TO N-1 DO
+
+            IF A[i] > MAX THEN
+                MAX ← A[i]
+            END IF
+
+        END FOR
+
+        PRINT MAX
+
+    END
+
+--------------------------------------------------------------------
+Dry Run
+--------------------------------------------------------------------
+
+Array:
+
+    [10, 25, 7, 50, 18]
+
+Initial:
+
+    MAX = 10
+
+i = 1:
+
+    A[1] = 25
+
+    25 > 10
+    MAX = 25
+
+i = 2:
+
+    A[2] = 7
+
+    7 > 25 → FALSE
+
+    MAX = 25
+
+i = 3:
+
+    A[3] = 50
+
+    50 > 25
+    MAX = 50
+
+i = 4:
+
+    A[4] = 18
+
+    18 > 50 → FALSE
+
+Final:
+
+    MAX = 50
+
+Output:
+
+    50
+
+--------------------------------------------------------------------
+Complexity
+--------------------------------------------------------------------
+
+If there are N elements:
+
+    Time = O(N)
+
+Extra Space = O(1)
+
+====================================================================
+1.15 ALGORITHM VS DATA STRUCTURE
+====================================================================
+
+These are two fundamental concepts in computer science.
+
+Data Structure:
+
+    A way of organizing and storing data.
+
+Algorithm:
+
+    A procedure for processing that data.
+
+Example:
+
+    Array
+       +
+    Binary Search
+       =
+    Fast searching in a sorted array
+
+Another example:
+
+    Graph
+       +
+    BFS
+       =
+    Graph traversal
+
+Another:
+
+    Priority Queue
+       +
+    Dijkstra
+       =
+    Efficient shortest-path implementation
+
+Therefore:
+
+    Data Structure = How data is organized
+
+    Algorithm = How data is processed
+
+Together:
+
+    DATA STRUCTURE + ALGORITHM
+                 ↓
+          EFFICIENT SOLUTION
+
+====================================================================
+1.16 ALGORITHMIC THINKING
+====================================================================
+
+Algorithmic thinking means approaching a problem systematically.
+
+It involves:
+
+    1. Breaking the problem into smaller parts.
+    2. Identifying patterns.
+    3. Removing unnecessary details.
+    4. Finding a logical procedure.
+    5. Considering efficiency.
+    6. Verifying correctness.
+
+--------------------------------------------------------------------
+Example
+--------------------------------------------------------------------
+
+Problem:
+
+    Find whether a number exists in an array.
+
+Array:
+
+    [10, 20, 30, 40, 50]
+
+Search:
+
+    40
+
+Algorithmic thinking:
+
+    Question 1:
+        Is the array sorted?
+
+    Answer:
+        Yes.
+
+    Question 2:
+        Can we use the property of sorted order?
+
+    Answer:
+        Yes.
+
+    Question 3:
+        Can we repeatedly eliminate half the search space?
+
+    Answer:
+        Yes.
+
+Therefore:
+
+    Use Binary Search.
+
+This is algorithmic thinking.
+
+====================================================================
+1.17 BRUTE FORCE THINKING
+====================================================================
+
+A useful strategy for beginners is:
+
+    First solve → Then optimize.
+
+Example:
+
+Problem:
+Find whether an element exists in an array.
+
+Array:
+
+    [5, 8, 12, 20, 30]
+
+Search:
+
+    20
+
+Brute force:
+
+    Check every element.
+
+    5  → No
+    8  → No
+    12 → No
+    20 → Yes
+
+This is Linear Search.
+
+Complexity:
+
+    O(N)
+
+If the array is sorted, we may use:
+
+    Binary Search
+
+Complexity:
+
+    O(log N)
+
+Therefore:
+
+    Brute Force
+        ↓
+    Analyze
+        ↓
+    Find bottleneck
+        ↓
+    Optimize
+
+This is one of the most important habits for coding interviews.
+
+====================================================================
+1.18 ALGORITHM DESIGN PARADIGM
+====================================================================
+
+An algorithm design paradigm is a general strategy used to design
+algorithms.
+
+Major paradigms:
+
+    Brute Force
+        ↓
+    Divide and Conquer
+        ↓
+    Greedy
+        ↓
+    Dynamic Programming
+        ↓
+    Backtracking
+        ↓
+    Branch and Bound
+        ↓
+    Randomization
+
+Example:
+
+    Sorting
+
+    Simple:
+        Bubble Sort
+
+    Divide and Conquer:
+        Merge Sort
+        Quick Sort
+
+    Heap-based:
+        Heap Sort
+
+Different paradigms provide different ways of thinking about the
+same or related problems.
+
+====================================================================
+1.19 ALGORITHM TERMINOLOGY
+====================================================================
+
+You should become familiar with these terms.
+
+Algorithm:
+    Step-by-step problem-solving procedure.
+
+Input:
+    Data given to an algorithm.
+
+Output:
+    Result produced by an algorithm.
+
+Procedure:
+    Ordered sequence of operations.
+
+Pseudocode:
+    Informal representation of algorithmic logic.
+
+Flowchart:
+    Graphical representation of an algorithm.
+
+Correctness:
+    Ability to produce the expected result for valid inputs.
+
+Efficiency:
+    How much time and memory an algorithm requires.
+
+Termination:
+    Algorithm eventually stops.
+
+Complexity:
+    Measure of resource usage.
+
+Time Complexity:
+    Growth of execution time with input size.
+
+Space Complexity:
+    Growth of memory usage with input size.
+
+Optimization:
+    Improving an algorithm's resource usage.
+
+Constraint:
+    Limitation on input or required output.
+
+====================================================================
+1.20 COMMON BEGINNER MISTAKES
+====================================================================
+
+Mistake 1:
+    Writing code immediately without understanding the problem.
+
+Better:
+
+    Problem
+      ↓
+    Logic
+      ↓
+    Algorithm
+      ↓
+    Code
+
+--------------------------------------------------------------------
+
+Mistake 2:
+    Ignoring constraints.
+
+Example:
+
+    N <= 10^5
+
+Using an O(N²) algorithm may be too slow.
+
+--------------------------------------------------------------------
+
+Mistake 3:
+    Not testing edge cases.
+
+Example:
+
+    Find maximum:
+
+    [5]
+
+    [-10, -20, -5]
+
+    [7, 7, 7]
+
+--------------------------------------------------------------------
+
+Mistake 4:
+    Confusing algorithm with programming language.
+
+An algorithm is independent of C++, Java, Python, etc.
+
+--------------------------------------------------------------------
+
+Mistake 5:
+    Focusing only on getting the correct output.
+
+In interviews:
+
+    Correctness + Efficiency + Explanation
+
+are important.
+
+--------------------------------------------------------------------
+
+Mistake 6:
+    Memorizing algorithms without understanding them.
+
+Do not simply memorize:
+
+    "Binary Search code"
+
+Understand:
+
+    Why does binary search work?
+    When can it be used?
+    Why is it O(log N)?
+    What happens with duplicates?
+    What are the boundary conditions?
+
+====================================================================
+1.21 HOW TO SOLVE AN ALGORITHM PROBLEM IN AN INTERVIEW
+====================================================================
+
+Use this framework:
+
+    STEP 1
+        Understand the problem.
+
+    STEP 2
+        Repeat the problem in your own words.
+
+    STEP 3
+        Ask about constraints if unclear.
+
+    STEP 4
+        Identify input and output.
+
+    STEP 5
+        Give a brute-force solution.
+
+    STEP 6
+        Analyze its complexity.
+
+    STEP 7
+        Look for optimization.
+
+    STEP 8
+        Explain the optimized algorithm.
+
+    STEP 9
+        Prove/explain correctness.
+
+    STEP 10
+        Write clean code.
+
+    STEP 11
+        Test with examples.
+
+    STEP 12
+        Discuss time and space complexity.
+
+Example interview conversation:
+
+    Interviewer:
+        Find an element in a sorted array.
+
+    Candidate:
+
+        "Since the array is sorted, I can use binary search.
+         I compare the target with the middle element.
+
+         If the target equals the middle element, I return it.
+
+         If the target is smaller, I search the left half.
+
+         Otherwise, I search the right half.
+
+         Each step removes approximately half of the remaining
+         search space, so the time complexity is O(log N)."
+
+This demonstrates:
+
+    Understanding
+    Algorithm selection
+    Reasoning
+    Complexity knowledge
+    Communication
+
+====================================================================
+1.22 ALGORITHM QUALITY
+====================================================================
+
+A good algorithm should ideally satisfy:
+
+    1. Correct
+    2. Clear
+    3. Finite
+    4. Efficient
+    5. General
+    6. Maintainable
+    7. Scalable
+
+Think about an algorithm as:
+
+             CORRECT
+                +
+             EFFICIENT
+                +
+              CLEAR
+                +
+             GENERAL
+                ↓
+        HIGH-QUALITY ALGORITHM
+
+====================================================================
+1.23 IMPORTANT REAL-WORLD EXAMPLE
+====================================================================
+
+Suppose an e-commerce website has:
+
+    100 million products.
+
+User searches:
+
+    "Laptop"
+
+A naive approach might scan every product.
+
+If:
+
+    N = 100,000,000
+
+then scanning all records can be expensive.
+
+Real systems use combinations of:
+
+    Indexing
+    Hashing
+    Search algorithms
+    Ranking algorithms
+    Caching
+    Distributed processing
+
+This shows why algorithms matter in real software engineering.
+
+====================================================================
+1.24 ALGORITHM LEARNING ROADMAP
+====================================================================
+
+After Chapter 1, your learning should progress like this:
+
+    CHAPTER 1
+    Introduction to Algorithms
+          ↓
+    CHAPTER 2
+    Mathematical Foundations
+          ↓
+    CHAPTER 3
+    Complexity Analysis
+          ↓
+    CHAPTER 4
+    Correctness
+          ↓
+    Searching
+          ↓
+    Sorting
+          ↓
+    Divide & Conquer
+          ↓
+    Greedy
+          ↓
+    Recursion & Backtracking
+          ↓
+    Dynamic Programming
+          ↓
+    Trees
+          ↓
+    Graphs
+          ↓
+    String Algorithms
+          ↓
+    Advanced Algorithms
+          ↓
+    Interview Patterns
+          ↓
+    Competitive Programming
+          ↓
+    MOCK INTERVIEWS
+          ↓
+    JOB READY
+
+====================================================================
+1.25 CHAPTER 1 QUICK REVISION
+====================================================================
+
+Q1. What is an algorithm?
+
+Answer:
+
+    A finite sequence of well-defined steps used to solve a
+    computational problem.
+
+--------------------------------------------------------------------
+
+Q2. What are the basic characteristics of an algorithm?
+
+Answer:
+
+    Input
+    Output
+    Definiteness
+    Finiteness
+    Effectiveness
+
+Additional desirable properties:
+
+    Correctness
+    Generality
+    Efficiency
+
+--------------------------------------------------------------------
+
+Q3. Algorithm vs Program?
+
+Answer:
+
+    Algorithm:
+        Logical solution.
+
+    Program:
+        Implementation of that solution in a programming language.
+
+--------------------------------------------------------------------
+
+Q4. What is pseudocode?
+
+Answer:
+
+    A language-independent, informal representation of algorithmic
+    logic.
+
+--------------------------------------------------------------------
+
+Q5. What is a flowchart?
+
+Answer:
+
+    A graphical representation of an algorithm.
+
+--------------------------------------------------------------------
+
+Q6. Why is correctness important?
+
+Answer:
+
+    Because an algorithm must produce the expected result for valid
+    inputs.
+
+--------------------------------------------------------------------
+
+Q7. Why is efficiency important?
+
+Answer:
+
+    Because two correct algorithms may require very different
+    amounts of time and memory.
+
+--------------------------------------------------------------------
+
+Q8. What is algorithmic thinking?
+
+Answer:
+
+    A systematic way of analyzing and solving problems by breaking
+    them down, identifying patterns, designing procedures, and
+    considering correctness and efficiency.
+
+--------------------------------------------------------------------
+
+Q9. What is brute force?
+
+Answer:
+
+    A straightforward approach that explores or checks possible
+    solutions without using more advanced optimization.
+
+--------------------------------------------------------------------
+
+Q10. What is the basic problem-solving workflow?
+
+Answer:
+
+    Understand
+       ↓
+    Identify Input/Output
+       ↓
+    Analyze Constraints
+       ↓
+    Design
+       ↓
+    Prove/Check Correctness
+       ↓
+    Analyze Complexity
+       ↓
+    Implement
+       ↓
+    Test
+       ↓
+    Optimize
+
+====================================================================
+1.26 INTERVIEW-READY POINTS
+====================================================================
+
+You should be able to answer these without hesitation:
+
+    • Define an algorithm.
+    • What are the characteristics of an algorithm?
+    • Algorithm vs program?
+    • Algorithm vs pseudocode?
+    • What is a flowchart?
+    • Why do we analyze algorithms?
+    • What makes an algorithm efficient?
+    • What is algorithmic thinking?
+    • What is brute force?
+    • What are algorithm design paradigms?
+    • Why are constraints important?
+    • Why should we consider edge cases?
+    • What is correctness?
+    • What is termination?
+    • Why can two algorithms solving the same problem have different
+      performance?
+
+====================================================================
+1.27 EXAM-READY QUESTIONS
+====================================================================
+
+SHORT ANSWER:
+
+    1. Define algorithm.
+    2. List the characteristics of an algorithm.
+    3. Define definiteness.
+    4. Define finiteness.
+    5. What is pseudocode?
+    6. What is a flowchart?
+    7. Differentiate algorithm and program.
+    8. What is algorithmic efficiency?
+    9. What is brute force?
+   10. What is algorithmic thinking?
+
+LONG ANSWER:
+
+    1. Explain the characteristics of an algorithm with examples.
+    2. Explain the algorithm design process.
+    3. Explain different methods of algorithm representation.
+    4. Explain algorithm vs program with examples.
+    5. Explain major algorithm design paradigms.
+    6. Explain the importance of algorithms in computer science.
+
+CODING/LOGIC QUESTIONS:
+
+    1. Write an algorithm to add two numbers.
+    2. Write an algorithm to find the maximum of two numbers.
+    3. Write an algorithm to check even/odd.
+    4. Write an algorithm to find the largest element in an array.
+    5. Write an algorithm to calculate factorial.
+    6. Write an algorithm to calculate sum from 1 to N.
+    7. Write an algorithm to determine whether a number is prime.
+
+====================================================================
+1.28 KEY TAKEAWAYS
+====================================================================
+
+Remember these five fundamental ideas:
+
+    1. ALGORITHM
+       = Step-by-step solution.
+
+    2. INPUT
+       = Data supplied to the algorithm.
+
+    3. PROCESSING
+       = Operations performed.
+
+    4. OUTPUT
+       = Result produced.
+
+    5. EFFICIENCY
+       = How well the algorithm uses time and memory.
+
+Most importantly:
+
+    DO NOT START WITH CODE.
+
+Instead:
+
+    PROBLEM
+       ↓
+    UNDERSTAND
+       ↓
+    INPUT + OUTPUT
+       ↓
+    CONSTRAINTS
+       ↓
+    ALGORITHM
+       ↓
+    CORRECTNESS
+       ↓
+    COMPLEXITY
+       ↓
+    CODE
+       ↓
+    TEST
+       ↓
+    OPTIMIZE
+
+This workflow is one of the most important habits for becoming
+job-ready in algorithms.
+
+====================================================================
+END OF CHAPTER 1
+====================================================================
+
+NEXT CHAPTER:
+    CHAPTER 2 — MATHEMATICAL FOUNDATIONS FOR ALGORITHMS
+
+Topics:
+    • Basic Mathematics
+    • Powers and Logarithms
+    • Number Theory
+    • GCD and LCM
+    • Euclidean Algorithm
+    • Modular Arithmetic
+    • Prime Numbers
+    • Combinatorics
+    • Mathematical Series
+    • Recurrence Relations
+
+Type NEXT when you are ready to continue.
+====================================================================
