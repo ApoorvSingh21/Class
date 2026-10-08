@@ -1,0 +1,2899 @@
+============================================================
+        C++ JOB-READY COURSE — CHAPTER 3
+        DEVELOPMENT ENVIRONMENT & TOOLCHAIN
+============================================================
+
+GOAL OF CHAPTER 3
+------------------------------------------------------------
+After completing this chapter, you should be able to:
+
+1. Understand how C++ code is compiled and executed.
+2. Install/configure a C++ compiler.
+3. Use GCC/G++, Clang, or MSVC.
+4. Configure C++ in VS Code.
+5. Compile and run programs from the terminal.
+6. Understand Debug vs Release builds.
+7. Read and fix compiler errors.
+8. Understand source files, header files, object files and executables.
+9. Understand basic build systems.
+10. Create a professional C++ project structure.
+11. Use C++ standards such as C++17/C++20/C++23.
+12. Start using Git/GitHub with C++ projects.
+13. Debug C++ programs using breakpoints.
+14. Build a job-ready development workflow.
+
+
+============================================================
+1. WHAT IS A C++ DEVELOPMENT ENVIRONMENT?
+============================================================
+
+A development environment is the collection of tools used to:
+
+    Write code
+        ↓
+    Compile code
+        ↓
+    Link code
+        ↓
+    Run program
+        ↓
+    Debug program
+        ↓
+    Test program
+
+
+Main components:
+
+1. Text Editor / IDE
+2. Compiler
+3. Linker
+4. Debugger
+5. Build System
+6. Terminal
+7. Version Control System
+
+
+Example:
+
+VS Code
+   +
+G++ Compiler
+   +
+GDB Debugger
+   +
+CMake
+   +
+Git
+   =
+Professional C++ Development Environment
+
+
+============================================================
+2. EDITOR VS IDE
+============================================================
+
+EDITOR
+------------------------------------------------------------
+
+A code editor is primarily used to write/edit source code.
+
+Examples:
+
+    VS Code
+    Sublime Text
+    Vim
+    Neovim
+    Notepad++
+
+VS Code is NOT itself a C++ compiler.
+
+VS Code provides:
+
+    Code editing
+    Extensions
+    IntelliSense
+    Debugging integration
+    Terminal
+    Git integration
+
+
+IDE
+------------------------------------------------------------
+
+IDE = Integrated Development Environment
+
+An IDE usually combines:
+
+    Editor
+    Compiler integration
+    Debugger
+    Project management
+    Build tools
+
+
+Examples:
+
+    Visual Studio
+    CLion
+    Code::Blocks
+    Qt Creator
+
+
+IMPORTANT:
+
+VS Code + compiler + debugger can provide a
+professional C++ development environment.
+
+
+============================================================
+3. WHAT IS A COMPILER?
+============================================================
+
+A compiler translates source code written by a programmer
+into machine-understandable/object code.
+
+Example:
+
+C++ source:
+
+    int main() {
+        return 0;
+    }
+
+The compiler processes this code and produces lower-level
+code that can eventually become an executable program.
+
+
+Basic flow:
+
+C++ Source Code
+      ↓
+Preprocessor
+      ↓
+Compiler
+      ↓
+Assembly
+      ↓
+Assembler
+      ↓
+Object File
+      ↓
+Linker
+      ↓
+Executable
+      ↓
+Operating System
+      ↓
+Program Execution
+
+
+============================================================
+4. POPULAR C++ COMPILERS
+============================================================
+
+Common C++ compiler toolchains include:
+
+1. GCC
+2. Clang/LLVM
+3. Microsoft Visual C++ (MSVC)
+4. Intel oneAPI DPC++/C++ compiler
+
+------------------------------------------------------------
+GCC
+------------------------------------------------------------
+
+GCC = GNU Compiler Collection
+
+For C++:
+
+    g++
+
+Example:
+
+    g++ main.cpp -o main
+
+
+------------------------------------------------------------
+Clang
+------------------------------------------------------------
+
+Clang is a compiler frontend associated with LLVM.
+
+Example:
+
+    clang++ main.cpp -o main
+
+
+------------------------------------------------------------
+MSVC
+------------------------------------------------------------
+
+Microsoft Visual C++ is Microsoft's C/C++ compiler toolchain.
+
+Commonly used through:
+
+    Visual Studio
+    Developer Command Prompt
+    MSBuild
+
+
+============================================================
+5. GCC VS G++ 
+============================================================
+
+GCC is the overall GNU Compiler Collection.
+
+The command:
+
+    gcc
+
+is commonly used for C.
+
+The command:
+
+    g++
+
+is commonly used for C++.
+
+For C++ development, prefer:
+
+    g++
+
+Example:
+
+    g++ program.cpp -o program
+
+
+Compile:
+
+    g++ program.cpp -o program
+
+Run on Linux/macOS:
+
+    ./program
+
+Run on Windows:
+
+    program.exe
+
+
+============================================================
+6. INSTALLING C++ ON WINDOWS
+============================================================
+
+You need a compiler/toolchain.
+
+Common approaches:
+
+A. Visual Studio
+B. MSYS2 + MinGW-w64 toolchain
+C. Another GCC/Clang distribution
+
+
+------------------------------------------------------------
+OPTION A: VISUAL STUDIO
+------------------------------------------------------------
+
+Visual Studio provides:
+
+    MSVC compiler
+    Debugger
+    IDE
+    Windows SDK
+    Build tools
+
+
+During installation, select the workload:
+
+    Desktop development with C++
+
+
+This installs the major components needed for
+Windows C++ development.
+
+
+------------------------------------------------------------
+OPTION B: MSYS2 + MinGW-W64
+------------------------------------------------------------
+
+MSYS2 can provide a modern GCC-based environment and
+package management.
+
+Typical workflow:
+
+    Install MSYS2
+        ↓
+    Update packages
+        ↓
+    Install appropriate MinGW-w64 C++ toolchain
+        ↓
+    Add/use its bin directory
+        ↓
+    Verify g++
+
+
+Then:
+
+    g++ --version
+
+
+If it works, the compiler is available.
+
+
+============================================================
+7. VERIFYING THE COMPILER
+============================================================
+
+Open terminal/Command Prompt and type:
+
+    g++ --version
+
+
+Example output will contain information about:
+
+    GCC version
+    Copyright
+    Target platform
+
+
+Also:
+
+    g++ -v
+
+
+This displays more detailed compiler information.
+
+
+For Clang:
+
+    clang++ --version
+
+
+For MSVC:
+
+    cl
+
+
+IMPORTANT:
+
+If Windows says:
+
+    'g++' is not recognized...
+
+then the compiler may not be installed correctly,
+or its executable directory may not be in PATH.
+
+
+============================================================
+8. WHAT IS PATH?
+============================================================
+
+PATH is an operating-system environment variable containing
+directories where executable programs can be searched.
+
+Suppose g++ exists at:
+
+    C:\SomeCompiler\bin\g++.exe
+
+If that directory is included in PATH, you can execute:
+
+    g++
+
+from a terminal without typing the complete path.
+
+
+Without PATH:
+
+    C:\SomeCompiler\bin\g++.exe program.cpp
+
+
+With PATH:
+
+    g++ program.cpp
+
+
+============================================================
+9. VS CODE FOR C++
+============================================================
+
+VS Code can be used as a professional C++ editor.
+
+Typical setup:
+
+    VS Code
+       +
+    C++ extension
+       +
+    Compiler
+       +
+    Debugger
+       +
+    CMake (for larger projects)
+       +
+    Git
+
+
+Important concept:
+
+Installing VS Code does NOT automatically install
+a C++ compiler.
+
+
+============================================================
+10. C++ EXTENSION IN VS CODE
+============================================================
+
+Microsoft's C/C++ extension provides features such as:
+
+    Syntax highlighting
+    IntelliSense
+    Code navigation
+    Error diagnostics
+    Debugging support
+    Code completion
+
+
+You still need an actual compiler/toolchain.
+
+
+============================================================
+11. FIRST C++ PROJECT
+============================================================
+
+Create a directory:
+
+    cpp-learning
+
+Inside it:
+
+    cpp-learning/
+        main.cpp
+
+
+main.cpp:
+
+    #include <iostream>
+
+    int main() {
+        std::cout << "Hello, C++!" << std::endl;
+        return 0;
+    }
+
+
+============================================================
+12. COMPILE FROM TERMINAL
+============================================================
+
+Open terminal in the project directory.
+
+Command:
+
+    g++ main.cpp -o main
+
+
+Meaning:
+
+    g++
+        compiler
+
+    main.cpp
+        input source file
+
+    -o
+        output option
+
+    main
+        output executable name
+
+
+On Windows, the executable generally becomes:
+
+    main.exe
+
+
+On Linux/macOS, commonly:
+
+    main
+
+
+============================================================
+13. RUN THE PROGRAM
+============================================================
+
+Windows:
+
+    .\main.exe
+
+or:
+
+    main.exe
+
+
+Linux/macOS:
+
+    ./main
+
+
+Expected output:
+
+    Hello, C++!
+
+
+============================================================
+14. USING C++ STANDARD OPTIONS
+============================================================
+
+C++ has different language standards.
+
+You can explicitly select a standard.
+
+Example:
+
+    g++ -std=c++17 main.cpp -o main
+
+
+C++20:
+
+    g++ -std=c++20 main.cpp -o main
+
+
+C++23:
+
+    g++ -std=c++23 main.cpp -o main
+
+
+Why specify the standard?
+
+Because different C++ standards provide different
+language/library features.
+
+
+For job preparation:
+
+    C++17
+    C++20
+    C++23
+
+are useful standards to understand.
+
+For interviews and competitive programming,
+C++17 is still particularly common.
+
+
+============================================================
+15. IMPORTANT COMPILER OPTIONS
+============================================================
+
+Example:
+
+    g++ -std=c++17 -Wall -Wextra main.cpp -o main
+
+
+Meaning:
+
+    -std=c++17
+        use C++17
+
+    -Wall
+        enable many useful warnings
+
+    -Wextra
+        enable additional warnings
+
+    -o main
+        name output executable
+
+
+Recommended learning command:
+
+    g++ -std=c++17 -Wall -Wextra main.cpp -o main
+
+
+For stronger diagnostics:
+
+    g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o main
+
+
+IMPORTANT:
+
+Warnings are valuable.
+
+A professional programmer does not simply ignore
+compiler warnings.
+
+
+============================================================
+16. SOURCE FILE
+============================================================
+
+A source file contains implementation code.
+
+Common extension:
+
+    .cpp
+
+Example:
+
+    main.cpp
+    employee.cpp
+    database.cpp
+
+
+Example:
+
+    // employee.cpp
+
+    int calculateSalary() {
+        return 50000;
+    }
+
+
+============================================================
+17. HEADER FILE
+============================================================
+
+Header files commonly contain:
+
+    Declarations
+    Class definitions
+    Function declarations
+    Templates
+    Constants
+    Interfaces
+
+
+Common extensions:
+
+    .h
+    .hpp
+
+
+Example:
+
+employee.hpp:
+
+    #ifndef EMPLOYEE_HPP
+    #define EMPLOYEE_HPP
+
+    class Employee {
+    public:
+        void display();
+    };
+
+    #endif
+
+
+employee.cpp:
+
+    #include "employee.hpp"
+    #include <iostream>
+
+    void Employee::display() {
+        std::cout << "Employee";
+    }
+
+
+main.cpp:
+
+    #include "employee.hpp"
+
+    int main() {
+        Employee e;
+        e.display();
+    }
+
+
+Compile:
+
+    g++ -std=c++17 main.cpp employee.cpp -o app
+
+
+============================================================
+18. DECLARATION VS DEFINITION
+============================================================
+
+Declaration tells the compiler that something exists.
+
+Example:
+
+    int add(int, int);
+
+
+Definition provides implementation.
+
+Example:
+
+    int add(int a, int b) {
+        return a + b;
+    }
+
+
+Header:
+
+    int add(int, int);
+
+
+Source:
+
+    int add(int a, int b) {
+        return a + b;
+    }
+
+
+This separation becomes extremely important
+in large C++ projects.
+
+
+============================================================
+19. TRANSLATION UNIT
+============================================================
+
+A translation unit is essentially the source file after
+preprocessing, along with the included contents needed
+for compilation.
+
+For example:
+
+    main.cpp
+
+after preprocessing may contain:
+
+    main.cpp
+       +
+    included header contents
+       ↓
+    translation unit
+
+
+Each source file can generally be compiled separately.
+
+
+============================================================
+20. OBJECT FILE
+============================================================
+
+After compilation, source code can be converted into
+an object file.
+
+Example:
+
+    main.cpp
+       ↓
+    main.o
+
+
+Another:
+
+    employee.cpp
+       ↓
+    employee.o
+
+
+Then:
+
+    main.o
+       +
+    employee.o
+       ↓
+    Linker
+       ↓
+    executable
+
+
+============================================================
+21. LINKER
+============================================================
+
+The linker combines object files and libraries into
+a final executable or library.
+
+Example:
+
+    main.cpp
+    employee.cpp
+
+Compile:
+
+    g++ -c main.cpp
+    g++ -c employee.cpp
+
+
+Produces:
+
+    main.o
+    employee.o
+
+
+Link:
+
+    g++ main.o employee.o -o app
+
+
+Now:
+
+    app
+
+is the executable.
+
+
+============================================================
+22. COMPILER VS LINKER
+============================================================
+
+Compiler:
+
+    Source code
+        ↓
+    Object code
+
+
+Linker:
+
+    Object files
+       +
+    Libraries
+       ↓
+    Executable
+
+
+Example linker problem:
+
+    undefined reference to `Employee::display()'
+
+
+Possible reason:
+
+The declaration exists, but the implementation
+was not linked into the final executable.
+
+
+============================================================
+23. PREPROCESSOR
+============================================================
+
+The preprocessor handles preprocessing directives.
+
+Examples:
+
+    #include
+    #define
+    #if
+    #ifdef
+    #ifndef
+    #endif
+
+
+Example:
+
+    #include <iostream>
+
+
+Conceptually, the preprocessor processes the included
+header before the compiler analyzes the resulting code.
+
+
+============================================================
+24. COMPILATION PIPELINE
+============================================================
+
+Detailed conceptual pipeline:
+
+                main.cpp
+                   |
+                   v
+             PREPROCESSOR
+                   |
+                   v
+          Preprocessed source
+                   |
+                   v
+               COMPILER
+                   |
+                   v
+               Assembly
+                   |
+                   v
+              ASSEMBLER
+                   |
+                   v
+              Object file
+                   |
+                   v
+                LINKER
+                   |
+                   v
+              Executable
+                   |
+                   v
+              OPERATING SYSTEM
+                   |
+                   v
+                 RUN
+
+
+============================================================
+25. VIEWING PREPROCESSOR OUTPUT
+============================================================
+
+With GCC:
+
+    g++ -E main.cpp
+
+
+This asks the compiler driver to stop after preprocessing
+and output the preprocessed source.
+
+
+This can help you understand:
+
+    #include
+    macros
+    conditional compilation
+
+
+============================================================
+26. GENERATING ASSEMBLY
+============================================================
+
+Example:
+
+    g++ -S main.cpp
+
+
+This can generate assembly output.
+
+Purpose:
+
+    Understand compiler output
+    Study low-level behavior
+    Learn optimization
+    Understand performance
+
+
+You don't need assembly expertise initially,
+but basic understanding is valuable for advanced C++.
+
+
+============================================================
+27. GENERATING OBJECT FILE
+============================================================
+
+Use:
+
+    g++ -c main.cpp
+
+
+Output:
+
+    main.o
+
+The -c option means:
+
+    Compile/assemble but do not link.
+
+
+============================================================
+28. COMMON TYPES OF ERRORS
+============================================================
+
+A. Syntax Error
+B. Compilation Error
+C. Linker Error
+D. Runtime Error
+E. Logical Error
+F. Undefined Behavior
+
+
+------------------------------------------------------------
+A. SYNTAX ERROR
+------------------------------------------------------------
+
+Example:
+
+    int main() {
+        std::cout << "Hello"
+    }
+
+
+Missing semicolon.
+
+Compiler reports an error.
+
+
+------------------------------------------------------------
+B. COMPILATION ERROR
+------------------------------------------------------------
+
+Example:
+
+    int main() {
+        unknownFunction();
+    }
+
+
+The compiler may report that the function
+is not declared.
+
+
+------------------------------------------------------------
+C. LINKER ERROR
+------------------------------------------------------------
+
+Example:
+
+    void display();
+
+    int main() {
+        display();
+    }
+
+
+If display() is declared but never defined,
+the linker may report an undefined reference/symbol.
+
+
+------------------------------------------------------------
+D. RUNTIME ERROR
+------------------------------------------------------------
+
+Program compiles but fails during execution.
+
+Examples:
+
+    Invalid memory access
+    Division by zero
+    Unhandled exception
+    Resource failure
+
+
+------------------------------------------------------------
+E. LOGICAL ERROR
+------------------------------------------------------------
+
+Program runs but gives incorrect result.
+
+Example:
+
+Expected:
+
+    10
+
+Program produces:
+
+    20
+
+
+The compiler may not detect this.
+
+
+------------------------------------------------------------
+F. UNDEFINED BEHAVIOR
+------------------------------------------------------------
+
+The C++ standard does not define what should happen.
+
+Example:
+
+    int arr[3] = {1, 2, 3};
+
+    std::cout << arr[10];
+
+
+Accessing outside the array bounds is undefined behavior.
+
+
+IMPORTANT:
+
+Undefined behavior is extremely important
+for C++ interviews.
+
+
+============================================================
+29. DEBUG BUILD VS RELEASE BUILD
+============================================================
+
+DEBUG BUILD
+------------------------------------------------------------
+
+Used mainly during development.
+
+Usually emphasizes:
+
+    Debug information
+    Easier debugging
+    Less aggressive optimization
+
+
+RELEASE BUILD
+------------------------------------------------------------
+
+Used for production/distribution.
+
+Usually emphasizes:
+
+    Optimization
+    Performance
+    Smaller/faster executable where appropriate
+
+
+Conceptually:
+
+Development:
+
+    Code → Debug Build → Debugger → Fix
+
+
+Production:
+
+    Code → Release Build → Test → Deploy
+
+
+============================================================
+30. DEBUGGER
+============================================================
+
+A debugger lets you inspect a program while it runs.
+
+Common debugger:
+
+    GDB
+
+Other environments:
+
+    Visual Studio Debugger
+    LLDB
+
+
+Debugger can help inspect:
+
+    Variables
+    Call stack
+    Execution flow
+    Memory
+    Breakpoints
+    Expressions
+
+
+============================================================
+31. BREAKPOINT
+============================================================
+
+A breakpoint tells the debugger:
+
+    "Pause execution here."
+
+
+Example:
+
+    int main() {
+
+        int a = 10;
+        int b = 20;
+
+        int sum = a + b;   // breakpoint
+
+        return 0;
+    }
+
+
+When execution reaches the breakpoint,
+you can inspect:
+
+    a
+    b
+    sum
+
+
+============================================================
+32. STEP OPERATIONS
+============================================================
+
+Common debugger commands/concepts:
+
+    Continue
+    Step Over
+    Step Into
+    Step Out
+    Restart
+    Stop
+
+
+STEP OVER:
+
+Execute current line without entering a function.
+
+
+STEP INTO:
+
+Enter the function being called.
+
+
+STEP OUT:
+
+Finish current function and return to caller.
+
+
+CONTINUE:
+
+Continue execution until next breakpoint/event.
+
+
+============================================================
+33. GDB BASIC COMMANDS
+============================================================
+
+Compile with debug information:
+
+    g++ -std=c++17 -g main.cpp -o main
+
+
+Start debugger:
+
+    gdb ./main
+
+
+Useful commands:
+
+    break main
+    run
+    next
+    step
+    continue
+    print variable
+    backtrace
+    quit
+
+
+Examples:
+
+    break main
+
+sets a breakpoint at main.
+
+    run
+
+starts execution.
+
+    print x
+
+prints x.
+
+    backtrace
+
+shows the call stack.
+
+
+============================================================
+34. ASSERTIONS
+============================================================
+
+Assertions help detect programming assumptions.
+
+Include:
+
+    #include <cassert>
+
+
+Example:
+
+    int divide(int a, int b) {
+        assert(b != 0);
+        return a / b;
+    }
+
+
+If the assumption fails during a debug-oriented run,
+the program can stop and report the failed assertion.
+
+
+Assertions are useful for catching programming errors early.
+
+
+============================================================
+35. C++ PROJECT STRUCTURE
+============================================================
+
+A small professional project may look like:
+
+    my_project/
+    |
+    +-- include/
+    |     +-- calculator.hpp
+    |
+    +-- src/
+    |     +-- calculator.cpp
+    |     +-- main.cpp
+    |
+    +-- tests/
+    |     +-- calculator_test.cpp
+    |
+    +-- build/
+    |
+    +-- CMakeLists.txt
+    |
+    +-- README.md
+    |
+    +-- .gitignore
+
+
+Purpose:
+
+    include/
+        public headers
+
+    src/
+        implementation
+
+    tests/
+        tests
+
+    build/
+        generated build files
+
+    CMakeLists.txt
+        build configuration
+
+    README.md
+        project documentation
+
+    .gitignore
+        files Git should ignore
+
+
+============================================================
+36. WHY PROJECT STRUCTURE MATTERS
+============================================================
+
+Real companies rarely keep everything in:
+
+    main.cpp
+
+
+Large applications may contain:
+
+    Hundreds/thousands of files
+    Multiple libraries
+    Tests
+    Configuration
+    Documentation
+    Build scripts
+
+
+Good project structure improves:
+
+    Maintainability
+    Collaboration
+    Testing
+    Scalability
+    Code review
+
+
+============================================================
+37. BUILD SYSTEMS
+============================================================
+
+When projects become large, manually writing:
+
+    g++ a.cpp b.cpp c.cpp d.cpp ...
+
+becomes inconvenient.
+
+Build systems automate compilation.
+
+
+Popular C++ build systems/tools include:
+
+    CMake
+    Ninja
+    Make
+    MSBuild
+
+
+For modern cross-platform C++ development,
+CMake is extremely important.
+
+
+============================================================
+38. CMAKE INTRODUCTION
+============================================================
+
+CMake is a build-system generator/configuration tool.
+
+A basic:
+
+    CMakeLists.txt
+
+
+Example:
+
+    cmake_minimum_required(VERSION 3.20)
+
+    project(MyApp LANGUAGES CXX)
+
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+    add_executable(MyApp
+        src/main.cpp
+        src/calculator.cpp
+    )
+
+
+Conceptually:
+
+    CMakeLists.txt
+          ↓
+       CMake
+          ↓
+    Build files
+          ↓
+    Compiler
+          ↓
+    Executable
+
+
+============================================================
+39. WHY CMAKE IS IMPORTANT FOR JOBS
+============================================================
+
+CMake is widely used in professional C++ projects.
+
+You should eventually learn:
+
+    project()
+    add_executable()
+    add_library()
+    target_include_directories()
+    target_link_libraries()
+    target_compile_features()
+    target_compile_options()
+    build directories
+    Debug/Release configuration
+    dependencies
+    testing
+
+
+Don't try to memorize everything initially.
+
+First understand the workflow.
+
+
+============================================================
+40. OUT-OF-SOURCE BUILD
+============================================================
+
+Recommended structure:
+
+    project/
+    |
+    +-- src/
+    +-- include/
+    +-- tests/
+    +-- CMakeLists.txt
+    |
+    +-- build/
+
+
+The build directory contains generated files.
+
+This keeps generated files separate from source code.
+
+
+============================================================
+41. GIT FOR C++ PROJECTS
+============================================================
+
+Git is a version control system.
+
+Basic workflow:
+
+    Create project
+         ↓
+    git init
+         ↓
+    Write code
+         ↓
+    git status
+         ↓
+    git add .
+         ↓
+    git commit
+         ↓
+    git push
+
+
+Useful commands:
+
+    git init
+    git status
+    git add .
+    git commit -m "Initial C++ project"
+    git branch
+    git remote -v
+    git push
+
+
+For job readiness, Git is essential.
+
+
+============================================================
+42. .gitignore FOR C++
+============================================================
+
+Do not normally commit generated build artifacts
+unnecessarily.
+
+Example:
+
+    build/
+    *.exe
+    *.o
+    *.obj
+    *.out
+    .vscode/
+    CMakeFiles/
+    CMakeCache.txt
+
+
+Exact .gitignore rules depend on your tooling/project.
+
+
+============================================================
+43. PACKAGE / DEPENDENCY MANAGEMENT
+============================================================
+
+Real C++ applications often depend on external libraries.
+
+Examples:
+
+    Boost
+    OpenCV
+    Eigen
+    fmt
+    GoogleTest
+
+
+Dependency management can involve:
+
+    CMake
+    vcpkg
+    Conan
+    system package managers
+
+
+You should eventually learn how to:
+
+    Find dependencies
+    Link libraries
+    Include headers
+    Configure builds
+    Manage versions
+
+
+============================================================
+44. STATIC VS DYNAMIC LIBRARIES
+============================================================
+
+STATIC LIBRARY
+------------------------------------------------------------
+
+Common forms:
+
+    .a
+    .lib
+
+
+Conceptually, code is incorporated into the final executable
+during linking.
+
+
+DYNAMIC/SHARED LIBRARY
+------------------------------------------------------------
+
+Common forms:
+
+    .so
+    .dll
+    .dylib
+
+
+The executable can use separately built library code.
+
+
+Understanding libraries becomes important in:
+
+    System programming
+    Large applications
+    Game development
+    Embedded systems
+    Backend systems
+
+
+============================================================
+45. TERMINAL SKILLS
+============================================================
+
+A job-ready C++ developer should be comfortable with:
+
+    cd
+    mkdir
+    ls
+    dir
+    pwd
+    cp
+    copy
+    mv
+    move
+    rm
+    del
+    echo
+
+
+You should know how to:
+
+    Create directories
+    Navigate folders
+    Compile programs
+    Run programs
+    Inspect files
+    Manage projects
+
+
+============================================================
+46. WINDOWS VS LINUX C++ WORKFLOW
+============================================================
+
+WINDOWS:
+
+    VS Code / Visual Studio
+          +
+    MSVC / GCC / Clang
+          +
+    Debugger
+          +
+    CMake
+          +
+    Git
+
+
+LINUX:
+
+    VS Code / CLion / Vim
+          +
+    GCC / Clang
+          +
+    GDB / LLDB
+          +
+    CMake
+          +
+    Git
+
+
+Concepts remain mostly the same.
+
+
+============================================================
+47. FIRST PRACTICAL PROJECT
+============================================================
+
+Create:
+
+    Calculator
+
+
+Features:
+
+    Addition
+    Subtraction
+    Multiplication
+    Division
+
+
+Structure:
+
+    calculator/
+    |
+    +-- include/
+    |     +-- calculator.hpp
+    |
+    +-- src/
+    |     +-- calculator.cpp
+    |     +-- main.cpp
+    |
+    +-- README.md
+    +-- .gitignore
+
+
+calculator.hpp:
+
+    #ifndef CALCULATOR_HPP
+    #define CALCULATOR_HPP
+
+    int add(int a, int b);
+    int subtract(int a, int b);
+    int multiply(int a, int b);
+    int divide(int a, int b);
+
+    #endif
+
+
+calculator.cpp:
+
+    #include "calculator.hpp"
+
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    int subtract(int a, int b) {
+        return a - b;
+    }
+
+    int multiply(int a, int b) {
+        return a * b;
+    }
+
+    int divide(int a, int b) {
+        return a / b;
+    }
+
+
+main.cpp:
+
+    #include <iostream>
+    #include "calculator.hpp"
+
+    int main() {
+
+        std::cout << add(10, 20) << '\n';
+        std::cout << subtract(20, 10) << '\n';
+        std::cout << multiply(5, 4) << '\n';
+        std::cout << divide(20, 5) << '\n';
+
+        return 0;
+    }
+
+
+Compile:
+
+    g++ -std=c++17 -Wall -Wextra \
+        src/main.cpp src/calculator.cpp \
+        -Iinclude -o calculator
+
+
+Run:
+
+Windows:
+
+    .\calculator.exe
+
+Linux/macOS:
+
+    ./calculator
+
+
+============================================================
+48. IMPORTANT: INCLUDE PATH
+============================================================
+
+Suppose:
+
+    include/calculator.hpp
+
+
+Compiler must know where to find it.
+
+Option:
+
+    -Iinclude
+
+
+Example:
+
+    g++ src/main.cpp src/calculator.cpp \
+        -Iinclude -o calculator
+
+
+Here:
+
+    -I
+        specifies an additional include directory.
+
+
+============================================================
+49. DEBUGGING THE CALCULATOR
+============================================================
+
+Suppose:
+
+    int divide(int a, int b) {
+        return a / b;
+    }
+
+
+Potential problem:
+
+    b == 0
+
+
+A better design should handle invalid input.
+
+For example, you might throw an exception:
+
+    #include <stdexcept>
+
+    int divide(int a, int b) {
+        if (b == 0) {
+            throw std::invalid_argument("Division by zero");
+        }
+
+        return a / b;
+    }
+
+
+This introduces an important professional concept:
+
+    Error handling.
+
+
+You will study this deeply in later chapters.
+
+
+============================================================
+50. COMPILER FLAGS YOU SHOULD KNOW
+============================================================
+
+Important GCC-style flags:
+
+    -std=c++17
+    -std=c++20
+    -std=c++23
+
+    -Wall
+    -Wextra
+    -Werror
+
+    -g
+
+    -O0
+    -O1
+    -O2
+    -O3
+
+    -c
+    -o
+    -I
+    -L
+    -l
+
+
+Basic meanings:
+
+    -g
+        debugging information
+
+    -O0
+        little/no optimization
+
+    -O2
+        optimization level commonly used for optimized builds
+
+    -c
+        compile without linking
+
+    -I
+        include directory
+
+    -L
+        library directory
+
+    -l
+        link a library
+
+
+============================================================
+51. WARNING AS ERROR
+============================================================
+
+Example:
+
+    -Werror
+
+
+This can treat warnings as errors.
+
+Example:
+
+    g++ -std=c++17 -Wall -Wextra -Werror main.cpp -o main
+
+
+This is useful in some professional/CI environments,
+but whether it should always be enabled depends on the project.
+
+
+============================================================
+52. OPTIMIZATION
+============================================================
+
+Compilers can optimize code.
+
+Examples:
+
+    -O0
+    -O1
+    -O2
+    -O3
+
+
+Concept:
+
+    Source Code
+        ↓
+    Compiler
+        ↓
+    Optimized Machine Code
+
+
+Optimization can improve:
+
+    Execution speed
+    Code size
+    Resource usage
+
+
+But optimization can make debugging harder.
+
+Therefore:
+
+    Debug build → lower optimization
+    Release build → optimized
+
+
+============================================================
+53. COMPILATION TIME VS RUNTIME
+============================================================
+
+COMPILE TIME:
+
+Time required to translate source code
+into executable/object code.
+
+RUNTIME:
+
+Time during which the program executes.
+
+
+Example:
+
+    g++ main.cpp -o main
+
+Compilation happens here.
+
+Then:
+
+    ./main
+
+Program executes here.
+
+
+============================================================
+54. ENVIRONMENT VARIABLES
+============================================================
+
+Important environment variables may include:
+
+    PATH
+
+
+Other variables can be used for:
+
+    Compiler configuration
+    SDK locations
+    Library paths
+    Build configuration
+
+
+You should learn how to inspect environment variables
+in your operating system.
+
+
+============================================================
+55. COMMAND-LINE DEVELOPMENT
+============================================================
+
+Don't depend completely on IDE buttons.
+
+You should be able to do this manually:
+
+    Create file
+       ↓
+    Write C++ code
+       ↓
+    Open terminal
+       ↓
+    Compile
+       ↓
+    Fix errors
+       ↓
+    Run
+       ↓
+    Debug
+
+
+Example:
+
+    g++ -std=c++17 -Wall -Wextra main.cpp -o main
+
+
+This skill is very useful in:
+
+    Linux servers
+    Docker
+    CI/CD
+    Remote development
+    Interviews
+    Competitive programming
+
+
+============================================================
+56. C++ DEVELOPMENT WORKFLOW
+============================================================
+
+Professional-style workflow:
+
+    Requirement
+        ↓
+    Design
+        ↓
+    Create project
+        ↓
+    Write code
+        ↓
+    Compile
+        ↓
+    Fix compiler warnings/errors
+        ↓
+    Run
+        ↓
+    Test
+        ↓
+    Debug
+        ↓
+    Refactor
+        ↓
+    Git commit
+        ↓
+    Code review
+        ↓
+    CI/CD
+        ↓
+    Release
+
+
+============================================================
+57. COMMON BEGINNER MISTAKES
+============================================================
+
+1. Thinking VS Code is a compiler.
+
+2. Installing an editor but not a compiler.
+
+3. Not configuring PATH.
+
+4. Ignoring compiler warnings.
+
+5. Compiling without specifying a language standard.
+
+6. Putting the entire project in one file.
+
+7. Not learning terminal commands.
+
+8. Not learning debugging.
+
+9. Not using Git.
+
+10. Committing build files unnecessarily.
+
+11. Copying compiler commands without understanding them.
+
+12. Using extremely old C++ practices unnecessarily.
+
+
+============================================================
+58. TROUBLESHOOTING GUIDE
+============================================================
+
+PROBLEM:
+
+    g++ is not recognized
+
+
+CHECK:
+
+    g++ --version
+
+Possible causes:
+
+    Compiler not installed
+    PATH not configured
+    Wrong terminal/environment
+
+
+------------------------------------------------------------
+
+PROBLEM:
+
+    fatal error: iostream: No such file or directory
+
+
+Possible causes:
+
+    Incorrect compiler/toolchain configuration
+    Broken installation
+    Using the wrong compiler/environment
+
+
+------------------------------------------------------------
+
+PROBLEM:
+
+    undefined reference / unresolved external symbol
+
+
+Likely issue:
+
+    Linker cannot find required implementation/library.
+
+
+Check:
+
+    Are all .cpp files included?
+    Are required libraries linked?
+
+
+------------------------------------------------------------
+
+PROBLEM:
+
+    Permission denied
+
+
+Possible causes:
+
+    File permissions
+    Locked executable
+    Incorrect environment
+
+
+------------------------------------------------------------
+
+PROBLEM:
+
+    Program compiles but output is wrong
+
+
+Likely:
+
+    Logical error
+
+
+Use:
+
+    Debugger
+    Tests
+    Logging
+    Assertions
+    Code review
+
+
+============================================================
+59. JOB-READY TOOLCHAIN
+============================================================
+
+You should become comfortable with:
+
+    C++
+      ↓
+    GCC / Clang / MSVC
+      ↓
+    VS Code / Visual Studio / CLion
+      ↓
+    GDB / LLDB / Visual Studio Debugger
+      ↓
+    CMake
+      ↓
+    Git
+      ↓
+    GitHub
+      ↓
+    Unit Testing
+      ↓
+    CI/CD
+
+
+Later:
+
+    Docker
+    Linux
+    Conan/vcpkg
+    Static analysis
+    Sanitizers
+    Profilers
+
+
+============================================================
+60. SANITIZERS — INTRODUCTION
+============================================================
+
+Sanitizers are powerful tools for finding certain classes
+of bugs.
+
+Examples:
+
+    AddressSanitizer (ASan)
+    UndefinedBehaviorSanitizer (UBSan)
+    ThreadSanitizer (TSan)
+
+
+For example, depending on compiler/platform support:
+
+    -fsanitize=address
+
+
+Can help detect memory errors such as:
+
+    Buffer overflow
+    Use-after-free
+    Some invalid memory accesses
+
+
+You will study these deeply in advanced C++.
+
+
+============================================================
+61. STATIC ANALYSIS — INTRODUCTION
+============================================================
+
+Static analysis examines code without normal program execution.
+
+Examples:
+
+    clang-tidy
+    compiler warnings
+    static analyzers
+
+
+Can identify:
+
+    Potential bugs
+    Bad practices
+    Suspicious code
+    Style problems
+    Maintainability issues
+
+
+Professional C++ development often uses static analysis
+as part of quality control.
+
+
+============================================================
+62. UNIT TESTING — INTRODUCTION
+============================================================
+
+A unit test verifies a small part of a program.
+
+Popular C++ testing framework:
+
+    GoogleTest
+
+
+Concept:
+
+    Function
+       ↓
+    Test
+       ↓
+    Expected result?
+       ↓
+    PASS / FAIL
+
+
+Example:
+
+    add(2, 3) == 5
+
+
+Testing will become an important part of your
+job-ready C++ preparation.
+
+
+============================================================
+63. CI/CD — INTRODUCTION
+============================================================
+
+CI = Continuous Integration
+
+CD = Continuous Delivery/Deployment
+
+
+A CI pipeline may:
+
+    Clone Git repository
+        ↓
+    Configure build
+        ↓
+    Compile
+        ↓
+    Run tests
+        ↓
+    Static analysis
+        ↓
+    Package
+        ↓
+    Report result
+
+
+This connects C++ development with DevOps,
+which is valuable for modern software jobs.
+
+
+============================================================
+64. IMPORTANT INTERVIEW QUESTIONS
+============================================================
+
+Q1. Is VS Code a C++ compiler?
+
+Answer:
+
+    No. VS Code is primarily a code editor.
+    A separate compiler/toolchain is required.
+
+
+Q2. What is g++?
+
+Answer:
+
+    g++ is the GNU C++ compiler driver used to
+    compile/link C++ programs.
+
+
+Q3. What is the difference between compiler and linker?
+
+Answer:
+
+    Compiler translates source code into lower-level/object
+    code. The linker combines object files and libraries
+    into an executable or other final binary.
+
+
+Q4. What does -std=c++17 mean?
+
+Answer:
+
+    It requests compilation using the C++17 language standard.
+
+
+Q5. What does -c do?
+
+Answer:
+
+    It compiles/assembles without performing the final link.
+
+
+Q6. What does -o do?
+
+Answer:
+
+    Specifies the output file name.
+
+
+Q7. What does -I do?
+
+Answer:
+
+    Adds an include search directory.
+
+
+Q8. What is PATH?
+
+Answer:
+
+    An environment variable containing directories searched
+    for executable programs.
+
+
+Q9. What is a linker error?
+
+Answer:
+
+    An error occurring when required symbols/definitions or
+    libraries cannot be resolved during linking.
+
+
+Q10. What is a debugger?
+
+Answer:
+
+    A tool that lets you inspect and control program execution
+    to find bugs.
+
+
+Q11. What is a breakpoint?
+
+Answer:
+
+    A location where the debugger pauses program execution.
+
+
+Q12. Debug vs Release?
+
+Answer:
+
+    Debug builds prioritize debugging and diagnostic information;
+    release builds generally prioritize optimization and
+    production use.
+
+
+Q13. Why is CMake used?
+
+Answer:
+
+    To configure and manage builds in a portable and scalable
+    way across platforms and toolchains.
+
+
+Q14. Why should warnings be enabled?
+
+Answer:
+
+    They can identify suspicious or potentially erroneous code
+    before runtime.
+
+
+Q15. What is undefined behavior?
+
+Answer:
+
+    Behavior for which the C++ standard imposes no requirements.
+
+
+============================================================
+65. INTERVIEW TRICK QUESTIONS
+============================================================
+
+TRICK 1:
+
+"Can C++ code run without compilation?"
+
+Answer:
+
+    Standard C++ source normally needs to be translated into
+    executable/object code through an implementation/toolchain
+    before execution. The exact process can involve interpreters,
+    JITs, or other mechanisms in special environments, but that is
+    not the normal native C++ workflow.
+
+
+TRICK 2:
+
+"Is compilation the same as linking?"
+
+Answer:
+
+    No.
+
+    Compilation:
+        source → object/lower-level code
+
+    Linking:
+        object files + libraries → final executable/library
+
+
+TRICK 3:
+
+"Does successful compilation guarantee a correct program?"
+
+Answer:
+
+    No.
+
+    The program can still contain:
+
+        Logical errors
+        Runtime errors
+        Undefined behavior
+        Incorrect requirements
+
+
+TRICK 4:
+
+"Does a warning mean the program cannot run?"
+
+Answer:
+
+    Not necessarily.
+
+    A warning is a diagnostic indicating something potentially
+    problematic or noteworthy.
+
+
+============================================================
+66. PRACTICAL LAB — TASK 1
+============================================================
+
+Create:
+
+    hello.cpp
+
+
+Write:
+
+    #include <iostream>
+
+    int main() {
+        std::cout << "I am learning C++ for a software job.\n";
+        return 0;
+    }
+
+
+Compile:
+
+    g++ -std=c++17 -Wall -Wextra hello.cpp -o hello
+
+
+Run:
+
+    .\hello.exe
+
+or:
+
+    ./hello
+
+
+============================================================
+67. PRACTICAL LAB — TASK 2
+============================================================
+
+Create:
+
+    calculator.cpp
+
+
+Requirements:
+
+    Read two numbers.
+
+    Print:
+
+        Addition
+        Subtraction
+        Multiplication
+        Division
+
+
+Compile using:
+
+    g++ -std=c++17 -Wall -Wextra calculator.cpp -o calculator
+
+
+============================================================
+68. PRACTICAL LAB — TASK 3
+============================================================
+
+Create:
+
+    employee/
+        include/
+        src/
+        tests/
+
+
+Implement:
+
+    Employee class
+
+Properties:
+
+    id
+    name
+    salary
+
+
+Methods:
+
+    display()
+    calculateAnnualSalary()
+
+
+Use:
+
+    header file
+    source file
+    main.cpp
+
+
+Compile using multiple source files.
+
+
+============================================================
+69. PRACTICAL LAB — TASK 4
+============================================================
+
+Create a CMake project.
+
+Structure:
+
+    calculator/
+    |
+    +-- include/
+    |     +-- calculator.hpp
+    |
+    +-- src/
+    |     +-- calculator.cpp
+    |     +-- main.cpp
+    |
+    +-- CMakeLists.txt
+
+
+Build using CMake.
+
+Goal:
+
+    Understand:
+
+    Configure
+       ↓
+    Generate
+       ↓
+    Build
+       ↓
+    Run
+
+
+============================================================
+70. PRACTICAL LAB — TASK 5
+============================================================
+
+Git practice:
+
+    git init
+
+Create:
+
+    README.md
+
+Then:
+
+    git status
+
+    git add .
+
+    git commit -m "Create C++ calculator project"
+
+
+Goal:
+
+    Learn basic version control.
+
+
+============================================================
+71. JOB-READY CHECKLIST
+============================================================
+
+Before moving to Chapter 4, you should be able to:
+
+[ ] Explain what a compiler does.
+
+[ ] Explain GCC/G++.
+
+[ ] Explain Clang.
+
+[ ] Explain MSVC.
+
+[ ] Install/configure a compiler.
+
+[ ] Check compiler version.
+
+[ ] Understand PATH.
+
+[ ] Compile from terminal.
+
+[ ] Run executable.
+
+[ ] Use -std=c++17.
+
+[ ] Understand -Wall and -Wextra.
+
+[ ] Understand -g.
+
+[ ] Understand -O options.
+
+[ ] Understand source files.
+
+[ ] Understand header files.
+
+[ ] Understand object files.
+
+[ ] Understand linking.
+
+[ ] Understand preprocessing.
+
+[ ] Understand compilation errors.
+
+[ ] Understand linker errors.
+
+[ ] Understand runtime errors.
+
+[ ] Understand logical errors.
+
+[ ] Understand undefined behavior.
+
+[ ] Use a debugger.
+
+[ ] Set breakpoints.
+
+[ ] Understand Debug vs Release.
+
+[ ] Create basic project structure.
+
+[ ] Understand basic CMake.
+
+[ ] Use Git.
+
+[ ] Create a .gitignore.
+
+[ ] Build a multi-file C++ project.
+
+
+============================================================
+72. ACTIVE RECALL
+============================================================
+
+Without looking at the chapter, answer:
+
+1. What is a compiler?
+
+2. What is g++?
+
+3. What is PATH?
+
+4. What does -std=c++17 mean?
+
+5. What does -c mean?
+
+6. What does -o mean?
+
+7. What does -I mean?
+
+8. What is a linker?
+
+9. What is an object file?
+
+10. What is a translation unit?
+
+11. What is a breakpoint?
+
+12. What is Debug build?
+
+13. What is Release build?
+
+14. What is CMake?
+
+15. Why is Git important?
+
+16. What is undefined behavior?
+
+17. What is the difference between compiler error
+    and linker error?
+
+18. Why should compiler warnings be enabled?
+
+19. Why should large projects separate .hpp and .cpp files?
+
+20. Why is command-line compilation an important skill?
+
+
+============================================================
+73. CHAPTER 3 FINAL SUMMARY
+============================================================
+
+C++ DEVELOPMENT ENVIRONMENT:
+
+    Editor/IDE
+        ↓
+    Compiler
+        ↓
+    Debugger
+        ↓
+    Build System
+        ↓
+    Git
+        ↓
+    Testing
+        ↓
+    CI/CD
+
+
+CORE COMMAND:
+
+    g++ -std=c++17 -Wall -Wextra main.cpp -o main
+
+
+COMPILATION:
+
+    .cpp
+      ↓
+    Preprocessor
+      ↓
+    Compiler
+      ↓
+    Assembly
+      ↓
+    Assembler
+      ↓
+    Object file
+      ↓
+    Linker
+      ↓
+    Executable
+
+
+JOB-READY STACK:
+
+    C++
+    |
+    +-- GCC / Clang / MSVC
+    |
+    +-- VS Code / Visual Studio / CLion
+    |
+    +-- GDB / LLDB
+    |
+    +-- CMake
+    |
+    +-- Git/GitHub
+    |
+    +-- Testing
+    |
+    +-- Linux
+    |
+    +-- CI/CD
+    |
+    +-- Debugging
+    |
+    +-- Profiling & sanitizers
+
+
+============================================================
+END OF CHAPTER 3
+============================================================
+
+NEXT:
+
+CHAPTER 4 — C++ PROGRAM STRUCTURE & BASIC SYNTAX
+
+Topics will include:
+
+    • Tokens
+    • Keywords
+    • Identifiers
+    • Variables
+    • Constants
+    • Literals
+    • Data types
+    • Operators
+    • Expressions
+    • Statements
+    • Blocks
+    • Input/Output
+    • Type conversion
+    • Scope
+    • Lifetime
+    • Initialization
+    • const
+    • auto
+    • nullptr
+    • Basic memory concepts
+    • Common beginner mistakes
+    • Interview questions
+    • Coding practice
+============================================================
