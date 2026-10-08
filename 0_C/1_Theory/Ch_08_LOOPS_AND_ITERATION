@@ -1,0 +1,3157 @@
+============================================================
+CHAPTER 8 — LOOPS & ITERATION IN C
+============================================================
+
+Goal:
+Learn how to execute a block of code repeatedly using loops.
+
+After this chapter, you should understand:
+
+    while
+    do-while
+    for
+    nested loops
+    infinite loops
+    break
+    continue
+    loop control
+    counters
+    sentinels
+    input validation
+    off-by-one errors
+    loop complexity
+    pattern problems
+    array traversal
+
+Loops are one of the most important concepts in C because
+they are used everywhere in:
+
+    DSA
+    Arrays
+    Strings
+    Searching
+    Sorting
+    Operating Systems
+    Embedded Systems
+    System Programming
+    Competitive Programming
+    Software Development
+
+
+============================================================
+1. WHAT IS A LOOP?
+============================================================
+
+A loop repeatedly executes a block of code while a condition
+is satisfied.
+
+Example:
+
+    Print "Hello" 5 times.
+
+Without loop:
+
+    printf("Hello");
+    printf("Hello");
+    printf("Hello");
+    printf("Hello");
+    printf("Hello");
+
+With loop:
+
+    for (int i = 0; i < 5; i++)
+    {
+        printf("Hello");
+    }
+
+
+General idea:
+
+              START
+                |
+                v
+            CONDITION
+             /      \
+          TRUE      FALSE
+           |          |
+           v          v
+        BODY        EXIT
+           |
+           |
+           +--------> CONDITION
+
+
+============================================================
+2. WHY DO WE NEED LOOPS?
+============================================================
+
+Suppose you want to print numbers from 1 to 1000.
+
+Without loop:
+
+    printf("1");
+    printf("2");
+    ...
+    printf("1000");
+
+
+This is:
+
+    repetitive
+    difficult to maintain
+    error-prone
+    inefficient to write
+
+
+Using loop:
+
+    for (int i = 1; i <= 1000; i++)
+    {
+        printf("%d ", i);
+    }
+
+
+One loop replaces hundreds or thousands of statements.
+
+
+============================================================
+3. TYPES OF LOOPS IN C
+============================================================
+
+C provides three primary loop statements:
+
+    1. while
+    2. do-while
+    3. for
+
+
+Conceptually:
+
+    while
+       ↓
+    condition checked BEFORE body
+
+
+    do-while
+       ↓
+    body executes BEFORE condition is checked
+
+
+    for
+       ↓
+    compact form commonly used for counter-controlled loops
+
+
+============================================================
+4. WHILE LOOP
+============================================================
+
+Syntax:
+
+    while (condition)
+    {
+        statements;
+    }
+
+
+Execution:
+
+    1. Evaluate condition.
+    2. If true, execute body.
+    3. Return to condition.
+    4. Repeat.
+    5. If false, exit loop.
+
+
+Flow:
+
+          condition
+          /      \
+       true      false
+        |          |
+       body       exit
+        |
+        +---------> condition
+
+
+============================================================
+5. SIMPLE while EXAMPLE
+============================================================
+
+    int i = 1;
+
+    while (i <= 5)
+    {
+        printf("%d ", i);
+        i++;
+    }
+
+
+Output:
+
+    1 2 3 4 5
+
+
+Step-by-step:
+
+    i = 1
+    1 <= 5 → true → print 1
+    i = 2
+
+    2 <= 5 → true → print 2
+    i = 3
+
+    3 <= 5 → true → print 3
+    i = 4
+
+    4 <= 5 → true → print 4
+    i = 5
+
+    5 <= 5 → true → print 5
+    i = 6
+
+    6 <= 5 → false → stop
+
+
+============================================================
+6. IMPORTANT PARTS OF while LOOP
+============================================================
+
+A typical while loop has:
+
+    Initialization
+    Condition
+    Body
+    Update
+
+
+Example:
+
+    int i = 1;          // Initialization
+
+    while (i <= 5)      // Condition
+    {
+        printf("%d", i); // Body
+        i++;             // Update
+    }
+
+
+============================================================
+7. INFINITE while LOOP
+============================================================
+
+An infinite loop never terminates.
+
+Example:
+
+    while (1)
+    {
+        printf("Hello");
+    }
+
+
+Because:
+
+    1 → true
+
+forever.
+
+
+Another example:
+
+    int i = 1;
+
+    while (i <= 5)
+    {
+        printf("%d", i);
+    }
+
+
+This is also infinite because:
+
+    i
+
+is never updated.
+
+
+The condition remains:
+
+    1 <= 5
+
+forever.
+
+
+============================================================
+8. HOW TO STOP AN INFINITE LOOP
+============================================================
+
+Use:
+
+    break
+
+Example:
+
+    while (1)
+    {
+        printf("Running");
+
+        if (condition)
+        {
+            break;
+        }
+    }
+
+
+Infinite loops are sometimes intentional in:
+
+    operating systems
+    embedded systems
+    servers
+    event loops
+    real-time systems
+
+
+============================================================
+9. do-WHILE LOOP
+============================================================
+
+Syntax:
+
+    do
+    {
+        statements;
+    }
+    while (condition);
+
+
+Important:
+
+The body executes at least once.
+
+
+Flow:
+
+            START
+              |
+              v
+             BODY
+              |
+              v
+          CONDITION
+           /     \
+        true     false
+         |         |
+         +-------->EXIT
+
+
+============================================================
+10. SIMPLE do-WHILE
+============================================================
+
+    int i = 1;
+
+    do
+    {
+        printf("%d ", i);
+        i++;
+    }
+    while (i <= 5);
+
+
+Output:
+
+    1 2 3 4 5
+
+
+============================================================
+11. while VS do-WHILE
+============================================================
+
+while:
+
+    condition first
+    body may execute zero times
+
+
+do-while:
+
+    body first
+    body executes at least once
+
+
+Example:
+
+    int i = 10;
+
+    while (i < 5)
+    {
+        printf("Hello");
+    }
+
+
+Output:
+
+    Nothing
+
+
+Because:
+
+    10 < 5
+
+is false before entering.
+
+
+Now:
+
+    int i = 10;
+
+    do
+    {
+        printf("Hello");
+    }
+    while (i < 5);
+
+
+Output:
+
+    Hello
+
+
+Because the body executes first.
+
+
+============================================================
+12. do-WHILE SEMICOLON
+============================================================
+
+Important syntax:
+
+    do
+    {
+        ...
+    }
+    while (condition);
+
+
+There is a semicolon after:
+
+    while (condition);
+
+
+Unlike:
+
+    while (condition)
+    {
+        ...
+    }
+
+
+This is a common beginner mistake.
+
+
+============================================================
+13. FOR LOOP
+============================================================
+
+Syntax:
+
+    for (initialization; condition; update)
+    {
+        statements;
+    }
+
+
+Example:
+
+    for (int i = 1; i <= 5; i++)
+    {
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    1 2 3 4 5
+
+
+============================================================
+14. FOR LOOP EXECUTION ORDER
+============================================================
+
+Example:
+
+    for (int i = 1; i <= 5; i++)
+    {
+        printf("%d ", i);
+    }
+
+
+Execution:
+
+    Initialization
+         ↓
+    Condition
+         ↓
+       Body
+         ↓
+       Update
+         ↓
+    Condition
+         ↓
+       Body
+         ↓
+       Update
+         ↓
+      ...
+         ↓
+    Condition false
+         ↓
+       Exit
+
+
+Initialization happens only once.
+
+
+============================================================
+15. FOR LOOP COMPONENTS
+============================================================
+
+    for (initialization; condition; update)
+
+
+Initialization:
+
+    int i = 0
+
+
+Condition:
+
+    i < 10
+
+
+Update:
+
+    i++
+
+
+Example:
+
+    for (int i = 0; i < 10; i++)
+    {
+        ...
+    }
+
+
+============================================================
+16. FOR LOOP WITHOUT INITIALIZATION
+============================================================
+
+Valid:
+
+    int i = 0;
+
+    for (; i < 5; i++)
+    {
+        printf("%d ", i);
+    }
+
+
+Initialization can be outside the loop.
+
+
+============================================================
+17. FOR LOOP WITHOUT UPDATE
+============================================================
+
+Valid:
+
+    int i = 0;
+
+    for (; i < 5;)
+    {
+        printf("%d ", i);
+        i++;
+    }
+
+
+The update is moved into the body.
+
+
+============================================================
+18. INFINITE FOR LOOP
+============================================================
+
+Common syntax:
+
+    for (;;)
+    {
+        ...
+    }
+
+
+All three expressions are omitted.
+
+It creates an infinite loop.
+
+Equivalent conceptually to:
+
+    while (1)
+    {
+        ...
+    }
+
+
+============================================================
+19. FOR LOOP WITH MULTIPLE VARIABLES
+============================================================
+
+Example:
+
+    for (int i = 0, j = 10; i < j; i++, j--)
+    {
+        printf("%d %d\n", i, j);
+    }
+
+
+This is useful in:
+
+    two-pointer algorithms
+    array processing
+    searching
+    reversing
+
+
+============================================================
+20. WHILE VS FOR
+============================================================
+
+Use for when the loop is naturally counter-controlled.
+
+Example:
+
+    for (int i = 0; i < 10; i++)
+    {
+        ...
+    }
+
+
+Use while when termination depends more naturally on
+a condition.
+
+Example:
+
+    while (input != 0)
+    {
+        ...
+    }
+
+
+There is no strict rule; both can often express the same
+logic.
+
+
+============================================================
+21. DO-WHILE USE CASE
+============================================================
+
+do-while is useful when the operation must happen at least
+once.
+
+Classic example:
+
+    menu
+
+    do
+    {
+        display_menu();
+        scanf("%d", &choice);
+    }
+    while (choice != 4);
+
+
+The menu should appear at least once.
+
+
+============================================================
+22. COUNTER-CONTROLLED LOOP
+============================================================
+
+A counter-controlled loop repeats a known number of times.
+
+Example:
+
+    for (int i = 0; i < 10; i++)
+    {
+        printf("Hello\n");
+    }
+
+
+Iterations:
+
+    10
+
+
+Common uses:
+
+    arrays
+    tables
+    repeated calculations
+    fixed number of inputs
+
+
+============================================================
+23. SENTINEL-CONTROLLED LOOP
+============================================================
+
+A sentinel is a special value used to terminate input.
+
+Example:
+
+    int x;
+
+    scanf("%d", &x);
+
+    while (x != -1)
+    {
+        printf("You entered %d\n", x);
+        scanf("%d", &x);
+    }
+
+
+Here:
+
+    -1
+
+is the sentinel.
+
+
+============================================================
+24. SENTINEL EXAMPLE
+============================================================
+
+Program:
+
+    Read numbers until user enters 0.
+
+    int n;
+
+    scanf("%d", &n);
+
+    while (n != 0)
+    {
+        printf("Number = %d\n", n);
+        scanf("%d", &n);
+    }
+
+
+When:
+
+    n = 0
+
+loop terminates.
+
+
+============================================================
+25. INPUT VALIDATION LOOP
+============================================================
+
+Example:
+
+    int age;
+
+    do
+    {
+        printf("Enter age 1-100: ");
+        scanf("%d", &age);
+    }
+    while (age < 1 || age > 100);
+
+
+The loop continues until valid input is received.
+
+
+============================================================
+26. BREAK
+============================================================
+
+break immediately terminates the nearest:
+
+    loop
+    switch
+
+
+Example:
+
+    for (int i = 0; i < 10; i++)
+    {
+        if (i == 5)
+        {
+            break;
+        }
+
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    0 1 2 3 4
+
+
+When:
+
+    i == 5
+
+break executes.
+
+
+============================================================
+27. BREAK IN while
+============================================================
+
+    int i = 1;
+
+    while (i <= 10)
+    {
+        if (i == 6)
+        {
+            break;
+        }
+
+        printf("%d ", i);
+        i++;
+    }
+
+
+Output:
+
+    1 2 3 4 5
+
+
+============================================================
+28. CONTINUE
+============================================================
+
+continue skips the remaining body of the current iteration.
+
+Example:
+
+    for (int i = 1; i <= 5; i++)
+    {
+        if (i == 3)
+        {
+            continue;
+        }
+
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    1 2 4 5
+
+
+3 is skipped.
+
+
+============================================================
+29. BREAK VS CONTINUE
+============================================================
+
+break:
+
+    Stop the entire loop.
+
+
+continue:
+
+    Skip current iteration.
+    Continue with next iteration.
+
+
+Example:
+
+    break:
+
+    1 2 3 4
+    STOP
+
+
+    continue:
+
+    1 2 4 5
+    LOOP CONTINUES
+
+
+============================================================
+30. CONTINUE IN FOR LOOP
+============================================================
+
+Important:
+
+In a for loop, continue transfers control to the
+loop-update expression.
+
+Example:
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (i == 2)
+            continue;
+
+        printf("%d ", i);
+    }
+
+
+When i == 2:
+
+    continue
+       ↓
+    i++
+       ↓
+    condition
+
+
+So the update still occurs.
+
+
+============================================================
+31. CONTINUE IN WHILE LOOP
+============================================================
+
+Be careful.
+
+This can create an infinite loop:
+
+    int i = 0;
+
+    while (i < 5)
+    {
+        if (i == 2)
+            continue;
+
+        printf("%d ", i);
+        i++;
+    }
+
+
+When i becomes 2:
+
+    continue
+
+executes.
+
+The:
+
+    i++
+
+is skipped.
+
+Therefore:
+
+    i remains 2
+
+forever.
+
+
+Correct:
+
+    int i = 0;
+
+    while (i < 5)
+    {
+        if (i == 2)
+        {
+            i++;
+            continue;
+        }
+
+        printf("%d ", i);
+        i++;
+    }
+
+
+Or restructure the loop for clarity.
+
+
+============================================================
+32. NESTED LOOPS
+============================================================
+
+A loop inside another loop is called a nested loop.
+
+Example:
+
+    for (int i = 1; i <= 3; i++)
+    {
+        for (int j = 1; j <= 3; j++)
+        {
+            printf("%d %d\n", i, j);
+        }
+    }
+
+
+Output:
+
+    1 1
+    1 2
+    1 3
+    2 1
+    2 2
+    2 3
+    3 1
+    3 2
+    3 3
+
+
+============================================================
+33. HOW NESTED LOOPS WORK
+============================================================
+
+Outer loop:
+
+    i = 1
+
+Inner loop runs completely:
+
+    j = 1
+    j = 2
+    j = 3
+
+
+Then:
+
+    i = 2
+
+Inner loop starts again:
+
+    j = 1
+    j = 2
+    j = 3
+
+
+Then:
+
+    i = 3
+
+Again:
+
+    j = 1
+    j = 2
+    j = 3
+
+
+============================================================
+34. NESTED LOOP ITERATIONS
+============================================================
+
+Example:
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            ...
+        }
+    }
+
+
+Outer:
+
+    5 iterations
+
+
+Inner:
+
+    10 iterations per outer iteration
+
+
+Total:
+
+    5 × 10 = 50
+
+
+This leads to time complexity:
+
+    O(n × m)
+
+
+If both are n:
+
+    O(n²)
+
+
+============================================================
+35. LOOP COMPLEXITY
+============================================================
+
+Single loop:
+
+    for (int i = 0; i < n; i++)
+    {
+        ...
+    }
+
+
+Time complexity:
+
+    O(n)
+
+
+Two nested loops:
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            ...
+        }
+    }
+
+
+Time complexity:
+
+    O(n²)
+
+
+Three nested loops:
+
+    O(n³)
+
+
+Understanding this is essential for DSA interviews.
+
+
+============================================================
+36. TWO SEPARATE LOOPS
+============================================================
+
+Consider:
+
+    for (int i = 0; i < n; i++)
+    {
+        ...
+    }
+
+    for (int j = 0; j < n; j++)
+    {
+        ...
+    }
+
+
+Complexity:
+
+    O(n) + O(n)
+
+    = O(2n)
+
+Drop constants:
+
+    O(n)
+
+
+It is NOT:
+
+    O(n²)
+
+
+============================================================
+37. NESTED LOOP WITH DIFFERENT BOUNDS
+============================================================
+
+Example:
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            ...
+        }
+    }
+
+
+Number of iterations:
+
+    0 + 1 + 2 + ... + (n-1)
+
+    = n(n-1)/2
+
+
+Complexity:
+
+    O(n²)
+
+
+============================================================
+38. LOGARITHMIC LOOP
+============================================================
+
+Example:
+
+    for (int i = 1; i < n; i *= 2)
+    {
+        printf("%d ", i);
+    }
+
+
+Values:
+
+    1
+    2
+    4
+    8
+    16
+    32
+    ...
+
+
+Number of iterations:
+
+    O(log n)
+
+
+This pattern is very important in algorithms.
+
+
+============================================================
+39. DIVIDING LOOP
+============================================================
+
+Example:
+
+    for (int n = value; n > 1; n /= 2)
+    {
+        ...
+    }
+
+
+Complexity:
+
+    O(log n)
+
+
+This appears in:
+
+    binary search
+    divide-and-conquer algorithms
+    tree algorithms
+
+
+============================================================
+40. OFF-BY-ONE ERROR
+============================================================
+
+An off-by-one error occurs when a loop executes one too many
+or one too few times.
+
+Example:
+
+    for (int i = 0; i <= 10; i++)
+
+Iterations:
+
+    0 through 10
+
+Total:
+
+    11
+
+
+But:
+
+    for (int i = 0; i < 10; i++)
+
+Iterations:
+
+    0 through 9
+
+Total:
+
+    10
+
+
+Remember:
+
+    < n
+
+usually means:
+
+    n iterations when starting at 0.
+
+
+============================================================
+41. ARRAY INDEXING AND LOOPS
+============================================================
+
+C arrays use zero-based indexing.
+
+Example:
+
+    int arr[5];
+
+
+Valid indexes:
+
+    0
+    1
+    2
+    3
+    4
+
+
+Correct traversal:
+
+    for (int i = 0; i < 5; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+
+Wrong:
+
+    for (int i = 0; i <= 5; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+
+arr[5] is outside the array.
+
+Accessing it causes undefined behavior.
+
+
+============================================================
+42. ARRAY TRAVERSAL WITH sizeof
+============================================================
+
+For an actual array in the same scope:
+
+    int arr[] = {10, 20, 30, 40, 50};
+
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    for (size_t i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+
+Output:
+
+    10 20 30 40 50
+
+
+Important:
+This technique works for an actual array object, not for an
+array parameter that has decayed to a pointer.
+
+
+============================================================
+43. LOOPING THROUGH A STRING
+============================================================
+
+C strings end with:
+
+    '\0'
+
+
+Example:
+
+    char str[] = "Hello";
+
+Memory:
+
+    H e l l o \0
+
+
+Loop:
+
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        printf("%c", str[i]);
+    }
+
+
+Output:
+
+    Hello
+
+
+============================================================
+44. WHILE STRING TRAVERSAL
+============================================================
+
+    int i = 0;
+
+    while (str[i] != '\0')
+    {
+        printf("%c", str[i]);
+        i++;
+    }
+
+
+This pattern is fundamental for string programming.
+
+
+============================================================
+45. LOOPING THROUGH A MATRIX
+============================================================
+
+Example:
+
+    int matrix[2][3] =
+    {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+
+Traversal:
+
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+
+        printf("\n");
+    }
+
+
+Output:
+
+    1 2 3
+    4 5 6
+
+
+============================================================
+46. BREAK IN NESTED LOOPS
+============================================================
+
+Important:
+
+break terminates only the nearest loop.
+
+Example:
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (j == 1)
+                break;
+
+            printf("%d %d\n", i, j);
+        }
+    }
+
+
+The inner loop stops.
+
+The outer loop continues.
+
+
+============================================================
+47. CONTINUE IN NESTED LOOPS
+============================================================
+
+continue affects the nearest loop in which it occurs.
+
+Example:
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (j == 1)
+                continue;
+
+            printf("%d %d\n", i, j);
+        }
+    }
+
+
+Only j == 1 is skipped.
+
+
+============================================================
+48. NESTED LOOP — STAR PATTERN
+============================================================
+
+Example:
+
+    for (int i = 1; i <= 5; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            printf("* ");
+        }
+
+        printf("\n");
+    }
+
+
+Output:
+
+    *
+    * *
+    * * *
+    * * * *
+    * * * * *
+
+
+This is a very common beginner programming exercise.
+
+
+============================================================
+49. STAR RECTANGLE
+============================================================
+
+    for (int i = 1; i <= 4; i++)
+    {
+        for (int j = 1; j <= 5; j++)
+        {
+            printf("* ");
+        }
+
+        printf("\n");
+    }
+
+
+Output:
+
+    * * * * *
+    * * * * *
+    * * * * *
+    * * * * *
+
+
+Rows:
+
+    4
+
+Columns:
+
+    5
+
+
+Complexity:
+
+    O(rows × columns)
+
+
+============================================================
+50. NUMBER PATTERN
+============================================================
+
+    for (int i = 1; i <= 5; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            printf("%d ", j);
+        }
+
+        printf("\n");
+    }
+
+
+Output:
+
+    1
+    1 2
+    1 2 3
+    1 2 3 4
+    1 2 3 4 5
+
+
+============================================================
+51. REVERSE LOOP
+============================================================
+
+Example:
+
+    for (int i = 10; i >= 1; i--)
+    {
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    10 9 8 7 6 5 4 3 2 1
+
+
+============================================================
+52. MULTIPLE OF A NUMBER
+============================================================
+
+Print multiples of 5:
+
+    for (int i = 5; i <= 50; i += 5)
+    {
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    5 10 15 20 25 30 35 40 45 50
+
+
+============================================================
+53. SUM OF NUMBERS
+============================================================
+
+Calculate:
+
+    1 + 2 + 3 + ... + 100
+
+
+Program:
+
+    int sum = 0;
+
+    for (int i = 1; i <= 100; i++)
+    {
+        sum += i;
+    }
+
+    printf("%d\n", sum);
+
+
+Output:
+
+    5050
+
+
+============================================================
+54. FACTORIAL USING LOOP
+============================================================
+
+Calculate:
+
+    5! = 5 × 4 × 3 × 2 × 1
+
+
+Program:
+
+    int n = 5;
+    unsigned long long fact = 1;
+
+    for (int i = 1; i <= n; i++)
+    {
+        fact *= (unsigned long long)i;
+    }
+
+    printf("%llu\n", fact);
+
+
+Output:
+
+    120
+
+
+Be aware that factorial grows extremely quickly and can
+overflow fixed-width integer types.
+
+
+============================================================
+55. REVERSE A NUMBER
+============================================================
+
+Example:
+
+    1234
+
+Expected:
+
+    4321
+
+
+Algorithm:
+
+    reverse = 0
+
+    digit = n % 10
+
+    reverse = reverse * 10 + digit
+
+    n = n / 10
+
+
+Program:
+
+    int n = 1234;
+    int reverse = 0;
+
+    while (n != 0)
+    {
+        int digit = n % 10;
+        reverse = reverse * 10 + digit;
+        n /= 10;
+    }
+
+    printf("%d\n", reverse);
+
+
+Output:
+
+    4321
+
+
+This is an excellent loop practice problem.
+
+
+============================================================
+56. COUNT DIGITS
+============================================================
+
+Example:
+
+    12345
+
+Number of digits:
+
+    5
+
+
+Program:
+
+    int n = 12345;
+    int count = 0;
+
+    while (n != 0)
+    {
+        count++;
+        n /= 10;
+    }
+
+    printf("%d\n", count);
+
+
+Output:
+
+    5
+
+
+Special case:
+
+    n = 0
+
+needs separate handling if you want its digit count to be 1.
+
+
+============================================================
+57. SUM OF DIGITS
+============================================================
+
+Example:
+
+    1234
+
+Sum:
+
+    1 + 2 + 3 + 4 = 10
+
+
+Program:
+
+    int n = 1234;
+    int sum = 0;
+
+    while (n != 0)
+    {
+        sum += n % 10;
+        n /= 10;
+    }
+
+    printf("%d\n", sum);
+
+
+Output:
+
+    10
+
+
+============================================================
+58. PALINDROME NUMBER
+============================================================
+
+Example:
+
+    121
+
+Reverse:
+
+    121
+
+Therefore:
+
+    palindrome
+
+
+Algorithm:
+
+    Store original number.
+
+    Reverse number using loop.
+
+    Compare:
+
+        original == reverse
+
+
+Example:
+
+    int n = 121;
+    int original = n;
+    int reverse = 0;
+
+    while (n != 0)
+    {
+        int digit = n % 10;
+        reverse = reverse * 10 + digit;
+        n /= 10;
+    }
+
+    if (original == reverse)
+        printf("Palindrome");
+    else
+        printf("Not palindrome");
+
+
+============================================================
+59. PRIME NUMBER USING LOOP
+============================================================
+
+A prime number has exactly two positive divisors:
+
+    1
+    itself
+
+
+Basic approach:
+
+    int n = 29;
+    int prime = 1;
+
+    if (n < 2)
+        prime = 0;
+
+    for (int i = 2; i <= n / i && prime; i++)
+    {
+        if (n % i == 0)
+        {
+            prime = 0;
+        }
+    }
+
+    if (prime)
+        printf("Prime");
+    else
+        printf("Not prime");
+
+
+Why:
+
+    i <= n / i
+
+instead of:
+
+    i * i <= n
+
+?
+
+It avoids multiplication overflow for sufficiently large
+integer values.
+
+
+============================================================
+60. BREAK IN SEARCHING
+============================================================
+
+Suppose you search for a target:
+
+    int arr[] = {10, 20, 30, 40, 50};
+    int target = 30;
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (arr[i] == target)
+        {
+            printf("Found at index %d\n", i);
+            break;
+        }
+    }
+
+
+Once found, there is no need to continue searching.
+
+
+============================================================
+61. SENTINEL SEARCH
+============================================================
+
+Example:
+
+    Read numbers until -1.
+
+    int n;
+
+    while (1)
+    {
+        scanf("%d", &n);
+
+        if (n == -1)
+            break;
+
+        printf("Processing %d\n", n);
+    }
+
+
+This is an infinite loop with an explicit termination
+condition.
+
+
+============================================================
+62. MENU LOOP
+============================================================
+
+Example:
+
+    int choice;
+
+    do
+    {
+        printf("\n1. Add");
+        printf("\n2. Delete");
+        printf("\n3. Search");
+        printf("\n4. Exit");
+
+        printf("\nChoice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                printf("Add");
+                break;
+
+            case 2:
+                printf("Delete");
+                break;
+
+            case 3:
+                printf("Search");
+                break;
+
+            case 4:
+                printf("Exiting");
+                break;
+
+            default:
+                printf("Invalid choice");
+        }
+
+    }
+    while (choice != 4);
+
+
+This combines:
+
+    do-while
+    switch
+    break
+    input
+    conditions
+
+
+============================================================
+63. LOOP AND INPUT FAILURE
+============================================================
+
+A loop that reads input using scanf must consider whether
+scanf succeeded.
+
+Example:
+
+    int x;
+
+    if (scanf("%d", &x) != 1)
+    {
+        printf("Invalid input");
+    }
+
+
+For robust interactive programs, repeatedly attempting scanf
+without handling failed input can cause the same invalid input
+to remain unread and lead to an infinite loop.
+
+Input handling is therefore an important part of loop design.
+
+
+============================================================
+64. LOOP VARIABLE SCOPE
+============================================================
+
+Example:
+
+    for (int i = 0; i < 10; i++)
+    {
+        printf("%d", i);
+    }
+
+
+Here:
+
+    i
+
+is scoped to the for statement and its body.
+
+After the loop:
+
+    i
+
+is not available.
+
+
+If you need it afterward:
+
+    int i;
+
+    for (i = 0; i < 10; i++)
+    {
+        ...
+    }
+
+    printf("%d", i);
+
+
+============================================================
+65. MODIFYING LOOP COUNTER
+============================================================
+
+Avoid unnecessary modifications to the loop counter inside
+the body.
+
+Example:
+
+    for (int i = 0; i < 10; i++)
+    {
+        i += 2;
+    }
+
+
+This is valid but makes the number of iterations less obvious.
+
+Prefer clear loop structure when possible.
+
+
+============================================================
+66. COMMON BUG — WRONG CONDITION
+============================================================
+
+Wrong:
+
+    for (int i = 0; i > 10; i++)
+    {
+        printf("%d", i);
+    }
+
+
+Initial condition:
+
+    0 > 10
+
+is false.
+
+So the loop executes zero times.
+
+
+Correct:
+
+    i < 10
+
+
+============================================================
+67. COMMON BUG — WRONG UPDATE
+============================================================
+
+Wrong:
+
+    for (int i = 0; i < 10; i--)
+    {
+        ...
+    }
+
+
+i starts at 0.
+
+Condition:
+
+    0 < 10 → true
+
+Then:
+
+    i--
+
+becomes:
+
+    -1
+
+Still:
+
+    -1 < 10 → true
+
+The loop continues forever.
+
+Correct:
+
+    i++
+
+
+============================================================
+68. COMMON BUG — OFF-BY-ONE
+============================================================
+
+Suppose an array has 10 elements.
+
+Valid indexes:
+
+    0 through 9
+
+
+Correct:
+
+    for (int i = 0; i < 10; i++)
+
+
+Wrong:
+
+    for (int i = 0; i <= 10; i++)
+
+
+Because i becomes 10.
+
+
+============================================================
+69. COMMON BUG — MODIFYING WRONG VARIABLE
+============================================================
+
+Wrong:
+
+    int i = 0;
+
+    while (i < 10)
+    {
+        printf("%d", i);
+        int j = 0;
+        j++;
+    }
+
+
+i never changes.
+
+Therefore the loop is infinite.
+
+
+Correct:
+
+    i++;
+
+
+============================================================
+70. COMMON BUG — CONTINUE IN WHILE
+============================================================
+
+Dangerous:
+
+    int i = 0;
+
+    while (i < 10)
+    {
+        if (i == 5)
+            continue;
+
+        i++;
+    }
+
+
+When i == 5:
+
+    continue
+
+executes forever.
+
+Always ensure the loop's progress mechanism still happens
+when continue is reached.
+
+
+============================================================
+71. COMMON BUG — FLOAT LOOP COUNTER
+============================================================
+
+Avoid using floating-point variables as loop counters when
+exact iteration counts matter.
+
+Example:
+
+    for (double x = 0.0; x <= 1.0; x += 0.1)
+    {
+        ...
+    }
+
+
+Binary floating-point cannot represent many decimal fractions
+exactly, so the number of iterations may not behave exactly
+as expected.
+
+Prefer integer counters:
+
+    for (int i = 0; i <= 10; i++)
+    {
+        double x = i / 10.0;
+        ...
+    }
+
+
+============================================================
+72. LOOP WITH MULTIPLE CONDITIONS
+============================================================
+
+Example:
+
+    int i = 0;
+
+    while (i < 100 && !found)
+    {
+        ...
+        i++;
+    }
+
+
+The loop continues while:
+
+    i < 100
+
+AND:
+
+    found is false.
+
+
+Short-circuit evaluation applies to &&.
+
+
+============================================================
+73. LOOP AND SHORT-CIRCUIT
+============================================================
+
+Example:
+
+    while (ptr != NULL && *ptr != '\0')
+    {
+        ...
+        ptr++;
+    }
+
+
+First:
+
+    ptr != NULL
+
+
+If false:
+
+    *ptr
+
+is not evaluated.
+
+
+This is a very common safe pattern.
+
+
+============================================================
+74. LOOP INVARIANT — INTRODUCTION
+============================================================
+
+A loop invariant is a property that remains true before and
+after each iteration.
+
+Example:
+
+    int sum = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+    }
+
+
+A useful invariant:
+
+    sum contains the sum of elements processed so far.
+
+
+Loop invariants are important for:
+
+    algorithm correctness
+    DSA
+    formal reasoning
+    interviews
+
+
+============================================================
+75. LOOP TERMINATION
+============================================================
+
+A well-designed loop should have:
+
+    initialization
+    progress
+    termination condition
+
+
+Example:
+
+    int i = 0;
+
+    while (i < 10)
+    {
+        ...
+        i++;
+    }
+
+
+Termination reasoning:
+
+    i increases every iteration.
+
+Eventually:
+
+    i == 10
+
+Then:
+
+    i < 10
+
+becomes false.
+
+
+============================================================
+76. LOOP COMPLEXITY CHEAT SHEET
+============================================================
+
+Pattern:
+
+    for (i = 0; i < n; i++)
+
+Complexity:
+
+    O(n)
+
+
+Pattern:
+
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++)
+
+Complexity:
+
+    O(n²)
+
+
+Pattern:
+
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
+
+Complexity:
+
+    O(nm)
+
+
+Pattern:
+
+    for (i = 1; i < n; i *= 2)
+
+Complexity:
+
+    O(log n)
+
+
+Pattern:
+
+    for (i = n; i > 0; i /= 2)
+
+Complexity:
+
+    O(log n)
+
+
+Pattern:
+
+    for (i = 0; i < n; i++)
+        for (j = i; j < n; j++)
+
+Complexity:
+
+    O(n²)
+
+
+============================================================
+77. LOOP OPTIMIZATION MINDSET
+============================================================
+
+Do not optimize loops blindly.
+
+First ask:
+
+    Is the algorithm correct?
+    What is its complexity?
+    Is the loop necessary?
+    Can work be moved outside?
+    Can the algorithm be improved?
+
+
+Example:
+
+    O(n²)
+
+may sometimes be improved to:
+
+    O(n log n)
+
+or:
+
+    O(n)
+
+
+Algorithm selection usually matters more than tiny syntax
+optimizations.
+
+
+============================================================
+78. BREAK VS RETURN
+============================================================
+
+break:
+
+    exits the nearest loop/switch.
+
+
+return:
+
+    exits the entire current function.
+
+
+Example:
+
+    int find(void)
+    {
+        for (...)
+        {
+            if (...)
+            {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+
+return exits the function completely.
+
+
+============================================================
+79. GOTO VS LOOPS
+============================================================
+
+C also has:
+
+    goto
+
+
+But normal repetitive logic should usually use:
+
+    for
+    while
+    do-while
+
+
+Avoid unnecessary goto because it can make control flow
+harder to understand.
+
+There are specialized low-level situations where goto can be
+appropriate, particularly centralized cleanup in C.
+
+
+============================================================
+80. PRACTICAL PROGRAM — TABLE
+============================================================
+
+Print multiplication table of n:
+
+    int n;
+
+    scanf("%d", &n);
+
+    for (int i = 1; i <= 10; i++)
+    {
+        printf("%d x %d = %d\n",
+               n, i, n * i);
+    }
+
+
+For n = 5:
+
+    5 x 1 = 5
+    5 x 2 = 10
+    ...
+    5 x 10 = 50
+
+
+============================================================
+81. PRACTICAL PROGRAM — FIBONACCI
+============================================================
+
+Generate first n Fibonacci numbers.
+
+Example:
+
+    0 1 1 2 3 5 8 ...
+
+
+Program:
+
+    int n = 10;
+    unsigned long long a = 0;
+    unsigned long long b = 1;
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("%llu ", a);
+
+        unsigned long long next = a + b;
+        a = b;
+        b = next;
+    }
+
+
+Important:
+Fixed-width integer overflow can occur for sufficiently
+large n.
+
+
+============================================================
+82. PRACTICAL PROGRAM — GCD
+============================================================
+
+Euclidean algorithm:
+
+    gcd(a, b)
+
+repeatedly replaces:
+
+    a, b
+
+with:
+
+    b, a % b
+
+
+Example:
+
+    int a = 48;
+    int b = 18;
+
+    while (b != 0)
+    {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+
+    printf("GCD = %d\n", a);
+
+
+Output:
+
+    GCD = 6
+
+
+Complexity:
+
+    O(log(min(a,b)))
+
+for the standard Euclidean algorithm under usual assumptions.
+
+
+============================================================
+83. PRACTICAL PROGRAM — COUNT EVEN/ODD
+============================================================
+
+    int even = 0;
+    int odd = 0;
+
+    for (int i = 1; i <= 100; i++)
+    {
+        if (i % 2 == 0)
+            even++;
+        else
+            odd++;
+    }
+
+    printf("Even = %d\n", even);
+    printf("Odd = %d\n", odd);
+
+
+============================================================
+84. PRACTICAL PROGRAM — FIND MAXIMUM
+============================================================
+
+    int arr[] = {10, 40, 20, 80, 30};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int max = arr[0];
+
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] > max)
+        {
+            max = arr[i];
+        }
+    }
+
+    printf("Max = %d\n", max);
+
+
+This combines:
+
+    array
+    loop
+    condition
+
+
+============================================================
+85. PRACTICAL PROGRAM — LINEAR SEARCH
+============================================================
+
+    int arr[] = {10, 20, 30, 40, 50};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 30;
+    int index = -1;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == target)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    printf("Index = %d\n", index);
+
+
+Time complexity:
+
+    O(n)
+
+
+============================================================
+86. OUTPUT PREDICTION — QUESTION 1
+============================================================
+
+    int i;
+
+    for (i = 0; i < 5; i++)
+    {
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    0 1 2 3 4
+
+
+After loop:
+
+    i = 5
+
+
+============================================================
+87. OUTPUT PREDICTION — QUESTION 2
+============================================================
+
+    int i = 5;
+
+    while (i > 0)
+    {
+        printf("%d ", i);
+        i--;
+    }
+
+
+Output:
+
+    5 4 3 2 1
+
+
+============================================================
+88. OUTPUT PREDICTION — QUESTION 3
+============================================================
+
+    int i = 10;
+
+    while (i < 5)
+    {
+        printf("Hello");
+        i++;
+    }
+
+
+Output:
+
+    Nothing
+
+
+Because condition is initially false.
+
+
+============================================================
+89. OUTPUT PREDICTION — QUESTION 4
+============================================================
+
+    int i = 10;
+
+    do
+    {
+        printf("Hello");
+    }
+    while (i < 5);
+
+
+Output:
+
+    Hello
+
+
+Because do-while executes once before checking condition.
+
+
+============================================================
+90. OUTPUT PREDICTION — QUESTION 5
+============================================================
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (i == 2)
+            continue;
+
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    0 1 3 4
+
+
+============================================================
+91. OUTPUT PREDICTION — QUESTION 6
+============================================================
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (i == 2)
+            break;
+
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    0 1
+
+
+============================================================
+92. OUTPUT PREDICTION — QUESTION 7
+============================================================
+
+    for (int i = 1; i <= 3; i++)
+    {
+        for (int j = 1; j <= 2; j++)
+        {
+            printf("%d%d ", i, j);
+        }
+    }
+
+
+Output:
+
+    11 12 21 22 31 32
+
+
+Total iterations:
+
+    3 × 2 = 6
+
+
+============================================================
+93. OUTPUT PREDICTION — QUESTION 8
+============================================================
+
+    for (int i = 1; i <= 5; i++)
+    {
+        if (i % 2 == 0)
+            continue;
+
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    1 3 5
+
+
+============================================================
+94. OUTPUT PREDICTION — QUESTION 9
+============================================================
+
+    int i = 0;
+
+    while (i < 3)
+    {
+        printf("%d ", i);
+        i++;
+    }
+
+    printf("%d", i);
+
+
+Output:
+
+    0 1 2 3
+
+
+Because after the final iteration:
+
+    i = 3
+
+
+============================================================
+95. OUTPUT PREDICTION — QUESTION 10
+============================================================
+
+    int count = 0;
+
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            count++;
+        }
+    }
+
+    printf("%d", count);
+
+
+Output:
+
+    100
+
+
+============================================================
+96. INTERVIEW QUESTIONS
+============================================================
+
+Q1. What is a loop?
+
+Q2. Why are loops used?
+
+Q3. What are the three primary loops in C?
+
+Q4. Difference between while and do-while?
+
+Q5. Which loop executes at least once?
+
+Q6. What is an infinite loop?
+
+Q7. How can an infinite loop be terminated?
+
+Q8. What is the purpose of break?
+
+Q9. What is the purpose of continue?
+
+Q10. Difference between break and continue?
+
+Q11. What is a nested loop?
+
+Q12. What is an off-by-one error?
+
+Q13. What is a sentinel-controlled loop?
+
+Q14. What is a counter-controlled loop?
+
+Q15. When should you use for instead of while?
+
+Q16. What happens when continue is used in a for loop?
+
+Q17. What happens when continue is used in a while loop?
+
+Q18. How does break behave in nested loops?
+
+Q19. What is the time complexity of two nested n loops?
+
+Q20. What is the complexity of:
+
+        for (i = 1; i < n; i *= 2)
+
+Q21. Why are C arrays commonly traversed using:
+
+        i < n
+
+instead of:
+
+        i <= n
+
+Q22. What is a loop invariant?
+
+Q23. What causes an infinite loop?
+
+Q24. Why can floating-point loop counters be problematic?
+
+Q25. Difference between break and return?
+
+
+============================================================
+97. GATE / ADVANCED QUESTIONS
+============================================================
+
+Question:
+
+    int i = 0;
+
+    while (i < 5)
+    {
+        if (i == 2)
+            continue;
+
+        i++;
+    }
+
+
+Will this terminate?
+
+Answer:
+
+    NO.
+
+
+Reason:
+
+    i = 0 → increments
+    i = 1 → increments
+    i = 2 → continue
+    i remains 2
+
+Therefore:
+
+    i < 5
+
+remains true forever.
+
+
+============================================================
+98. GATE / ADVANCED QUESTION
+============================================================
+
+What is the complexity?
+
+    for (int i = 1; i < n; i *= 2)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            ...
+        }
+    }
+
+
+Outer loop:
+
+    O(log n)
+
+
+Inner loop:
+
+    O(n)
+
+
+Total:
+
+    O(n log n)
+
+
+============================================================
+99. JOB-READY CHECKLIST
+============================================================
+
+You should now be able to:
+
+[ ] Explain loops
+[ ] Use while
+[ ] Use do-while
+[ ] Use for
+[ ] Create infinite loops intentionally
+[ ] Prevent accidental infinite loops
+[ ] Use break
+[ ] Use continue
+[ ] Build nested loops
+[ ] Traverse arrays
+[ ] Traverse strings
+[ ] Traverse matrices
+[ ] Implement counters
+[ ] Implement sentinels
+[ ] Validate input
+[ ] Find maximum/minimum
+[ ] Search arrays
+[ ] Calculate sums
+[ ] Reverse numbers
+[ ] Count digits
+[ ] Calculate factorial
+[ ] Check palindrome
+[ ] Check prime
+[ ] Calculate GCD
+[ ] Generate Fibonacci
+[ ] Build patterns
+[ ] Analyze loop complexity
+[ ] Identify off-by-one errors
+[ ] Understand loop termination
+[ ] Predict loop output
+[ ] Debug infinite loops
+
+
+============================================================
+100. FINAL REVISION
+============================================================
+
+while:
+
+    condition checked first.
+
+    while (condition)
+    {
+        ...
+    }
+
+
+do-while:
+
+    body executes first.
+
+    do
+    {
+        ...
+    }
+    while (condition);
+
+
+for:
+
+    initialization
+    condition
+    update
+
+    for (initialization; condition; update)
+    {
+        ...
+    }
+
+
+break:
+
+    exits nearest loop/switch.
+
+
+continue:
+
+    skips current iteration.
+
+
+Nested loop:
+
+    loop inside another loop.
+
+
+Counter loop:
+
+    fixed/reasonably predictable number of iterations.
+
+
+Sentinel loop:
+
+    terminates when special value appears.
+
+
+Off-by-one:
+
+    one extra or one missing iteration.
+
+
+Complexity:
+
+    One loop       → O(n)
+    Nested loops   → O(n²)
+    Doubling       → O(log n)
+    Nested + log   → O(n log n)
+
+
+============================================================
+CHAPTER 8 COMPLETE
+============================================================
+
+NEXT CHAPTER:
+
+CHAPTER 9 — FUNCTIONS IN C
+
+Topics:
+
+    1. What is a function?
+    2. Why functions are needed
+    3. Function declaration
+    4. Function definition
+    5. Function call
+    6. Parameters
+    7. Arguments
+    8. Return values
+    9. void functions
+    10. Function prototypes
+    11. Pass by value
+    12. Passing arrays to functions
+    13. Passing pointers
+    14. Local variables
+    15. Global variables
+    16. Scope
+    17. Lifetime
+    18. Recursion
+    19. Static functions
+    20. Inline functions
+    21. Function pointers
+    22. Callback functions
+    23. Variadic functions
+    24. Header files
+    25. Modular programming
+    26. Stack frames
+    27. Recursion depth
+    28. Common function bugs
+    29. Practical programs
+    30. Interview questions
+    31. GATE-level problems
+    32. Job-ready exercises
+============================================================

@@ -1,0 +1,4104 @@
+============================================================
+              C PROGRAMMING — CHAPTER 5
+                OPERATORS & EXPRESSIONS
+============================================================
+
+Goal:
+Learn how C performs calculations, comparisons, logical
+operations, assignments, bit manipulation, and how expressions
+are evaluated.
+
+By the end of this chapter, you should understand:
+
+    - Arithmetic operators
+    - Relational operators
+    - Logical operators
+    - Assignment operators
+    - Increment/decrement operators
+    - Bitwise operators
+    - Conditional operator
+    - sizeof operator
+    - Comma operator
+    - Operator precedence
+    - Operator associativity
+    - Expressions
+    - lvalue/rvalue concepts
+    - Short-circuit evaluation
+    - Side effects
+    - Integer division
+    - Modulo
+    - Common operator mistakes
+    - Job/interview-level operator questions
+
+
+============================================================
+1. WHAT IS AN OPERATOR?
+============================================================
+
+An operator is a symbol that tells the compiler to perform
+an operation.
+
+Examples:
+
+    +       addition
+    -       subtraction
+    *       multiplication
+    /       division
+    %       remainder
+    ==      equality comparison
+    &&      logical AND
+    ||      logical OR
+    =       assignment
+    &       bitwise AND
+    |       bitwise OR
+
+
+Example:
+
+    int result = 10 + 20;
+
+
+Here:
+
+    +       → operator
+    10, 20  → operands
+    10 + 20 → expression
+
+
+============================================================
+2. WHAT IS AN OPERAND?
+============================================================
+
+An operand is a value or expression on which an operator acts.
+
+Example:
+
+    a + b
+
+    a → operand
+    + → operator
+    b → operand
+
+
+Example:
+
+    -x
+
+    - → operator
+    x → operand
+
+
+============================================================
+3. WHAT IS AN EXPRESSION?
+============================================================
+
+An expression is a combination of:
+
+    constants
+    variables
+    operators
+    function calls
+    other expressions
+
+that produces a value, or otherwise represents computation.
+
+
+Examples:
+
+    10 + 20
+
+    a * b
+
+    x > 10
+
+    a && b
+
+    x = 100
+
+
+Examples:
+
+    int result = a + b;
+
+Here:
+
+    a + b
+
+is an expression.
+
+
+============================================================
+4. TYPES OF OPERATORS IN C
+============================================================
+
+Major categories:
+
+    1. Arithmetic
+    2. Relational
+    3. Logical
+    4. Assignment
+    5. Increment/Decrement
+    6. Bitwise
+    7. Conditional
+    8. sizeof
+    9. Comma
+    10. Cast
+    11. Address/dereference operators
+    12. Member access operators
+
+
+This chapter focuses primarily on the first ten.
+
+
+============================================================
+5. ARITHMETIC OPERATORS
+============================================================
+
+Arithmetic operators:
+
+    +       Addition
+    -       Subtraction
+    *       Multiplication
+    /       Division
+    %       Remainder
+
+
+Example:
+
+    int a = 20;
+    int b = 6;
+
+    printf("%d\n", a + b);  // 26
+    printf("%d\n", a - b);  // 14
+    printf("%d\n", a * b);  // 120
+    printf("%d\n", a / b);  // 3
+    printf("%d\n", a % b);  // 2
+
+
+============================================================
+6. ADDITION +
+============================================================
+
+Example:
+
+    int a = 10;
+    int b = 20;
+
+    int result = a + b;
+
+
+Result:
+
+    30
+
+
+The + operator can also be used with floating-point values.
+
+    double x = 10.5;
+    double y = 2.5;
+
+    double result = x + y;
+
+
+Result:
+
+    13.0
+
+
+============================================================
+7. SUBTRACTION -
+============================================================
+
+Example:
+
+    int a = 20;
+    int b = 8;
+
+    int result = a - b;
+
+
+Result:
+
+    12
+
+
+Unary minus is also possible:
+
+    int x = 10;
+
+    int y = -x;
+
+
+Result:
+
+    -10
+
+
+============================================================
+8. MULTIPLICATION *
+============================================================
+
+Example:
+
+    int a = 5;
+    int b = 4;
+
+    int result = a * b;
+
+
+Result:
+
+    20
+
+
+For floating point:
+
+    double area = 5.5 * 2.0;
+
+
+============================================================
+9. DIVISION /
+============================================================
+
+Division depends on the operand types.
+
+Example:
+
+    int a = 10;
+    int b = 3;
+
+    printf("%d\n", a / b);
+
+
+Output:
+
+    3
+
+
+Because both operands are integers.
+
+
+============================================================
+10. INTEGER DIVISION
+============================================================
+
+Very important.
+
+    10 / 3
+
+using integer operands produces:
+
+    3
+
+
+The fractional part is discarded.
+
+Example:
+
+    int result = 7 / 2;
+
+    result = 3
+
+
+NOT:
+
+    3.5
+
+
+============================================================
+11. FLOATING-POINT DIVISION
+============================================================
+
+Example:
+
+    double result = 7.0 / 2.0;
+
+
+Result:
+
+    3.5
+
+
+Example:
+
+    int a = 7;
+    int b = 2;
+
+    double result = (double)a / b;
+
+
+Result:
+
+    3.5
+
+
+The cast changes the calculation to floating-point division.
+
+
+============================================================
+12. INTEGER DIVISION INTERVIEW QUESTION
+============================================================
+
+What is the output?
+
+    int x = 5 / 2;
+
+Answer:
+
+    2
+
+
+What is the output?
+
+    double x = 5 / 2;
+
+Answer:
+
+    2.0
+
+
+Why?
+
+Because:
+
+    5
+    2
+
+are both integer constants.
+
+The division occurs as integer division BEFORE the result is
+assigned to double.
+
+
+Correct:
+
+    double x = 5.0 / 2.0;
+
+
+or:
+
+    double x = (double)5 / 2;
+
+
+============================================================
+13. MODULO OPERATOR %
+============================================================
+
+% gives the remainder of integer division.
+
+Example:
+
+    10 % 3
+
+
+Result:
+
+    1
+
+
+Because:
+
+    10 = 3 * 3 + 1
+
+
+Example:
+
+    20 % 5
+
+Result:
+
+    0
+
+
+============================================================
+14. USES OF MODULO
+============================================================
+
+Modulo is extremely useful.
+
+Check even:
+
+    if (n % 2 == 0)
+
+Check odd:
+
+    if (n % 2 != 0)
+
+
+Last digit:
+
+    n % 10
+
+
+Cycle through values:
+
+    index % size
+
+
+Example:
+
+    17 % 10
+
+Result:
+
+    7
+
+
+============================================================
+15. NEGATIVE MODULO
+============================================================
+
+C does not define % as mathematical modulo in every intuitive
+sense; it gives the remainder associated with integer division.
+
+Example:
+
+    -7 % 3
+
+produces:
+
+    -1
+
+
+And:
+
+    7 % -3
+
+produces:
+
+    1
+
+
+The sign follows the dividend in these examples.
+
+
+============================================================
+16. DIVISION BY ZERO
+============================================================
+
+This is invalid:
+
+    int x = 10 / 0;
+
+
+Do not divide by zero.
+
+Similarly:
+
+    x % 0
+
+is invalid.
+
+
+For integer arithmetic, division by zero results in undefined
+behavior.
+
+
+============================================================
+17. RELATIONAL OPERATORS
+============================================================
+
+Relational/equality operators are used for comparisons.
+
+    <
+    >
+    <=
+    >=
+    ==
+    !=
+
+
+Examples:
+
+    a < b
+    a > b
+    a <= b
+    a >= b
+    a == b
+    a != b
+
+
+The result is an integer value:
+
+    1 → true
+    0 → false
+
+
+============================================================
+18. LESS THAN <
+============================================================
+
+Example:
+
+    10 < 20
+
+
+Result:
+
+    1
+
+
+Example:
+
+    20 < 10
+
+
+Result:
+
+    0
+
+
+============================================================
+19. GREATER THAN >
+============================================================
+
+Example:
+
+    20 > 10
+
+
+Result:
+
+    1
+
+
+Example:
+
+    5 > 20
+
+
+Result:
+
+    0
+
+
+============================================================
+20. LESS THAN OR EQUAL <=
+============================================================
+
+Example:
+
+    10 <= 10
+
+
+Result:
+
+    1
+
+
+Example:
+
+    10 <= 5
+
+
+Result:
+
+    0
+
+
+============================================================
+21. GREATER THAN OR EQUAL >=
+============================================================
+
+Example:
+
+    10 >= 10
+
+
+Result:
+
+    1
+
+
+Example:
+
+    20 >= 10
+
+
+Result:
+
+    1
+
+
+============================================================
+22. EQUALITY ==
+============================================================
+
+== means:
+
+    "Are these values equal?"
+
+
+Example:
+
+    int a = 10;
+    int b = 10;
+
+    if (a == b)
+    {
+        printf("Equal\n");
+    }
+
+
+============================================================
+23. ASSIGNMENT = vs EQUALITY ==
+============================================================
+
+This is one of the most important C mistakes.
+
+Assignment:
+
+    =
+
+Comparison:
+
+    ==
+
+
+Example:
+
+    x = 10;
+
+means:
+
+    Put 10 into x.
+
+
+Example:
+
+    x == 10
+
+means:
+
+    Check whether x is equal to 10.
+
+
+============================================================
+24. COMMON BUG
+============================================================
+
+Wrong:
+
+    if (x = 10)
+    {
+        printf("Yes");
+    }
+
+
+This performs assignment.
+
+It assigns:
+
+    10
+
+to x.
+
+Then the value 10 is used as the condition, which is nonzero,
+so the condition is true.
+
+
+Correct:
+
+    if (x == 10)
+    {
+        printf("Yes");
+    }
+
+
+Compilers can often warn about suspicious assignments in
+conditions.
+
+
+============================================================
+25. NOT EQUAL !=
+============================================================
+
+Example:
+
+    if (age != 18)
+    {
+        printf("Age is not 18\n");
+    }
+
+
+If:
+
+    age = 20
+
+then:
+
+    age != 18
+
+is true.
+
+
+============================================================
+26. LOGICAL OPERATORS
+============================================================
+
+Main logical operators:
+
+    &&      Logical AND
+    ||      Logical OR
+    !       Logical NOT
+
+
+Used mainly with conditions.
+
+
+============================================================
+27. LOGICAL AND &&
+============================================================
+
+AND is true only when both operands are true.
+
+Truth table:
+
+    A    B    A && B
+    ----------------
+    0    0      0
+    0    1      0
+    1    0      0
+    1    1      1
+
+
+Example:
+
+    age >= 18 && age <= 60
+
+
+Meaning:
+
+    age must satisfy BOTH conditions.
+
+
+============================================================
+28. LOGICAL OR ||
+============================================================
+
+OR is true if at least one operand is true.
+
+Truth table:
+
+    A    B    A || B
+    ----------------
+    0    0      0
+    0    1      1
+    1    0      1
+    1    1      1
+
+
+Example:
+
+    day == 6 || day == 7
+
+
+Meaning:
+
+    day is Saturday OR Sunday.
+
+
+============================================================
+29. LOGICAL NOT !
+============================================================
+
+NOT reverses truth value.
+
+    !0 → 1
+
+    !1 → 0
+
+
+Example:
+
+    int x = 0;
+
+    if (!x)
+    {
+        printf("False/zero value\n");
+    }
+
+
+In C:
+
+    0       → false
+    nonzero → true
+
+
+============================================================
+30. C BOOLEAN LOGIC
+============================================================
+
+C traditionally uses integers for conditions.
+
+    0
+
+means false.
+
+Any nonzero value means true.
+
+
+Example:
+
+    if (5)
+    {
+        printf("True\n");
+    }
+
+
+This executes because 5 is nonzero.
+
+
+Example:
+
+    if (-10)
+    {
+        printf("True\n");
+    }
+
+
+Also true.
+
+
+============================================================
+31. stdbool.h
+============================================================
+
+Modern C provides boolean support through:
+
+    #include <stdbool.h>
+
+
+You can use:
+
+    bool
+
+
+Example:
+
+    #include <stdio.h>
+    #include <stdbool.h>
+
+    int main(void)
+    {
+        bool logged_in = true;
+
+        if (logged_in)
+        {
+            printf("User logged in\n");
+        }
+
+        return 0;
+    }
+
+
+Note:
+C23 provides built-in language support for bool/true/false,
+while older C versions commonly use <stdbool.h>.
+
+
+============================================================
+32. SHORT-CIRCUIT EVALUATION
+============================================================
+
+Extremely important.
+
+For:
+
+    A && B
+
+
+If A is false:
+
+    B is NOT evaluated.
+
+
+For:
+
+    A || B
+
+
+If A is true:
+
+    B is NOT evaluated.
+
+
+This is called:
+
+    short-circuit evaluation.
+
+
+============================================================
+33. AND SHORT-CIRCUIT EXAMPLE
+============================================================
+
+    int x = 0;
+
+    if (x != 0 && 10 / x > 2)
+    {
+        printf("Yes\n");
+    }
+
+
+First:
+
+    x != 0
+
+is false.
+
+Therefore:
+
+    10 / x
+
+is never evaluated.
+
+This prevents division by zero in this particular expression.
+
+
+============================================================
+34. OR SHORT-CIRCUIT EXAMPLE
+============================================================
+
+    int x = 10;
+
+    if (x == 10 || expensive_operation())
+    {
+        ...
+    }
+
+
+Since:
+
+    x == 10
+
+is true,
+
+the second operand may not be evaluated.
+
+
+This is useful for:
+
+    performance
+    safety
+    null-pointer checks
+    conditional function calls
+
+
+============================================================
+35. IMPORTANT POINTER EXAMPLE
+============================================================
+
+Later, with pointers:
+
+    if (ptr != NULL && *ptr == 10)
+    {
+        ...
+    }
+
+
+First:
+
+    ptr != NULL
+
+is checked.
+
+If false, then:
+
+    *ptr
+
+is not evaluated.
+
+
+This is a very important practical use of short-circuiting.
+
+
+============================================================
+36. ASSIGNMENT OPERATORS
+============================================================
+
+Basic assignment:
+
+    =
+
+
+Compound assignments:
+
+    +=
+    -=
+    *=
+    /=
+    %=
+    <<=
+    >>=
+    &=
+    ^=
+    |=
+
+
+============================================================
+37. SIMPLE ASSIGNMENT
+============================================================
+
+    int x;
+
+    x = 10;
+
+
+The value 10 is assigned to x.
+
+
+============================================================
+38. +=
+============================================================
+
+Instead of:
+
+    x = x + 5;
+
+
+write:
+
+    x += 5;
+
+
+Example:
+
+    int x = 10;
+
+    x += 5;
+
+
+Result:
+
+    15
+
+
+============================================================
+39. -=
+============================================================
+
+    x -= 5;
+
+
+means:
+
+    x = x - 5;
+
+
+Example:
+
+    int x = 20;
+
+    x -= 8;
+
+
+Result:
+
+    12
+
+
+============================================================
+40. *=
+============================================================
+
+    x *= 3;
+
+
+means:
+
+    x = x * 3;
+
+
+Example:
+
+    int x = 5;
+
+    x *= 4;
+
+
+Result:
+
+    20
+
+
+============================================================
+41. /=
+============================================================
+
+    x /= 2;
+
+
+means:
+
+    x = x / 2;
+
+
+Example:
+
+    int x = 20;
+
+    x /= 4;
+
+
+Result:
+
+    5
+
+
+============================================================
+42. %=
+============================================================
+
+    x %= 3;
+
+
+means:
+
+    x = x % 3;
+
+
+Example:
+
+    int x = 10;
+
+    x %= 3;
+
+
+Result:
+
+    1
+
+
+============================================================
+43. BITWISE COMPOUND ASSIGNMENT
+============================================================
+
+Examples:
+
+    x &= mask;
+    x |= mask;
+    x ^= mask;
+    x <<= 2;
+    x >>= 1;
+
+
+These are heavily used in:
+
+    embedded systems
+    operating systems
+    device drivers
+    networking
+    systems programming
+
+
+============================================================
+44. INCREMENT OPERATOR ++
+============================================================
+
+Adds 1.
+
+    x++
+
+
+is equivalent in value effect to:
+
+    x = x + 1;
+
+
+Example:
+
+    int x = 5;
+
+    x++;
+
+Now:
+
+    x = 6
+
+
+============================================================
+45. DECREMENT OPERATOR --
+============================================================
+
+Subtracts 1.
+
+    x--
+
+
+Example:
+
+    int x = 5;
+
+    x--;
+
+
+Now:
+
+    x = 4
+
+
+============================================================
+46. PREFIX INCREMENT
+============================================================
+
+    ++x
+
+
+First increments x.
+
+Then the resulting value is used.
+
+
+Example:
+
+    int x = 5;
+
+    int y = ++x;
+
+
+After:
+
+    x = 6
+    y = 6
+
+
+============================================================
+47. POSTFIX INCREMENT
+============================================================
+
+    x++
+
+
+First the old value is used.
+
+Then x is incremented.
+
+
+Example:
+
+    int x = 5;
+
+    int y = x++;
+
+
+After:
+
+    x = 6
+    y = 5
+
+
+============================================================
+48. PREFIX DECREMENT
+============================================================
+
+    --x
+
+
+Example:
+
+    int x = 5;
+
+    int y = --x;
+
+
+Result:
+
+    x = 4
+    y = 4
+
+
+============================================================
+49. POSTFIX DECREMENT
+============================================================
+
+    x--
+
+
+Example:
+
+    int x = 5;
+
+    int y = x--;
+
+
+Result:
+
+    x = 4
+    y = 5
+
+
+============================================================
+50. IMPORTANT ++ INTERVIEW QUESTION
+============================================================
+
+What is the output?
+
+    int x = 5;
+
+    printf("%d\n", x++);
+    printf("%d\n", x);
+
+
+Answer:
+
+    5
+    6
+
+
+Because postfix uses the old value, then increments.
+
+
+============================================================
+51. IMPORTANT ++ INTERVIEW QUESTION
+============================================================
+
+    int x = 5;
+
+    printf("%d\n", ++x);
+
+
+Output:
+
+    6
+
+
+Because prefix increment happens before the value is used.
+
+
+============================================================
+52. DANGEROUS MULTIPLE MODIFICATION
+============================================================
+
+Avoid expressions like:
+
+    i = i++;
+
+
+or:
+
+    i++ + ++i;
+
+
+or similar expressions where the same scalar object is
+modified multiple times without a sequencing guarantee.
+
+
+These can result in undefined behavior or otherwise dangerous
+and non-portable code.
+
+
+Professional rule:
+
+    Keep increments/decrements simple and separate when
+    evaluation order becomes unclear.
+
+
+============================================================
+53. BITWISE OPERATORS
+============================================================
+
+Bitwise operators operate on individual bits.
+
+    &       Bitwise AND
+    |       Bitwise OR
+    ^       Bitwise XOR
+    ~       Bitwise NOT
+    <<      Left shift
+    >>      Right shift
+
+
+Used in:
+
+    embedded programming
+    operating systems
+    networking
+    cryptography-related low-level code
+    device drivers
+    compression
+    flags
+    hardware programming
+
+
+============================================================
+54. BINARY REPRESENTATION
+============================================================
+
+Consider:
+
+    5
+
+
+Binary:
+
+    0101
+
+
+And:
+
+    3
+
+Binary:
+
+    0011
+
+
+Bitwise operations work on these individual bits.
+
+
+============================================================
+55. BITWISE AND &
+============================================================
+
+    5 & 3
+
+
+Binary:
+
+    0101
+    0011
+    ----
+    0001
+
+
+Result:
+
+    1
+
+
+Truth table:
+
+    0 & 0 = 0
+    0 & 1 = 0
+    1 & 0 = 0
+    1 & 1 = 1
+
+
+============================================================
+56. BITWISE OR |
+============================================================
+
+    5 | 3
+
+
+Binary:
+
+    0101
+    0011
+    ----
+    0111
+
+
+Result:
+
+    7
+
+
+Truth table:
+
+    0 | 0 = 0
+    0 | 1 = 1
+    1 | 0 = 1
+    1 | 1 = 1
+
+
+============================================================
+57. BITWISE XOR ^
+============================================================
+
+XOR means:
+
+    1 if bits are different
+    0 if bits are the same
+
+
+Example:
+
+    5 ^ 3
+
+
+Binary:
+
+    0101
+    0011
+    ----
+    0110
+
+
+Result:
+
+    6
+
+
+Truth table:
+
+    0 ^ 0 = 0
+    0 ^ 1 = 1
+    1 ^ 0 = 1
+    1 ^ 1 = 0
+
+
+============================================================
+58. BITWISE NOT ~
+============================================================
+
+~ flips every bit of its operand.
+
+
+Example conceptually:
+
+    x = 5
+
+    binary:
+        00000101
+
+    ~x:
+        11111010
+
+
+The exact numeric result depends on the type and its
+representation.
+
+
+For signed integers, do not oversimplify ~x as merely "negative
+x minus 1" unless the relevant representation is known.
+
+
+============================================================
+59. LEFT SHIFT <<
+============================================================
+
+Example:
+
+    5 << 1
+
+
+Binary conceptually:
+
+    0101
+    ↓
+    1010
+
+
+Result:
+
+    10
+
+
+For unsigned values, left shift corresponds to multiplication
+by powers of two when the result is representable.
+
+
+Example:
+
+    3 << 2
+
+    0011 → 1100
+
+Result:
+
+    12
+
+
+============================================================
+60. RIGHT SHIFT >>
+============================================================
+
+Example:
+
+    8 >> 1
+
+
+Binary:
+
+    1000
+    ↓
+    0100
+
+
+Result:
+
+    4
+
+
+For unsigned values, right shift divides by powers of two,
+discarding shifted-out bits.
+
+
+For signed negative values, right-shift behavior is
+implementation-defined in important respects, so avoid assuming
+a specific result without considering the implementation.
+
+
+============================================================
+61. BIT MASK
+============================================================
+
+A bit mask selects particular bits.
+
+Example:
+
+    int x = 13;
+    int mask = 1;
+
+
+Check least significant bit:
+
+    if (x & mask)
+    {
+        printf("LSB is 1\n");
+    }
+
+
+This technique is widely used in systems programming.
+
+
+============================================================
+62. SETTING A BIT
+============================================================
+
+To set bit n:
+
+    x = x | (1u << n);
+
+
+Example:
+
+    x |= (1u << 3);
+
+
+This sets bit 3.
+
+
+============================================================
+63. CLEARING A BIT
+============================================================
+
+To clear bit n:
+
+    x &= ~(1u << n);
+
+
+Example:
+
+    x &= ~(1u << 3);
+
+
+This clears bit 3.
+
+
+============================================================
+64. TOGGLING A BIT
+============================================================
+
+To toggle bit n:
+
+    x ^= (1u << n);
+
+
+Example:
+
+    x ^= (1u << 3);
+
+
+If bit was:
+
+    0 → becomes 1
+
+If bit was:
+
+    1 → becomes 0
+
+
+============================================================
+65. CHECKING A BIT
+============================================================
+
+To check bit n:
+
+    if (x & (1u << n))
+    {
+        // bit is set
+    }
+
+
+Otherwise:
+
+    // bit is clear
+
+
+This is a very common interview question.
+
+
+============================================================
+66. CONDITIONAL / TERNARY OPERATOR
+============================================================
+
+Syntax:
+
+    condition ? expression1 : expression2
+
+
+Example:
+
+    int max = (a > b) ? a : b;
+
+
+If:
+
+    a > b
+
+is true:
+
+    max = a
+
+
+Otherwise:
+
+    max = b
+
+
+============================================================
+67. TERNARY EXAMPLE
+============================================================
+
+    int age = 22;
+
+    const char *status =
+        (age >= 18) ? "Adult" : "Minor";
+
+
+Output:
+
+    Adult
+
+
+The conditional operator is the only ternary operator in C.
+
+
+============================================================
+68. NESTED TERNARY
+============================================================
+
+Example:
+
+    int result =
+        (marks >= 90) ? 1 :
+        (marks >= 75) ? 2 :
+        (marks >= 50) ? 3 : 4;
+
+
+This works, but excessive nesting hurts readability.
+
+Professional code should prefer if/else when the logic becomes
+complex.
+
+
+============================================================
+69. sizeof OPERATOR
+============================================================
+
+sizeof gives the size in bytes of a type or expression.
+
+Example:
+
+    sizeof(int)
+
+
+or:
+
+    int x;
+
+    sizeof(x)
+
+
+Result type:
+
+    size_t
+
+
+Example:
+
+    printf("%zu\n", sizeof(int));
+
+
+============================================================
+70. sizeof DOES NOT EVALUATE MOST EXPRESSIONS
+============================================================
+
+Example:
+
+    int x = 10;
+
+    sizeof(x++);
+
+
+The x++ expression is generally not evaluated because it is
+inside sizeof and its type does not require runtime evaluation.
+
+Therefore x remains:
+
+    10
+
+
+There are special cases involving variable length arrays where
+evaluation rules differ.
+
+
+============================================================
+71. COMMA OPERATOR
+============================================================
+
+The comma operator:
+
+    ,
+
+
+evaluates its left operand first, then its right operand.
+
+The result is the value of the right operand.
+
+
+Example:
+
+    int x;
+
+    x = (10, 20);
+
+
+Result:
+
+    x = 20
+
+
+The 10 is evaluated and discarded.
+
+
+============================================================
+72. COMMA OPERATOR vs COMMA SEPARATOR
+============================================================
+
+These are different concepts.
+
+Declaration:
+
+    int a, b;
+
+
+The comma separates declarators.
+
+But:
+
+    x = (a++, b++);
+
+
+uses the actual comma operator because of the expression
+context.
+
+
+============================================================
+73. CAST OPERATOR
+============================================================
+
+Explicit type conversion:
+
+    (type) expression
+
+
+Example:
+
+    int a = 5;
+    int b = 2;
+
+    double result = (double)a / b;
+
+
+Result:
+
+    2.5
+
+
+The cast:
+
+    (double)a
+
+converts a to double for that expression.
+
+
+============================================================
+74. IMPLICIT vs EXPLICIT CONVERSION
+============================================================
+
+Implicit:
+
+    int x = 10;
+    double y = x;
+
+
+C automatically converts x to double.
+
+
+Explicit:
+
+    double result = (double)a / b;
+
+
+You explicitly request the conversion.
+
+
+Detailed type conversion will be covered in:
+
+    CHAPTER 6 — TYPE CONVERSION & TYPE CASTING
+
+
+============================================================
+75. OPERATOR PRECEDENCE
+============================================================
+
+Operator precedence determines which operator binds more
+strongly.
+
+Example:
+
+    int result = 2 + 3 * 4;
+
+
+Multiplication happens first:
+
+    3 * 4 = 12
+
+Then:
+
+    2 + 12 = 14
+
+
+So:
+
+    result = 14
+
+
+NOT:
+
+    20
+
+
+============================================================
+76. PARENTHESES
+============================================================
+
+Use parentheses to make intention explicit.
+
+Instead of:
+
+    result = a + b * c;
+
+
+You can write:
+
+    result = a + (b * c);
+
+
+Or:
+
+    result = (a + b) * c;
+
+
+Parentheses are often preferable when they improve clarity.
+
+
+============================================================
+77. BASIC PRECEDENCE ORDER
+============================================================
+
+A simplified useful hierarchy:
+
+    1. Postfix
+       () [] -> . x++ x--
+
+    2. Unary
+       ++ -- + - ! ~ sizeof
+       casts
+
+    3. Multiplicative
+       * / %
+
+    4. Additive
+       + -
+
+    5. Shift
+       << >>
+
+    6. Relational
+       < <= > >=
+
+    7. Equality
+       == !=
+
+    8. Bitwise AND
+       &
+
+    9. Bitwise XOR
+       ^
+
+   10. Bitwise OR
+       |
+
+   11. Logical AND
+       &&
+
+   12. Logical OR
+       ||
+
+   13. Conditional
+       ?:
+
+   14. Assignment
+       = += -= *= /= %= ...
+
+   15. Comma
+       ,
+
+
+IMPORTANT:
+
+This is a simplified precedence guide.
+
+When in doubt:
+
+    USE PARENTHESES.
+
+
+============================================================
+78. OPERATOR ASSOCIATIVITY
+============================================================
+
+Associativity determines how operators of the same precedence
+are grouped.
+
+
+Many arithmetic operators are:
+
+    left-to-right
+
+
+Example:
+
+    a - b - c
+
+
+is grouped as:
+
+    (a - b) - c
+
+
+NOT:
+
+    a - (b - c)
+
+
+============================================================
+79. ASSIGNMENT ASSOCIATIVITY
+============================================================
+
+Assignment operators associate right-to-left.
+
+Example:
+
+    a = b = c = 10;
+
+
+Evaluation grouping:
+
+    a = (b = (c = 10));
+
+
+Afterward:
+
+    a = 10
+    b = 10
+    c = 10
+
+
+============================================================
+80. RELATIONAL + LOGICAL EXAMPLE
+============================================================
+
+    if (age >= 18 && age <= 60)
+    {
+        printf("Working-age range\n");
+    }
+
+
+Operators involved:
+
+    >=
+    <=
+    &&
+
+
+The relational comparisons are evaluated before logical AND
+according to precedence.
+
+
+Still, parentheses can improve readability:
+
+    if ((age >= 18) && (age <= 60))
+
+
+============================================================
+81. DO NOT MEMORIZE EVERYTHING
+============================================================
+
+For interviews, learn the major precedence levels.
+
+For production code:
+
+    use parentheses when there is any possibility of confusion.
+
+
+Example:
+
+    if ((a > b) && (c < d))
+    {
+        ...
+    }
+
+
+is easier to understand than relying heavily on precedence.
+
+
+============================================================
+82. lvalue CONCEPT
+============================================================
+
+An lvalue is an expression designating an object in an
+appropriate context.
+
+Simple example:
+
+    int x;
+
+    x = 10;
+
+
+Here:
+
+    x
+
+designates an object and can appear on the left side of
+assignment.
+
+
+The terminology is more nuanced in modern C, so do not reduce
+lvalue simply to "left side of =".
+
+
+============================================================
+83. rvalue CONCEPT
+============================================================
+
+C does not use the C++ terminology of "rvalue" as a central
+language category in exactly the same way.
+
+For introductory C learning, think of:
+
+    x + 10
+
+as producing a value that is not an assignable object.
+
+
+Example:
+
+    x = 10;
+
+
+    x
+
+designates the object being modified.
+
+    10
+
+is a value.
+
+
+Pointer and expression semantics become more important later.
+
+
+============================================================
+84. MODIFIABLE LVALUE
+============================================================
+
+Not every lvalue can be modified.
+
+Example:
+
+    const int x = 10;
+
+
+You cannot do:
+
+    x = 20;
+
+
+because x is not a modifiable lvalue.
+
+
+This distinction becomes important with:
+
+    const
+    arrays
+    structures
+    pointers
+
+
+============================================================
+85. SIDE EFFECT
+============================================================
+
+A side effect changes program state.
+
+Examples:
+
+    x = 10;
+
+    x++;
+
+    ++x;
+
+
+These modify x.
+
+
+Function calls can also produce side effects:
+
+    printf("Hello");
+
+
+because output state changes.
+
+
+============================================================
+86. SEQUENCING
+============================================================
+
+C has rules describing when evaluations and side effects are
+sequenced relative to one another.
+
+This matters in expressions such as:
+
+    i++ + i++
+
+
+or:
+
+    i = i++;
+
+
+Never write complicated expressions whose correctness depends
+on uncertain evaluation/side-effect ordering.
+
+
+Professional code favors:
+
+    i++;
+    i++;
+
+
+over cryptic expressions.
+
+
+============================================================
+87. COMMON TRICK QUESTION
+============================================================
+
+What is:
+
+    10 + 20 * 3
+
+
+Answer:
+
+    70
+
+
+Because:
+
+    20 * 3 = 60
+
+then:
+
+    10 + 60 = 70
+
+
+============================================================
+88. COMMON TRICK QUESTION
+============================================================
+
+    10 / 3 * 2
+
+
+Both / and * have the same precedence and associate
+left-to-right.
+
+Therefore:
+
+    (10 / 3) * 2
+
+    3 * 2
+
+    6
+
+
+NOT:
+
+    10 / (3 * 2)
+
+
+============================================================
+89. COMMON TRICK QUESTION
+============================================================
+
+    10 - 5 - 2
+
+
+Grouped left-to-right:
+
+    (10 - 5) - 2
+
+    5 - 2
+
+    3
+
+
+============================================================
+90. COMMON TRICK QUESTION
+============================================================
+
+    int x = 5;
+
+    printf("%d\n", x++);
+
+
+Output:
+
+    5
+
+
+After the statement:
+
+    x = 6
+
+
+============================================================
+91. COMMON TRICK QUESTION
+============================================================
+
+    int x = 5;
+
+    printf("%d\n", ++x);
+
+
+Output:
+
+    6
+
+
+After the statement:
+
+    x = 6
+
+
+============================================================
+92. COMMON TRICK QUESTION
+============================================================
+
+    int x = 10;
+
+    printf("%d\n", x > 5);
+
+
+Output:
+
+    1
+
+
+Because:
+
+    10 > 5
+
+is true.
+
+
+============================================================
+93. COMMON TRICK QUESTION
+============================================================
+
+    int x = 10;
+
+    printf("%d\n", x == 10);
+
+
+Output:
+
+    1
+
+
+============================================================
+94. COMMON TRICK QUESTION
+============================================================
+
+    int x = 0;
+
+    printf("%d\n", !x);
+
+
+Output:
+
+    1
+
+
+Because:
+
+    x = 0 → false
+
+therefore:
+
+    !false → true
+
+
+============================================================
+95. COMMON TRICK QUESTION
+============================================================
+
+    int x = 5;
+
+    printf("%d\n", !!x);
+
+
+Output:
+
+    1
+
+
+The first ! converts the truthiness to false.
+
+The second ! converts it back to true.
+
+
+This is sometimes used to normalize a value to 0 or 1.
+
+
+============================================================
+96. OPERATOR vs FUNCTION
+============================================================
+
+Operator:
+
+    +
+
+Example:
+
+    a + b
+
+
+Function:
+
+    printf()
+
+
+Operators are part of C's expression syntax.
+
+Functions are callable program entities.
+
+
+============================================================
+97. UNARY OPERATORS
+============================================================
+
+Unary operator operates on one operand.
+
+Examples:
+
+    -x
+    +x
+    !x
+    ~x
+    ++x
+    --x
+    sizeof(x)
+
+
+Binary operator operates on two operands:
+
+    a + b
+    a - b
+    a * b
+    a / b
+
+
+Conditional operator:
+
+    condition ? x : y
+
+has three operands.
+
+
+============================================================
+98. ADDRESS-OF & AND BITWISE &
+============================================================
+
+The symbol:
+
+    &
+
+has different meanings depending on context.
+
+
+Bitwise AND:
+
+    a & b
+
+
+Address-of:
+
+    &x
+
+
+Example:
+
+    int x = 10;
+
+    scanf("%d", &x);
+
+
+Here:
+
+    &x
+
+means:
+
+    address of x.
+
+
+Later:
+
+    &
+
+is important for pointers.
+
+
+============================================================
+99. ASTERISK * HAS MULTIPLE MEANINGS
+============================================================
+
+Multiplication:
+
+    a * b
+
+
+Pointer declaration:
+
+    int *p;
+
+
+Dereference:
+
+    *p
+
+
+Same symbol, different syntactic context.
+
+
+This is a common C interview topic.
+
+
+============================================================
+100. CONDITIONAL LOGIC EXAMPLE
+============================================================
+
+    int age = 22;
+    int has_id = 1;
+
+    if (age >= 18 && has_id)
+    {
+        printf("Entry allowed\n");
+    }
+
+
+This combines:
+
+    >=
+    &&
+    implicit truth-value interpretation
+
+
+============================================================
+101. REAL-WORLD EXAMPLE
+============================================================
+
+Suppose an employee gets a bonus if:
+
+    salary >= 50000
+    AND
+    performance >= 8
+
+
+Code:
+
+    if ((salary >= 50000) &&
+        (performance >= 8))
+    {
+        bonus = 10000;
+    }
+
+
+Operators:
+
+    >=
+    &&
+    =
+
+
+============================================================
+102. EVEN / ODD PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int n;
+
+        printf("Enter number: ");
+        scanf("%d", &n);
+
+        if (n % 2 == 0)
+        {
+            printf("Even\n");
+        }
+        else
+        {
+            printf("Odd\n");
+        }
+
+        return 0;
+    }
+
+
+Important operators:
+
+    %
+    ==
+    =
+
+
+============================================================
+103. MAXIMUM OF TWO NUMBERS
+============================================================
+
+Using if:
+
+    if (a > b)
+        max = a;
+    else
+        max = b;
+
+
+Using ternary:
+
+    max = (a > b) ? a : b;
+
+
+============================================================
+104. SWAPPING TWO VARIABLES
+============================================================
+
+Using a temporary variable:
+
+    int temp;
+
+    temp = a;
+    a = b;
+    b = temp;
+
+
+Operators used:
+
+    =
+
+
+A temporary variable is usually clearer and safer than
+trying to use complicated arithmetic tricks.
+
+
+============================================================
+105. BITWISE FLAG EXAMPLE
+============================================================
+
+Suppose:
+
+    READ  = 1 << 0
+    WRITE = 1 << 1
+    EXEC  = 1 << 2
+
+
+Then:
+
+    unsigned int permissions = 0;
+
+Set READ:
+
+    permissions |= READ;
+
+
+Set WRITE:
+
+    permissions |= WRITE;
+
+
+Check WRITE:
+
+    if (permissions & WRITE)
+    {
+        printf("Write enabled\n");
+    }
+
+
+Clear WRITE:
+
+    permissions &= ~WRITE;
+
+
+This pattern is common in systems programming.
+
+
+============================================================
+106. OPERATOR PRECEDENCE EXAMPLE
+============================================================
+
+Expression:
+
+    a + b * c > d && e
+
+
+Evaluation conceptually follows:
+
+    multiplication
+        ↓
+    addition
+        ↓
+    comparison
+        ↓
+    logical AND
+
+
+But professional code can make it explicit:
+
+    (((a + (b * c)) > d) && e)
+
+
+Usually you don't need this many parentheses; use enough to
+make intent clear.
+
+
+============================================================
+107. SHORT-CIRCUIT AND FUNCTION CALLS
+============================================================
+
+Example:
+
+    if (is_valid() && process())
+    {
+        ...
+    }
+
+
+If:
+
+    is_valid()
+
+returns false,
+
+then:
+
+    process()
+
+is not called.
+
+
+This can be useful but remember that if process() has a
+required side effect, short-circuiting may prevent it.
+
+
+============================================================
+108. SHORT-CIRCUIT OR
+============================================================
+
+Example:
+
+    if (cache_available() || load_from_disk())
+    {
+        ...
+    }
+
+
+If:
+
+    cache_available()
+
+returns true,
+
+then:
+
+    load_from_disk()
+
+is not called.
+
+
+This is a common pattern in real programs.
+
+
+============================================================
+109. COMMON OPERATOR MISTAKES
+============================================================
+
+Mistake 1:
+
+    if (x = 5)
+
+Usually intended:
+
+    if (x == 5)
+
+
+Mistake 2:
+
+    5 / 2
+
+Expecting:
+
+    2.5
+
+Actual integer result:
+
+    2
+
+
+Mistake 3:
+
+    if (x & y)
+
+when you intended logical AND:
+
+    if (x && y)
+
+
+Mistake 4:
+
+    if (x | y)
+
+when you intended logical OR:
+
+    if (x || y)
+
+
+Mistake 5:
+
+    x = x + 1;
+
+when simply:
+
+    x++;
+
+
+Mistake 6:
+
+    i++ + ++i
+
+Avoid complicated modification/evaluation expressions.
+
+
+============================================================
+110. && vs &
+============================================================
+
+Logical AND:
+
+    &&
+
+
+Bitwise AND:
+
+    &
+
+
+Example:
+
+    if (a && b)
+
+
+asks whether both expressions are logically true.
+
+
+Example:
+
+    a & b
+
+
+performs bit-level AND.
+
+
+They are NOT interchangeable.
+
+
+============================================================
+111. || vs |
+============================================================
+
+Logical OR:
+
+    ||
+
+
+Bitwise OR:
+
+    |
+
+
+Logical:
+
+    if (a || b)
+
+
+Bitwise:
+
+    result = a | b;
+
+
+Different purposes.
+
+
+============================================================
+112. ! vs ~
+============================================================
+
+Logical NOT:
+
+    !
+
+
+Bitwise NOT:
+
+    ~
+
+
+Example:
+
+    !0
+
+produces:
+
+    1
+
+
+But:
+
+    ~0
+
+flips every bit of zero.
+
+
+These are completely different operations.
+
+
+============================================================
+113. OPERATOR PRECEDENCE INTERVIEW QUESTION
+============================================================
+
+What is:
+
+    int x = 10 + 20 * 2;
+
+
+Answer:
+
+    50
+
+
+Because:
+
+    20 * 2 = 40
+
+then:
+
+    10 + 40 = 50
+
+
+============================================================
+114. ANOTHER PRECEDENCE QUESTION
+============================================================
+
+    int x = 10 - 4 / 2;
+
+
+First:
+
+    4 / 2 = 2
+
+
+Then:
+
+    10 - 2 = 8
+
+
+Answer:
+
+    8
+
+
+============================================================
+115. ANOTHER PRECEDENCE QUESTION
+============================================================
+
+    int x = 10 / 2 * 3;
+
+
+Same precedence for / and *.
+
+Left-to-right:
+
+    (10 / 2) * 3
+
+    5 * 3
+
+    15
+
+
+============================================================
+116. ANOTHER PRECEDENCE QUESTION
+============================================================
+
+    int x = 5 > 3 && 2 < 4;
+
+
+First comparisons:
+
+    5 > 3 → 1
+    2 < 4 → 1
+
+
+Then:
+
+    1 && 1 → 1
+
+
+Answer:
+
+    1
+
+
+============================================================
+117. ANOTHER PRECEDENCE QUESTION
+============================================================
+
+    int x = 5 + 2 > 6;
+
+
+First:
+
+    5 + 2 = 7
+
+
+Then:
+
+    7 > 6
+
+
+Result:
+
+    1
+
+
+============================================================
+118. ASSIGNMENT IS AN EXPRESSION
+============================================================
+
+In C:
+
+    x = 10
+
+is itself an expression whose value is the assigned value.
+
+Example:
+
+    int a;
+
+    int b = (a = 10);
+
+
+After:
+
+    a = 10
+    b = 10
+
+
+This is legal C.
+
+
+However, avoid overly clever assignments when they reduce
+readability.
+
+
+============================================================
+119. CHAINED ASSIGNMENT
+============================================================
+
+Example:
+
+    a = b = c = 0;
+
+
+Because assignment associates right-to-left:
+
+    a = (b = (c = 0));
+
+
+All become:
+
+    0
+
+
+============================================================
+120. COMPOUND ASSIGNMENT SUBTLETY
+============================================================
+
+For:
+
+    x += y;
+
+
+Think conceptually:
+
+    x = x + y;
+
+
+But compound assignment has important type/conversion
+semantics, so it is not always identical to manually writing
+the expanded form in every corner case.
+
+
+For normal integer arithmetic, the conceptual equivalence is
+usually sufficient.
+
+
+============================================================
+121. OPERATOR PRECEDENCE CHEAT SHEET
+============================================================
+
+Highest → Lower
+
+    postfix:
+        () [] -> . ++ --
+
+    unary:
+        ++ -- + - ! ~ sizeof (type)
+
+    multiplicative:
+        * / %
+
+    additive:
+        + -
+
+    shifts:
+        << >>
+
+    relational:
+        < <= > >=
+
+    equality:
+        == !=
+
+    bitwise:
+        &
+        ^
+        |
+
+    logical:
+        &&
+        ||
+
+    conditional:
+        ?:
+
+    assignment:
+        = += -= *= /= %= <<= >>= &= ^= |=
+
+    comma:
+        ,
+
+
+Remember:
+
+    Parentheses override normal precedence.
+
+
+============================================================
+122. OPERATOR PRACTICE PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 20;
+        int b = 6;
+
+        printf("Addition       = %d\n", a + b);
+        printf("Subtraction    = %d\n", a - b);
+        printf("Multiplication = %d\n", a * b);
+        printf("Division       = %d\n", a / b);
+        printf("Remainder      = %d\n", a % b);
+
+        return 0;
+    }
+
+
+============================================================
+123. LOGICAL OPERATOR PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int age;
+
+        printf("Enter age: ");
+        scanf("%d", &age);
+
+        if (age >= 18 && age <= 60)
+        {
+            printf("Condition satisfied\n");
+        }
+        else
+        {
+            printf("Condition not satisfied\n");
+        }
+
+        return 0;
+    }
+
+
+============================================================
+124. BITWISE PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        unsigned int a = 5;
+        unsigned int b = 3;
+
+        printf("AND = %u\n", a & b);
+        printf("OR  = %u\n", a | b);
+        printf("XOR = %u\n", a ^ b);
+
+        return 0;
+    }
+
+
+Output:
+
+    AND = 1
+    OR  = 7
+    XOR = 6
+
+
+============================================================
+125. TERNARY PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 20;
+        int b = 30;
+
+        int max = (a > b) ? a : b;
+
+        printf("Maximum = %d\n", max);
+
+        return 0;
+    }
+
+
+Output:
+
+    Maximum = 30
+
+
+============================================================
+126. BIT SET/CLEAR/TOGGLE PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        unsigned int x = 0;
+
+        // Set bit 2
+        x |= (1u << 2);
+
+        printf("After setting bit 2: %u\n", x);
+
+        // Clear bit 2
+        x &= ~(1u << 2);
+
+        printf("After clearing bit 2: %u\n", x);
+
+        // Toggle bit 1
+        x ^= (1u << 1);
+
+        printf("After toggling bit 1: %u\n", x);
+
+        return 0;
+    }
+
+
+============================================================
+127. REAL-WORLD JOB EXAMPLE
+============================================================
+
+Suppose an application has permissions:
+
+    READ
+    WRITE
+    DELETE
+
+
+Define:
+
+    #define READ   (1u << 0)
+    #define WRITE  (1u << 1)
+    #define DELETE (1u << 2)
+
+
+Store:
+
+    unsigned int permissions = 0;
+
+
+Give READ + WRITE:
+
+    permissions |= READ;
+    permissions |= WRITE;
+
+
+Check WRITE:
+
+    if (permissions & WRITE)
+    {
+        printf("WRITE permission available\n");
+    }
+
+
+Remove WRITE:
+
+    permissions &= ~WRITE;
+
+
+This is a classic real-world use of bitwise operators.
+
+
+============================================================
+128. INTERVIEW QUESTIONS
+============================================================
+
+Q1. What is an operator?
+
+Q2. What is an operand?
+
+Q3. What is an expression?
+
+Q4. What is the difference between = and ==?
+
+Q5. What is the difference between / and %?
+
+Q6. What is integer division?
+
+Q7. What is the result of 5 / 2?
+
+Q8. What is the result of 5.0 / 2?
+
+Q9. What is modulo?
+
+Q10. What happens when integer division is performed by zero?
+
+Q11. What are relational operators?
+
+Q12. What are logical operators?
+
+Q13. What is short-circuit evaluation?
+
+Q14. Difference between && and &?
+
+Q15. Difference between || and |?
+
+Q16. Difference between ! and ~?
+
+Q17. What is prefix increment?
+
+Q18. What is postfix increment?
+
+Q19. Difference between ++x and x++?
+
+Q20. What is a compound assignment operator?
+
+
+============================================================
+129. ADVANCED INTERVIEW QUESTIONS
+============================================================
+
+Q21. What is operator precedence?
+
+Q22. What is associativity?
+
+Q23. What is the associativity of assignment?
+
+Q24. What is the associativity of * / %?
+
+Q25. What is the conditional operator?
+
+Q26. What is the comma operator?
+
+Q27. Difference between comma operator and comma separator?
+
+Q28. What is sizeof?
+
+Q29. What type does sizeof return?
+
+Q30. What is an lvalue?
+
+Q31. What is a modifiable lvalue?
+
+Q32. What is an expression side effect?
+
+Q33. Why should expressions like i++ + ++i be avoided?
+
+Q34. How do you set a bit?
+
+Q35. How do you clear a bit?
+
+Q36. How do you toggle a bit?
+
+Q37. How do you test whether a bit is set?
+
+Q38. Why are bitwise operators important in system
+     programming?
+
+Q39. Why can parentheses improve code safety?
+
+Q40. What is the difference between implicit and explicit
+     conversion?
+
+
+============================================================
+130. OUTPUT PREDICTION PRACTICE
+============================================================
+
+Q1.
+
+    int x = 10;
+    int y = 3;
+
+    printf("%d\n", x / y);
+
+Answer:
+
+    3
+
+
+------------------------------------------------------------
+
+Q2.
+
+    printf("%d\n", 10 % 3);
+
+Answer:
+
+    1
+
+
+------------------------------------------------------------
+
+Q3.
+
+    printf("%d\n", 10 > 5);
+
+Answer:
+
+    1
+
+
+------------------------------------------------------------
+
+Q4.
+
+    printf("%d\n", 10 == 5);
+
+Answer:
+
+    0
+
+
+------------------------------------------------------------
+
+Q5.
+
+    printf("%d\n", !0);
+
+Answer:
+
+    1
+
+
+------------------------------------------------------------
+
+Q6.
+
+    printf("%d\n", !5);
+
+Answer:
+
+    0
+
+
+------------------------------------------------------------
+
+Q7.
+
+    int x = 5;
+
+    printf("%d\n", x++);
+
+Answer:
+
+    5
+
+
+------------------------------------------------------------
+
+Q8.
+
+    int x = 5;
+
+    printf("%d\n", ++x);
+
+Answer:
+
+    6
+
+
+------------------------------------------------------------
+
+Q9.
+
+    printf("%d\n", 2 + 3 * 4);
+
+Answer:
+
+    14
+
+
+------------------------------------------------------------
+
+Q10.
+
+    printf("%d\n", 10 / 2 * 3);
+
+Answer:
+
+    15
+
+
+============================================================
+131. CODING PRACTICE
+============================================================
+
+Beginner:
+
+    1. Add two numbers
+    2. Subtract two numbers
+    3. Multiply two numbers
+    4. Divide two numbers
+    5. Find remainder
+    6. Check even/odd
+    7. Find maximum of two numbers
+    8. Find minimum of two numbers
+    9. Check positive/negative
+    10. Check voting eligibility
+
+
+Intermediate:
+
+    11. Find maximum of three numbers
+    12. Build a calculator
+    13. Check leap year
+    14. Calculate grade
+    15. Calculate electricity bill
+    16. Calculate salary
+    17. Validate age range
+    18. Create menu-based program
+    19. Implement bit set
+    20. Implement bit clear
+
+
+Advanced:
+
+    21. Implement bit toggle
+    22. Implement bit check
+    23. Permission management using bit masks
+    24. Flag management system
+    25. Number manipulation using bitwise operators
+    26. Build a binary representation utility
+    27. Implement power-of-two checking
+    28. Implement bit counting
+    29. Implement bit reversal
+    30. Create a low-level flag-based configuration system
+
+
+============================================================
+132. POWER OF TWO USING BITWISE OPERATOR
+============================================================
+
+For a positive integer n:
+
+    n is a power of two if:
+
+    (n & (n - 1)) == 0
+
+
+Example:
+
+    n = 8
+
+Binary:
+
+    1000
+
+n - 1:
+
+    0111
+
+AND:
+
+    1000
+    0111
+    ----
+    0000
+
+
+Therefore 8 is a power of two.
+
+
+But remember to ensure:
+
+    n > 0
+
+
+Example:
+
+    int is_power_of_two(unsigned int n)
+    {
+        return n != 0 && (n & (n - 1)) == 0;
+    }
+
+
+============================================================
+133. SWAPPING USING XOR — INTERVIEW CONCEPT
+============================================================
+
+You may see:
+
+    a ^= b;
+    b ^= a;
+    a ^= b;
+
+
+This can swap two integers under appropriate conditions.
+
+However, it is generally NOT recommended in production code.
+
+Prefer:
+
+    int temp = a;
+    a = b;
+    b = temp;
+
+
+Why?
+
+    - clearer
+    - easier to maintain
+    - fewer edge cases
+    - easier for other programmers to understand
+
+
+Know XOR swap for interviews, but prefer readable code.
+
+
+============================================================
+134. BIT COUNTING CONCEPT
+============================================================
+
+A classic technique:
+
+    while (x != 0)
+    {
+        x &= (x - 1);
+        count++;
+    }
+
+
+Each iteration removes the lowest set bit.
+
+
+Example:
+
+    x = 13
+
+Binary:
+
+    1101
+
+
+Repeated operation:
+
+    1101
+    1100
+    1000
+    0000
+
+
+Number of iterations:
+
+    3
+
+
+Therefore:
+
+    popcount(13) = 3
+
+
+============================================================
+135. OPERATOR BEST PRACTICES
+============================================================
+
+1. Use parentheses when logic could be misunderstood.
+
+2. Avoid overly complicated expressions.
+
+3. Do not mix assignment and comparison carelessly.
+
+4. Avoid modifying the same variable multiple times in one
+   complicated expression.
+
+5. Use logical operators for logical conditions.
+
+6. Use bitwise operators for bit manipulation.
+
+7. Avoid division by zero.
+
+8. Remember integer division truncation.
+
+9. Check signed/unsigned interactions carefully.
+
+10. Compile with warnings.
+
+
+Recommended:
+
+    gcc -Wall -Wextra -Wpedantic program.c -o program
+
+
+============================================================
+136. SIGNED/UNSIGNED COMPARISON WARNING
+============================================================
+
+Be careful when comparing signed and unsigned integers.
+
+Example:
+
+    int a = -1;
+    unsigned int b = 1;
+
+    if (a < b)
+    {
+        ...
+    }
+
+
+The result may surprise beginners because usual arithmetic
+conversions can convert the signed value to unsigned.
+
+
+This is a major source of bugs in C.
+
+
+For job-ready C, you should learn:
+
+    integer promotions
+    usual arithmetic conversions
+    signed/unsigned conversion rules
+
+
+in Chapter 6.
+
+
+============================================================
+137. OPERATOR ROADMAP
+============================================================
+
+You now know:
+
+    Arithmetic
+       ↓
+    Relational
+       ↓
+    Logical
+       ↓
+    Assignment
+       ↓
+    Increment/Decrement
+       ↓
+    Bitwise
+       ↓
+    Conditional
+       ↓
+    sizeof
+       ↓
+    Comma
+       ↓
+    Cast
+       ↓
+    Precedence
+       ↓
+    Associativity
+       ↓
+    Expressions
+
+
+These concepts form the foundation for:
+
+    if/else
+    loops
+    functions
+    arrays
+    pointers
+    data structures
+    system programming
+
+
+============================================================
+138. CHAPTER 5 MASTER SUMMARY
+============================================================
+
+ARITHMETIC:
+
+    +   -   *   /   %
+
+
+RELATIONAL:
+
+    <   >   <=   >=   ==   !=
+
+
+LOGICAL:
+
+    &&   ||   !
+
+
+ASSIGNMENT:
+
+    =   +=   -=   *=   /=   %=
+
+
+INCREMENT/DECREMENT:
+
+    ++   --
+
+
+BITWISE:
+
+    &   |   ^   ~   <<   >>
+
+
+CONDITIONAL:
+
+    ?:
+
+
+OTHER:
+
+    sizeof
+    ,
+    (type)
+
+
+IMPORTANT CONCEPTS:
+
+    precedence
+    associativity
+    short-circuiting
+    side effects
+    integer division
+    modulo
+    lvalue
+    modifiable lvalue
+    bit masks
+
+
+============================================================
+139. CHAPTER 5 — QUICK REVISION
+============================================================
+
+1. + performs addition.
+
+2. - performs subtraction and can be unary negation.
+
+3. * performs multiplication.
+
+4. / performs division.
+
+5. % gives integer remainder.
+
+6. == compares values.
+
+7. = assigns a value.
+
+8. && performs logical AND.
+
+9. || performs logical OR.
+
+10. ! performs logical NOT.
+
+11. & performs bitwise AND or address-of depending on context.
+
+12. | performs bitwise OR.
+
+13. ^ performs bitwise XOR.
+
+14. ~ performs bitwise NOT.
+
+15. << shifts bits left.
+
+16. >> shifts bits right.
+
+17. ++ increments by one.
+
+18. -- decrements by one.
+
+19. ? : is the conditional operator.
+
+20. sizeof returns a size in bytes.
+
+21. * / % have higher precedence than + -.
+
+22. Assignment associates right-to-left.
+
+23. && and || use short-circuit evaluation.
+
+24. 0 is false; nonzero is true.
+
+25. Integer division discards the fractional part.
+
+26. Parentheses improve clarity.
+
+27. Avoid expressions with confusing multiple side effects.
+
+28. Bitwise operators are important for low-level programming.
+
+29. Always be careful with signed/unsigned conversions.
+
+30. Compile with warnings.
+
+
+============================================================
+140. JOB-READY CHECKLIST
+============================================================
+
+[ ] Understand operators
+[ ] Understand operands
+[ ] Understand expressions
+[ ] Know arithmetic operators
+[ ] Know integer division
+[ ] Know modulo
+[ ] Know relational operators
+[ ] Know logical operators
+[ ] Know assignment operators
+[ ] Know compound assignment
+[ ] Know prefix ++
+[ ] Know postfix ++
+[ ] Know prefix --
+[ ] Know postfix --
+[ ] Understand short-circuiting
+[ ] Understand bitwise AND
+[ ] Understand bitwise OR
+[ ] Understand XOR
+[ ] Understand NOT
+[ ] Understand left shift
+[ ] Understand right shift
+[ ] Understand bit masks
+[ ] Set a bit
+[ ] Clear a bit
+[ ] Toggle a bit
+[ ] Check a bit
+[ ] Understand ternary operator
+[ ] Understand sizeof
+[ ] Understand comma operator
+[ ] Understand casting basics
+[ ] Understand precedence
+[ ] Understand associativity
+[ ] Understand side effects
+[ ] Understand lvalue basics
+[ ] Avoid undefined-behavior expressions
+[ ] Understand signed/unsigned pitfalls
+[ ] Solve output-prediction questions
+[ ] Write operator-based programs
+[ ] Answer C interview questions
+
+
+============================================================
+NEXT CHAPTER
+============================================================
+
+CHAPTER 6 — TYPE CONVERSION & TYPE CASTING
+
+Topics:
+
+    1. Implicit conversion
+    2. Explicit conversion
+    3. Type casting
+    4. Integer promotions
+    5. Floating-point promotions
+    6. Usual arithmetic conversions
+    7. Signed/unsigned conversions
+    8. Narrowing conversions
+    9. Conversion during assignment
+    10. Conversion during function calls
+    11. Conversion in expressions
+    12. Conversion and overflow
+    13. Conversion and precision loss
+    14. char/int conversions
+    15. float/double conversions
+    16. Common conversion bugs
+    17. Interview-level problems
+    18. Output prediction
+    19. Practical programs
+    20. Job-ready exercises
+
+============================================================
+                    END OF CHAPTER 5
+============================================================3

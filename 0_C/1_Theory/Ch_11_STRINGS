@@ -1,0 +1,2900 @@
+============================================================
+              C PROGRAMMING — CHAPTER 11
+                     STRINGS IN C
+        FULL JOB-READY + INTERVIEW EXPLANATION
+============================================================
+
+
+1. WHAT IS A STRING IN C?
+------------------------------------------------------------
+
+C does not have a built-in `string` data type like C++ or
+Java.
+
+A C string is a sequence of characters terminated by a
+special character:
+
+    '\0'
+
+Example:
+
+char name[] = "Apoorv";
+
+Memory:
+
++-----+-----+-----+-----+-----+-----+------+
+| 'A' | 'p' | 'o' | 'o' | 'r' | 'v' | '\0' |
++-----+-----+-----+-----+-----+-----+------+
+
+A string is therefore stored inside a character array.
+
+
+------------------------------------------------------------
+2. CHARACTER VS STRING
+------------------------------------------------------------
+
+Character:
+
+    'A'
+
+String:
+
+    "A"
+
+Difference:
+
+    'A'
+        -> one character
+
+    "A"
+        -> two characters in storage:
+           'A' + '\0'
+
+
+Example:
+
+char ch = 'A';
+
+char str[] = "A";
+
+
+------------------------------------------------------------
+3. NULL CHARACTER '\0'
+------------------------------------------------------------
+
+The null character marks the END of a C string.
+
+Example:
+
+char str[] = "Hello";
+
+Internally:
+
+H
+e
+l
+l
+o
+\0
+
+
+ASCII value of '\0' is commonly 0.
+
+IMPORTANT:
+
+'\0' is a character.
+
+It is NOT the same thing as:
+
+    NULL
+
+`NULL` is a null pointer constant.
+
+Do not confuse:
+
+    '\0'     -> null character
+    NULL     -> null pointer constant
+
+
+------------------------------------------------------------
+4. STRING DECLARATION
+------------------------------------------------------------
+
+Example:
+
+char name[20];
+
+
+This creates space for 20 characters.
+
+It does NOT automatically contain a valid string with useful
+text.
+
+You must initialize or write a terminating '\0' appropriately
+before treating it as a C string.
+
+
+------------------------------------------------------------
+5. STRING INITIALIZATION
+------------------------------------------------------------
+
+Method 1:
+
+char name[] = "Apoorv";
+
+
+Compiler determines size.
+
+Required storage:
+
+6 characters + '\0'
+
+Total:
+
+7
+
+
+Method 2:
+
+char name[20] = "Apoorv";
+
+
+20 characters are allocated.
+
+The string occupies the beginning and remaining elements are
+zero-initialized.
+
+
+Method 3:
+
+char name[7] =
+{
+    'A',
+    'p',
+    'o',
+    'o',
+    'r',
+    'v',
+    '\0'
+};
+
+
+All are valid.
+
+
+------------------------------------------------------------
+6. IMPORTANT STRING SIZE RULE
+------------------------------------------------------------
+
+This is valid:
+
+char str[6] = "Hello";
+
+
+Why?
+
+H e l l o \0
+
+Total = 6
+
+
+This is NOT enough:
+
+char str[5] = "Hello";
+
+
+Because 5 positions cannot contain both the five letters and
+the terminating '\0'.
+
+
+------------------------------------------------------------
+7. STRING TRAVERSAL
+------------------------------------------------------------
+
+Example:
+
+#include <stdio.h>
+
+int main(void)
+{
+    char str[] = "Hello";
+
+    for (size_t i = 0; str[i] != '\0'; i++)
+    {
+        printf("%c\n", str[i]);
+    }
+
+    return 0;
+}
+
+Output:
+
+H
+e
+l
+l
+o
+
+
+------------------------------------------------------------
+8. STRING LENGTH
+------------------------------------------------------------
+
+The standard library provides:
+
+strlen()
+
+Header:
+
+#include <string.h>
+
+
+Example:
+
+char str[] = "Hello";
+
+printf("%zu\n", strlen(str));
+
+Output:
+
+5
+
+
+IMPORTANT:
+
+strlen() counts characters before '\0'.
+
+It does NOT count '\0'.
+
+
+------------------------------------------------------------
+9. strlen() INTERNAL IDEA
+------------------------------------------------------------
+
+Conceptually:
+
+size_t my_strlen(const char *str)
+{
+    size_t length = 0;
+
+    while (str[length] != '\0')
+    {
+        length++;
+    }
+
+    return length;
+}
+
+
+Complexity:
+
+O(n)
+
+
+IMPORTANT:
+
+The function must receive a valid null-terminated string.
+
+
+------------------------------------------------------------
+10. strlen() VS sizeof()
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello";
+
+strlen(str)
+    -> 5
+
+sizeof(str)
+    -> 6
+
+Why?
+
+sizeof() counts the complete array storage.
+
+strlen() counts characters before '\0'.
+
+
+------------------------------------------------------------
+11. strlen() WITH POINTER
+------------------------------------------------------------
+
+char *p = "Hello";
+
+strlen(p)
+
+returns:
+
+5
+
+
+But:
+
+sizeof(p)
+
+returns the size of the pointer, NOT the string length.
+
+
+------------------------------------------------------------
+12. STRING OUTPUT USING printf()
+------------------------------------------------------------
+
+Use:
+
+printf("%s", str);
+
+
+Example:
+
+char str[] = "Hello";
+
+printf("%s\n", str);
+
+
+Output:
+
+Hello
+
+
+`%s` expects a pointer to a null-terminated character sequence.
+
+
+------------------------------------------------------------
+13. STRING OUTPUT USING puts()
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello";
+
+puts(str);
+
+
+Output:
+
+Hello
+
+
+puts() automatically writes a newline after the string.
+
+
+------------------------------------------------------------
+14. STRING INPUT USING scanf()
+------------------------------------------------------------
+
+Example:
+
+char name[50];
+
+scanf("%49s", name);
+
+
+IMPORTANT:
+
+Do NOT use:
+
+scanf("%s", name);
+
+
+without a field width when the input size is not otherwise
+controlled, because it can overflow the destination array.
+
+
+Also remember:
+
+scanf("%s", ...)
+stops at whitespace.
+
+
+Input:
+
+Apoorv Singh
+
+
+Only:
+
+Apoorv
+
+is read.
+
+
+------------------------------------------------------------
+15. STRING INPUT USING fgets()
+------------------------------------------------------------
+
+Recommended for line-oriented input:
+
+char name[50];
+
+if (fgets(name, sizeof name, stdin) != NULL)
+{
+    printf("%s", name);
+}
+
+
+fgets() can read spaces.
+
+Example input:
+
+Apoorv Singh Rathor
+
+
+The whole line can be stored, subject to buffer size.
+
+
+------------------------------------------------------------
+16. fgets() AND NEWLINE
+------------------------------------------------------------
+
+If there is room, fgets() normally stores the newline generated
+by pressing Enter.
+
+Example input:
+
+Hello\n
+
+
+Array may contain:
+
+'H'
+'e'
+'l'
+'l'
+'o'
+'\n'
+'\0'
+
+
+If you want to remove the newline:
+
+#include <string.h>
+
+name[strcspn(name, "\n")] = '\0';
+
+
+------------------------------------------------------------
+17. STRING COPY — strcpy()
+------------------------------------------------------------
+
+Header:
+
+#include <string.h>
+
+
+Example:
+
+char source[] = "Hello";
+char destination[20];
+
+strcpy(destination, source);
+
+
+Now:
+
+destination = "Hello"
+
+
+IMPORTANT:
+
+destination must have enough space for:
+
+source characters + '\0'
+
+
+------------------------------------------------------------
+18. strcpy() DANGER
+------------------------------------------------------------
+
+Wrong:
+
+char source[] = "Hello";
+char destination[3];
+
+strcpy(destination, source);
+
+
+There is insufficient space.
+
+This causes undefined behavior.
+
+Always ensure the destination object is large enough.
+
+
+------------------------------------------------------------
+19. strncpy()
+------------------------------------------------------------
+
+Example:
+
+char source[] = "Hello";
+char destination[10];
+
+strncpy(destination, source, sizeof destination);
+
+
+`strncpy()` has subtle semantics.
+
+It does NOT always guarantee null termination.
+
+Example:
+
+char destination[5];
+
+strncpy(destination, "Hello", sizeof destination);
+
+
+There may be no '\0' in destination.
+
+Therefore, do not assume strncpy() always produces a valid
+C string.
+
+
+------------------------------------------------------------
+20. SAFER STRING COPY PATTERN
+------------------------------------------------------------
+
+If you control the destination size, one approach is:
+
+size_t n = sizeof destination;
+
+if (n > 0)
+{
+    strncpy(destination, source, n - 1);
+    destination[n - 1] = '\0';
+}
+
+
+This guarantees termination when n > 0.
+
+However, this may truncate the source string.
+
+Production code should define what truncation means.
+
+
+------------------------------------------------------------
+21. STRING CONCATENATION — strcat()
+------------------------------------------------------------
+
+Example:
+
+char first[30] = "Hello ";
+char second[] = "World";
+
+strcat(first, second);
+
+
+Result:
+
+Hello World
+
+
+IMPORTANT:
+
+`first` must have enough unused space for the final string
+including '\0'.
+
+
+------------------------------------------------------------
+22. strcat() DANGER
+------------------------------------------------------------
+
+Example:
+
+char a[5] = "Hello";
+
+strcat(a, "World");
+
+
+This is invalid because `a` does not have enough capacity.
+
+Potential result:
+
+undefined behavior.
+
+
+------------------------------------------------------------
+23. strncat()
+------------------------------------------------------------
+
+Example:
+
+char destination[20] = "Hello ";
+
+strncat(destination, "World", 5);
+
+
+Result:
+
+Hello World
+
+
+But `strncat()` also requires careful capacity management.
+
+The third argument specifies the maximum number of characters
+taken from the source, not the total destination capacity.
+
+Therefore, blindly using:
+
+strncat(dest, src, sizeof dest)
+
+is NOT automatically safe.
+
+
+------------------------------------------------------------
+24. STRING COMPARISON — strcmp()
+------------------------------------------------------------
+
+Example:
+
+strcmp("abc", "abc")
+
+
+returns:
+
+0
+
+
+For:
+
+strcmp("abc", "abd")
+
+
+result is negative.
+
+
+For:
+
+strcmp("abd", "abc")
+
+
+result is positive.
+
+
+IMPORTANT:
+
+Do NOT assume the result is specifically -1 or +1.
+
+Only the sign matters:
+
+    0       -> equal
+    < 0     -> first string compares before second
+    > 0     -> first string compares after second
+
+
+------------------------------------------------------------
+25. strcmp() EXAMPLE
+------------------------------------------------------------
+
+if (strcmp(username, "admin") == 0)
+{
+    printf("Matched\n");
+}
+
+
+Correct comparison:
+
+strcmp(a, b) == 0
+
+
+Incorrect:
+
+if (a == b)
+
+
+because `a == b` does not compare string contents.
+
+
+------------------------------------------------------------
+26. strncmp()
+------------------------------------------------------------
+
+strncmp() compares at most a specified number of characters.
+
+Example:
+
+strncmp("abcdef", "abcxyz", 3)
+
+
+returns:
+
+0
+
+
+because the first 3 characters are equal.
+
+
+IMPORTANT:
+
+It compares at most n characters, but its exact use still
+depends on whether the strings are valid accessible character
+sequences for the requested range.
+
+
+------------------------------------------------------------
+27. FIND CHARACTER — strchr()
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello";
+
+char *p = strchr(str, 'l');
+
+
+`p` points to the first occurrence of 'l'.
+
+
+Conceptually:
+
+H e l l o
+    ^
+    |
+    p
+
+
+If not found:
+
+p == NULL
+
+
+------------------------------------------------------------
+28. FIND LAST CHARACTER — strrchr()
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello";
+
+char *p = strrchr(str, 'l');
+
+
+It returns a pointer to the LAST occurrence.
+
+
+Hello
+
+    ^
+
+
+------------------------------------------------------------
+29. FIND SUBSTRING — strstr()
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello World";
+
+char *p = strstr(str, "World");
+
+
+`p` points to:
+
+World
+
+
+If substring is not found:
+
+p == NULL
+
+
+------------------------------------------------------------
+30. STRING TOKENIZATION — strtok()
+------------------------------------------------------------
+
+Example:
+
+char str[] = "C,C++,Python";
+
+char *token = strtok(str, ",");
+
+while (token != NULL)
+{
+    printf("%s\n", token);
+    token = strtok(NULL, ",");
+}
+
+
+Output:
+
+C
+C++
+Python
+
+
+IMPORTANT:
+
+strtok() modifies the string being tokenized.
+
+Therefore do not use it directly on a string literal.
+
+
+------------------------------------------------------------
+31. strtok() AND STRING LITERALS
+------------------------------------------------------------
+
+Wrong:
+
+char *str = "A,B,C";
+
+strtok(str, ",");
+
+
+String literals must not be modified.
+
+
+Correct:
+
+char str[] = "A,B,C";
+
+strtok(str, ",");
+
+
+------------------------------------------------------------
+32. strtok() LIMITATIONS
+------------------------------------------------------------
+
+strtok() maintains parsing state internally.
+
+This can make it unsuitable for:
+
+    - nested tokenization
+    - concurrent use
+    - situations requiring independent parser state
+
+For more complex parsing, manually track positions or use an
+appropriate reentrant/platform-specific tokenizer where
+available.
+
+
+------------------------------------------------------------
+33. STRING AND POINTERS
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello";
+
+char *p = str;
+
+
+Then:
+
+*p       -> 'H'
+
+*(p + 1) -> 'e'
+
+*(p + 2) -> 'l'
+
+
+Equivalent indexing:
+
+p[0]
+p[1]
+p[2]
+
+
+------------------------------------------------------------
+34. POINTER STRING TRAVERSAL
+------------------------------------------------------------
+
+Example:
+
+void printString(const char *str)
+{
+    while (*str != '\0')
+    {
+        putchar(*str);
+        str++;
+    }
+}
+
+
+Call:
+
+printString("Hello");
+
+
+Output:
+
+Hello
+
+
+------------------------------------------------------------
+35. char[] VS char *
+------------------------------------------------------------
+
+Very important difference:
+
+char str[] = "Hello";
+
+This creates a character array containing a copy of the
+characters plus '\0'.
+
+
+char *p = "Hello";
+
+This points to a string literal.
+
+The program must not modify the string literal through p.
+
+
+------------------------------------------------------------
+36. MODIFYING char[] STRING
+------------------------------------------------------------
+
+Valid:
+
+char str[] = "Hello";
+
+str[0] = 'J';
+
+Now:
+
+Jello
+
+
+Because `str` is a modifiable array.
+
+
+------------------------------------------------------------
+37. MODIFYING STRING LITERAL
+------------------------------------------------------------
+
+Invalid:
+
+char *p = "Hello";
+
+p[0] = 'J';
+
+
+The behavior is undefined.
+
+
+Use:
+
+const char *p = "Hello";
+
+
+This correctly communicates that the characters should not be
+modified through p.
+
+
+------------------------------------------------------------
+38. STRING LITERAL TYPE — IMPORTANT C CONCEPT
+------------------------------------------------------------
+
+A string literal has type:
+
+array of char
+
+but attempting to modify it results in undefined behavior.
+
+This differs from C++ where string literals have type array of
+const char.
+
+In C, writing:
+
+const char *p = "Hello";
+
+is still the correct way to express that your code will not
+modify the literal.
+
+
+------------------------------------------------------------
+39. STRING ARRAY
+------------------------------------------------------------
+
+Example:
+
+char names[3][20] =
+{
+    "Apoorv",
+    "Rahul",
+    "Amit"
+};
+
+
+Conceptually:
+
+names
+ |
+ +--> "Apoorv"
+ |
+ +--> "Rahul"
+ |
+ +--> "Amit"
+
+
+Each row has space for up to 19 characters plus '\0'.
+
+
+------------------------------------------------------------
+40. ARRAY OF STRING POINTERS
+------------------------------------------------------------
+
+Another approach:
+
+const char *names[] =
+{
+    "Apoorv",
+    "Rahul",
+    "Amit"
+};
+
+
+Now:
+
+names
+
+is an array of pointers to characters.
+
+
+Difference:
+
+char names[3][20]
+
+    -> storage for characters is inside the 2D array.
+
+
+const char *names[3]
+
+    -> array contains pointers to string literals.
+
+
+------------------------------------------------------------
+41. STRING REVERSAL
+------------------------------------------------------------
+
+Example:
+
+"Hello"
+
+becomes:
+
+"olleH"
+
+
+Implementation:
+
+void reverseString(char str[])
+{
+    size_t length = strlen(str);
+
+    if (length == 0)
+        return;
+
+    size_t left = 0;
+    size_t right = length - 1;
+
+    while (left < right)
+    {
+        char temp = str[left];
+
+        str[left] = str[right];
+        str[right] = temp;
+
+        left++;
+        right--;
+    }
+}
+
+
+------------------------------------------------------------
+42. STRING PALINDROME
+------------------------------------------------------------
+
+A palindrome reads the same forward and backward.
+
+Examples:
+
+madam
+level
+radar
+
+
+Algorithm:
+
+    compare first and last
+    compare second and second-last
+    continue toward center
+
+
+Example:
+
+int isPalindrome(const char str[])
+{
+    size_t left = 0;
+    size_t right = strlen(str);
+
+    if (right == 0)
+        return 1;
+
+    right--;
+
+    while (left < right)
+    {
+        if (str[left] != str[right])
+            return 0;
+
+        left++;
+        right--;
+    }
+
+    return 1;
+}
+
+
+------------------------------------------------------------
+43. COUNT VOWELS
+------------------------------------------------------------
+
+Example:
+
+int countVowels(const char str[])
+{
+    int count = 0;
+
+    for (size_t i = 0; str[i] != '\0'; i++)
+    {
+        char c = str[i];
+
+        if (c == 'a' || c == 'e' || c == 'i' ||
+            c == 'o' || c == 'u' ||
+            c == 'A' || c == 'E' || c == 'I' ||
+            c == 'O' || c == 'U')
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+
+------------------------------------------------------------
+44. CHARACTER CLASSIFICATION
+------------------------------------------------------------
+
+Header:
+
+#include <ctype.h>
+
+
+Useful functions:
+
+isalpha()
+isdigit()
+isalnum()
+isspace()
+islower()
+isupper()
+tolower()
+toupper()
+
+
+Example:
+
+if (isdigit((unsigned char)c))
+{
+    ...
+}
+
+
+IMPORTANT:
+
+For the <ctype.h> classification/conversion functions, passing
+a negative signed-char value that is not EOF causes undefined
+behavior.
+
+A safe pattern is:
+
+isdigit((unsigned char)c)
+
+
+when `c` came from a potentially signed char.
+
+
+------------------------------------------------------------
+45. CONVERT STRING TO UPPERCASE
+------------------------------------------------------------
+
+#include <ctype.h>
+
+void toUpperCase(char str[])
+{
+    for (size_t i = 0; str[i] != '\0'; i++)
+    {
+        str[i] = (char)toupper((unsigned char)str[i]);
+    }
+}
+
+
+Example:
+
+hello world
+
+becomes:
+
+HELLO WORLD
+
+
+------------------------------------------------------------
+46. CONVERT STRING TO LOWERCASE
+------------------------------------------------------------
+
+void toLowerCase(char str[])
+{
+    for (size_t i = 0; str[i] != '\0'; i++)
+    {
+        str[i] = (char)tolower((unsigned char)str[i]);
+    }
+}
+
+
+------------------------------------------------------------
+47. REMOVE SPACES
+------------------------------------------------------------
+
+Example:
+
+Input:
+
+H e l l o
+
+
+Output:
+
+Hello
+
+
+Two-pointer technique:
+
+void removeSpaces(char str[])
+{
+    size_t read = 0;
+    size_t write = 0;
+
+    while (str[read] != '\0')
+    {
+        if (str[read] != ' ')
+        {
+            str[write++] = str[read];
+        }
+
+        read++;
+    }
+
+    str[write] = '\0';
+}
+
+
+Time:
+
+O(n)
+
+Extra space:
+
+O(1)
+
+
+------------------------------------------------------------
+48. COUNT WORDS
+------------------------------------------------------------
+
+A basic word-count algorithm can track transitions between
+whitespace and non-whitespace.
+
+For example:
+
+"Hello C World"
+
+contains:
+
+3 words
+
+
+Use:
+
+isspace()
+
+instead of checking only `' '` when the definition of a word
+separator includes tabs/newlines.
+
+
+------------------------------------------------------------
+49. STRING SEARCH
+------------------------------------------------------------
+
+Basic character search:
+
+for (size_t i = 0; str[i] != '\0'; i++)
+{
+    if (str[i] == key)
+    {
+        ...
+    }
+}
+
+
+Complexity:
+
+O(n)
+
+
+Standard library:
+
+strchr()
+
+
+------------------------------------------------------------
+50. STRING CONCATENATION MANUALLY
+------------------------------------------------------------
+
+void append(char dest[], size_t capacity, const char src[])
+{
+    size_t d = strlen(dest);
+    size_t s = 0;
+
+    if (d >= capacity)
+        return;
+
+    while (src[s] != '\0' && d + 1 < capacity)
+    {
+        dest[d++] = src[s++];
+    }
+
+    dest[d] = '\0';
+}
+
+
+This demonstrates explicit capacity handling.
+
+A production API should clearly specify what happens when the
+source does not fit.
+
+
+------------------------------------------------------------
+51. STRING COPY MANUALLY
+------------------------------------------------------------
+
+void copyString(char dest[],
+                size_t capacity,
+                const char src[])
+{
+    if (capacity == 0)
+        return;
+
+    size_t i = 0;
+
+    while (src[i] != '\0' && i + 1 < capacity)
+    {
+        dest[i] = src[i];
+        i++;
+    }
+
+    dest[i] = '\0';
+}
+
+
+This copies at most:
+
+capacity - 1
+
+characters and always terminates when capacity > 0.
+
+
+------------------------------------------------------------
+52. BUFFER OVERFLOW
+------------------------------------------------------------
+
+One of the most important C security issues.
+
+Example:
+
+char name[10];
+
+gets(name);
+
+
+`gets()` is removed from the C standard because it cannot
+safely limit input size.
+
+NEVER use gets().
+
+
+Use:
+
+fgets(name, sizeof name, stdin);
+
+
+instead.
+
+
+------------------------------------------------------------
+53. BUFFER OVERFLOW EXAMPLE
+------------------------------------------------------------
+
+char name[10];
+
+scanf("%s", name);
+
+
+Input:
+
+ThisIsAVeryLongName
+
+
+The input may exceed the array capacity.
+
+Result:
+
+undefined behavior and possible memory corruption.
+
+
+Better:
+
+scanf("%9s", name);
+
+
+or use fgets() for line input.
+
+
+------------------------------------------------------------
+54. fgets() — RECOMMENDED BASIC PATTERN
+------------------------------------------------------------
+
+char buffer[100];
+
+if (fgets(buffer, sizeof buffer, stdin) != NULL)
+{
+    buffer[strcspn(buffer, "\n")] = '\0';
+
+    printf("%s\n", buffer);
+}
+
+
+This:
+
+    - limits the number of characters read
+    - supports spaces
+    - leaves room for '\0'
+
+
+------------------------------------------------------------
+55. STRING PARSING
+------------------------------------------------------------
+
+Parsing means breaking a string into meaningful components.
+
+Example:
+
+"age=25"
+
+
+Could be parsed into:
+
+key:
+age
+
+value:
+25
+
+
+More complex example:
+
+"name=Apoorv&age=25&city=Nagpur"
+
+
+Possible tokens:
+
+name=Apoorv
+age=25
+city=Nagpur
+
+
+Parsing is heavily used in:
+
+    - configuration files
+    - HTTP
+    - JSON/XML processing
+    - command-line arguments
+    - log files
+    - compilers
+    - network protocols
+
+
+------------------------------------------------------------
+56. STRING CONVERSION TO INTEGER
+------------------------------------------------------------
+
+Avoid blindly using:
+
+atoi()
+
+
+for robust input validation because it provides limited error
+reporting.
+
+Prefer:
+
+strtol()
+
+
+Example:
+
+#include <errno.h>
+#include <limits.h>
+#include <stdlib.h>
+
+char *end;
+long value;
+
+errno = 0;
+
+value = strtol("123", &end, 10);
+
+
+You should check:
+
+    - errno
+    - whether any digits were consumed
+    - whether the entire expected input was consumed
+    - range limits
+
+
+This is a job-ready parsing technique.
+
+
+------------------------------------------------------------
+57. ASCII BASICS
+------------------------------------------------------------
+
+Common ASCII values:
+
+'A' = 65
+'B' = 66
+...
+'a' = 97
+'b' = 98
+...
+'0' = 48
+'1' = 49
+
+
+But portable C should not assume every character encoding is
+ASCII.
+
+The C execution character set has implementation-defined
+character values.
+
+
+------------------------------------------------------------
+58. CHARACTER DIGIT CONVERSION
+------------------------------------------------------------
+
+If:
+
+char c = '7';
+
+
+Then:
+
+c - '0'
+
+produces the numeric value:
+
+7
+
+provided c is a decimal digit character.
+
+
+Example:
+
+int digit = c - '0';
+
+
+Do not apply this to arbitrary characters.
+
+
+------------------------------------------------------------
+59. STRING AND MEMORY
+------------------------------------------------------------
+
+Consider:
+
+char str[] = "Hello";
+
+
+Typical conceptual memory:
+
++----+----+----+----+----+----+
+| H  | e  | l  | l  | o  | \0 |
++----+----+----+----+----+----+
+
+
+Total object size:
+
+6 bytes
+
+because char has size 1 byte in C.
+
+
+------------------------------------------------------------
+60. STRING LENGTH VS CAPACITY
+------------------------------------------------------------
+
+Example:
+
+char name[100] = "Apoorv";
+
+
+Capacity:
+
+100 characters
+
+Current string length:
+
+6
+
+
+Available storage after the null character:
+
+93 array elements remain after the terminator.
+
+
+This distinction is important when designing safe string APIs.
+
+
+------------------------------------------------------------
+61. EMPTY STRING
+------------------------------------------------------------
+
+Example:
+
+char str[] = "";
+
+
+Storage:
+
++------+
+| '\0' |
++------+
+
+
+strlen(str):
+
+0
+
+
+The string is valid but contains zero characters.
+
+
+------------------------------------------------------------
+62. NULL POINTER AND STRING
+------------------------------------------------------------
+
+This is dangerous:
+
+char *p = NULL;
+
+strlen(p);
+
+
+`strlen()` requires a valid pointer to a null-terminated
+character sequence.
+
+Passing NULL causes undefined behavior.
+
+
+Correct:
+
+if (p != NULL)
+{
+    printf("%zu", strlen(p));
+}
+
+
+But the pointer must also point to a valid string, not merely
+be non-NULL.
+
+
+------------------------------------------------------------
+63. EMPTY STRING VS NULL POINTER
+------------------------------------------------------------
+
+Empty string:
+
+char str[] = "";
+
+There is a valid string of length 0.
+
+
+NULL pointer:
+
+char *p = NULL;
+
+There is no string object being referenced.
+
+
+They are completely different concepts.
+
+
+------------------------------------------------------------
+64. STRING COMPARISON — CASE SENSITIVITY
+------------------------------------------------------------
+
+strcmp():
+
+strcmp("Hello", "hello")
+
+
+returns a nonzero result because characters differ.
+
+
+C's standard library does not provide a standard `stricmp()`
+function.
+
+Case-insensitive comparison can be implemented using character
+conversion or platform-specific functions.
+
+
+------------------------------------------------------------
+65. STRING MEMORY FUNCTIONS
+------------------------------------------------------------
+
+Important functions:
+
+memcpy()
+memmove()
+memcmp()
+memset()
+
+
+They operate on raw memory/bytes rather than specifically
+requiring C strings.
+
+
+Example:
+
+memset(buffer, 0, sizeof buffer);
+
+
+can fill the entire buffer with zero bytes.
+
+
+------------------------------------------------------------
+66. memcpy() VS strcpy()
+------------------------------------------------------------
+
+strcpy():
+
+    works with null-terminated strings
+    copies through '\0'
+
+
+memcpy():
+
+    copies a specified number of bytes
+    does not care about '\0'
+
+
+Example:
+
+memcpy(dest, src, 10);
+
+
+copies exactly 10 bytes.
+
+
+------------------------------------------------------------
+67. memmove() VS memcpy()
+------------------------------------------------------------
+
+If source and destination memory regions overlap:
+
+Use:
+
+memmove()
+
+
+For non-overlapping regions:
+
+memcpy()
+
+
+Using memcpy() with overlapping objects causes undefined
+behavior.
+
+
+------------------------------------------------------------
+68. STRING LITERAL STORAGE
+------------------------------------------------------------
+
+Example:
+
+printf("%s", "Hello");
+
+
+"Hello" is a string literal.
+
+Its storage duration and exact placement are implementation
+details.
+
+Do not assume:
+
+    - it is always stored in writable memory
+    - identical literals must have distinct storage
+    - their addresses are always different
+
+
+Never modify a string literal.
+
+
+------------------------------------------------------------
+69. STRING CONSTANT POINTER
+------------------------------------------------------------
+
+Recommended:
+
+const char *message = "Hello";
+
+
+Meaning:
+
+message points to characters that should not be modified through
+this pointer.
+
+
+------------------------------------------------------------
+70. POINTER TO CONST VS CONST POINTER
+------------------------------------------------------------
+
+Example:
+
+const char *p = "Hello";
+
+Meaning:
+
+pointer to const char
+
+
+You can change p:
+
+p = "World";
+
+
+But you cannot modify:
+
+*p
+
+
+Another declaration:
+
+char *const p = buffer;
+
+
+Meaning:
+
+p itself cannot point somewhere else.
+
+But the characters can potentially be modified through p.
+
+
+Third:
+
+const char *const p = "Hello";
+
+
+Both pointer and pointed-to characters are const through p.
+
+
+------------------------------------------------------------
+71. STRING FUNCTIONS — HEADER
+------------------------------------------------------------
+
+Most standard C string functions are declared in:
+
+#include <string.h>
+
+
+Examples:
+
+strlen()
+strcpy()
+strncpy()
+strcat()
+strncat()
+strcmp()
+strncmp()
+strchr()
+strrchr()
+strstr()
+strtok()
+strspn()
+strcspn()
+strpbrk()
+
+
+Know the purpose of each.
+
+
+------------------------------------------------------------
+72. strspn()
+------------------------------------------------------------
+
+Returns the length of the initial segment containing only
+characters from a specified set.
+
+Example:
+
+strspn("12345abc", "0123456789")
+
+returns:
+
+5
+
+
+Useful for validation/parsing.
+
+
+------------------------------------------------------------
+73. strcspn()
+------------------------------------------------------------
+
+Returns the length of the initial segment containing none of
+the characters from a specified set.
+
+Example:
+
+strcspn("Hello\nWorld", "\n")
+
+returns:
+
+5
+
+
+This is why:
+
+str[strcspn(str, "\n")] = '\0';
+
+is commonly used to remove a trailing newline.
+
+
+------------------------------------------------------------
+74. strpbrk()
+------------------------------------------------------------
+
+Searches for the first character in a string that belongs to a
+specified set.
+
+Example:
+
+strpbrk("Hello123", "0123456789")
+
+points to:
+
+1
+
+
+------------------------------------------------------------
+75. COMMON STRING BUGS
+------------------------------------------------------------
+
+BUG 1:
+No null terminator.
+
+char str[5] = {'H','e','l','l','o'};
+
+Using:
+
+printf("%s", str);
+
+is invalid because str is not necessarily a C string.
+
+
+BUG 2:
+Buffer overflow.
+
+char str[5];
+
+strcpy(str, "Hello");
+
+
+BUG 3:
+String literal modification.
+
+char *p = "Hello";
+p[0] = 'X';
+
+
+BUG 4:
+Comparing strings with ==.
+
+if (a == b)
+
+
+BUG 5:
+Using strlen() on NULL.
+
+
+BUG 6:
+Using sizeof(pointer) expecting string length.
+
+
+BUG 7:
+Assuming strncpy() always terminates.
+
+
+BUG 8:
+Using strcat() without checking destination capacity.
+
+
+BUG 9:
+Using scanf("%s", buffer) without a field width.
+
+
+BUG 10:
+Using gets().
+
+
+BUG 11:
+Forgetting that fgets() may retain '\n'.
+
+
+BUG 12:
+Calling ctype functions with invalid negative char values.
+
+
+------------------------------------------------------------
+76. STRING INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+Why does:
+
+strlen("Hello")
+
+return 5?
+
+Answer:
+
+The string contains five characters:
+
+H e l l o
+
+followed by '\0'.
+
+strlen() counts only characters before '\0'.
+
+
+------------------------------------------------------------
+77. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+Difference between:
+
+char str[] = "Hello";
+
+and:
+
+char *str = "Hello";
+
+
+Answer:
+
+`char str[]` creates a modifiable character array initialized
+from the string literal.
+
+`char *str` points to a string literal, which must not be
+modified.
+
+
+------------------------------------------------------------
+78. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+Why is this wrong?
+
+if (str1 == str2)
+
+
+Answer:
+
+For arrays/strings, this does not compare their character
+contents.
+
+Use:
+
+strcmp(str1, str2) == 0
+
+
+when comparing null-terminated strings.
+
+
+------------------------------------------------------------
+79. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+What is the difference between strlen() and sizeof()?
+
+Answer:
+
+strlen():
+
+    runtime string length
+    stops at '\0'
+
+sizeof():
+
+    compile-time/operator result based on operand type
+    gives object/type size in bytes
+
+For:
+
+char str[] = "Hello";
+
+strlen(str) -> 5
+
+sizeof(str) -> 6
+
+
+------------------------------------------------------------
+80. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+Why is `gets()` unsafe?
+
+Answer:
+
+It cannot limit the number of input characters, so input can
+overflow the destination buffer.
+
+It was removed from the C standard.
+
+Use bounded input such as fgets().
+
+
+------------------------------------------------------------
+81. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+Does strcpy() check destination size?
+
+Answer:
+
+No.
+
+The programmer must ensure the destination has enough space.
+
+
+------------------------------------------------------------
+82. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+Does strncpy() always add '\0'?
+
+Answer:
+
+No.
+
+If the source length is at least the specified count, no null
+terminator is necessarily written.
+
+
+------------------------------------------------------------
+83. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+
+What does strcmp() return?
+
+Answer:
+
+    0       -> strings equal
+
+    < 0     -> first string compares before second
+
+    > 0     -> first string compares after second
+
+Do not depend on exact negative/positive values.
+
+
+------------------------------------------------------------
+84. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+char s[] = "HELLO";
+
+What is:
+
+sizeof(s)?
+
+
+Answer:
+
+6
+
+
+What is:
+
+strlen(s)?
+
+
+Answer:
+
+5
+
+
+Reason:
+
+sizeof includes '\0'.
+
+strlen does not.
+
+
+------------------------------------------------------------
+85. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+char s[] = {'A', 'B', 'C'};
+
+Is `s` a C string?
+
+Answer:
+
+NO.
+
+There is no '\0'.
+
+It is a character array, not a null-terminated C string.
+
+
+------------------------------------------------------------
+86. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+char s[] = "ABC";
+
+Then:
+
+s[3]
+
+contains:
+
+'\0'
+
+
+Valid indexes:
+
+0 -> A
+1 -> B
+2 -> C
+3 -> \0
+
+
+------------------------------------------------------------
+87. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+char *p = "Hello";
+
+What is:
+
+sizeof(p)?
+
+
+Answer:
+
+Size of the pointer.
+
+It is NOT 5 and not necessarily 6.
+
+
+------------------------------------------------------------
+88. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+char s[] = "ABC";
+
+What does:
+
+*(s + 2)
+
+produce?
+
+Answer:
+
+'C'
+
+
+Because:
+
+*(s + 2)
+=
+s[2]
+
+
+------------------------------------------------------------
+89. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+char s[] = "ABC";
+
+What does:
+
+&s
+
+represent?
+
+Answer:
+
+A pointer to the entire array.
+
+Its type is:
+
+char (*)[4]
+
+
+because:
+
+"ABC"
+
+requires:
+
+A B C \0
+
+= 4 chars.
+
+
+------------------------------------------------------------
+90. PRACTICAL PROGRAM — STRING LENGTH
+------------------------------------------------------------
+
+#include <stdio.h>
+
+size_t my_strlen(const char *str)
+{
+    size_t length = 0;
+
+    while (str[length] != '\0')
+    {
+        length++;
+    }
+
+    return length;
+}
+
+int main(void)
+{
+    char str[] = "Apoorv";
+
+    printf("%zu\n", my_strlen(str));
+
+    return 0;
+}
+
+Output:
+
+6
+
+
+------------------------------------------------------------
+91. PRACTICAL PROGRAM — REVERSE STRING
+------------------------------------------------------------
+
+#include <stdio.h>
+#include <string.h>
+
+void reverse(char str[])
+{
+    size_t left = 0;
+    size_t right = strlen(str);
+
+    if (right == 0)
+        return;
+
+    right--;
+
+    while (left < right)
+    {
+        char temp = str[left];
+
+        str[left] = str[right];
+        str[right] = temp;
+
+        left++;
+        right--;
+    }
+}
+
+int main(void)
+{
+    char str[] = "Apoorv";
+
+    reverse(str);
+
+    printf("%s\n", str);
+
+    return 0;
+}
+
+Output:
+
+roopA
+
+
+------------------------------------------------------------
+92. PRACTICAL PROGRAM — PALINDROME
+------------------------------------------------------------
+
+#include <stdio.h>
+#include <string.h>
+
+int isPalindrome(const char str[])
+{
+    size_t left = 0;
+    size_t right = strlen(str);
+
+    if (right == 0)
+        return 1;
+
+    right--;
+
+    while (left < right)
+    {
+        if (str[left] != str[right])
+            return 0;
+
+        left++;
+        right--;
+    }
+
+    return 1;
+}
+
+int main(void)
+{
+    char str[] = "madam";
+
+    if (isPalindrome(str))
+        printf("Palindrome\n");
+    else
+        printf("Not Palindrome\n");
+
+    return 0;
+}
+
+
+------------------------------------------------------------
+93. PRACTICAL PROGRAM — COUNT CHARACTERS
+------------------------------------------------------------
+
+#include <stdio.h>
+
+void countCharacters(const char str[])
+{
+    int vowels = 0;
+    int digits = 0;
+    int spaces = 0;
+
+    for (size_t i = 0; str[i] != '\0'; i++)
+    {
+        char c = str[i];
+
+        if (c == 'a' || c == 'e' || c == 'i' ||
+            c == 'o' || c == 'u' ||
+            c == 'A' || c == 'E' || c == 'I' ||
+            c == 'O' || c == 'U')
+        {
+            vowels++;
+        }
+
+        if (c >= '0' && c <= '9')
+            digits++;
+
+        if (c == ' ')
+            spaces++;
+    }
+
+    printf("Vowels = %d\n", vowels);
+    printf("Digits = %d\n", digits);
+    printf("Spaces = %d\n", spaces);
+}
+
+
+------------------------------------------------------------
+94. PRACTICAL PROGRAM — SAFE LINE INPUT
+------------------------------------------------------------
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    char name[100];
+
+    printf("Enter your name: ");
+
+    if (fgets(name, sizeof name, stdin) != NULL)
+    {
+        name[strcspn(name, "\n")] = '\0';
+
+        printf("Hello, %s!\n", name);
+    }
+
+    return 0;
+}
+
+
+------------------------------------------------------------
+95. PRACTICAL PROGRAM — STRING TOKENIZATION
+------------------------------------------------------------
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    char data[] = "C,C++,Python,Java";
+
+    char *token = strtok(data, ",");
+
+    while (token != NULL)
+    {
+        printf("%s\n", token);
+
+        token = strtok(NULL, ",");
+    }
+
+    return 0;
+}
+
+Output:
+
+C
+C++
+Python
+Java
+
+
+------------------------------------------------------------
+96. PRACTICAL PROGRAM — STRING COPY
+------------------------------------------------------------
+
+#include <stdio.h>
+
+void copyString(char dest[],
+                size_t capacity,
+                const char src[])
+{
+    if (capacity == 0)
+        return;
+
+    size_t i = 0;
+
+    while (src[i] != '\0' && i + 1 < capacity)
+    {
+        dest[i] = src[i];
+        i++;
+    }
+
+    dest[i] = '\0';
+}
+
+int main(void)
+{
+    char dest[20];
+
+    copyString(dest, sizeof dest, "Hello");
+
+    printf("%s\n", dest);
+
+    return 0;
+}
+
+
+------------------------------------------------------------
+97. STRING PROCESSING — JOB-READY PATTERNS
+------------------------------------------------------------
+
+You should be comfortable with:
+
+    1. Two-pointer technique
+    2. Sliding window
+    3. Character frequency
+    4. Hashing/frequency tables
+    5. String searching
+    6. Tokenization
+    7. Parsing
+    8. Prefix/suffix processing
+    9. Palindrome checking
+    10. Anagram checking
+    11. Duplicate detection
+    12. Substring search
+
+
+------------------------------------------------------------
+98. ANAGRAM PROBLEM
+------------------------------------------------------------
+
+Two strings are anagrams if they contain the same characters
+with the same frequencies.
+
+Example:
+
+listen
+
+silent
+
+
+Possible approach:
+
+Create a frequency array.
+
+For lowercase English letters:
+
+int freq[26] = {0};
+
+
+Increment for the first string.
+
+Decrement for the second.
+
+All frequencies should end at zero.
+
+
+Complexity:
+
+O(n)
+
+
+------------------------------------------------------------
+99. FREQUENCY COUNT
+------------------------------------------------------------
+
+Example:
+
+"banana"
+
+Frequency:
+
+b -> 1
+a -> 3
+n -> 2
+
+
+For ASCII-oriented tasks, a frequency table such as:
+
+int freq[256] = {0};
+
+can be useful, but be careful about character signedness and
+the actual character encoding.
+
+
+------------------------------------------------------------
+100. STRING SECURITY CHECKLIST
+------------------------------------------------------------
+
+Before using a string function, ask:
+
+    1. Is the pointer NULL?
+    2. Is it pointing to valid memory?
+    3. Is it null-terminated?
+    4. Is destination capacity sufficient?
+    5. Can input exceed the buffer?
+    6. Can integer size calculations overflow?
+    7. Is the source/destination overlapping?
+    8. Should truncation be allowed?
+    9. Is the string literal being modified?
+    10. Is external/untrusted input being parsed?
+
+
+============================================================
+              CHAPTER 11 SUMMARY
+============================================================
+
+You should now understand:
+
+    [✓] C strings
+    [✓] Character arrays
+    [✓] '\0'
+    [✓] String literals
+    [✓] String initialization
+    [✓] strlen()
+    [✓] sizeof() vs strlen()
+    [✓] printf("%s")
+    [✓] puts()
+    [✓] scanf() string input
+    [✓] fgets()
+    [✓] strcpy()
+    [✓] strncpy()
+    [✓] strcat()
+    [✓] strncat()
+    [✓] strcmp()
+    [✓] strncmp()
+    [✓] strchr()
+    [✓] strrchr()
+    [✓] strstr()
+    [✓] strtok()
+    [✓] strspn()
+    [✓] strcspn()
+    [✓] strpbrk()
+    [✓] String + pointers
+    [✓] char[] vs char*
+    [✓] const char*
+    [✓] String reversal
+    [✓] Palindrome
+    [✓] Character counting
+    [✓] String parsing
+    [✓] ASCII basics
+    [✓] ctype.h
+    [✓] memcpy()
+    [✓] memmove()
+    [✓] Buffer overflow
+    [✓] String security
+    [✓] Common bugs
+    [✓] Interview questions
+    [✓] GATE-level concepts
+
+
+============================================================
+             CHAPTER 11 JOB-READY CHECKLIST
+============================================================
+
+You should be able to:
+
+    1. Explain exactly what a C string is.
+    2. Explain why '\0' is required.
+    3. Differentiate char and string.
+    4. Differentiate char[] and char*.
+    5. Explain strlen() vs sizeof().
+    6. Safely read a line using fgets().
+    7. Copy strings safely.
+    8. Compare strings using strcmp().
+    9. Search characters/substrings.
+    10. Tokenize strings.
+    11. Reverse a string.
+    12. Check palindrome.
+    13. Count character frequencies.
+    14. Parse numeric strings.
+    15. Explain buffer overflow.
+    16. Identify unsafe string operations.
+    17. Use const correctly.
+    18. Understand string/pointer relationships.
+    19. Explain array-to-pointer conversion.
+    20. Solve string interview problems.
+
+
+============================================================
+           IMPORTANT FUNCTIONS TO MEMORIZE
+============================================================
+
+#include <string.h>
+
+strlen()
+strcpy()
+strncpy()
+strcat()
+strncat()
+strcmp()
+strncmp()
+strchr()
+strrchr()
+strstr()
+strtok()
+strspn()
+strcspn()
+strpbrk()
+
+#include <ctype.h>
+
+isalpha()
+isdigit()
+isalnum()
+isspace()
+islower()
+isupper()
+tolower()
+toupper()
+
+#include <stdio.h>
+
+printf()
+puts()
+fgets()
+scanf()
+
+#include <stdlib.h>
+
+strtol()
+strtoul()
+strtod()
+
+
+============================================================
+          NEXT: CHAPTER 12 — POINTERS IN C
+============================================================
+
+1. What is a Pointer?
+2. Why Pointers Are Needed
+3. Memory Addresses
+4. Address-of Operator &
+5. Dereference Operator *
+6. Pointer Declaration
+7. Pointer Initialization
+8. Pointer Types
+9. NULL Pointers
+10. Pointer Arithmetic
+11. Pointer Increment/Decrement
+12. Pointer Comparison
+13. Pointer and Arrays
+14. Array-to-Pointer Conversion
+15. Pointer to Pointer
+16. Multiple Indirection
+17. Pointers and Functions
+18. Pass-by-Value with Pointers
+19. Modifying Caller Data
+20. Pointer to Structure
+21. -> Operator
+22. const with Pointers
+23. Pointer to const
+24. const Pointer
+25. const Pointer to const
+26. void Pointers
+27. Function Pointers
+28. Callback Functions
+29. Pointer and Strings
+30. Pointer and Dynamic Memory
+31. malloc()
+32. calloc()
+33. realloc()
+34. free()
+35. Dangling Pointers
+36. Wild Pointers
+37. Memory Leaks
+38. Double Free
+39. Use-After-Free
+40. Pointer Aliasing
+41. restrict
+42. Pointer-to-Array
+43. Array-of-Pointers
+44. Complex Pointer Declarations
+45. Pointer Casting
+46. Alignment
+47. Effective Type / Aliasing Basics
+48. Common Pointer Bugs
+49. Memory Debugging
+50. Practical Programs
+51. Interview Questions
+52. GATE-Level Problems
+53. Job-Ready Pointer Problems
+
+============================================================

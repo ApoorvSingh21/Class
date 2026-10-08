@@ -1,0 +1,2992 @@
+Chapter 6 — Type Conversion & Type Casting in C
+
+============================================================
+CHAPTER 6: TYPE CONVERSION & TYPE CASTING IN C
+============================================================
+
+Goal:
+Understand how C converts one data type into another,
+when conversion happens automatically, when we explicitly
+force it, and how conversions can cause bugs, data loss,
+overflow, or precision problems.
+
+This chapter is very important for:
+- C programming interviews
+- C++ programming
+- Embedded programming
+- System programming
+- Competitive programming
+- Understanding pointers and memory
+- Writing safe production code
+
+
+============================================================
+1. WHAT IS TYPE CONVERSION?
+============================================================
+
+Type conversion means converting a value from one data type
+to another data type.
+
+Example:
+
+    int x = 10;
+    double y;
+
+    y = x;
+
+Here:
+
+    int 10
+       ↓
+    double 10.0
+
+The compiler performs the conversion automatically.
+
+General form:
+
+    value of Type A
+          ↓
+    conversion
+          ↓
+    value of Type B
+
+
+Example:
+
+    int a = 10;
+    float b = a;
+
+b becomes:
+
+    10.000000
+
+
+============================================================
+2. WHY TYPE CONVERSION IS REQUIRED
+============================================================
+
+Different operations may involve different data types.
+
+Example:
+
+    int a = 10;
+    double b = 3.5;
+
+    double result = a + b;
+
+Before performing the operation, C needs compatible types.
+
+Conceptually:
+
+    int a
+      ↓
+    converted to double
+      ↓
+    10.0 + 3.5
+      ↓
+    13.5
+
+
+Type conversion commonly occurs during:
+
+1. Assignment
+2. Arithmetic expressions
+3. Function calls
+4. Function return
+5. Comparisons
+6. Integer promotions
+7. Mixed-type expressions
+8. Explicit casts
+
+
+============================================================
+3. TWO MAJOR TYPES OF CONVERSION
+============================================================
+
+C mainly has two forms:
+
+    1. Implicit Type Conversion
+    2. Explicit Type Conversion
+
+------------------------------------------------------------
+3.1 IMPLICIT TYPE CONVERSION
+------------------------------------------------------------
+
+Implicit conversion is performed automatically by the
+compiler.
+
+Example:
+
+    int x = 10;
+    double y = x;
+
+The compiler converts:
+
+    int → double
+
+No cast is written.
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int x = 10;
+        double y = x;
+
+        printf("%d\n", x);
+        printf("%f\n", y);
+
+        return 0;
+    }
+
+Output:
+
+    10
+    10.000000
+
+
+============================================================
+4. WIDENING CONVERSION
+============================================================
+
+A conversion from a type that can represent a smaller range
+or precision to one that can generally represent more is
+often called widening conversion.
+
+Example:
+
+    int → long
+    int → float
+    int → double
+    float → double
+
+Example:
+
+    int x = 100;
+    double y = x;
+
+Usually no information is lost.
+
+    100 → 100.0
+
+
+IMPORTANT:
+"Widening" does not guarantee perfect preservation for every
+possible value. For example, very large integers may not be
+represented exactly by a floating-point type such as float.
+
+
+============================================================
+5. NARROWING CONVERSION
+============================================================
+
+Narrowing conversion converts a value into a type that may
+not be able to represent the original value completely.
+
+Examples:
+
+    double → int
+    long long → int
+    int → char
+
+Example:
+
+    double x = 10.75;
+    int y = x;
+
+The fractional part is discarded.
+
+    10.75
+      ↓
+     10
+
+
+Example:
+
+    int x = 300;
+    char c = x;
+
+Whether the resulting char value is what you expect depends
+on the implementation and the representable range of char.
+
+Narrowing conversions should therefore be handled carefully.
+
+
+============================================================
+6. EXPLICIT TYPE CONVERSION / TYPE CASTING
+============================================================
+
+Explicit conversion means the programmer explicitly tells
+the compiler to convert a value.
+
+Syntax:
+
+    (type) expression
+
+Example:
+
+    int a = 10;
+    int b = 3;
+
+    double result = (double)a / b;
+
+Without cast:
+
+    a / b
+
+becomes integer division:
+
+    10 / 3 = 3
+
+With cast:
+
+    (double)a / b
+
+becomes:
+
+    10.0 / 3 = 3.333333...
+
+
+============================================================
+7. IMPLICIT VS EXPLICIT
+============================================================
+
+Implicit:
+
+    int a = 10;
+    double b = a;
+
+Compiler performs conversion.
+
+Explicit:
+
+    int a = 10;
+    double b = (double)a;
+
+Programmer requests conversion.
+
+
+Difference:
+
+    Implicit:
+        compiler decides
+
+    Explicit:
+        programmer requests
+
+
+============================================================
+8. INTEGER CONVERSION
+============================================================
+
+Integer types include:
+
+    char
+    signed char
+    unsigned char
+    short
+    unsigned short
+    int
+    unsigned int
+    long
+    unsigned long
+    long long
+    unsigned long long
+
+
+C performs several automatic integer conversions before
+operations are performed.
+
+
+============================================================
+9. INTEGER PROMOTION
+============================================================
+
+Integer promotion converts certain smaller integer types
+to int or unsigned int.
+
+Types commonly affected:
+
+    char
+    signed char
+    unsigned char
+    short
+    unsigned short
+
+Example:
+
+    char a = 10;
+    char b = 20;
+
+    int result = a + b;
+
+Conceptually:
+
+    char → int
+    char → int
+
+Then:
+
+    int + int
+
+
+Example:
+
+    char c = 100;
+
+    printf("%zu\n", sizeof(c + 1));
+
+The expression:
+
+    c + 1
+
+typically has type int because of integer promotion.
+
+
+============================================================
+10. WHY INTEGER PROMOTION EXISTS
+============================================================
+
+Historically, C performs operations on integer types using
+at least int-sized representations in many situations.
+
+This simplifies arithmetic and compatibility with the
+language's rules.
+
+Example:
+
+    char a = 10;
+    char b = 20;
+
+    printf("%d\n", a + b);
+
+The result is an int expression.
+
+
+============================================================
+11. CHAR TO INT
+============================================================
+
+Example:
+
+    char c = 'A';
+
+    int x = c;
+
+ASCII-based systems commonly produce:
+
+    'A' → 65
+
+But C does not require ASCII specifically.
+
+The exact numeric value of a character depends on the
+execution character set.
+
+Example:
+
+    printf("%d\n", 'A');
+
+On an ASCII-based system:
+
+    65
+
+
+============================================================
+12. UNSIGNED CHAR PROMOTION
+============================================================
+
+Example:
+
+    unsigned char x = 255;
+
+    int y = x;
+
+If int can represent all values of unsigned char, then:
+
+    unsigned char → int
+
+and:
+
+    y = 255
+
+
+If int cannot represent every value of the original type,
+the promotion can instead be to unsigned int.
+
+
+============================================================
+13. SIGNED VS UNSIGNED
+============================================================
+
+Consider:
+
+    int a = -1;
+    unsigned int b = 1;
+
+    if (a < b)
+        printf("a is smaller\n");
+    else
+        printf("a is not smaller\n");
+
+This can produce surprising results because the signed value
+may be converted to unsigned before comparison.
+
+This is one of the most important C conversion traps.
+
+
+============================================================
+14. USUAL ARITHMETIC CONVERSIONS
+============================================================
+
+When different arithmetic types are used in one expression,
+C applies conversion rules to determine a common type.
+
+Example:
+
+    int a = 10;
+    double b = 2.5;
+
+    double result = a + b;
+
+The int is converted to double.
+
+Conceptually:
+
+    10 → 10.0
+
+Then:
+
+    10.0 + 2.5
+
+Result:
+
+    12.5
+
+
+============================================================
+15. BASIC CONVERSION ORDER
+============================================================
+
+A simplified mental model:
+
+    char/short
+         ↓
+    integer promotions
+         ↓
+    int / unsigned int
+         ↓
+    long / unsigned long
+         ↓
+    long long / unsigned long long
+         ↓
+    float
+         ↓
+    double
+         ↓
+    long double
+
+IMPORTANT:
+This is only a simplified learning model.
+
+The actual "usual arithmetic conversions" rules are more
+precise, especially for signed/unsigned combinations and
+different integer ranks.
+
+
+============================================================
+16. FLOAT AND DOUBLE
+============================================================
+
+Example:
+
+    float a = 10.5f;
+    double b = 20.5;
+
+    double result = a + b;
+
+The float is converted to double for the operation.
+
+Conceptually:
+
+    float
+      ↓
+    double
+
+Then:
+
+    double + double
+
+
+============================================================
+17. FLOATING-POINT PRECISION
+============================================================
+
+Consider:
+
+    float x = 0.1f;
+
+0.1 generally cannot be represented exactly in binary
+floating-point.
+
+Therefore:
+
+    float x = 0.1f;
+
+stores an approximation.
+
+Similarly:
+
+    double x = 0.1;
+
+is normally an approximation.
+
+This can cause:
+
+    0.1 + 0.2 != exactly 0.3
+
+when compared directly using floating-point equality.
+
+
+Bad:
+
+    if (a == b)
+
+for many numerical situations.
+
+Better approaches may involve an appropriate tolerance:
+
+    if (fabs(a - b) < EPSILON)
+
+For this you need:
+
+    #include <math.h>
+
+
+============================================================
+18. ASSIGNMENT CONVERSION
+============================================================
+
+When assigning one type to another, the right-hand value is
+converted to the type of the left-hand object.
+
+Example:
+
+    int x = 10.75;
+
+The value is converted to int.
+
+Result:
+
+    x = 10
+
+
+Example:
+
+    double x = 10;
+    
+Result:
+
+    x = 10.0
+
+
+============================================================
+19. INTEGER TO FLOAT
+============================================================
+
+Example:
+
+    int x = 100;
+    float y = x;
+
+Usually:
+
+    100 → 100.0f
+
+
+But sufficiently large integers may not be represented
+exactly by float.
+
+Example:
+
+    int x = 16777217;
+    float y = x;
+
+On common IEEE-754 binary32 systems, y cannot represent every
+integer in that range exactly.
+
+
+============================================================
+20. FLOAT TO INTEGER
+============================================================
+
+Example:
+
+    float x = 10.99f;
+    int y = x;
+
+Result:
+
+    y = 10
+
+
+The fractional portion is discarded.
+
+Example:
+
+    float x = -10.99f;
+    int y = x;
+
+Result is typically:
+
+    -10
+
+The conversion truncates toward zero, provided the resulting
+integer value is representable.
+
+
+============================================================
+21. FLOAT TO INTEGER: IMPORTANT UNDEFINED BEHAVIOR
+============================================================
+
+Consider:
+
+    float x = 1e30f;
+    int y = (int)x;
+
+If the integral value cannot be represented in the destination
+integer type, the conversion from floating type to integer
+type has undefined behavior.
+
+Therefore, don't assume:
+
+    huge_float → arbitrary_integer
+
+is safe.
+
+
+============================================================
+22. DOUBLE TO FLOAT
+============================================================
+
+Example:
+
+    double d = 3.141592653589793;
+    float f = d;
+
+Possible result:
+
+    f ≈ 3.1415927
+
+Precision can be lost.
+
+Therefore:
+
+    double → float
+
+can be a narrowing conversion.
+
+
+============================================================
+23. INTEGER DIVISION PROBLEM
+============================================================
+
+This is one of the most common interview questions.
+
+Code:
+
+    int a = 5;
+    int b = 2;
+
+    printf("%d\n", a / b);
+
+Output:
+
+    2
+
+
+Why?
+
+Both operands are int.
+
+Therefore:
+
+    5 / 2
+
+performs integer division.
+
+
+Correct for decimal result:
+
+    printf("%f\n", (double)a / b);
+
+Result:
+
+    2.500000
+
+
+============================================================
+24. IMPORTANT: CASTING ONLY ONE OPERAND
+============================================================
+
+This works:
+
+    (double)a / b
+
+Because:
+
+    double / int
+
+causes b to be converted to double.
+
+So:
+
+    5 / 2
+
+becomes conceptually:
+
+    5.0 / 2.0
+
+Result:
+
+    2.5
+
+
+============================================================
+25. WRONG CAST LOCATION
+============================================================
+
+Consider:
+
+    (double)(a / b)
+
+First:
+
+    a / b
+
+happens.
+
+Since both are int:
+
+    5 / 2 = 2
+
+Then:
+
+    (double)2
+
+becomes:
+
+    2.0
+
+So:
+
+    (double)(a / b)
+
+is NOT the same as:
+
+    (double)a / b
+
+
+Remember:
+
+    (double)(a / b)  → 2.0
+
+    (double)a / b     → 2.5
+
+
+============================================================
+26. EXPLICIT CAST SYNTAX
+============================================================
+
+General syntax:
+
+    (data_type) expression
+
+Examples:
+
+    (int)3.14
+    (double)10
+    (float)x
+    (char)65
+    (long long)x
+
+
+Examples:
+
+    int x = (int)3.99;
+
+Result:
+
+    3
+
+
+    double y = (double)10;
+
+Result:
+
+    10.0
+
+
+============================================================
+27. CAST DOES NOT CHANGE THE ORIGINAL VARIABLE
+============================================================
+
+Example:
+
+    int x = 10;
+
+    double y = (double)x;
+
+x remains:
+
+    10
+
+The cast creates a converted value for that expression.
+
+Example:
+
+    int x = 10;
+
+    printf("%f\n", (double)x);
+    printf("%d\n", x);
+
+Output:
+
+    10.000000
+    10
+
+
+============================================================
+28. TYPE CASTING VS TYPE CONVERSION
+============================================================
+
+Type conversion:
+    General process of changing a value from one type to
+    another.
+
+Type casting:
+    Explicitly requesting a conversion using cast syntax.
+
+Example:
+
+    int x = 10;
+    double y = x;
+
+Conversion:
+    implicit
+
+Example:
+
+    double y = (double)x;
+
+Conversion:
+    explicit
+
+Casting:
+    explicitly written by programmer.
+
+
+============================================================
+29. CONVERSION DURING FUNCTION CALL
+============================================================
+
+Consider:
+
+    void display(double x)
+    {
+        printf("%f\n", x);
+    }
+
+    int main(void)
+    {
+        int a = 10;
+
+        display(a);
+
+        return 0;
+    }
+
+The int argument is converted to double when passed to the
+function because the parameter type is double.
+
+
+============================================================
+30. FUNCTION PROTOTYPES MATTER
+============================================================
+
+Example:
+
+    int add(int a, int b);
+
+    int main(void)
+    {
+        double x = 10.5;
+        double y = 20.5;
+
+        int result = add(x, y);
+
+        return 0;
+    }
+
+Because the function expects int:
+
+    double → int
+
+conversion occurs for the arguments.
+
+The fractional portions can be lost.
+
+
+============================================================
+31. FUNCTION RETURN CONVERSION
+============================================================
+
+Example:
+
+    int getValue(void)
+    {
+        return 10.75;
+    }
+
+The return expression is converted to int.
+
+Result:
+
+    10
+
+
+Better:
+
+    double getValue(void)
+    {
+        return 10.75;
+    }
+
+
+============================================================
+32. CONSTANTS AND TYPES
+============================================================
+
+Consider:
+
+    10
+
+It is an integer constant.
+
+    10.5
+
+It is normally a double constant.
+
+    10.5f
+
+It is a float constant.
+
+    10L
+
+It is a long integer constant.
+
+    10LL
+
+It is a long long integer constant.
+
+Unsigned suffix:
+
+    10U
+
+
+Examples:
+
+    10
+    10U
+    10L
+    10UL
+    10LL
+    10ULL
+    10.5
+    10.5f
+    10.5L
+
+
+============================================================
+33. WHY SUFFIXES MATTER
+============================================================
+
+Example:
+
+    float x = 3.14;
+
+3.14 is a double constant.
+
+Better:
+
+    float x = 3.14f;
+
+Here 3.14f is a float constant.
+
+This avoids an unnecessary conversion from double to float
+for the initialization.
+
+
+============================================================
+34. CHAR AND INTEGER CONVERSION
+============================================================
+
+Example:
+
+    char c = 'A';
+
+    int x = c;
+
+Character values participate in integer promotions.
+
+Example:
+
+    char c = 'A';
+
+    printf("%d\n", c);
+
+On an ASCII system:
+
+    65
+
+
+Reverse:
+
+    int x = 65;
+    char c = (char)x;
+
+On an ASCII system:
+
+    'A'
+
+But character representation is implementation-dependent,
+so don't assume ASCII when writing strictly portable code.
+
+
+============================================================
+35. UNSIGNED CONVERSION
+============================================================
+
+Example:
+
+    unsigned int x = 10;
+
+    int y = x;
+
+If x's value is representable in int:
+
+    y = 10
+
+But if an unsigned value is too large for int, converting it
+to int may produce an implementation-defined result or signal,
+depending on the implementation.
+
+
+============================================================
+36. SIGNED INTEGER OVERFLOW
+============================================================
+
+Example:
+
+    int x = INT_MAX;
+
+    x = x + 1;
+
+Signed integer overflow is undefined behavior.
+
+Include:
+
+    #include <limits.h>
+
+Then:
+
+    INT_MAX
+
+represents the maximum value of int.
+
+
+============================================================
+37. UNSIGNED INTEGER WRAPAROUND
+============================================================
+
+Unsigned integer arithmetic behaves differently.
+
+Example:
+
+    unsigned int x = 0;
+
+    x = x - 1;
+
+Unsigned arithmetic is performed modulo 2^N, where N is the
+number of value bits.
+
+For a 32-bit unsigned int:
+
+    0 - 1
+
+wraps to:
+
+    4294967295
+
+assuming 32 value bits.
+
+This behavior is well-defined.
+
+
+============================================================
+38. NARROWING AND DATA LOSS
+============================================================
+
+Example:
+
+    double x = 123.987;
+
+    int y = (int)x;
+
+Result:
+
+    123
+
+Lost information:
+
+    .987
+
+
+Another example:
+
+    long long x = 5000000000LL;
+    int y = (int)x;
+
+If the value is not representable in int, the result is
+implementation-defined for integer-to-integer conversion
+when the destination signed type cannot represent the value.
+
+Do not assume that simply casting makes the conversion safe.
+
+
+============================================================
+39. CONVERSION AND PRECISION LOSS
+============================================================
+
+Example:
+
+    double d = 1.23456789012345;
+    float f = (float)d;
+
+float usually provides less precision than double.
+
+Therefore:
+
+    double → float
+
+can lose precision.
+
+
+Similarly:
+
+    double → int
+
+loses the fractional portion.
+
+
+============================================================
+40. CONVERSION AND TRUNCATION
+============================================================
+
+Truncation means removing the fractional part.
+
+Example:
+
+    double x = 9.99;
+
+    int y = (int)x;
+
+Result:
+
+    9
+
+
+Example:
+
+    double x = -9.99;
+
+    int y = (int)x;
+
+Result:
+
+    -9
+
+It does NOT round to the nearest integer.
+
+
+============================================================
+41. CASTING IS NOT ROUNDING
+============================================================
+
+Wrong assumption:
+
+    (int)9.9 → 10
+
+Actual:
+
+    (int)9.9 → 9
+
+
+For rounding, use appropriate functions from <math.h>:
+
+    floor()
+    ceil()
+    round()
+    trunc()
+
+Example:
+
+    #include <math.h>
+
+    double x = 9.9;
+
+    printf("%.0f\n", round(x));
+
+Output:
+
+    10
+
+
+============================================================
+42. INTEGER PROMOTION EXAMPLE
+============================================================
+
+Example:
+
+    char a = 100;
+    char b = 20;
+
+    int result = a + b;
+
+The operation is effectively:
+
+    int + int
+
+Result:
+
+    120
+
+
+============================================================
+43. THE sizeof EXCEPTION
+============================================================
+
+Normally:
+
+    char c = 'A';
+
+    sizeof(c)
+
+is:
+
+    sizeof(char)
+
+But:
+
+    sizeof(c + 1)
+
+is usually:
+
+    sizeof(int)
+
+because c is promoted to int for the addition.
+
+
+Example:
+
+    printf("%zu\n", sizeof(c));
+    printf("%zu\n", sizeof(c + 1));
+
+
+============================================================
+44. BOOLEAN CONVERSION
+============================================================
+
+In C, a scalar value can be used as a condition.
+
+Rule:
+
+    0      → false
+    nonzero → true
+
+Example:
+
+    int x = 10;
+
+    if (x)
+        printf("true\n");
+
+Since 10 is nonzero:
+
+    true
+
+
+Example:
+
+    int x = 0;
+
+    if (x)
+        printf("true\n");
+    else
+        printf("false\n");
+
+Output:
+
+    false
+
+
+With C99 and later:
+
+    #include <stdbool.h>
+
+    bool flag = true;
+
+A bool value is represented using the _Bool type.
+
+
+============================================================
+45. BOOLEAN CONVERSION EXAMPLE
+============================================================
+
+    int x = 25;
+
+    int result = !!x;
+
+Since x is nonzero:
+
+    !x  → 0
+    !!x → 1
+
+Therefore:
+
+    result = 1
+
+
+For:
+
+    int x = 0;
+
+    !!x → 0
+
+
+This is a common low-level programming technique.
+
+
+============================================================
+46. POINTER CONVERSION — INTRODUCTION
+============================================================
+
+Pointer conversions are an important advanced topic.
+
+Example:
+
+    int x = 10;
+
+    void *ptr = &x;
+
+An object pointer can be converted to void*.
+
+Then:
+
+    int *p = ptr;
+
+For object pointers, conversion between void* and another
+object pointer type is supported without an explicit cast in
+C.
+
+Example:
+
+    int *p = ptr;
+
+
+However, arbitrary pointer conversions can create alignment,
+aliasing, lifetime, and representation problems.
+
+Pointer conversions will become much more important when
+studying pointers.
+
+
+============================================================
+47. NULL POINTER AND INTEGER CONSTANT 0
+============================================================
+
+Example:
+
+    int *p = 0;
+
+The integer constant 0 is a null pointer constant in C.
+
+Also commonly:
+
+    int *p = NULL;
+
+where NULL is provided by standard headers.
+
+Important:
+
+    0
+
+and
+
+    NULL
+
+are not the same concept in every language.
+
+In C, NULL is a macro representing a null pointer constant,
+commonly defined as 0 or ((void *)0), depending on the
+implementation/header.
+
+
+============================================================
+48. CONVERSION IN COMPARISONS
+============================================================
+
+Example:
+
+    int a = 10;
+    double b = 10.0;
+
+    if (a == b)
+        printf("Equal\n");
+
+The int value is converted to a compatible floating type for
+the comparison.
+
+Result:
+
+    Equal
+
+
+But floating-point equality can be dangerous when the values
+come from calculations.
+
+
+============================================================
+49. MIXED ARITHMETIC EXAMPLE
+============================================================
+
+    int a = 10;
+    float b = 2.5f;
+    double c = 1.25;
+
+    double result = a + b + c;
+
+Conceptually:
+
+    a → float/double as required
+    b → double
+    c → double
+
+Eventually the arithmetic is performed at a common type
+compatible with the operands.
+
+Result:
+
+    13.75
+
+
+============================================================
+50. COMMON BUG: INTEGER DIVISION
+============================================================
+
+Bug:
+
+    int total = 5;
+    int count = 2;
+
+    double average = total / count;
+
+Many beginners expect:
+
+    2.5
+
+Actual:
+
+    2.0
+
+Why?
+
+    total / count
+
+is evaluated as integer division first.
+
+Correct:
+
+    double average = (double)total / count;
+
+
+============================================================
+51. COMMON BUG: CAST AFTER CALCULATION
+============================================================
+
+Wrong:
+
+    double result = (double)(5 / 2);
+
+Result:
+
+    2.0
+
+Correct:
+
+    double result = (double)5 / 2;
+
+Result:
+
+    2.5
+
+
+Rule:
+
+    Put the cast before the operation whose type you want
+    to change.
+
+
+============================================================
+52. COMMON BUG: ASSIGNMENT TO SMALLER TYPE
+============================================================
+
+    double salary = 55000.75;
+
+    int x = salary;
+
+Fractional information is lost.
+
+If the program requires exact decimal money calculations,
+blindly converting to int can be incorrect.
+
+
+============================================================
+53. COMMON BUG: SIGNED/UNSIGNED COMPARISON
+============================================================
+
+Example:
+
+    int a = -1;
+    unsigned int b = 1;
+
+    if (a < b)
+        printf("true\n");
+
+Do not reason only from the mathematical values.
+
+C's conversion rules can convert the signed operand to
+unsigned, producing a surprising comparison.
+
+This is a frequent source of bugs in loops and array/index
+code.
+
+
+============================================================
+54. COMMON BUG: LOOP WITH SIGNED/UNSIGNED MIXING
+============================================================
+
+Example:
+
+    int i = -1;
+    size_t n = 10;
+
+    if (i < n)
+        printf("yes\n");
+
+size_t is an unsigned integer type.
+
+Mixing signed and unsigned types can produce unexpected
+results.
+
+Be careful when comparing:
+
+    int
+    long
+    size_t
+    unsigned int
+
+
+============================================================
+55. size_t
+============================================================
+
+size_t is an unsigned integer type capable of representing
+the size of objects.
+
+Example:
+
+    size_t n = sizeof(int);
+
+Correct format:
+
+    printf("%zu\n", n);
+
+Common use:
+
+    for (size_t i = 0; i < n; i++)
+    {
+        ...
+    }
+
+
+============================================================
+56. EXPLICIT CASTING DOES NOT REMOVE RISK
+============================================================
+
+Consider:
+
+    int x = (int)3.14;
+
+The cast makes your intention explicit.
+
+But:
+
+    int x = (int)1e100;
+
+is not automatically safe.
+
+A cast tells the compiler:
+
+    "Convert this value."
+
+It does NOT mean:
+
+    "Check whether the conversion is safe."
+
+
+============================================================
+57. SAFE CONVERSION MINDSET
+============================================================
+
+Before converting, ask:
+
+1. Is the source value representable in destination type?
+2. Can precision be lost?
+3. Can the fractional part be lost?
+4. Can signedness change?
+5. Can overflow occur?
+6. Is the conversion implementation-defined?
+7. Can the conversion invoke undefined behavior?
+8. Is the conversion intentional?
+
+
+============================================================
+58. TYPE CONVERSION TABLE — COMMON CASES
+============================================================
+
+Source       Destination       Typical effect
+
+char         int                integer promotion
+short        int                integer promotion
+int          long               usually widening
+int          double             widening in range/precision
+int          float              may lose integer precision
+double       float              precision/range may be lost
+double       int                fraction discarded
+float        int                fraction discarded
+long long    int                possible value loss
+signed       unsigned           modulo conversion rules apply
+int          char               possible value change
+float        double              usually more precision/range
+
+
+============================================================
+59. PRACTICAL EXAMPLE — AVERAGE
+============================================================
+
+Wrong:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 10;
+        int b = 20;
+        int c = 30;
+
+        double avg = (a + b + c) / 3;
+
+        printf("%f\n", avg);
+
+        return 0;
+    }
+
+Why can this be wrong?
+
+    (a + b + c) / 3
+
+is integer division.
+
+Correct:
+
+    double avg = (double)(a + b + c) / 3;
+
+
+============================================================
+60. PRACTICAL EXAMPLE — PERCENTAGE
+============================================================
+
+Wrong:
+
+    int obtained = 45;
+    int total = 50;
+
+    double percentage = obtained / total * 100;
+
+Because:
+
+    45 / 50
+
+is:
+
+    0
+
+Then:
+
+    0 * 100 = 0
+
+
+Correct:
+
+    double percentage =
+        (double)obtained / total * 100;
+
+Result:
+
+    90.0
+
+
+============================================================
+61. PRACTICAL EXAMPLE — TEMPERATURE
+============================================================
+
+Suppose:
+
+    int celsius = 25;
+
+Formula:
+
+    Fahrenheit = Celsius * 9/5 + 32
+
+Wrong:
+
+    int f = celsius * 9 / 5 + 32;
+
+This is integer arithmetic.
+
+For integer Celsius values, this may still give the intended
+truncated result, but for a floating-point result use:
+
+    double f = (double)celsius * 9.0 / 5.0 + 32.0;
+
+
+============================================================
+62. PRACTICAL EXAMPLE — USER INPUT
+============================================================
+
+    int a, b;
+
+    scanf("%d %d", &a, &b);
+
+    double result = (double)a / b;
+
+Always think about the desired result type.
+
+If the result needs decimals:
+
+    cast before division.
+
+
+============================================================
+63. TYPE CONVERSION AND printf
+============================================================
+
+printf is variadic.
+
+For arguments corresponding to certain format specifiers,
+the argument must have the appropriate type after the
+language's default argument promotions.
+
+Example:
+
+    int x = 10;
+
+    printf("%d\n", x);
+
+Correct.
+
+For double:
+
+    double d = 10.5;
+
+    printf("%f\n", d);
+
+Correct.
+
+Important:
+For printf, `%f` expects a double argument.
+
+A float argument passed through `...` is promoted to double.
+
+Example:
+
+    float f = 10.5f;
+
+    printf("%f\n", f);
+
+works because float is promoted to double in a variadic call.
+
+
+============================================================
+64. DEFAULT ARGUMENT PROMOTIONS
+============================================================
+
+When arguments are passed through `...` in a variadic function:
+
+    float → double
+
+and integer types subject to integer promotion become:
+
+    char/short → int or unsigned int
+
+Example:
+
+    printf("%f\n", 3.14f);
+
+3.14f is float, but in the variadic call it is promoted to
+double.
+
+
+============================================================
+65. TYPE CONVERSION AND scanf
+============================================================
+
+scanf is different.
+
+Example:
+
+    int x;
+
+    scanf("%d", &x);
+
+The format specifier and pointer type must match correctly.
+
+Do NOT do:
+
+    double x;
+
+    scanf("%d", &x);
+
+This is incorrect and can cause undefined behavior because
+scanf expects a pointer to int for `%d`.
+
+
+Correct:
+
+    double x;
+
+    scanf("%lf", &x);
+
+
+For float:
+
+    float x;
+
+    scanf("%f", &x);
+
+
+Important:
+
+printf:
+    %f → double
+
+scanf:
+    %f  → float*
+    %lf → double*
+
+
+============================================================
+66. TYPE CASTING IN POINTERS
+============================================================
+
+Example:
+
+    int x = 100;
+
+    void *p = &x;
+
+    int *q = p;
+
+This is allowed for object pointers.
+
+But this:
+
+    double *q = p;
+
+would be dangerous if p actually points to an int object.
+
+Pointer type conversion does not magically change the object
+in memory.
+
+
+============================================================
+67. TYPE PUNNING WARNING
+============================================================
+
+Do not assume that casting a pointer changes the object's
+actual type.
+
+Example:
+
+    int x = 10;
+
+    float *p = (float *)&x;
+
+Dereferencing p is generally not a valid way to reinterpret
+an int object as a float object and can violate alignment or
+strict-aliasing rules.
+
+For raw representation copying, safer techniques such as
+memcpy are often appropriate.
+
+
+============================================================
+68. CONVERSION AND MEMORY
+============================================================
+
+Consider:
+
+    int x = 100;
+    double y = x;
+
+These are two different objects.
+
+Memory conceptually:
+
+    x → int representation
+    y → double representation
+
+The conversion produces a value appropriate for y.
+
+It does not simply copy the bytes of int into double.
+
+
+============================================================
+69. INTEGER TO CHARACTER
+============================================================
+
+Example:
+
+    int x = 65;
+    char c = (char)x;
+
+On ASCII systems:
+
+    c = 'A'
+
+But don't rely on ASCII for portable C programs.
+
+For character literals:
+
+    char c = 'A';
+
+is preferable when you actually mean the character A.
+
+
+============================================================
+70. CHARACTER TO INTEGER FOR DIGITS
+============================================================
+
+Suppose:
+
+    char c = '7';
+
+You cannot generally obtain the numeric value 7 simply by:
+
+    int x = c;
+
+On ASCII systems this gives:
+
+    55
+
+because '7' has character code 55.
+
+To convert a decimal digit character:
+
+    int digit = c - '0';
+
+Example:
+
+    char c = '7';
+
+    int digit = c - '0';
+
+Result:
+
+    7
+
+This assumes c is actually a decimal digit character.
+
+
+============================================================
+71. INTEGER TO STRING IS NOT A SIMPLE CAST
+============================================================
+
+Important:
+
+    int x = 123;
+
+You cannot do:
+
+    char *s = (char *)x;
+
+and expect:
+
+    "123"
+
+A cast does not convert an integer value into a textual
+string representation.
+
+Use functions such as:
+
+    snprintf()
+
+Example:
+
+    char buffer[32];
+
+    snprintf(buffer, sizeof buffer, "%d", x);
+
+
+============================================================
+72. STRING TO INTEGER
+============================================================
+
+Similarly:
+
+    "123"
+
+is a string, not an int.
+
+Use:
+
+    strtol()
+    strtoll()
+    strtoul()
+    strtod()
+
+from <stdlib.h> for robust conversion.
+
+
+Example:
+
+    char *end;
+    long value = strtol("123", &end, 10);
+
+
+============================================================
+73. CASTING VS PARSING
+============================================================
+
+Casting:
+
+    double → int
+
+means numerical type conversion.
+
+Parsing:
+
+    "123" → int
+
+means interpreting text as a number.
+
+They are completely different operations.
+
+
+============================================================
+74. TYPE CONVERSION IN CONDITIONAL OPERATOR
+============================================================
+
+Example:
+
+    int a = 10;
+    double b = 20.5;
+
+    double x = condition ? a : b;
+
+The conditional operator determines a compatible type for
+its second and third operands.
+
+The int may be converted to double.
+
+
+============================================================
+75. TYPE CONVERSION WITH ?: EXAMPLE
+============================================================
+
+    int a = 10;
+    double b = 20.5;
+
+    int condition = 1;
+
+    double result = condition ? a : b;
+
+Result:
+
+    10.0
+
+Because the conditional expression has a type compatible with
+both operands, here double.
+
+
+============================================================
+76. TYPE CONVERSION WITH ASSIGNMENT OPERATORS
+============================================================
+
+Example:
+
+    int x = 10;
+
+    x += 2.5;
+
+The right-hand value is converted according to the compound
+assignment rules, and the result is stored back into x.
+
+Do not assume compound assignment is always identical to:
+
+    x = x + 2.5
+
+because the language specifies compound assignment with its
+own conversion/evaluation rules.
+
+For normal programming, remember:
+
+    x += value
+
+stores the appropriately converted result back into x.
+
+
+============================================================
+77. EXPLICIT CAST IN EXPRESSIONS
+============================================================
+
+Example:
+
+    int a = 7;
+    int b = 2;
+
+    printf("%.2f\n", (double)a / b);
+
+Output:
+
+    3.50
+
+
+Another:
+
+    printf("%d\n", (int)3.99);
+
+Output:
+
+    3
+
+
+============================================================
+78. PRECEDENCE OF CAST
+============================================================
+
+Cast has high precedence.
+
+Example:
+
+    (double)a + b
+
+means:
+
+    ((double)a) + b
+
+not:
+
+    (double)(a + b)
+
+
+Parentheses can make intent clearer:
+
+    (double)(a + b)
+
+
+============================================================
+79. CAST AND OPERATOR PRECEDENCE
+============================================================
+
+Example:
+
+    (double)a / b + c
+
+Evaluation conceptually:
+
+    ((double)a / b) + c
+
+because:
+
+    cast
+    /
+    +
+
+have the relevant precedence relationship.
+
+
+============================================================
+80. COMMON INTERVIEW QUESTION
+============================================================
+
+Question:
+
+    int a = 10;
+    int b = 3;
+
+    printf("%d\n", a / b);
+
+Answer:
+
+    3
+
+
+Question:
+
+    printf("%f\n", (double)a / b);
+
+Answer:
+
+    3.333333
+
+
+Question:
+
+    printf("%f\n", (double)(a / b));
+
+Answer:
+
+    3.000000
+
+
+============================================================
+81. COMMON INTERVIEW QUESTION
+============================================================
+
+What is the result?
+
+    int x = 5;
+
+    double y = x / 2;
+
+Answer:
+
+    2.0
+
+Reason:
+
+    x / 2
+
+is integer division.
+
+Correct:
+
+    double y = (double)x / 2;
+
+Result:
+
+    2.5
+
+
+============================================================
+82. COMMON INTERVIEW QUESTION
+============================================================
+
+What happens here?
+
+    char c = 10;
+
+    printf("%zu\n", sizeof(c + 1));
+
+Answer on typical C implementations:
+
+    sizeof(int)
+
+Reason:
+
+    c
+
+undergoes integer promotion before addition.
+
+
+============================================================
+83. COMMON INTERVIEW QUESTION
+============================================================
+
+What is the difference?
+
+    (int)3.99
+
+and
+
+    round(3.99)
+
+Answer:
+
+    (int)3.99 → 3
+
+    round(3.99) → 4
+
+
+Casting truncates.
+
+round() rounds.
+
+
+============================================================
+84. COMMON INTERVIEW QUESTION
+============================================================
+
+What is the difference?
+
+    (double)(10 / 3)
+
+vs.
+
+    (double)10 / 3
+
+Answer:
+
+    (double)(10 / 3)
+        → (double)3
+        → 3.0
+
+    (double)10 / 3
+        → 10.0 / 3
+        → 3.333333...
+
+
+============================================================
+85. COMMON INTERVIEW QUESTION
+============================================================
+
+What is:
+
+    int x = -1;
+    unsigned int y = 1;
+
+    printf("%d\n", x < y);
+
+Do not simply answer from mathematical reasoning.
+
+The comparison involves the usual arithmetic conversions and
+signed/unsigned conversion rules.
+
+On common implementations where unsigned int and int have the
+same width, x can convert to a large unsigned value, making:
+
+    x < y
+
+false.
+
+This is why mixing signed and unsigned types should be done
+carefully.
+
+
+============================================================
+86. CONVERSION SAFETY
+============================================================
+
+Good:
+
+    int count = 10;
+    double average = (double)count / 3;
+
+Potentially dangerous:
+
+    double value = 1000000000000.0;
+    int x = (int)value;
+
+Potentially dangerous:
+
+    unsigned long long value = ...;
+    int x = (int)value;
+
+Always consider destination range.
+
+
+============================================================
+87. CHECKING RANGE BEFORE CONVERSION
+============================================================
+
+For floating-point to integer conversion, if the source may
+be outside the destination's range, validate it before
+converting.
+
+Example idea:
+
+    if (value >= INT_MIN && value <= INT_MAX)
+    {
+        int x = (int)value;
+    }
+
+For floating-point values, boundary handling and rounding
+details require care.
+
+Include:
+
+    #include <limits.h>
+
+
+============================================================
+88. BEST PRACTICES
+============================================================
+
+1. Avoid unnecessary casts.
+2. Cast intentionally.
+3. Cast before an operation when required.
+4. Watch integer division.
+5. Avoid careless signed/unsigned mixing.
+6. Understand narrowing conversions.
+7. Watch floating-point precision.
+8. Use correct printf/scanf format specifiers.
+9. Don't assume a cast makes unsafe data safe.
+10. Compile with warnings enabled.
+
+
+Recommended GCC:
+
+    gcc -Wall -Wextra -Wconversion -Wsign-conversion file.c
+
+
+For stronger diagnostics:
+
+    gcc -Wall -Wextra -Wconversion -Wsign-conversion \
+        -pedantic file.c
+
+
+============================================================
+89. PROFESSIONAL EXAMPLE
+============================================================
+
+#include <stdio.h>
+
+int main(void)
+{
+    int obtained = 87;
+    int total = 100;
+
+    double percentage =
+        (double)obtained / (double)total * 100.0;
+
+    printf("Percentage = %.2f%%\n", percentage);
+
+    return 0;
+}
+
+Output:
+
+    Percentage = 87.00%
+
+
+============================================================
+90. PRACTICE PROGRAM 1
+============================================================
+
+Write a program that demonstrates:
+
+    int → double
+    double → int
+    int → float
+    char → int
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 10;
+        double d = 20.75;
+        char c = 'A';
+
+        double x = a;
+        int y = (int)d;
+        float z = (float)a;
+        int code = c;
+
+        printf("x = %f\n", x);
+        printf("y = %d\n", y);
+        printf("z = %f\n", z);
+        printf("code = %d\n", code);
+
+        return 0;
+    }
+
+
+============================================================
+91. PRACTICE PROGRAM 2 — INTEGER DIVISION
+============================================================
+
+Write a program that prints:
+
+    10 / 3 = 3
+    10 / 3 = 3.333333...
+
+
+Solution idea:
+
+    int a = 10;
+    int b = 3;
+
+    printf("%d\n", a / b);
+    printf("%f\n", (double)a / b);
+
+
+============================================================
+92. PRACTICE PROGRAM 3 — CHARACTER DIGIT
+============================================================
+
+Input:
+
+    '8'
+
+Convert it into:
+
+    8
+
+Solution:
+
+    char c = '8';
+
+    int digit = c - '0';
+
+    printf("%d\n", digit);
+
+
+============================================================
+93. PRACTICE PROGRAM 4 — AVERAGE
+============================================================
+
+Read three integers and calculate an accurate average.
+
+Solution:
+
+    int a, b, c;
+
+    scanf("%d %d %d", &a, &b, &c);
+
+    double average =
+        (double)(a + b + c) / 3.0;
+
+Be aware that if a+b+c can overflow int, a safer approach is
+to convert before the addition or use a wider appropriate type.
+
+
+============================================================
+94. PRACTICE PROGRAM 5 — TEMPERATURE
+============================================================
+
+Convert Celsius to Fahrenheit.
+
+Formula:
+
+    F = C × 9/5 + 32
+
+Use floating-point arithmetic:
+
+    double fahrenheit =
+        celsius * 9.0 / 5.0 + 32.0;
+
+
+============================================================
+95. OUTPUT PREDICTION PRACTICE
+============================================================
+
+Question 1:
+
+    int x = 10;
+    double y = 3;
+
+    printf("%f\n", x / y);
+
+Think:
+
+    int / double
+        ↓
+    double / double
+        ↓
+    3.333333...
+
+
+------------------------------------------------------------
+
+Question 2:
+
+    int x = 10;
+    int y = 3;
+
+    printf("%f\n", (double)(x / y));
+
+Answer:
+
+    3.000000
+
+
+------------------------------------------------------------
+
+Question 3:
+
+    int x = 10;
+    int y = 3;
+
+    printf("%f\n", (double)x / y);
+
+Answer:
+
+    3.333333...
+
+
+------------------------------------------------------------
+
+Question 4:
+
+    double x = 9.99;
+
+    printf("%d\n", (int)x);
+
+Answer:
+
+    9
+
+
+------------------------------------------------------------
+
+Question 5:
+
+    char c = 'A';
+
+    printf("%d\n", c);
+
+On an ASCII execution environment:
+
+    65
+
+
+============================================================
+96. INTERVIEW QUESTIONS
+============================================================
+
+Q1. What is type conversion?
+
+Answer:
+Conversion of a value from one data type to another.
+
+
+Q2. What is implicit conversion?
+
+Answer:
+Automatic conversion performed according to C's type rules.
+
+
+Q3. What is explicit conversion?
+
+Answer:
+Conversion explicitly requested by the programmer.
+
+
+Q4. What is type casting?
+
+Answer:
+Using syntax such as:
+
+    (double)x
+
+to explicitly request conversion.
+
+
+Q5. What is integer promotion?
+
+Answer:
+Conversion of certain smaller integer types such as char
+and short to int or unsigned int for many expressions.
+
+
+Q6. Why does 5/2 produce 2?
+
+Answer:
+Both operands are integers, so integer division occurs.
+
+
+Q7. How do you get 2.5?
+
+Answer:
+
+    (double)5 / 2
+
+
+Q8. Does casting round a floating value?
+
+Answer:
+No. Floating-to-integer conversion truncates toward zero
+when the value is representable.
+
+
+Q9. What is narrowing conversion?
+
+Answer:
+Conversion to a type that may not represent all information
+of the source value.
+
+
+Q10. What is precision loss?
+
+Answer:
+Loss of numerical detail when converting to a type with
+insufficient precision.
+
+
+Q11. What is signed/unsigned conversion?
+
+Answer:
+Conversion between signed and unsigned integer types
+according to C's integer conversion rules.
+
+
+Q12. Is signed integer overflow safe?
+
+Answer:
+No. Signed integer overflow is undefined behavior.
+
+
+Q13. Is unsigned integer wraparound defined?
+
+Answer:
+Yes. Unsigned arithmetic uses modulo arithmetic.
+
+
+Q14. What is size_t?
+
+Answer:
+An unsigned integer type used for object sizes and commonly
+for results of sizeof.
+
+
+Q15. What is the difference between:
+
+    (double)(a / b)
+
+and
+
+    (double)a / b
+
+Answer:
+The first performs integer division first; the second changes
+the division to floating-point division.
+
+
+============================================================
+97. GATE / ADVANCED CONCEPTS TO REMEMBER
+============================================================
+
+For serious C programming, learn these terms:
+
+    Integer promotions
+    Integral promotions
+    Usual arithmetic conversions
+    Integer conversion rank
+    Signed/unsigned conversion
+    Floating-point conversion
+    Default argument promotions
+    Assignment conversion
+    Conditional operator conversions
+    Cast operator
+    Representability
+    Precision loss
+    Truncation
+    Implementation-defined behavior
+    Undefined behavior
+    Unspecified behavior
+    Object representation
+    Effective type
+    Strict aliasing
+
+
+These concepts become extremely important in:
+
+    C interviews
+    GATE
+    Embedded C
+    Operating systems
+    Compiler development
+    System programming
+    Low-level debugging
+
+
+============================================================
+98. VERY IMPORTANT DIFFERENCE
+============================================================
+
+Remember:
+
+    Conversion ≠ Casting
+
+Conversion:
+    The overall process.
+
+Casting:
+    Explicit syntax used to request a conversion.
+
+Also:
+
+    Casting ≠ Parsing
+
+Casting:
+
+    double → int
+
+Parsing:
+
+    "123" → integer 123
+
+
+============================================================
+99. JOB-READY CHECKLIST
+============================================================
+
+After Chapter 6, you should be able to explain:
+
+[ ] What type conversion means
+[ ] Implicit conversion
+[ ] Explicit conversion
+[ ] Type casting
+[ ] Widening conversion
+[ ] Narrowing conversion
+[ ] Integer promotion
+[ ] Usual arithmetic conversions
+[ ] Signed/unsigned conversions
+[ ] Assignment conversion
+[ ] Function argument conversion
+[ ] Return-value conversion
+[ ] char → int
+[ ] int → float
+[ ] int → double
+[ ] double → int
+[ ] float → double
+[ ] double → float
+[ ] Precision loss
+[ ] Truncation
+[ ] Integer division
+[ ] Floating-point division
+[ ] sizeof and size_t
+[ ] printf promotions
+[ ] scanf type requirements
+[ ] Conversion-related undefined behavior
+[ ] Implementation-defined integer conversions
+[ ] Signed integer overflow
+[ ] Unsigned wraparound
+[ ] Common type-conversion bugs
+
+
+============================================================
+100. FINAL SUMMARY
+============================================================
+
+The most important rules to remember:
+
+RULE 1:
+C can automatically convert values between compatible types.
+
+RULE 2:
+You can explicitly request conversion:
+
+    (type)value
+
+RULE 3:
+Integer operands usually perform integer arithmetic.
+
+    5 / 2 → 2
+
+RULE 4:
+Cast before the operation if you want the operation to use
+the converted type.
+
+    (double)5 / 2 → 2.5
+
+RULE 5:
+Casting after an integer operation is too late.
+
+    (double)(5 / 2) → 2.0
+
+RULE 6:
+Floating-to-integer conversion truncates toward zero when
+representable.
+
+    (int)9.99 → 9
+    (int)-9.99 → -9
+
+RULE 7:
+Narrowing conversions can lose information.
+
+RULE 8:
+Floating-point values may lose precision.
+
+RULE 9:
+Signed/unsigned mixing can produce surprising results.
+
+RULE 10:
+A cast does not automatically make a conversion safe.
+
+RULE 11:
+Signed integer overflow is undefined behavior.
+
+RULE 12:
+Unsigned arithmetic wraps modulo 2^N.
+
+RULE 13:
+Use compiler warnings:
+
+    -Wall
+    -Wextra
+    -Wconversion
+    -Wsign-conversion
+
+RULE 14:
+Always understand the type of each operand before evaluating
+a mixed-type expression.
+
+
+============================================================
+CHAPTER 6 COMPLETE
+============================================================
+
+NEXT CHAPTER:
+
+CHAPTER 7 — CONDITIONAL STATEMENTS
+
+Topics:
+    1. Decision making
+    2. if statement
+    3. if-else
+    4. else-if ladder
+    5. Nested if
+    6. switch-case
+    7. break
+    8. default
+    9. fall-through
+    10. switch limitations
+    11. Conditional expressions
+    12. Truth values
+    13. Complex conditions
+    14. Short-circuit logic
+    15. Nested decision making
+    16. Common mistakes
+    17. Practical programs
+    18. Interview questions
+    19. Output prediction
+    20. Job-ready exercises
+============================================================

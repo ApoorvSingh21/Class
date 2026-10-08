@@ -1,0 +1,2872 @@
+Absolutely. Below is Chapter 10 — Arrays in C, from fundamentals to job-ready, interview, and GATE-level concepts.
+
+============================================================
+              C PROGRAMMING — CHAPTER 10
+                     ARRAYS IN C
+          FULL JOB-READY + INTERVIEW EXPLANATION
+============================================================
+
+
+1. WHAT IS AN ARRAY?
+------------------------------------------------------------
+
+An array is a collection of elements of the SAME data type
+stored in a contiguous block of memory.
+
+Example:
+
+int marks[5];
+
+Conceptually:
+
+marks
+  |
+  v
+
++------+------+------+------+------+
+|  10  |  20  |  30  |  40  |  50  |
++------+------+------+------+------+
+   0      1      2      3      4
+  index
+
+
+Important properties:
+
+    - Same data type
+    - Fixed number of elements for an ordinary array
+    - Elements are indexed
+    - Index starts from 0
+    - Elements are stored contiguously
+    - Direct/random access is possible
+
+
+------------------------------------------------------------
+2. WHY DO WE NEED ARRAYS?
+------------------------------------------------------------
+
+Without an array:
+
+int mark1 = 80;
+int mark2 = 75;
+int mark3 = 90;
+int mark4 = 65;
+int mark5 = 88;
+
+This becomes difficult for large amounts of data.
+
+With an array:
+
+int marks[5] = {80, 75, 90, 65, 88};
+
+Now we can process the elements using loops.
+
+
+------------------------------------------------------------
+3. ARRAY DECLARATION
+------------------------------------------------------------
+
+Syntax:
+
+data_type array_name[size];
+
+Examples:
+
+int numbers[10];
+
+float prices[20];
+
+char name[50];
+
+double values[100];
+
+
+Meaning:
+
+int numbers[10];
+
+    int      -> element type
+    numbers  -> array name
+    10       -> number of elements
+
+
+Valid indexes:
+
+numbers[0]
+numbers[1]
+numbers[2]
+...
+numbers[9]
+
+
+IMPORTANT:
+
+For an array of size N:
+
+valid indexes are:
+
+0 to N-1
+
+
+------------------------------------------------------------
+4. ARRAY INITIALIZATION
+------------------------------------------------------------
+
+Example:
+
+int numbers[5] = {10, 20, 30, 40, 50};
+
+
+Memory:
+
+Index       Value
+
+0           10
+1           20
+2           30
+3           40
+4           50
+
+
+------------------------------------------------------------
+5. PARTIAL INITIALIZATION
+------------------------------------------------------------
+
+Example:
+
+int numbers[5] = {10, 20};
+
+Remaining elements are initialized to zero.
+
+Conceptually:
+
++----+----+----+----+----+
+| 10 | 20 |  0 |  0 |  0 |
++----+----+----+----+----+
+
+
+------------------------------------------------------------
+6. ALL-ZERO INITIALIZATION
+------------------------------------------------------------
+
+int numbers[5] = {0};
+
+All elements become zero.
+
+Result:
+
+0 0 0 0 0
+
+
+------------------------------------------------------------
+7. SIZE CAN BE INFERRED
+------------------------------------------------------------
+
+Instead of:
+
+int numbers[5] = {10, 20, 30, 40, 50};
+
+we can write:
+
+int numbers[] = {10, 20, 30, 40, 50};
+
+Compiler determines the size.
+
+Therefore:
+
+sizeof(numbers) / sizeof(numbers[0])
+
+gives the number of elements while `numbers` is still an
+actual array in that scope.
+
+
+------------------------------------------------------------
+8. ARRAY INDEXING
+------------------------------------------------------------
+
+Example:
+
+int arr[5] = {10, 20, 30, 40, 50};
+
+printf("%d\n", arr[0]);
+printf("%d\n", arr[3]);
+
+Output:
+
+10
+40
+
+
+Indexing:
+
+arr[0] -> first element
+arr[1] -> second element
+arr[2] -> third element
+arr[3] -> fourth element
+arr[4] -> fifth element
+
+
+------------------------------------------------------------
+9. INDEX STARTS FROM ZERO
+------------------------------------------------------------
+
+For:
+
+int arr[5];
+
+indexes are:
+
+0
+1
+2
+3
+4
+
+NOT:
+
+1
+2
+3
+4
+5
+
+
+------------------------------------------------------------
+10. MEMORY REPRESENTATION
+------------------------------------------------------------
+
+Suppose:
+
+int arr[4] = {10, 20, 30, 40};
+
+Assume sizeof(int) = 4 bytes.
+
+If arr starts at address 1000:
+
+arr[0] -> 1000
+arr[1] -> 1004
+arr[2] -> 1008
+arr[3] -> 1012
+
+
+General concept:
+
+address of arr[i]:
+
+    base_address + i * sizeof(element_type)
+
+
+This is why array indexing is efficient.
+
+
+------------------------------------------------------------
+11. ARRAY ELEMENT ACCESS
+------------------------------------------------------------
+
+Example:
+
+int arr[3] = {10, 20, 30};
+
+arr[1] = 100;
+
+Now:
+
+10 100 30
+
+
+Array elements can be modified if the array itself is
+modifiable.
+
+
+------------------------------------------------------------
+12. ARRAY TRAVERSAL
+------------------------------------------------------------
+
+Traversal means visiting every element.
+
+Example:
+
+#include <stdio.h>
+
+int main(void)
+{
+    int arr[] = {10, 20, 30, 40, 50};
+
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    for (size_t i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+Output:
+
+10 20 30 40 50
+
+
+------------------------------------------------------------
+13. sizeof WITH ARRAYS
+------------------------------------------------------------
+
+Example:
+
+int arr[10];
+
+sizeof(arr)
+
+returns the total size of the array in bytes.
+
+If sizeof(int) = 4:
+
+sizeof(arr) = 40
+
+
+Number of elements:
+
+sizeof(arr) / sizeof(arr[0])
+
+= 40 / 4
+
+= 10
+
+
+IMPORTANT:
+
+The result type of sizeof is `size_t`.
+
+
+------------------------------------------------------------
+14. VERY IMPORTANT: ARRAY PARAMETER
+------------------------------------------------------------
+
+Consider:
+
+void display(int arr[])
+{
+    printf("%zu\n", sizeof(arr));
+}
+
+Inside this function parameter, `arr` is adjusted to a pointer.
+
+Therefore:
+
+sizeof(arr)
+
+is the size of a pointer, NOT the size of the original array.
+
+
+Correct approach:
+
+void display(const int arr[], size_t n)
+{
+    for (size_t i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+}
+
+
+------------------------------------------------------------
+15. ARRAY-TO-POINTER CONVERSION
+------------------------------------------------------------
+
+In most expressions, an array expression is converted to a
+pointer to its first element.
+
+Example:
+
+int arr[5];
+
+arr
+
+usually converts to:
+
+&arr[0]
+
+
+Therefore:
+
+int *p = arr;
+
+is valid.
+
+Now:
+
+p[0]
+p[1]
+p[2]
+
+access the array elements.
+
+
+------------------------------------------------------------
+16. EXCEPTION TO ARRAY DECAY
+------------------------------------------------------------
+
+An array does NOT decay to a pointer in every context.
+
+Important exceptions include:
+
+    sizeof(array)
+
+and:
+
+    &array
+
+Also, a string literal used to initialize an array is an
+important special case.
+
+Example:
+
+int arr[5];
+
+sizeof(arr)
+
+gives the size of the entire array.
+
+
+------------------------------------------------------------
+17. ARRAY AND POINTER RELATIONSHIP
+------------------------------------------------------------
+
+Given:
+
+int arr[] = {10, 20, 30};
+
+Then:
+
+arr[0]
+
+is equivalent to:
+
+*(arr + 0)
+
+
+arr[1]
+
+is equivalent to:
+
+*(arr + 1)
+
+
+arr[2]
+
+is equivalent to:
+
+*(arr + 2)
+
+
+This follows from the definition of subscripting:
+
+E1[E2] is equivalent to:
+
+*((E1) + (E2))
+
+
+------------------------------------------------------------
+18. POINTER ARITHMETIC
+------------------------------------------------------------
+
+Example:
+
+int arr[] = {10, 20, 30};
+
+int *p = arr;
+
+printf("%d\n", *p);
+
+p++;
+
+printf("%d\n", *p);
+
+Output:
+
+10
+20
+
+
+When an int pointer is incremented, it moves to the next
+int object, not merely one byte.
+
+
+------------------------------------------------------------
+19. &arr[0] VS arr
+------------------------------------------------------------
+
+For:
+
+int arr[5];
+
+In many expressions:
+
+arr
+
+becomes:
+
+int *
+
+pointing to arr[0].
+
+
+But:
+
+&arr
+
+has type:
+
+int (*)[5]
+
+which is a pointer to the ENTIRE ARRAY.
+
+
+These are different types.
+
+
+------------------------------------------------------------
+20. POINTER TO ARRAY
+------------------------------------------------------------
+
+Example:
+
+int arr[5];
+
+int (*p)[5] = &arr;
+
+
+Here:
+
+p
+
+is a pointer to an array of 5 integers.
+
+
+Access:
+
+(*p)[0]
+(*p)[1]
+(*p)[2]
+
+
+------------------------------------------------------------
+21. ARRAY OF POINTERS
+------------------------------------------------------------
+
+Example:
+
+int a = 10;
+int b = 20;
+int c = 30;
+
+int *ptrs[3] = {&a, &b, &c};
+
+
+This is:
+
+array of 3 pointers to int.
+
+
+Access:
+
+*ptrs[0] -> 10
+*ptrs[1] -> 20
+*ptrs[2] -> 30
+
+
+------------------------------------------------------------
+22. ARRAY OF STRINGS
+------------------------------------------------------------
+
+One common approach:
+
+char names[3][20] =
+{
+    "Apoorv",
+    "Rahul",
+    "Amit"
+};
+
+
+This is a 2D character array.
+
+Memory is allocated for 3 rows, each with room for 20 chars.
+
+
+------------------------------------------------------------
+23. ONE-DIMENSIONAL ARRAY
+------------------------------------------------------------
+
+A one-dimensional array is a linear collection.
+
+Example:
+
+int arr[5] = {10, 20, 30, 40, 50};
+
+
+Representation:
+
+10 -> 20 -> 30 -> 40 -> 50
+
+
+Common operations:
+
+    - traversal
+    - insertion
+    - deletion
+    - searching
+    - sorting
+    - updating
+
+
+------------------------------------------------------------
+24. TWO-DIMENSIONAL ARRAY
+------------------------------------------------------------
+
+A two-dimensional array is commonly used to represent a
+table or matrix.
+
+Example:
+
+int matrix[2][3] =
+{
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+
+Representation:
+
+        col0 col1 col2
+
+row0     1    2    3
+row1     4    5    6
+
+
+Access:
+
+matrix[0][0] -> 1
+matrix[0][1] -> 2
+matrix[1][2] -> 6
+
+
+------------------------------------------------------------
+25. 2D ARRAY TRAVERSAL
+------------------------------------------------------------
+
+#include <stdio.h>
+
+int main(void)
+{
+    int matrix[2][3] =
+    {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    for (size_t i = 0; i < 2; i++)
+    {
+        for (size_t j = 0; j < 3; j++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
+
+Output:
+
+1 2 3
+4 5 6
+
+
+------------------------------------------------------------
+26. ROW-MAJOR ORDER
+------------------------------------------------------------
+
+C stores multidimensional arrays in row-major order.
+
+For:
+
+int matrix[2][3] =
+{
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+The logical memory sequence is:
+
+1 2 3 4 5 6
+
+
+The first complete row is followed by the second row.
+
+
+------------------------------------------------------------
+27. MULTIDIMENSIONAL ARRAYS
+------------------------------------------------------------
+
+Example:
+
+int arr[2][3][4];
+
+This contains:
+
+2 × 3 × 4 = 24 elements.
+
+
+Dimensions can represent:
+
+    arr[students][subjects][tests]
+
+or:
+
+    arr[x][y][z]
+
+
+------------------------------------------------------------
+28. PASSING 1D ARRAY TO FUNCTION
+------------------------------------------------------------
+
+void printArray(const int arr[], size_t n)
+{
+    for (size_t i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+}
+
+
+Call:
+
+int arr[] = {10, 20, 30};
+
+printArray(arr, 3);
+
+
+------------------------------------------------------------
+29. PASSING 2D ARRAY TO FUNCTION
+------------------------------------------------------------
+
+For a fixed second dimension:
+
+void printMatrix(size_t rows,
+                 int matrix[][3])
+{
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < 3; j++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+
+        printf("\n");
+    }
+}
+
+
+Why must the column dimension be known?
+
+Because pointer arithmetic needs to know how large one row is.
+
+
+------------------------------------------------------------
+30. 2D ARRAY PARAMETER EQUIVALENCE
+------------------------------------------------------------
+
+This:
+
+void f(int matrix[][3]);
+
+is adjusted to a parameter conceptually equivalent to:
+
+void f(int (*matrix)[3]);
+
+
+It is a pointer to an array of 3 integers.
+
+
+------------------------------------------------------------
+31. VARIABLE LENGTH ARRAY (VLA)
+------------------------------------------------------------
+
+C99 introduced variable length arrays.
+
+Example:
+
+void function(size_t n)
+{
+    int arr[n];
+
+    ...
+}
+
+
+The size is determined at runtime.
+
+However:
+
+    - VLA support is optional in later C standards/implementations
+    - VLAs are automatic storage duration
+    - large VLAs can create stack-space problems
+
+For portable production code, consider carefully whether a VLA
+is appropriate.
+
+
+------------------------------------------------------------
+32. DYNAMIC ARRAYS
+------------------------------------------------------------
+
+If array size must be determined dynamically and must have
+dynamic lifetime, use dynamic memory.
+
+Example:
+
+#include <stdlib.h>
+
+int *arr = malloc(n * sizeof *arr);
+
+if (arr == NULL)
+{
+    // allocation failed
+}
+
+
+Use:
+
+arr[i]
+
+
+When finished:
+
+free(arr);
+
+Dynamic arrays are allocated from the heap in typical
+implementations.
+
+
+------------------------------------------------------------
+33. SAFE DYNAMIC ALLOCATION
+------------------------------------------------------------
+
+Potential integer overflow must be considered when calculating
+allocation sizes.
+
+For example:
+
+n * sizeof *arr
+
+must fit in size_t.
+
+A production implementation should validate `n` before
+performing the allocation calculation when `n` may come from
+untrusted input.
+
+
+------------------------------------------------------------
+34. ARRAY BOUNDS
+------------------------------------------------------------
+
+For:
+
+int arr[5];
+
+Valid:
+
+arr[0]
+arr[1]
+arr[2]
+arr[3]
+arr[4]
+
+
+Invalid:
+
+arr[5]
+
+and:
+
+arr[-1]
+
+
+C does not automatically perform bounds checking.
+
+
+------------------------------------------------------------
+35. OUT-OF-BOUNDS ACCESS
+------------------------------------------------------------
+
+Example:
+
+int arr[3] = {10, 20, 30};
+
+printf("%d", arr[5]);
+
+This is undefined behavior.
+
+Possible results include:
+
+    - garbage value
+    - crash
+    - apparently correct output
+    - memory corruption
+
+Never rely on observed output.
+
+
+------------------------------------------------------------
+36. BUFFER OVERFLOW
+------------------------------------------------------------
+
+Example:
+
+char name[5];
+
+If code writes more than 5 bytes into the object, it can
+overwrite adjacent memory.
+
+This is a major security problem.
+
+Common consequences:
+
+    - corrupted data
+    - crashes
+    - control-flow corruption
+    - security vulnerabilities
+
+
+Always respect object boundaries.
+
+
+------------------------------------------------------------
+37. ARRAY INDEX VALIDATION
+------------------------------------------------------------
+
+Example:
+
+void setElement(int arr[], size_t n, size_t index, int value)
+{
+    if (index < n)
+    {
+        arr[index] = value;
+    }
+}
+
+
+The check:
+
+index < n
+
+ensures:
+
+0 <= index < n
+
+because index is unsigned.
+
+
+------------------------------------------------------------
+38. ARRAY SEARCHING — LINEAR SEARCH
+------------------------------------------------------------
+
+int linearSearch(const int arr[],
+                 size_t n,
+                 int key)
+{
+    for (size_t i = 0; i < n; i++)
+    {
+        if (arr[i] == key)
+            return (int)i;
+    }
+
+    return -1;
+}
+
+
+Complexity:
+
+Best case: O(1)
+
+Worst case: O(n)
+
+Average case: O(n)
+
+
+------------------------------------------------------------
+39. BINARY SEARCH
+------------------------------------------------------------
+
+Binary search requires sorted data.
+
+Example idea:
+
+Array:
+
+10 20 30 40 50 60 70
+
+Search:
+
+60
+
+Check middle.
+
+Eliminate half of the search space repeatedly.
+
+
+Complexity:
+
+O(log n)
+
+
+A robust implementation should avoid overflow in:
+
+mid = (low + high) / 2
+
+
+Prefer:
+
+mid = low + (high - low) / 2
+
+
+------------------------------------------------------------
+40. ARRAY INSERTION
+------------------------------------------------------------
+
+Suppose:
+
+10 20 30 40
+
+Insert 25 at index 2.
+
+Elements must shift:
+
+10 20 30 40
+      ↓
+10 20 25 30 40
+
+
+Insertion into an array may require O(n) movement.
+
+
+------------------------------------------------------------
+41. ARRAY DELETION
+------------------------------------------------------------
+
+Suppose:
+
+10 20 30 40
+
+Delete element at index 1:
+
+10 30 40
+
+
+Elements after the deleted element are shifted left.
+
+
+Worst-case complexity:
+
+O(n)
+
+
+------------------------------------------------------------
+42. ARRAY UPDATE
+------------------------------------------------------------
+
+Updating by known index is efficient:
+
+arr[3] = 100;
+
+Time:
+
+O(1)
+
+
+------------------------------------------------------------
+43. ARRAY REVERSE
+------------------------------------------------------------
+
+void reverse(int arr[], size_t n)
+{
+    size_t left = 0;
+    size_t right = n;
+
+    if (n == 0)
+        return;
+
+    right--;
+
+    while (left < right)
+    {
+        int temp = arr[left];
+
+        arr[left] = arr[right];
+        arr[right] = temp;
+
+        left++;
+        right--;
+    }
+}
+
+
+Example:
+
+1 2 3 4 5
+
+becomes:
+
+5 4 3 2 1
+
+
+Time:
+
+O(n)
+
+Extra space:
+
+O(1)
+
+
+------------------------------------------------------------
+44. FIND MAXIMUM
+------------------------------------------------------------
+
+int findMax(const int arr[], size_t n)
+{
+    int max = arr[0];
+
+    for (size_t i = 1; i < n; i++)
+    {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+
+    return max;
+}
+
+
+IMPORTANT:
+
+This function assumes:
+
+    n > 0
+    arr != NULL
+
+
+A production API should define how invalid input is handled.
+
+
+------------------------------------------------------------
+45. ARRAY SUM
+------------------------------------------------------------
+
+long long arraySum(const int arr[], size_t n)
+{
+    long long sum = 0;
+
+    for (size_t i = 0; i < n; i++)
+        sum += arr[i];
+
+    return sum;
+}
+
+
+Potential overflow should still be considered if the input
+can be sufficiently large.
+
+
+------------------------------------------------------------
+46. SORTING AN ARRAY
+------------------------------------------------------------
+
+Common sorting algorithms:
+
+    Bubble Sort
+    Selection Sort
+    Insertion Sort
+    Merge Sort
+    Quick Sort
+    Heap Sort
+
+
+Typical complexities:
+
+Bubble Sort:
+    O(n²)
+
+Selection Sort:
+    O(n²)
+
+Insertion Sort:
+    O(n²) worst case
+
+Merge Sort:
+    O(n log n)
+
+Quick Sort:
+    O(n log n) average
+    O(n²) worst case for some implementations/input patterns
+
+Heap Sort:
+    O(n log n)
+
+
+------------------------------------------------------------
+47. BUBBLE SORT
+------------------------------------------------------------
+
+void bubbleSort(int arr[], size_t n)
+{
+    if (n < 2)
+        return;
+
+    for (size_t i = 0; i < n - 1; i++)
+    {
+        int swapped = 0;
+
+        for (size_t j = 0; j < n - 1 - i; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+                swapped = 1;
+            }
+        }
+
+        if (!swapped)
+            break;
+    }
+}
+
+
+Example:
+
+5 2 4 1
+
+After sorting:
+
+1 2 4 5
+
+
+------------------------------------------------------------
+48. CONST ARRAY PARAMETERS
+------------------------------------------------------------
+
+If a function only reads an array:
+
+void print(const int arr[], size_t n);
+
+
+`const` tells the compiler that the function should not modify
+the elements through that parameter.
+
+This is good API design.
+
+
+------------------------------------------------------------
+49. CHARACTER ARRAYS
+------------------------------------------------------------
+
+Characters can be stored in arrays.
+
+Example:
+
+char name[6] = {'A', 'p', 'o', 'o', 'r', 'v'};
+
+
+This is NOT automatically a C string because there is no
+terminating '\0'.
+
+
+A C string requires a null character:
+
+char name[7] =
+{
+    'A', 'p', 'o', 'o', 'r', 'v', '\0'
+};
+
+
+------------------------------------------------------------
+50. STRING INITIALIZATION
+------------------------------------------------------------
+
+This:
+
+char name[] = "Apoorv";
+
+
+automatically creates:
+
+'A'
+'p'
+'o'
+'o'
+'r'
+'v'
+'\0'
+
+
+Therefore size is:
+
+7
+
+
+------------------------------------------------------------
+51. STRING ARRAY SIZE
+------------------------------------------------------------
+
+char name[20] = "Apoorv";
+
+
+The array has room for 20 chars.
+
+Only the beginning contains the string data and its '\0';
+remaining elements are zero-initialized.
+
+
+------------------------------------------------------------
+52. STRING VS CHARACTER
+------------------------------------------------------------
+
+Character:
+
+'A'
+
+Type:
+
+char
+
+
+String literal:
+
+"A"
+
+Type:
+
+array of char, which in most expressions converts to pointer
+to its first character.
+
+
+Important difference:
+
+'A'   -> one character
+
+"A"   -> character sequence containing 'A' and '\0'
+
+
+------------------------------------------------------------
+53. STRING TRAVERSAL
+------------------------------------------------------------
+
+Example:
+
+char str[] = "Hello";
+
+for (size_t i = 0; str[i] != '\0'; i++)
+{
+    printf("%c", str[i]);
+}
+
+
+Output:
+
+Hello
+
+
+------------------------------------------------------------
+54. COMMON STRING BUG
+------------------------------------------------------------
+
+Wrong:
+
+char str[5] = "Hello";
+
+
+Why?
+
+"Hello" needs:
+
+H
+e
+l
+l
+o
+\0
+
+Total = 6 chars.
+
+The array has only 5 elements.
+
+Correct:
+
+char str[6] = "Hello";
+
+
+or:
+
+char str[] = "Hello";
+
+
+------------------------------------------------------------
+55. STRING LITERAL MODIFICATION
+------------------------------------------------------------
+
+Do NOT modify a string literal.
+
+Wrong:
+
+char *p = "Hello";
+
+p[0] = 'J';       // undefined behavior
+
+
+Correct when modification is needed:
+
+char p[] = "Hello";
+
+p[0] = 'J';
+
+
+Now `p` is a modifiable array.
+
+
+------------------------------------------------------------
+56. ARRAY COPYING
+------------------------------------------------------------
+
+This is NOT array copying:
+
+int a[3] = {1, 2, 3};
+int b[3];
+
+b = a;      // invalid
+
+
+Use a loop or `memcpy()` when appropriate.
+
+Example:
+
+#include <string.h>
+
+memcpy(b, a, sizeof a);
+
+
+For overlapping memory regions, use:
+
+memmove()
+
+
+------------------------------------------------------------
+57. ARRAY COMPARISON
+------------------------------------------------------------
+
+This does NOT compare array contents:
+
+if (a == b)
+
+
+In expressions, arrays decay to pointers, so this compares
+addresses/pointers rather than element-by-element contents.
+
+Use a loop or `memcmp()` where appropriate.
+
+Be aware that `memcmp()` compares raw bytes, not abstract
+numeric values, and is not universally interchangeable with
+logical equality for every type.
+
+
+------------------------------------------------------------
+58. ARRAY INITIALIZATION WITH DESIGNATED INITIALIZERS
+------------------------------------------------------------
+
+C supports designated initializers.
+
+Example:
+
+int arr[10] =
+{
+    [2] = 100,
+    [5] = 500
+};
+
+
+Unspecified elements are initialized to zero.
+
+Conceptually:
+
+0 0 100 0 0 500 0 0 0 0
+
+
+This is useful for sparse tables and lookup structures.
+
+
+------------------------------------------------------------
+59. ARRAY OF STRUCTURES
+------------------------------------------------------------
+
+Example:
+
+struct Student
+{
+    int id;
+    float marks;
+};
+
+struct Student students[3];
+
+
+Access:
+
+students[0].id
+students[1].marks
+
+
+This is extremely common in real C programs.
+
+
+------------------------------------------------------------
+60. ARRAY OF STRUCTURES + FUNCTION
+------------------------------------------------------------
+
+void printStudents(const struct Student students[],
+                   size_t n)
+{
+    for (size_t i = 0; i < n; i++)
+    {
+        printf("%d %.2f\n",
+               students[i].id,
+               students[i].marks);
+    }
+}
+
+
+------------------------------------------------------------
+61. FLEXIBLE ARRAY MEMBER — ADVANCED
+------------------------------------------------------------
+
+C supports flexible array members in structures.
+
+Example:
+
+struct Buffer
+{
+    size_t length;
+    char data[];
+};
+
+
+The flexible array member must be the last member.
+
+This is useful for allocating a structure together with
+variable-sized trailing storage.
+
+This is an advanced memory-management topic.
+
+
+------------------------------------------------------------
+62. ARRAY OBJECT VS POINTER OBJECT
+------------------------------------------------------------
+
+Important:
+
+int arr[5];
+
+and:
+
+int *p;
+
+
+are NOT the same type.
+
+`arr` is an array object.
+
+`p` is a pointer object.
+
+Although `arr` often converts to a pointer in expressions,
+the objects themselves are different.
+
+
+------------------------------------------------------------
+63. sizeof ARRAY VS sizeof POINTER
+------------------------------------------------------------
+
+Example:
+
+int arr[10];
+
+int *p = arr;
+
+
+Then typically:
+
+sizeof(arr) = 10 * sizeof(int)
+
+while:
+
+sizeof(p) = sizeof(pointer)
+
+
+Do NOT assume:
+
+sizeof(arr) == sizeof(p)
+
+
+They represent different things.
+
+
+------------------------------------------------------------
+64. ARRAY ADDRESSING
+------------------------------------------------------------
+
+For:
+
+int arr[5];
+
+The following refer to the same first element address in
+appropriate contexts:
+
+arr
+&arr[0]
+
+
+But:
+
+&arr
+
+has a different pointer type.
+
+`arr + 1` points to the next int.
+
+`&arr + 1` points one entire array object past the array.
+
+
+This is a very important interview concept.
+
+
+------------------------------------------------------------
+65. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Given:
+
+int a[5];
+
+What is:
+
+sizeof(a) / sizeof(a[0]) ?
+
+Answer:
+
+5
+
+provided `a` is still an array in that scope and not a
+function parameter.
+
+
+------------------------------------------------------------
+66. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Given:
+
+int a[5];
+
+What is the type of:
+
+&a
+
+Answer:
+
+pointer to an array of 5 int:
+
+int (*)[5]
+
+
+Not:
+
+int *
+
+
+------------------------------------------------------------
+67. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Given:
+
+int a[3] = {10, 20, 30};
+
+What is:
+
+*(a + 2)
+
+Answer:
+
+30
+
+
+Because:
+
+*(a + 2)
+=
+a[2]
+=
+30
+
+
+------------------------------------------------------------
+68. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Given:
+
+int a[3] = {10, 20, 30};
+
+What is:
+
+2[a]
+
+Answer:
+
+30
+
+Because:
+
+a[2]
+
+is defined as:
+
+*(a + 2)
+
+and:
+
+2[a]
+
+is:
+
+*(2 + a)
+
+which is the same pointer arithmetic.
+
+
+Although legal, never write this in normal production code;
+`a[2]` is much clearer.
+
+
+------------------------------------------------------------
+69. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+int a[5];
+
+printf("%zu", sizeof(a));
+
+If sizeof(int) = 4:
+
+Output:
+
+20
+
+
+Because:
+
+5 × 4 = 20
+
+
+------------------------------------------------------------
+70. GATE-LEVEL QUESTION
+------------------------------------------------------------
+
+Consider:
+
+void f(int a[])
+{
+    printf("%zu", sizeof(a));
+}
+
+What does `sizeof(a)` represent?
+
+Answer:
+
+The size of the adjusted pointer parameter, not the original
+array size.
+
+This is one of the most common C interview questions.
+
+
+------------------------------------------------------------
+71. ARRAY TIME COMPLEXITY
+------------------------------------------------------------
+
+Access by index:
+
+arr[i]
+
+Complexity:
+
+O(1)
+
+
+Traversal:
+
+O(n)
+
+
+Linear search:
+
+O(n)
+
+
+Binary search on sorted array:
+
+O(log n)
+
+
+Insertion at beginning:
+
+O(n)
+
+
+Deletion at beginning:
+
+O(n)
+
+
+Update by index:
+
+O(1)
+
+
+------------------------------------------------------------
+72. CACHE LOCALITY
+------------------------------------------------------------
+
+Arrays are contiguous in memory.
+
+Therefore sequential traversal often has excellent cache
+locality.
+
+Example:
+
+for (size_t i = 0; i < n; i++)
+{
+    sum += arr[i];
+}
+
+This is generally cache-friendly.
+
+Cache behavior is an important real-world performance concept.
+
+
+------------------------------------------------------------
+73. ROW-MAJOR CACHE ACCESS
+------------------------------------------------------------
+
+For:
+
+int matrix[1000][1000];
+
+
+Usually cache-friendly:
+
+for (size_t i = 0; i < 1000; i++)
+{
+    for (size_t j = 0; j < 1000; j++)
+    {
+        process(matrix[i][j]);
+    }
+}
+
+
+This follows row-major storage order.
+
+Column-first traversal may have worse cache locality.
+
+
+------------------------------------------------------------
+74. ARRAY VS LINKED LIST
+------------------------------------------------------------
+
+Array:
+
+    - contiguous memory
+    - O(1) random access
+    - good cache locality
+    - insertion/deletion can be expensive
+
+Linked list:
+
+    - nodes need not be contiguous
+    - sequential access
+    - insertion/deletion can be efficient when node position
+      is already known
+    - extra pointer storage
+    - weaker cache locality
+
+
+Choose according to the workload.
+
+
+------------------------------------------------------------
+75. STATIC ARRAY
+------------------------------------------------------------
+
+At block scope:
+
+void f(void)
+{
+    static int arr[100];
+}
+
+
+The array has static storage duration.
+
+It exists for the entire execution of the program, but its
+name has block scope.
+
+
+At file scope:
+
+static int arr[100];
+
+This additionally gives internal linkage to the file-scope
+identifier.
+
+
+------------------------------------------------------------
+76. GLOBAL ARRAY
+------------------------------------------------------------
+
+Example:
+
+int data[100];
+
+This is a file-scope array with static storage duration.
+
+Global mutable arrays should be used carefully because they
+create shared state.
+
+
+------------------------------------------------------------
+77. AUTOMATIC ARRAY
+------------------------------------------------------------
+
+Example:
+
+void f(void)
+{
+    int arr[100];
+}
+
+
+This normally has automatic storage duration.
+
+Its lifetime ends when execution leaves the block.
+
+Do not return a pointer to such an array.
+
+Wrong:
+
+int *f(void)
+{
+    int arr[10];
+
+    return arr;
+}
+
+
+------------------------------------------------------------
+78. DYNAMIC ARRAY
+------------------------------------------------------------
+
+Example:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    size_t n = 5;
+
+    int *arr = malloc(n * sizeof *arr);
+
+    if (arr == NULL)
+        return 1;
+
+    for (size_t i = 0; i < n; i++)
+        arr[i] = (int)i;
+
+    for (size_t i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+
+    free(arr);
+
+    return 0;
+}
+
+
+------------------------------------------------------------
+79. MEMORY LEAK
+------------------------------------------------------------
+
+If dynamically allocated memory is not released:
+
+int *p = malloc(100 * sizeof *p);
+
+/* forgot free(p); */
+
+
+Memory becomes unreachable.
+
+This is called a memory leak.
+
+Correct:
+
+free(p);
+
+
+------------------------------------------------------------
+80. DOUBLE FREE
+------------------------------------------------------------
+
+Wrong:
+
+int *p = malloc(10 * sizeof *p);
+
+free(p);
+free(p);
+
+
+Calling free twice on the same allocation causes undefined
+behavior.
+
+
+A common defensive pattern is:
+
+free(p);
+p = NULL;
+
+
+Then:
+
+free(p);
+
+is defined because free(NULL) does nothing.
+
+However, setting one pointer to NULL does not invalidate other
+aliases to the same allocation.
+
+
+------------------------------------------------------------
+81. NULL POINTER VS EMPTY ARRAY
+------------------------------------------------------------
+
+These are different concepts.
+
+NULL pointer:
+
+int *p = NULL;
+
+
+It points to no object.
+
+An empty logical array might mean:
+
+n == 0
+
+A function should clearly define whether it accepts:
+
+    arr == NULL with n == 0
+
+or requires a valid pointer regardless of n.
+
+
+------------------------------------------------------------
+82. ARRAY INPUT
+------------------------------------------------------------
+
+Example:
+
+int arr[5];
+
+for (size_t i = 0; i < 5; i++)
+{
+    scanf("%d", &arr[i]);
+}
+
+
+Input:
+
+10 20 30 40 50
+
+
+Array:
+
+10 20 30 40 50
+
+
+Always consider checking scanf's return value in robust code.
+
+
+------------------------------------------------------------
+83. FIND SECOND LARGEST ELEMENT
+------------------------------------------------------------
+
+This problem requires careful handling of:
+
+    - duplicate values
+    - negative values
+    - arrays with fewer than two elements
+
+Do not simply assume:
+
+second = arr[1]
+
+
+Interviewers often test edge cases.
+
+
+------------------------------------------------------------
+84. COMMON ARRAY BUGS
+------------------------------------------------------------
+
+BUG 1:
+
+for (int i = 0; i <= n; i++)
+
+Wrong if array has n elements.
+
+Correct:
+
+i < n
+
+
+BUG 2:
+
+arr[n]
+
+Out of bounds for an n-element array.
+
+
+BUG 3:
+
+Using sizeof inside an array parameter.
+
+sizeof(arr)
+
+does not give the original array size.
+
+
+BUG 4:
+
+Returning local array address.
+
+int *f(void)
+{
+    int a[10];
+    return a;
+}
+
+
+BUG 5:
+
+Forgetting string null terminator.
+
+
+BUG 6:
+
+Writing beyond allocated memory.
+
+
+BUG 7:
+
+Using an uninitialized automatic array.
+
+
+BUG 8:
+
+Using a freed dynamic array.
+
+
+BUG 9:
+
+Double free.
+
+
+BUG 10:
+
+Integer overflow during allocation-size calculation.
+
+
+------------------------------------------------------------
+85. UNINITIALIZED AUTOMATIC ARRAY
+------------------------------------------------------------
+
+Example:
+
+int arr[5];
+
+for (int i = 0; i < 5; i++)
+{
+    printf("%d ", arr[i]);
+}
+
+
+The elements have indeterminate values.
+
+Reading an indeterminate value can lead to undefined behavior
+in certain circumstances.
+
+Initialize before reading:
+
+int arr[5] = {0};
+
+
+------------------------------------------------------------
+86. ARRAY OF POINTERS VS POINTER TO ARRAY
+------------------------------------------------------------
+
+Array of pointers:
+
+int *p[5];
+
+Meaning:
+
+    p is an array of 5 pointers to int.
+
+
+Pointer to array:
+
+int (*p)[5];
+
+Meaning:
+
+    p is a pointer to an array of 5 int.
+
+
+The parentheses are critical.
+
+
+------------------------------------------------------------
+87. ARRAY PARAMETER WITH STATIC
+------------------------------------------------------------
+
+Advanced C syntax:
+
+void process(int arr[static 10])
+{
+    ...
+}
+
+
+This communicates a contract to the compiler:
+
+when calling this function, the argument should provide access
+to at least 10 elements.
+
+This is different from merely writing:
+
+int arr[10]
+
+in a function parameter, because ordinary array parameters
+are adjusted to pointers.
+
+
+------------------------------------------------------------
+88. RESTRICT WITH ARRAYS
+------------------------------------------------------------
+
+Advanced C:
+
+void copy_data(size_t n,
+               int *restrict dst,
+               const int *restrict src)
+{
+    ...
+}
+
+
+`restrict` is used to express assumptions about pointer
+aliasing and can enable optimizations when the requirements
+are actually satisfied.
+
+Incorrect use of restrict can lead to undefined behavior.
+
+Learn it deeply later with pointers and memory.
+
+
+------------------------------------------------------------
+89. ARRAY COPYING WITH LOOP
+------------------------------------------------------------
+
+void copyArray(int dest[],
+               const int src[],
+               size_t n)
+{
+    for (size_t i = 0; i < n; i++)
+    {
+        dest[i] = src[i];
+    }
+}
+
+
+This requires:
+
+    dest
+
+to point to enough writable storage.
+
+
+------------------------------------------------------------
+90. ARRAY ROTATION
+------------------------------------------------------------
+
+Example:
+
+Original:
+
+1 2 3 4 5
+
+Left rotate by one:
+
+2 3 4 5 1
+
+Right rotate by one:
+
+5 1 2 3 4
+
+
+This is a common coding interview problem.
+
+Possible techniques:
+
+    - temporary array
+    - repeated shifting
+    - reversal algorithm
+
+
+------------------------------------------------------------
+91. TWO-SUM PROBLEM
+------------------------------------------------------------
+
+Given:
+
+2 7 11 15
+
+Target:
+
+9
+
+Answer:
+
+2 + 7 = 9
+
+
+Simple brute-force:
+
+O(n²)
+
+
+Using a suitable hash-table/data-structure approach:
+
+approximately O(n) average time in typical implementations.
+
+
+This is a common interview pattern.
+
+
+------------------------------------------------------------
+92. DUPLICATE ELEMENTS
+------------------------------------------------------------
+
+Given:
+
+1 2 3 2 4 1
+
+Duplicates:
+
+1 and 2
+
+
+Possible approaches depend on constraints:
+
+    - nested loops
+    - sorting
+    - frequency array
+    - hash table
+
+
+Choosing the approach based on constraints is an important
+job-ready skill.
+
+
+------------------------------------------------------------
+93. PREFIX SUM
+------------------------------------------------------------
+
+Given:
+
+arr:
+
+1 2 3 4 5
+
+Prefix sum:
+
+1 3 6 10 15
+
+
+Formula:
+
+prefix[i] = prefix[i - 1] + arr[i]
+
+
+Useful for answering range-sum queries efficiently.
+
+
+------------------------------------------------------------
+94. ARRAY AS FUNCTION RETURN ALTERNATIVE
+------------------------------------------------------------
+
+A function cannot directly return an array type.
+
+Instead:
+
+A. Caller provides output array:
+
+void generate(int out[], size_t n);
+
+
+B. Return a pointer to dynamically allocated memory:
+
+int *generate(size_t n);
+
+
+C. Return a structure containing an array when appropriate.
+
+D. Use static storage only when shared lifetime/state is
+   intentionally desired.
+
+
+------------------------------------------------------------
+95. PRACTICAL PROGRAM — ARRAY STATISTICS
+------------------------------------------------------------
+
+#include <stdio.h>
+
+int main(void)
+{
+    int arr[] = {10, 20, 30, 40, 50};
+
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    int min = arr[0];
+    int max = arr[0];
+    long long sum = 0;
+
+    for (size_t i = 0; i < n; i++)
+    {
+        if (arr[i] < min)
+            min = arr[i];
+
+        if (arr[i] > max)
+            max = arr[i];
+
+        sum += arr[i];
+    }
+
+    printf("Min = %d\n", min);
+    printf("Max = %d\n", max);
+    printf("Sum = %lld\n", sum);
+    printf("Average = %.2f\n", (double)sum / n);
+
+    return 0;
+}
+
+
+------------------------------------------------------------
+96. PRACTICAL PROGRAM — REVERSE ARRAY
+------------------------------------------------------------
+
+#include <stdio.h>
+
+void reverse(int arr[], size_t n)
+{
+    size_t i = 0;
+    size_t j = n;
+
+    if (n == 0)
+        return;
+
+    j--;
+
+    while (i < j)
+    {
+        int temp = arr[i];
+
+        arr[i] = arr[j];
+        arr[j] = temp;
+
+        i++;
+        j--;
+    }
+}
+
+int main(void)
+{
+    int arr[] = {1, 2, 3, 4, 5};
+
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    reverse(arr, n);
+
+    for (size_t i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+
+    return 0;
+}
+
+Output:
+
+5 4 3 2 1
+
+
+------------------------------------------------------------
+97. PRACTICAL PROGRAM — LINEAR SEARCH
+------------------------------------------------------------
+
+#include <stdio.h>
+
+int search(const int arr[], size_t n, int key)
+{
+    for (size_t i = 0; i < n; i++)
+    {
+        if (arr[i] == key)
+            return (int)i;
+    }
+
+    return -1;
+}
+
+int main(void)
+{
+    int arr[] = {10, 20, 30, 40, 50};
+
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    int index = search(arr, n, 30);
+
+    printf("Index = %d\n", index);
+
+    return 0;
+}
+
+Output:
+
+Index = 2
+
+
+------------------------------------------------------------
+98. PRACTICAL PROGRAM — MATRIX ADDITION
+------------------------------------------------------------
+
+#include <stdio.h>
+
+int main(void)
+{
+    int A[2][2] =
+    {
+        {1, 2},
+        {3, 4}
+    };
+
+    int B[2][2] =
+    {
+        {5, 6},
+        {7, 8}
+    };
+
+    int C[2][2];
+
+    for (size_t i = 0; i < 2; i++)
+    {
+        for (size_t j = 0; j < 2; j++)
+        {
+            C[i][j] = A[i][j] + B[i][j];
+        }
+    }
+
+    for (size_t i = 0; i < 2; i++)
+    {
+        for (size_t j = 0; j < 2; j++)
+        {
+            printf("%d ", C[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
+
+Output:
+
+6 8
+10 12
+
+
+------------------------------------------------------------
+99. INTERVIEW QUESTIONS
+------------------------------------------------------------
+
+Q1. What is an array?
+
+Q2. Why does array indexing start at 0?
+
+Q3. What is the difference between an array and pointer?
+
+Q4. What is array-to-pointer conversion?
+
+Q5. What is sizeof(array)?
+
+Q6. Why does sizeof(array) behave differently inside a
+    function parameter?
+
+Q7. What is a pointer to an array?
+
+Q8. What is an array of pointers?
+
+Q9. What is a two-dimensional array?
+
+Q10. What is row-major order?
+
+Q11. Can a function return an array?
+
+Q12. Can arrays be assigned using = ?
+
+Q13. How do you copy an array?
+
+Q14. What is an out-of-bounds access?
+
+Q15. What is buffer overflow?
+
+Q16. What is a VLA?
+
+Q17. What is a dynamic array?
+
+Q18. Difference between static and automatic arrays?
+
+Q19. Difference between char array and string?
+
+Q20. Why is '\0' important?
+
+Q21. What is the complexity of array access?
+
+Q22. What is the complexity of insertion into an array?
+
+Q23. Why are arrays cache-friendly?
+
+Q24. Difference between int *p[5] and int (*p)[5]?
+
+Q25. Why is `&arr` different from `arr`?
+
+
+============================================================
+              MOST IMPORTANT INTERVIEW POINTS
+============================================================
+
+Remember these extremely well:
+
+1. Array indexing starts at 0.
+
+2. For N elements:
+
+       valid indexes = 0 ... N-1
+
+3. Array elements are contiguous.
+
+4. Array access by index is O(1).
+
+5. In most expressions, an array converts to pointer to its
+   first element.
+
+6. sizeof(array) gives total array size only when the object
+   is actually an array in that scope.
+
+7. Function array parameters are adjusted to pointers.
+
+8. C does not automatically perform array bounds checking.
+
+9. Out-of-bounds access is undefined behavior.
+
+10. `int *p[5]` = array of pointers.
+
+11. `int (*p)[5]` = pointer to array.
+
+12. `arr[i]` is equivalent to `*(arr + i)`.
+
+13. `&arr[0]` and `arr` point to the first element in the
+    relevant expressions.
+
+14. `&arr` points to the entire array and has a different type.
+
+15. C strings require a terminating `'\0'`.
+
+16. A function cannot directly return an array type.
+
+17. Dynamic arrays can be implemented using malloc/realloc/free.
+
+18. Always consider memory bounds and allocation overflow.
+
+19. C arrays do not carry their length as part of the array
+    object in ordinary function parameters.
+
+20. Array + pointer concepts are fundamental to advanced C.
+
+
+============================================================
+             CHAPTER 10 — PRACTICE SET
+============================================================
+
+LEVEL 1 — BASIC
+
+1. Declare an array of 10 integers.
+2. Initialize an array with 5 values.
+3. Print all array elements.
+4. Find array sum.
+5. Find array average.
+6. Find maximum.
+7. Find minimum.
+8. Count even numbers.
+9. Count odd numbers.
+10. Count positive and negative numbers.
+
+
+LEVEL 2 — INTERMEDIATE
+
+11. Reverse an array.
+12. Search an element.
+13. Find second largest element.
+14. Remove duplicates.
+15. Count frequency of each element.
+16. Rotate array left.
+17. Rotate array right.
+18. Merge two arrays.
+19. Sort an array.
+20. Find missing number.
+
+
+LEVEL 3 — ADVANCED
+
+21. Implement binary search.
+22. Implement merge sort.
+23. Implement quicksort.
+24. Find two-sum.
+25. Find maximum subarray sum.
+26. Implement prefix sums.
+27. Rotate array using reversal algorithm.
+28. Matrix multiplication.
+29. Transpose a matrix.
+30. Spiral matrix traversal.
+
+
+LEVEL 4 — C MEMORY/POINTER
+
+31. Reverse an array using pointers.
+32. Implement array copy using pointers.
+33. Implement dynamic array.
+34. Implement dynamic 2D array.
+35. Explain `int *p[5]`.
+36. Explain `int (*p)[5]`.
+37. Explain `arr`, `&arr[0]`, and `&arr`.
+38. Explain array decay.
+39. Explain sizeof with arrays.
+40. Pass multidimensional arrays to functions.
+
+
+============================================================
+             CHAPTER 10 FINAL CHECKLIST
+============================================================
+
+Before moving to Chapter 11, you should be able to explain:
+
+    [✓] Array definition
+    [✓] Array declaration
+    [✓] Initialization
+    [✓] Indexing
+    [✓] Array traversal
+    [✓] Memory layout
+    [✓] Contiguous storage
+    [✓] sizeof with arrays
+    [✓] Array-to-pointer conversion
+    [✓] Pointer arithmetic
+    [✓] 1D arrays
+    [✓] 2D arrays
+    [✓] Multidimensional arrays
+    [✓] Row-major order
+    [✓] Array function parameters
+    [✓] Array + const
+    [✓] Array of pointers
+    [✓] Pointer to array
+    [✓] Character arrays
+    [✓] C strings
+    [✓] Dynamic arrays
+    [✓] VLA
+    [✓] Array bounds
+    [✓] Buffer overflow
+    [✓] Searching
+    [✓] Sorting
+    [✓] Array insertion
+    [✓] Array deletion
+    [✓] Array copying
+    [✓] Cache locality
+    [✓] Memory safety
+    [✓] Interview questions
+    [✓] GATE-level concepts
+
+
+============================================================
+             NEXT CHAPTER — CHAPTER 11
+                    STRINGS IN C
+============================================================
+
+1. Character vs String
+2. Null Character '\0'
+3. String Literals
+4. Character Arrays
+5. String Initialization
+6. String Input
+7. String Output
+8. strlen()
+9. strcpy()
+10. strncpy()
+11. strcat()
+12. strncat()
+13. strcmp()
+14. strncmp()
+15. strchr()
+16. strrchr()
+17. strstr()
+18. strtok()
+19. String Traversal
+20. String Manipulation
+21. String Searching
+22. String Reversal
+23. String Palindrome
+24. String Tokenization
+25. String and Pointers
+26. String Literals and Memory
+27. const char *
+28. char * vs char[]
+29. Buffer Overflow
+30. Safe String Handling
+31. String Parsing
+32. ASCII and Character Processing
+33. Wide/Multibyte Character Basics
+34. Common String Bugs
+35. Practical Programs
+36. Interview Questions
+37. GATE-Level Problems
+38. Job-Ready String Problems
+============================================================

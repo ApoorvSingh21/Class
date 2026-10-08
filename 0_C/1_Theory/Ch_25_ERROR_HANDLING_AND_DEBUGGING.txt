@@ -1,0 +1,1698 @@
+Worked for a few seconds
+
+===============================================================
+        CHAPTER 25 — ERROR HANDLING & DEBUGGING
+        C PROGRAMMING — JOB-READY MASTER SYLLABUS
+===============================================================
+
+SOURCE TOPICS:
+
+25.1 Types of Errors
+    ├── Syntax error
+    ├── Compilation error
+    ├── Linker error
+    ├── Runtime error
+    └── Logical error
+
+25.2 Debugging
+    ├── Debugger basics
+    ├── Breakpoints
+    ├── Step over
+    ├── Step into
+    ├── Watch variables
+    └── Call stack
+
+25.3 Common C Bugs
+    ├── Segmentation fault
+    ├── Buffer overflow
+    ├── Null dereference
+    ├── Memory leak
+    ├── Dangling pointer
+    ├── Uninitialized variable
+    ├── Integer overflow
+    └── Undefined behavior
+
+===============================================================
+1. INTRODUCTION
+===============================================================
+
+Writing a C program does not guarantee that the program is
+correct.
+
+A program can fail at different stages:
+
+    Source Code
+        ↓
+    Preprocessing
+        ↓
+    Compilation
+        ↓
+    Linking
+        ↓
+    Execution
+        ↓
+    Correct Result?
+
+Errors can therefore appear at different stages.
+
+The major categories in this chapter are:
+
+    1. Syntax error
+    2. Compilation error
+    3. Linker error
+    4. Runtime error
+    5. Logical error
+
+
+===============================================================
+2. SYNTAX ERROR
+===============================================================
+
+A syntax error occurs when the source code violates the grammar
+or syntax rules of C.
+
+Example:
+
+    #include <stdio.h>
+
+    int main()
+    {
+        printf("Hello")
+        return 0;
+    }
+
+The statement:
+
+    printf("Hello")
+
+is missing:
+
+    ;
+
+The compiler will report an error.
+
+Correct:
+
+    printf("Hello");
+
+
+---------------------------------------------------------------
+2.1 MORE EXAMPLES
+---------------------------------------------------------------
+
+Missing semicolon:
+
+    int x = 10
+
+Correct:
+
+    int x = 10;
+
+
+Unbalanced parentheses:
+
+    if (x > 10
+    {
+        printf("Large");
+    }
+
+
+Missing closing brace:
+
+    int main()
+    {
+        printf("Hello");
+
+Correct structure:
+
+    int main()
+    {
+        printf("Hello");
+        return 0;
+    }
+
+
+===============================================================
+3. COMPILATION ERROR
+===============================================================
+
+A compilation error occurs when the compiler cannot successfully
+translate the source code into the required object code.
+
+Syntax errors are one common cause, but compilation diagnostics
+can involve other language-rule violations too.
+
+Example:
+
+    int main()
+    {
+        int x = "hello";
+        return 0;
+    }
+
+Depending on compiler settings and language rules, this produces a
+diagnostic because the initialization is incompatible with the
+declared type.
+
+Another example:
+
+    int main()
+    {
+        printf("Hello");
+        return 0;
+    }
+
+If printf is used without the appropriate declaration available,
+the compiler can issue a diagnostic.
+
+
+---------------------------------------------------------------
+IMPORTANT DISTINCTION
+---------------------------------------------------------------
+
+Syntax error:
+
+    Violation of C grammar/syntax.
+
+Compilation error:
+
+    Failure/diagnostic during compilation.
+
+Therefore:
+
+    Syntax error ⟶ commonly detected during compilation
+
+But "compilation error" is a broader practical category.
+
+
+===============================================================
+4. LINKER ERROR
+===============================================================
+
+Compilation and linking are different stages.
+
+Consider:
+
+    int add(int, int);
+
+    int main()
+    {
+        int result = add(10, 20);
+        return 0;
+    }
+
+The compiler sees the declaration:
+
+    int add(int, int);
+
+So the source can compile.
+
+But if there is no actual definition of add anywhere in the
+linked program, the linker may report an undefined reference or
+equivalent unresolved-symbol error.
+
+Conceptually:
+
+    Source
+       ↓
+    Compiler
+       ↓
+    Object file
+       ↓
+    Linker
+       ↓
+    Executable
+
+
+---------------------------------------------------------------
+4.1 EXAMPLE
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int add(int, int);
+
+    int main()
+    {
+        printf("%d\n", add(10, 20));
+        return 0;
+    }
+
+There is a declaration:
+
+    int add(int, int);
+
+but no definition:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+The linker cannot find the implementation.
+
+Correct version:
+
+    #include <stdio.h>
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int main()
+    {
+        printf("%d\n", add(10, 20));
+        return 0;
+    }
+
+
+===============================================================
+5. RUNTIME ERROR
+===============================================================
+
+A runtime error occurs while the program is executing.
+
+The program may compile and link successfully but fail during
+execution.
+
+Example:
+
+    int a = 10;
+    int b = 0;
+
+    int result = a / b;
+
+Division by zero is not a valid integer operation.
+
+The exact observable behavior depends on the execution
+environment, but the program can fail at runtime.
+
+
+Other examples include:
+
+    • Invalid memory access
+    • Segmentation fault
+    • Null pointer dereference
+    • Certain resource/file failures
+
+
+===============================================================
+6. LOGICAL ERROR
+===============================================================
+
+A logical error occurs when the program runs but produces an
+incorrect result because the algorithm or logic is wrong.
+
+Example:
+
+    int a = 10;
+    int b = 20;
+
+    int average = a + b / 2;
+
+Expected:
+
+    (10 + 20) / 2 = 15
+
+But operator precedence gives:
+
+    10 + (20 / 2)
+
+Result:
+
+    20
+
+Correct:
+
+    int average = (a + b) / 2;
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+Logical errors are dangerous because:
+
+    ✓ Program compiles
+    ✓ Program executes
+    ✓ Program may appear normal
+    ✗ Result is incorrect
+
+
+===============================================================
+7. ERROR TYPE COMPARISON
+===============================================================
+
++-------------------+------------------------------+
+| Error             | Typical Stage               |
++-------------------+------------------------------+
+| Syntax            | Compilation                 |
+| Compilation       | Compiler stage              |
+| Linker            | Linking                     |
+| Runtime           | Program execution           |
+| Logical           | Incorrect program behavior  |
++-------------------+------------------------------+
+
+Example flow:
+
+    int x = 10
+           ↓
+    Syntax/compilation problem
+
+    missing_function()
+           ↓
+    Potential linker problem
+
+    *NULL_POINTER
+           ↓
+    Runtime failure / undefined behavior
+
+    wrong formula
+           ↓
+    Logical error
+
+
+===============================================================
+8. WHAT IS DEBUGGING?
+===============================================================
+
+Debugging is the systematic process of finding, understanding,
+and fixing defects in a program.
+
+Typical debugging cycle:
+
+    Observe problem
+          ↓
+    Reproduce problem
+          ↓
+    Locate suspicious code
+          ↓
+    Inspect variables/state
+          ↓
+    Identify root cause
+          ↓
+    Fix code
+          ↓
+    Test again
+          ↓
+    Verify no regression
+
+
+IMPORTANT:
+
+Debugging is NOT simply:
+
+    "Run the program and randomly change code."
+
+
+A good debugger follows evidence.
+
+
+===============================================================
+9. DEBUGGER BASICS
+===============================================================
+
+A debugger allows us to execute a program under controlled
+conditions and inspect its state.
+
+Common capabilities include:
+
+    • Start/stop execution
+    • Pause execution
+    • Execute one instruction/statement at a time
+    • Inspect variables
+    • Inspect call stack
+    • Set breakpoints
+    • Continue execution
+
+
+For C, GDB is a major command-line debugger.
+
+Typical workflow:
+
+    Compile with debugging information
+             ↓
+    Start debugger
+             ↓
+    Set breakpoint
+             ↓
+    Run
+             ↓
+    Inspect state
+             ↓
+    Step
+             ↓
+    Find bug
+
+
+===============================================================
+10. COMPILING FOR DEBUGGING
+===============================================================
+
+With GCC, debugging information is commonly included using:
+
+    gcc -g program.c -o program
+
+Then:
+
+    gdb ./program
+
+
+The:
+
+    -g
+
+option tells the compiler to include debugging information.
+
+This is particularly useful because the debugger can associate
+machine instructions with source-level information.
+
+
+===============================================================
+11. BREAKPOINTS
+===============================================================
+
+A breakpoint tells the debugger:
+
+    "Pause execution here."
+
+Example:
+
+    int main()
+    {
+        int x = 10;
+        int y = 20;
+
+        int sum = x + y;
+
+        printf("%d\n", sum);
+
+        return 0;
+    }
+
+You might place a breakpoint at:
+
+    int sum = x + y;
+
+
+When execution reaches that line, the debugger pauses.
+
+Now you can inspect:
+
+    x
+    y
+    sum
+
+
+---------------------------------------------------------------
+11.1 WHY BREAKPOINTS ARE USEFUL
+---------------------------------------------------------------
+
+Suppose output is:
+
+    Sum = 35
+
+but expected:
+
+    Sum = 30
+
+Instead of adding random printf statements everywhere, you can
+pause before the suspicious calculation and inspect the state.
+
+
+===============================================================
+12. STEP OVER
+===============================================================
+
+"Step over" executes the current source statement and moves to
+the next statement without entering a function called by that
+statement.
+
+Example:
+
+    result = add(a, b);
+
+With step over, the debugger executes add() as a unit and stops
+at the next source-level statement in the current function.
+
+
+Use step over when:
+
+    You trust the called function
+    OR
+    You want to inspect what happens after the call.
+
+
+===============================================================
+13. STEP INTO
+===============================================================
+
+"Step into" enters a function call so that you can debug the
+function's internal execution.
+
+Example:
+
+    result = add(a, b);
+
+If you step into this statement, the debugger can enter:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+You can then inspect:
+
+    a
+    b
+    return calculation
+
+
+Use step into when you suspect the called function contains the
+bug.
+
+
+===============================================================
+14. STEP OVER VS STEP INTO
+===============================================================
+
+Suppose:
+
+    result = calculate(x, y);
+
+STEP OVER:
+
+    calculate()
+        ↓
+    executes as a unit
+        ↓
+    return to next line
+
+STEP INTO:
+
+    calculate()
+        ↓
+    enter function
+        ↓
+    inspect its statements
+        ↓
+    return
+
+
+Interview answer:
+
+    Step over executes a function call without entering it.
+
+    Step into enters the called function for detailed debugging.
+
+
+===============================================================
+15. WATCH VARIABLES
+===============================================================
+
+During debugging, you often need to observe how a variable
+changes.
+
+Example:
+
+    int sum = 0;
+
+    for (int i = 0; i < 5; i++)
+    {
+        sum += i;
+    }
+
+You may watch:
+
+    i
+    sum
+
+Then you can observe:
+
+    i = 0 → sum = 0
+    i = 1 → sum = 1
+    i = 2 → sum = 3
+    i = 3 → sum = 6
+    i = 4 → sum = 10
+
+
+This can reveal:
+
+    • Wrong initialization
+    • Wrong update
+    • Unexpected values
+    • Off-by-one errors
+
+
+===============================================================
+16. CALL STACK
+===============================================================
+
+The call stack represents active function calls.
+
+Example:
+
+    main()
+      ↓
+    calculate()
+      ↓
+    process()
+      ↓
+    helper()
+
+
+At the deepest point, the call stack may look conceptually like:
+
+    helper()
+    process()
+    calculate()
+    main()
+
+
+Each function call generally has an associated stack frame.
+
+The call stack is extremely useful for understanding:
+
+    • Where the program currently is
+    • Which function called the current function
+    • How execution reached the current point
+    • Recursive calls
+    • Crash locations
+
+
+===============================================================
+17. DEBUGGING A SEGMENTATION FAULT
+===============================================================
+
+Consider:
+
+    int *p = NULL;
+
+    *p = 10;
+
+The program attempts to access memory through a null pointer.
+
+Possible result:
+
+    Segmentation fault
+
+
+A debugger can stop at the problematic statement.
+
+Then inspect:
+
+    p
+
+You discover:
+
+    p == NULL
+
+
+Root cause:
+
+    Invalid pointer dereference.
+
+
+Correct solution:
+
+    int x;
+    int *p = &x;
+
+    *p = 10;
+
+
+===============================================================
+18. COMMON C BUG #1 — SEGMENTATION FAULT
+===============================================================
+
+A segmentation fault commonly occurs when a program accesses
+memory it is not permitted to access.
+
+Example:
+
+    int *p = NULL;
+
+    printf("%d\n", *p);
+
+
+Another example:
+
+    int arr[5];
+
+    arr[10] = 100;
+
+
+Another:
+
+    int *p;
+
+    *p = 50;
+
+
+The last example uses an uninitialized pointer.
+
+
+IMPORTANT:
+
+"Segmentation fault" describes an observed execution failure.
+
+The underlying programming mistake can be:
+
+    • Null dereference
+    • Out-of-bounds access
+    • Dangling pointer
+    • Invalid pointer
+    • Other invalid memory access
+
+
+===============================================================
+19. COMMON C BUG #2 — BUFFER OVERFLOW
+===============================================================
+
+A buffer is a region of memory used to hold data.
+
+Example:
+
+    char name[5];
+
+Valid character positions:
+
+    name[0]
+    name[1]
+    name[2]
+    name[3]
+    name[4]
+
+
+Writing beyond the buffer boundary is an overflow.
+
+Conceptually:
+
+    | name[0] | name[1] | name[2] | name[3] | name[4] |
+                                                     ↓
+                                                boundary
+
+Writing more data than the buffer can contain can corrupt
+adjacent memory.
+
+Example danger:
+
+    char name[5];
+
+    scanf("%s", name);
+
+If the user enters more characters than the buffer can hold,
+the input can overflow the array.
+
+Safer bounded input can be designed using functions such as:
+
+    fgets(name, sizeof name, stdin);
+
+
+===============================================================
+20. BUFFER OVERFLOW CONSEQUENCES
+===============================================================
+
+A buffer overflow can cause:
+
+    • Incorrect data
+    • Memory corruption
+    • Program crash
+    • Undefined behavior
+    • Security vulnerabilities
+
+
+This is one reason secure input handling is extremely important
+in C programming.
+
+
+===============================================================
+21. COMMON C BUG #3 — NULL DEREFERENCE
+===============================================================
+
+NULL indicates that a pointer does not point to a valid object.
+
+Example:
+
+    int *p = NULL;
+
+    *p = 100;
+
+The problem is:
+
+    p does not point to an object that can be written.
+
+Correct pattern:
+
+    int x = 0;
+
+    int *p = &x;
+
+    *p = 100;
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+Checking for NULL can prevent one class of invalid access:
+
+    if (p != NULL)
+    {
+        *p = 100;
+    }
+
+But a non-NULL pointer is not automatically safe.
+
+A pointer can also be:
+
+    • Dangling
+    • Invalid
+    • Pointing outside an object
+    • Otherwise unusable
+
+
+===============================================================
+22. COMMON C BUG #4 — MEMORY LEAK
+===============================================================
+
+A memory leak occurs when dynamically allocated memory is no
+longer reachable but has not been released.
+
+Example:
+
+    int *p = malloc(100 * sizeof(int));
+
+    if (p == NULL)
+        return 1;
+
+    /*
+       Use p
+    */
+
+    p = NULL;
+
+The original allocated block has become unreachable.
+
+The program has lost the address needed to free it.
+
+Correct:
+
+    int *p = malloc(100 * sizeof(int));
+
+    if (p == NULL)
+        return 1;
+
+    /*
+       Use p
+    */
+
+    free(p);
+    p = NULL;
+
+
+---------------------------------------------------------------
+MEMORY LEAK FLOW
+---------------------------------------------------------------
+
+    malloc()
+       ↓
+    allocated memory
+       ↓
+    pointer lost
+       ↓
+    memory still allocated
+       ↓
+    cannot be reached
+       ↓
+    MEMORY LEAK
+
+
+===============================================================
+23. COMMON C BUG #5 — DANGLING POINTER
+===============================================================
+
+A dangling pointer is a pointer that refers to an object whose
+lifetime has ended or whose storage is no longer valid for the
+pointer's intended use.
+
+Example:
+
+    int *p = malloc(sizeof(int));
+
+    *p = 100;
+
+    free(p);
+
+Now:
+
+    p
+
+still contains the old address, but the allocated object's
+lifetime has ended.
+
+Using:
+
+    *p = 200;
+
+is invalid.
+
+
+---------------------------------------------------------------
+SAFER PATTERN
+---------------------------------------------------------------
+
+    free(p);
+    p = NULL;
+
+
+This does not restore the freed object, but it prevents p from
+continuing to hold the old address.
+
+
+===============================================================
+24. MEMORY LEAK VS DANGLING POINTER
+===============================================================
+
+MEMORY LEAK:
+
+    Memory remains allocated
+    but the program loses the ability
+    to access/free it.
+
+DANGLING POINTER:
+
+    Pointer remains
+    but the object/storage it refers to
+    is no longer valid.
+
+
+Conceptually:
+
+    MEMORY LEAK:
+
+        memory → allocated
+        pointer → lost
+
+    DANGLING POINTER:
+
+        pointer → old address
+        object  → lifetime ended
+
+
+===============================================================
+25. COMMON C BUG #6 — UNINITIALIZED VARIABLE
+===============================================================
+
+Example:
+
+    int x;
+
+    printf("%d\n", x);
+
+For an automatic local variable, x has an indeterminate value.
+
+Reading such a value can lead to undefined behavior in situations
+where the value is used in a way not permitted by the language.
+
+Correct:
+
+    int x = 0;
+
+
+---------------------------------------------------------------
+POINTER EXAMPLE
+---------------------------------------------------------------
+
+    int *p;
+
+    *p = 10;
+
+Here p itself has not been initialized to point to a valid object.
+
+This is a serious error.
+
+
+Correct:
+
+    int x;
+
+    int *p = &x;
+
+    *p = 10;
+
+
+===============================================================
+26. COMMON C BUG #7 — INTEGER OVERFLOW
+===============================================================
+
+Integer arithmetic has finite ranges.
+
+For signed integer types, exceeding the representable range can
+lead to undefined behavior.
+
+Example:
+
+    int x = INT_MAX;
+
+    x = x + 1;
+
+Include:
+
+    #include <limits.h>
+
+
+INT_MAX represents the maximum value of int on the implementation.
+
+
+---------------------------------------------------------------
+UNSIGNED INTEGER
+---------------------------------------------------------------
+
+Unsigned arithmetic behaves differently.
+
+Unsigned integer arithmetic is performed modulo 2^N for the
+appropriate width.
+
+Example conceptually for an N-bit unsigned type:
+
+    maximum + 1 → 0
+
+
+This difference between signed and unsigned overflow is an
+important C interview topic.
+
+
+===============================================================
+27. COMMON C BUG #8 — UNDEFINED BEHAVIOR
+===============================================================
+
+Undefined behavior (UB) means that the C standard imposes no
+requirements on what happens when a program performs a prohibited
+operation.
+
+Examples can include:
+
+    • Dereferencing an invalid pointer
+    • Accessing an array outside its bounds
+    • Using an indeterminate value in prohibited ways
+    • Signed integer overflow
+    • Certain invalid shifts
+    • Certain violations involving object lifetimes
+
+
+IMPORTANT:
+
+Undefined behavior does NOT mean:
+
+    "The program will always crash."
+
+It means:
+
+    The language standard does not define what the program must
+    do.
+
+Possible observed results include:
+
+    • Crash
+    • Unexpected output
+    • Apparently correct output
+    • Different behavior under optimization
+    • Different behavior on another compiler/system
+
+
+===============================================================
+28. DEBUGGING STRATEGY
+===============================================================
+
+When a program behaves incorrectly:
+
+STEP 1:
+    Reproduce the problem.
+
+STEP 2:
+    Determine expected output.
+
+STEP 3:
+    Determine actual output.
+
+STEP 4:
+    Narrow down the suspicious region.
+
+STEP 5:
+    Use breakpoints.
+
+STEP 6:
+    Inspect variables.
+
+STEP 7:
+    Step through execution.
+
+STEP 8:
+    Inspect the call stack.
+
+STEP 9:
+    Find the root cause.
+
+STEP 10:
+    Fix the underlying bug.
+
+STEP 11:
+    Re-run tests.
+
+STEP 12:
+    Test edge cases.
+
+
+===============================================================
+29. EXAMPLE DEBUGGING PROBLEM
+===============================================================
+
+Program:
+
+    #include <stdio.h>
+
+    int main()
+    {
+        int arr[5] = {10, 20, 30, 40, 50};
+
+        for (int i = 0; i <= 5; i++)
+        {
+            printf("%d\n", arr[i]);
+        }
+
+        return 0;
+    }
+
+
+Problem:
+
+    Array has 5 elements.
+
+Valid indexes:
+
+    0 through 4
+
+But loop uses:
+
+    i <= 5
+
+Therefore it eventually accesses:
+
+    arr[5]
+
+which is outside the array.
+
+Correct:
+
+    for (int i = 0; i < 5; i++)
+
+
+---------------------------------------------------------------
+DEBUGGING THOUGHT PROCESS
+---------------------------------------------------------------
+
+Observe:
+
+    Unexpected behavior / possible crash
+
+Inspect:
+
+    i
+
+Check:
+
+    Array size
+
+Compare:
+
+    Valid indexes vs loop condition
+
+Find:
+
+    Off-by-one error
+
+Fix:
+
+    i < 5
+
+
+This is much better than changing random statements.
+
+
+===============================================================
+30. OFF-BY-ONE ERRORS
+===============================================================
+
+One of the most common C bugs.
+
+Suppose:
+
+    int arr[10];
+
+Valid indexes:
+
+    0 ... 9
+
+
+Wrong:
+
+    for (int i = 0; i <= 10; i++)
+
+Correct:
+
+    for (int i = 0; i < 10; i++)
+
+
+Remember:
+
+    Number of elements = 10
+    Last valid index   = 9
+
+
+General rule:
+
+    Valid indexes:
+
+        0 <= index < size
+
+
+===============================================================
+31. COMPILER WARNINGS ARE IMPORTANT
+===============================================================
+
+Warnings are not always errors, but they can identify suspicious
+code before the program fails.
+
+With GCC, useful warning options include:
+
+    -Wall
+    -Wextra
+
+Example:
+
+    gcc -Wall -Wextra -g program.c -o program
+
+
+A professional C developer should generally compile with useful
+warnings enabled during development.
+
+Warnings can reveal:
+
+    • Suspicious conversions
+    • Unused variables
+    • Missing declarations
+    • Potential mistakes
+    • Other implementation/compiler diagnostics
+
+
+===============================================================
+32. PRINTF DEBUGGING
+===============================================================
+
+A simple debugging technique is temporarily adding diagnostic
+output.
+
+Example:
+
+    printf("DEBUG: x = %d\n", x);
+
+    printf("DEBUG: i = %d\n", i);
+
+    printf("DEBUG: entering function\n");
+
+
+Advantages:
+
+    ✓ Simple
+    ✓ Fast
+    ✓ Available almost everywhere
+
+Disadvantages:
+
+    ✗ Can clutter code
+    ✗ Can change timing in some situations
+    ✗ Harder to inspect complex program state
+    ✗ Must often be removed or disabled later
+
+A debugger is generally more powerful for interactive inspection.
+
+
+===============================================================
+33. DEBUGGING WITH THE CALL STACK
+===============================================================
+
+Consider:
+
+    main()
+       ↓
+    process()
+       ↓
+    calculate()
+       ↓
+    divide()
+
+Suppose divide() causes a failure.
+
+The call stack tells you:
+
+    divide()
+    calculate()
+    process()
+    main()
+
+
+This answers:
+
+    "How did execution reach this function?"
+
+
+This is especially important for:
+
+    • Large programs
+    • Recursive functions
+    • Deep function call chains
+    • Crashes
+
+
+===============================================================
+34. ROOT CAUSE VS SYMPTOM
+===============================================================
+
+Suppose the program crashes at:
+
+    printf("%d\n", *p);
+
+You might say:
+
+    "printf caused the crash."
+
+That may be incorrect.
+
+The real problem could be:
+
+    p was already invalid.
+
+
+Therefore:
+
+    Crash location ≠ necessarily root cause.
+
+
+Professional debugging asks:
+
+    WHY did this state occur?
+
+
+===============================================================
+35. IMPORTANT BUG COMPARISON
+===============================================================
+
+SEGMENTATION FAULT:
+
+    A runtime failure commonly associated with invalid memory
+    access.
+
+BUFFER OVERFLOW:
+
+    Writing/reading beyond a buffer's valid bounds.
+
+NULL DEREFERENCE:
+
+    Attempting to use a null pointer as if it pointed to an
+    object.
+
+MEMORY LEAK:
+
+    Allocated memory becomes unreachable without being released.
+
+DANGLING POINTER:
+
+    Pointer refers to storage/object whose lifetime has ended or
+    is otherwise no longer valid.
+
+UNINITIALIZED VARIABLE:
+
+    Variable is used without a valid initialization.
+
+INTEGER OVERFLOW:
+
+    Arithmetic exceeds representable range; rules depend on
+    signedness.
+
+UNDEFINED BEHAVIOR:
+
+    Program performs an operation for which the C standard places
+    no requirements.
+
+
+===============================================================
+36. GATE / INTERVIEW QUESTIONS
+===============================================================
+
+Q1. What is the difference between a compiler error and a linker
+error?
+
+Answer:
+
+    Compiler errors occur while translating source code into
+    object code.
+
+    Linker errors occur when object files/libraries cannot be
+    combined into the required executable, such as when a
+    referenced definition is missing.
+
+
+---------------------------------------------------------------
+
+Q2. Can a program compile successfully and still contain a bug?
+
+Answer:
+
+    YES.
+
+Examples:
+
+    Runtime error
+    Logical error
+    Undefined behavior
+
+
+---------------------------------------------------------------
+
+Q3. What is a segmentation fault?
+
+Answer:
+
+    It is a runtime failure commonly caused by invalid memory
+    access. It is a symptom; the underlying cause may be a null,
+    dangling, out-of-bounds, or otherwise invalid pointer.
+
+
+---------------------------------------------------------------
+
+Q4. Difference between memory leak and dangling pointer?
+
+Answer:
+
+    Memory leak:
+        allocated memory is no longer reachable.
+
+    Dangling pointer:
+        pointer remains but refers to storage whose lifetime has
+        ended or is otherwise invalid.
+
+
+---------------------------------------------------------------
+
+Q5. What is undefined behavior?
+
+Answer:
+
+    Behavior for which the C standard imposes no requirements
+    after the program performs a prohibited operation.
+
+
+---------------------------------------------------------------
+
+Q6. Why should compiler warnings be enabled?
+
+Answer:
+
+    They can expose suspicious constructs and potential bugs
+    before runtime.
+
+
+---------------------------------------------------------------
+
+Q7. What is a breakpoint?
+
+Answer:
+
+    A debugger instruction to pause execution at a selected
+    location.
+
+
+---------------------------------------------------------------
+
+Q8. Step into vs step over?
+
+Answer:
+
+    Step into enters a called function.
+
+    Step over executes the call without entering it at the
+    source-debugging level.
+
+
+---------------------------------------------------------------
+
+Q9. Why is the call stack useful?
+
+Answer:
+
+    It shows the chain of active function calls and helps trace
+    how execution reached the current function.
+
+
+---------------------------------------------------------------
+
+Q10. Is every segmentation fault caused by NULL?
+
+Answer:
+
+    NO.
+
+Possible causes include:
+
+    • Null dereference
+    • Out-of-bounds access
+    • Dangling pointer
+    • Invalid pointer usage
+    • Other invalid memory access
+
+
+===============================================================
+37. MASTER REVISION MAP
+===============================================================
+
+                ERROR HANDLING
+                      |
+        +-------------+-------------+
+        |             |             |
+      Compile        Link          Run
+        |             |             |
+      Syntax       Undefined     Runtime
+      errors       reference      bugs
+                                      |
+                              +-------+-------+
+                              |       |       |
+                            Memory  Pointer  Logic
+                              |       |       |
+                           Overflow  NULL   Wrong result
+                           Leak      Dangling
+                           UB        Uninitialized
+
+
+                DEBUGGING
+                    |
+          +---------+---------+
+          |         |         |
+      Breakpoint  Step     Inspect
+                    |         |
+              +-----+-----+    |
+              |           |    |
+           Over         Into   Variables
+                              |
+                           Call Stack
+
+
+===============================================================
+38. JOB-READY CHECKLIST
+===============================================================
+
+You should now be able to:
+
+    [✓] Identify syntax errors
+    [✓] Understand compilation errors
+    [✓] Identify linker errors
+    [✓] Understand runtime errors
+    [✓] Identify logical errors
+
+    [✓] Explain debugging
+    [✓] Use the idea of breakpoints
+    [✓] Understand step over
+    [✓] Understand step into
+    [✓] Inspect variables
+    [✓] Understand call stack
+
+    [✓] Explain segmentation faults
+    [✓] Explain buffer overflow
+    [✓] Explain NULL dereference
+    [✓] Explain memory leaks
+    [✓] Explain dangling pointers
+    [✓] Explain uninitialized variables
+    [✓] Explain integer overflow
+    [✓] Explain undefined behavior
+
+    [✓] Distinguish symptom from root cause
+    [✓] Use systematic debugging
+    [✓] Understand why compiler warnings matter
+
+
+===============================================================
+39. CHAPTER 25 — FINAL TAKEAWAY
+===============================================================
+
+A professional C programmer should think in this order:
+
+    Does the code compile?
+             ↓
+    Does it link?
+             ↓
+    Does it execute?
+             ↓
+    Does it produce the correct result?
+             ↓
+    Is its behavior defined?
+             ↓
+    Is memory used safely?
+             ↓
+    Can the bug be reproduced?
+             ↓
+    Can a debugger reveal the root cause?
+
+
+The most important lesson:
+
+    DO NOT DEBUG BY GUESSING.
+
+Instead:
+
+    Reproduce
+       ↓
+    Observe
+       ↓
+    Isolate
+       ↓
+    Inspect
+       ↓
+    Identify root cause
+       ↓
+    Fix
+       ↓
+    Test again
+
+
+===============================================================
+END OF CHAPTER 25
+===============================================================
+
+NEXT:
+    CHAPTER 26 — UNDEFINED BEHAVIOR & C PITFALLS
+
+This chapter follows directly from the debugging concepts and
+focuses on the dangerous C behaviors and pitfalls that commonly
+appear in GATE, interviews, debugging, and low-level programming.
+===============================================================

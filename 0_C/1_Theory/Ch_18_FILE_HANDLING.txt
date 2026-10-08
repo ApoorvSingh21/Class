@@ -1,0 +1,1788 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                  CHAPTER 18 — FILE HANDLING IN C                   ║
+║                    Job-Ready Master Explanation                    ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+
+18.1 FILE CONCEPTS
+══════════════════════════════════════════════════════════════════════
+
+A file is a named collection of data stored on secondary storage such
+as an SSD, HDD, USB drive, etc.
+
+Normally, variables and arrays store data temporarily in RAM.
+
+Example:
+
+    int marks = 95;
+
+When the program terminates, the variable disappears.
+
+If we want data to remain available after the program terminates,
+we can store it in a FILE.
+
+                Program
+                   │
+                   ▼
+              ┌─────────┐
+              │   RAM   │
+              └─────────┘
+                   │
+             File operations
+                   │
+                   ▼
+          ┌─────────────────┐
+          │ Storage Device  │
+          │                 │
+          │ students.txt    │
+          │ data.bin        │
+          └─────────────────┘
+
+
+Why file handling?
+
+1. Permanent data storage
+2. Reading previously stored information
+3. Writing large amounts of data
+4. Maintaining records
+5. Logging
+6. Configuration files
+7. Database-like small applications
+8. Binary data storage
+
+
+Two major categories:
+
+    1. Text files
+    2. Binary files
+
+
+TEXT FILE
+─────────
+
+Data is generally represented as characters.
+
+Example:
+
+    101 Apoorv 95
+
+A text editor can normally display the contents.
+
+
+BINARY FILE
+───────────
+
+Data is stored as raw bytes.
+
+For example, an integer may be stored in its binary
+representation rather than as characters '9' and '5'.
+
+
+Important:
+
+Text representation:
+
+    95
+
+may occupy two character bytes:
+
+    '9' '5'
+
+while an int may occupy typically 4 bytes in a particular
+implementation.
+
+The exact representation depends on the C implementation.
+
+
+──────────────────────────────────────────────────────────────────────
+18.2 FILE POINTER
+──────────────────────────────────────────────────────────────────────
+
+C provides the FILE type through <stdio.h>.
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        FILE *fp;
+
+        return 0;
+    }
+
+
+FILE *fp;
+
+means:
+
+    fp
+
+is a pointer to a FILE object used by the C standard I/O library.
+
+
+Think of it as:
+
+    FILE *fp
+        │
+        ▼
+    ┌─────────────────────┐
+    │ File stream state   │
+    │ Position            │
+    │ Buffer information  │
+    │ Mode information    │
+    └─────────────────────┘
+              │
+              ▼
+         Actual file
+
+
+The internal structure of FILE is implementation-defined.
+
+Do NOT assume that FILE directly represents the physical file
+structure.
+
+
+──────────────────────────────────────────────────────────────────────
+18.3 fopen()
+──────────────────────────────────────────────────────────────────────
+
+fopen() opens a file stream.
+
+Prototype:
+
+    FILE *fopen(const char *filename, const char *mode);
+
+
+Example:
+
+    FILE *fp = fopen("data.txt", "r");
+
+
+Here:
+
+    "data.txt" → filename
+    "r"        → opening mode
+
+
+Always check whether fopen() succeeded.
+
+Correct:
+
+    FILE *fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file\n");
+        return 1;
+    }
+
+
+Why?
+
+Because opening can fail due to:
+
+    • File doesn't exist
+    • Permission denied
+    • Invalid path
+    • Storage problem
+    • Resource limitations
+
+
+Bad:
+
+    FILE *fp = fopen("data.txt", "r");
+
+    fprintf(fp, "Hello");
+
+If fopen() failed, fp may be NULL.
+
+Using it as a valid stream can cause undefined behavior.
+
+
+──────────────────────────────────────────────────────────────────────
+18.4 fclose()
+──────────────────────────────────────────────────────────────────────
+
+After finishing file operations, close the file.
+
+Syntax:
+
+    fclose(fp);
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        FILE *fp = fopen("data.txt", "w");
+
+        if (fp == NULL)
+        {
+            return 1;
+        }
+
+        fprintf(fp, "Hello C\n");
+
+        fclose(fp);
+
+        return 0;
+    }
+
+
+Why close?
+
+    1. Releases associated resources
+    2. Flushes buffered output
+    3. Ends the stream
+    4. Prevents resource leaks
+
+
+General pattern:
+
+    fopen()
+       ↓
+    Check NULL
+       ↓
+    Read/write
+       ↓
+    fclose()
+
+
+Important:
+
+After fclose(fp), the stream is no longer usable.
+
+Do not do:
+
+    fclose(fp);
+    fprintf(fp, "Hello");     // WRONG
+
+
+──────────────────────────────────────────────────────────────────────
+18.5 FILE MODES
+──────────────────────────────────────────────────────────────────────
+
+The syllabus includes:
+
+    r
+    w
+    a
+    r+
+    w+
+    a+
+
+
+┌────────┬─────────────────────────────────────────────────────────┐
+│ Mode   │ Meaning                                                 │
+├────────┼─────────────────────────────────────────────────────────┤
+│ r      │ Read existing file                                      │
+│ w      │ Write; creates/truncates file                           │
+│ a      │ Append; creates if needed                               │
+│ r+     │ Read + write existing file                              │
+│ w+     │ Read + write; creates/truncates                         │
+│ a+     │ Read + append; creates if needed                        │
+└────────┴─────────────────────────────────────────────────────────┘
+
+
+MODE: "r"
+─────────
+
+Open existing file for reading.
+
+    FILE *fp = fopen("data.txt", "r");
+
+If the file does not exist:
+
+    fopen() → NULL
+
+
+It does not create the file.
+
+
+MODE: "w"
+─────────
+
+Open for writing.
+
+If file does not exist:
+
+    Creates it.
+
+If file already exists:
+
+    Existing contents are discarded/truncated.
+
+
+Example:
+
+    FILE *fp = fopen("data.txt", "w");
+
+
+This is a major interview trap.
+
+Suppose:
+
+    data.txt
+
+contains:
+
+    ABC
+    DEF
+    GHI
+
+Then:
+
+    fopen("data.txt", "w");
+
+will truncate the existing contents.
+
+
+MODE: "a"
+─────────
+
+Append mode.
+
+If file does not exist:
+
+    Creates it.
+
+Existing data is preserved.
+
+New output is appended.
+
+
+Example:
+
+    FILE *fp = fopen("log.txt", "a");
+
+    fprintf(fp, "New log entry\n");
+
+
+Existing:
+
+    Old entry
+
+
+After operation:
+
+    Old entry
+    New log entry
+
+
+MODE: "r+"
+──────────
+
+Read + write.
+
+The file must already exist.
+
+It does NOT truncate the existing file.
+
+
+MODE: "w+"
+──────────
+
+Read + write.
+
+Creates if necessary.
+
+If it already exists:
+
+    Contents are truncated.
+
+
+MODE: "a+"
+──────────
+
+Read + append.
+
+Creates if necessary.
+
+Writing occurs at the end of the file.
+
+
+Important comparison:
+
+    r   → read
+    w   → write/truncate
+    a   → append
+
+    r+  → read/write
+    w+  → read/write/truncate
+    a+  → read/append
+
+
+──────────────────────────────────────────────────────────────────────
+18.6 CHARACTER FILE I/O
+──────────────────────────────────────────────────────────────────────
+
+The syllabus includes:
+
+    fgetc()
+    fputc()
+
+
+fgetc()
+───────
+
+Reads one character from a stream.
+
+Conceptually:
+
+    int fgetc(FILE *stream);
+
+
+Notice the return type:
+
+    int
+
+not char.
+
+Why?
+
+Because fgetc() must be able to represent every possible unsigned
+character value AND EOF.
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        FILE *fp = fopen("data.txt", "r");
+
+        if (fp == NULL)
+            return 1;
+
+        int ch;
+
+        while ((ch = fgetc(fp)) != EOF)
+        {
+            putchar(ch);
+        }
+
+        fclose(fp);
+
+        return 0;
+    }
+
+
+Important:
+
+    int ch;
+
+is preferred instead of:
+
+    char ch;
+
+because EOF must be represented.
+
+
+EOF
+───
+
+EOF means End Of File.
+
+It is a special negative integer value returned by input functions
+when the end/error condition is reached.
+
+
+Common pattern:
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        ...
+    }
+
+
+Do NOT write:
+
+    while (!feof(fp))
+    {
+        ch = fgetc(fp);
+        ...
+    }
+
+as the primary EOF-reading pattern.
+
+The EOF condition is detected by the read operation itself.
+
+
+fputc()
+────────
+
+Writes one character to a stream.
+
+Conceptually:
+
+    int fputc(int character, FILE *stream);
+
+
+Example:
+
+    FILE *fp = fopen("data.txt", "w");
+
+    if (fp == NULL)
+        return 1;
+
+    fputc('A', fp);
+    fputc('\n', fp);
+
+    fclose(fp);
+
+
+File becomes:
+
+    A
+
+
+Character-copy program:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        FILE *src = fopen("input.txt", "r");
+        FILE *dest = fopen("output.txt", "w");
+
+        if (src == NULL || dest == NULL)
+        {
+            if (src != NULL)
+                fclose(src);
+
+            if (dest != NULL)
+                fclose(dest);
+
+            return 1;
+        }
+
+        int ch;
+
+        while ((ch = fgetc(src)) != EOF)
+        {
+            fputc(ch, dest);
+        }
+
+        fclose(src);
+        fclose(dest);
+
+        return 0;
+    }
+
+
+This is a fundamental file-processing pattern.
+
+
+──────────────────────────────────────────────────────────────────────
+18.7 STRING FILE I/O
+──────────────────────────────────────────────────────────────────────
+
+The syllabus includes:
+
+    fgets()
+    fputs()
+
+
+fgets()
+───────
+
+Reads a line/string from a stream.
+
+Prototype conceptually:
+
+    char *fgets(char *str, int n, FILE *stream);
+
+
+Example:
+
+    char buffer[100];
+
+    fgets(buffer, sizeof(buffer), fp);
+
+
+Important behavior:
+
+fgets() reads at most:
+
+    n - 1
+
+characters and adds:
+
+    '\0'
+
+when successful.
+
+If a newline is encountered within the limit, it is normally
+stored in the buffer.
+
+
+Example file:
+
+    Hello World
+
+
+Code:
+
+    char buffer[100];
+
+    if (fgets(buffer, sizeof(buffer), fp) != NULL)
+    {
+        printf("%s", buffer);
+    }
+
+
+If newline is read, buffer may contain:
+
+    "Hello World\n\0"
+
+
+This is one reason:
+
+    printf("%s", buffer);
+
+may not require another newline.
+
+
+fputs()
+────────
+
+Writes a string to a stream.
+
+Example:
+
+    fputs("Hello C\n", fp);
+
+
+Unlike puts(), fputs() does not automatically append a newline.
+
+
+Example:
+
+    fputs("Hello", fp);
+    fputs("World", fp);
+
+
+Result:
+
+    HelloWorld
+
+
+Whereas:
+
+    fputs("Hello\n", fp);
+    fputs("World\n", fp);
+
+
+Result:
+
+    Hello
+    World
+
+
+Reading a file line by line:
+
+    char buffer[256];
+
+    while (fgets(buffer, sizeof(buffer), fp) != NULL)
+    {
+        printf("%s", buffer);
+    }
+
+
+This is generally safer than attempting to read arbitrarily long
+input into a fixed-size buffer without bounds.
+
+
+──────────────────────────────────────────────────────────────────────
+18.8 FORMATTED FILE I/O
+──────────────────────────────────────────────────────────────────────
+
+The syllabus includes:
+
+    fprintf()
+    fscanf()
+
+
+fprintf()
+──────────
+
+Works like printf(), but writes to a specified stream.
+
+Example:
+
+    FILE *fp = fopen("student.txt", "w");
+
+    if (fp == NULL)
+        return 1;
+
+    int roll = 101;
+    float marks = 91.5f;
+
+    fprintf(fp, "Roll: %d\n", roll);
+    fprintf(fp, "Marks: %.2f\n", marks);
+
+    fclose(fp);
+
+
+File:
+
+    Roll: 101
+    Marks: 91.50
+
+
+General form:
+
+    fprintf(stream, format, arguments);
+
+
+Compare:
+
+    printf("Hello");
+
+and:
+
+    fprintf(fp, "Hello");
+
+
+printf() is effectively formatted output to standard output,
+while fprintf() allows an arbitrary stream.
+
+
+fscanf()
+────────
+
+Works similarly to scanf(), but reads from a stream.
+
+Example file:
+
+    101 95.5
+
+
+Code:
+
+    int roll;
+    float marks;
+
+    fscanf(fp, "%d %f", &roll, &marks);
+
+
+General form:
+
+    fscanf(stream, format, &variables);
+
+
+Example:
+
+    FILE *fp = fopen("student.txt", "r");
+
+    if (fp == NULL)
+        return 1;
+
+    int roll;
+    float marks;
+
+    if (fscanf(fp, "%d %f", &roll, &marks) == 2)
+    {
+        printf("Roll = %d\n", roll);
+        printf("Marks = %.2f\n", marks);
+    }
+
+    fclose(fp);
+
+
+Important:
+
+Always consider the return value of fscanf().
+
+For:
+
+    "%d %f"
+
+successful conversion of both values means:
+
+    return value == 2
+
+
+This helps detect malformed input.
+
+
+──────────────────────────────────────────────────────────────────────
+18.9 BINARY FILES
+──────────────────────────────────────────────────────────────────────
+
+Binary file functions in the syllabus:
+
+    fread()
+    fwrite()
+
+
+These operate on blocks of bytes.
+
+
+fwrite()
+─────────
+
+Conceptually:
+
+    fwrite(ptr, size, count, stream);
+
+
+Example:
+
+    int x = 100;
+
+    fwrite(&x, sizeof(x), 1, fp);
+
+
+Meaning:
+
+    &x       → address of data
+    sizeof(x) → size of each item
+    1        → number of items
+    fp       → stream
+
+
+Reading:
+
+    int x;
+
+    fread(&x, sizeof(x), 1, fp);
+
+
+Example:
+
+    #include <stdio.h>
+
+    struct Student
+    {
+        int roll;
+        float marks;
+    };
+
+    int main(void)
+    {
+        struct Student s = {101, 92.5f};
+
+        FILE *fp = fopen("student.dat", "wb");
+
+        if (fp == NULL)
+            return 1;
+
+        fwrite(&s, sizeof(s), 1, fp);
+
+        fclose(fp);
+
+        return 0;
+    }
+
+
+Reading it:
+
+    struct Student s;
+
+    FILE *fp = fopen("student.dat", "rb");
+
+    if (fp == NULL)
+        return 1;
+
+    if (fread(&s, sizeof(s), 1, fp) == 1)
+    {
+        printf("%d %.2f\n", s.roll, s.marks);
+    }
+
+    fclose(fp);
+
+
+Binary mode:
+
+    "rb"
+    "wb"
+    "ab"
+
+
+and corresponding update modes can also use:
+
+    "rb+"
+    "wb+"
+    "ab+"
+
+
+Why binary files?
+
+    • Efficient representation
+    • Suitable for structured records
+    • Can avoid text parsing for certain applications
+    • Useful for raw byte data
+
+
+Important portability warning:
+
+Writing a C struct directly with fwrite() is not necessarily a
+portable interchange format.
+
+Why?
+
+Because a struct may contain:
+
+    • Padding
+    • Alignment differences
+    • Different type sizes
+    • Different representations
+    • Different endianness
+
+
+For example:
+
+    struct Student
+    {
+        int roll;
+        char grade;
+    };
+
+
+There may be padding between/after members.
+
+
+So this:
+
+    fwrite(&s, sizeof(s), 1, fp);
+
+is useful for many same-environment applications, but should not
+automatically be considered a portable file format.
+
+
+──────────────────────────────────────────────────────────────────────
+18.10 FILE POSITIONING
+──────────────────────────────────────────────────────────────────────
+
+The syllabus includes:
+
+    fseek()
+    ftell()
+    rewind()
+
+and:
+
+    SEEK_SET
+    SEEK_CUR
+    SEEK_END
+
+
+A stream has a current file position.
+
+Think:
+
+    Beginning
+       │
+       ▼
+    ┌─────────────────────────────────────────┐
+    │ A B C D E F G H I J                    │
+    └─────────────────────────────────────────┘
+                ▲
+                │
+          current position
+
+
+After reading characters, the position moves.
+
+
+ftell()
+───────
+
+Returns the current file position indicator.
+
+Example:
+
+    long pos = ftell(fp);
+
+    printf("Position = %ld\n", pos);
+
+
+The exact interpretation is subject to the C standard and stream
+mode; do not blindly assume it is always a simple byte offset for
+every kind of stream.
+
+
+fseek()
+───────
+
+Changes the file position.
+
+Conceptually:
+
+    fseek(stream, offset, origin);
+
+
+Origins:
+
+    SEEK_SET
+    SEEK_CUR
+    SEEK_END
+
+
+Example:
+
+    fseek(fp, 0, SEEK_SET);
+
+
+Meaning:
+
+    Move to the beginning.
+
+
+Example:
+
+    fseek(fp, 0, SEEK_END);
+
+
+Moves toward the end of the file.
+
+
+Example:
+
+    fseek(fp, 5, SEEK_SET);
+
+
+Moves to position 5 relative to the beginning for streams where the
+operation is meaningful.
+
+
+Relative movement:
+
+    fseek(fp, 10, SEEK_CUR);
+
+
+Move relative to the current position.
+
+
+rewind()
+────────
+
+Moves the file position back to the beginning.
+
+    rewind(fp);
+
+
+Conceptually similar to:
+
+    fseek(fp, 0, SEEK_SET);
+
+but rewind() additionally clears the stream's error indicator.
+
+
+Example:
+
+    FILE *fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+        return 1;
+
+    int ch;
+
+    ch = fgetc(fp);
+
+    printf("First: %c\n", ch);
+
+    rewind(fp);
+
+    ch = fgetc(fp);
+
+    printf("Again: %c\n", ch);
+
+    fclose(fp);
+
+
+Output could be:
+
+    First: A
+    Again: A
+
+
+──────────────────────────────────────────────────────────────────────
+18.11 ERROR HANDLING IN FILE OPERATIONS
+──────────────────────────────────────────────────────────────────────
+
+File operations can fail.
+
+A robust C program must handle failures.
+
+
+Example:
+
+    FILE *fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        perror("fopen");
+        return 1;
+    }
+
+
+perror()
+────────
+
+Prints a message associated with the current error indication.
+
+Example:
+
+    perror("fopen");
+
+
+Possible output:
+
+    fopen: No such file or directory
+
+
+The exact wording depends on the operating system/environment.
+
+
+Another useful mechanism is:
+
+    errno
+
+provided through:
+
+    #include <errno.h>
+
+
+Example:
+
+    #include <stdio.h>
+    #include <errno.h>
+
+    FILE *fp = fopen("missing.txt", "r");
+
+    if (fp == NULL)
+    {
+        perror("fopen");
+        printf("errno = %d\n", errno);
+    }
+
+
+Important:
+
+errno should generally be examined when an operation indicates
+failure; don't treat its value as a universal success/failure flag.
+
+
+──────────────────────────────────────────────────────────────────────
+EOF VS ERROR
+──────────────────────────────────────────────────────────────────────
+
+When reading a stream, reaching EOF and encountering an error are
+different conditions.
+
+Functions available for checking:
+
+    feof()
+    ferror()
+
+
+Example:
+
+    int ch;
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        putchar(ch);
+    }
+
+    if (feof(fp))
+    {
+        printf("End of file reached\n");
+    }
+
+    if (ferror(fp))
+    {
+        printf("File read error\n");
+    }
+
+
+Important distinction:
+
+    EOF does not necessarily mean an error.
+
+EOF means the input operation reached the end condition.
+
+ferror() can indicate an I/O error.
+
+
+──────────────────────────────────────────────────────────────────────
+COMPLETE TEXT-FILE EXAMPLE
+──────────────────────────────────────────────────────────────────────
+
+Write:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        FILE *fp = fopen("students.txt", "w");
+
+        if (fp == NULL)
+        {
+            perror("students.txt");
+            return 1;
+        }
+
+        fprintf(fp, "101 Apoorv 92.5\n");
+        fprintf(fp, "102 Rahul 88.0\n");
+        fprintf(fp, "103 Priya 95.0\n");
+
+        if (fclose(fp) != 0)
+        {
+            perror("fclose");
+            return 1;
+        }
+
+        return 0;
+    }
+
+
+Then read:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        FILE *fp = fopen("students.txt", "r");
+
+        if (fp == NULL)
+        {
+            perror("students.txt");
+            return 1;
+        }
+
+        char line[256];
+
+        while (fgets(line, sizeof(line), fp) != NULL)
+        {
+            printf("%s", line);
+        }
+
+        if (ferror(fp))
+        {
+            perror("Reading students.txt");
+        }
+
+        fclose(fp);
+
+        return 0;
+    }
+
+
+This demonstrates the fundamental:
+
+    OPEN → CHECK → PROCESS → CHECK → CLOSE
+
+pattern.
+
+
+══════════════════════════════════════════════════════════════════════
+IMPORTANT FILE-MODE MAP
+══════════════════════════════════════════════════════════════════════
+
+                Existing?       Create?       Truncate?
+--------------------------------------------------------------
+    r             Yes             No             No
+
+    w             No/Yes          Yes            Yes
+
+    a             No/Yes          Yes            No
+
+    r+            Yes             No             No
+
+    w+            No/Yes          Yes            Yes
+
+    a+            No/Yes          Yes            No
+
+
+Remember:
+
+    r  = read
+    w  = write from beginning / truncate
+    a  = append
+
+    +  = update mode (reading + writing)
+
+
+══════════════════════════════════════════════════════════════════════
+TEXT VS BINARY
+══════════════════════════════════════════════════════════════════════
+
+TEXT:
+
+    fprintf()
+    fscanf()
+    fgetc()
+    fputc()
+    fgets()
+    fputs()
+
+
+BINARY:
+
+    fwrite()
+    fread()
+
+
+Conceptually:
+
+    TEXT
+    ────
+    Human-readable representation
+          ↓
+    Parsing/conversion may be required
+
+
+    BINARY
+    ──────
+    Raw bytes
+          ↓
+    More direct representation of data
+
+
+But binary does NOT automatically mean:
+
+    "always smaller"
+    "always faster"
+    "always portable"
+
+
+Those depend on the application and representation.
+
+
+══════════════════════════════════════════════════════════════════════
+VERY IMPORTANT INTERVIEW TRAPS
+══════════════════════════════════════════════════════════════════════
+
+TRAP 1
+──────
+
+What happens with:
+
+    fopen("x.txt", "w");
+
+if x.txt already exists?
+
+ANSWER:
+
+    Existing contents are truncated.
+
+
+TRAP 2
+──────
+
+What happens with:
+
+    fopen("x.txt", "r");
+
+if x.txt doesn't exist?
+
+ANSWER:
+
+    fopen() returns NULL.
+
+
+TRAP 3
+──────
+
+Why is fgetc() return type int?
+
+ANSWER:
+
+    To represent all possible character values plus EOF.
+
+
+TRAP 4
+──────
+
+Is EOF a character?
+
+ANSWER:
+
+    No.
+
+It is a special integer value used to indicate an end/error
+condition from input operations.
+
+
+TRAP 5
+──────
+
+Why is this dangerous?
+
+    while (!feof(fp))
+    {
+        ch = fgetc(fp);
+        ...
+    }
+
+ANSWER:
+
+    feof() becomes true only after an input operation has attempted
+    to read past the end condition.
+
+The preferred pattern is:
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        ...
+    }
+
+
+TRAP 6
+──────
+
+Difference:
+
+    fprintf()
+    printf()
+
+ANSWER:
+
+    printf() → standard output
+    fprintf() → specified stream
+
+
+TRAP 7
+──────
+
+Difference:
+
+    fscanf()
+    scanf()
+
+ANSWER:
+
+    scanf() reads from standard input.
+
+    fscanf() reads from a specified stream.
+
+
+TRAP 8
+──────
+
+Does fputs() automatically add '\n'?
+
+ANSWER:
+
+    No.
+
+
+TRAP 9
+──────
+
+Does fgets() necessarily remove '\n'?
+
+ANSWER:
+
+    No.
+
+If newline fits in the buffer, fgets() normally stores it.
+
+
+TRAP 10
+───────
+
+Why check:
+
+    fp == NULL
+
+after fopen()?
+
+ANSWER:
+
+    Because opening the file can fail.
+
+
+TRAP 11
+───────
+
+Does fclose() matter?
+
+ANSWER:
+
+    Yes.
+
+It releases resources and ensures buffered output is properly
+handled.
+
+
+TRAP 12
+───────
+
+Can a struct always be safely exchanged between different machines
+using:
+
+    fwrite(&s, sizeof(s), 1, fp);
+
+ANSWER:
+
+    No.
+
+Padding, alignment, representation, type sizes and endianness can
+make raw struct representation non-portable.
+
+
+══════════════════════════════════════════════════════════════════════
+FILE-HANDLING MASTER MAP
+══════════════════════════════════════════════════════════════════════
+
+                         FILE HANDLING
+                              │
+          ┌───────────────────┼────────────────────┐
+          │                   │                    │
+       Opening             Reading              Writing
+          │                   │                    │
+       fopen()             fgetc()             fputc()
+          │                 fgets()             fputs()
+          │                 fscanf()            fprintf()
+          │                 fread()             fwrite()
+          │
+       Modes
+          │
+     ┌────┼────┬────┬────┬────┐
+     r    w    a    r+   w+   a+
+          │
+          ▼
+       fclose()
+          │
+          ▼
+       Positioning
+          │
+     ┌────┼─────────┐
+     │    │         │
+   fseek ftell    rewind
+     │
+ SEEK_SET
+ SEEK_CUR
+ SEEK_END
+          │
+          ▼
+       Errors
+          │
+     ┌────┼───────────┐
+     │    │           │
+   EOF  feof()     ferror()
+             │
+           errno
+             │
+          perror()
+
+
+══════════════════════════════════════════════════════════════════════
+JOB-READY FILE-HANDLING PATTERN
+══════════════════════════════════════════════════════════════════════
+
+Always think:
+
+    1. OPEN
+       ↓
+    2. CHECK
+       ↓
+    3. PROCESS
+       ↓
+    4. CHECK ERRORS
+       ↓
+    5. CLOSE
+
+
+Example:
+
+    FILE *fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        perror("data.txt");
+        return 1;
+    }
+
+    /* process file */
+
+    if (ferror(fp))
+    {
+        perror("data.txt");
+    }
+
+    fclose(fp);
+
+
+This pattern becomes extremely important in:
+
+    • Student Management System
+    • Employee Management System
+    • Banking System
+    • Library Management
+    • Contact Management
+    • Inventory Management
+    • File-based Quiz
+    • Logging systems
+    • Configuration systems
+
+
+══════════════════════════════════════════════════════════════════════
+GATE / INTERVIEW QUICK REVISION
+══════════════════════════════════════════════════════════════════════
+
+Q1. Which mode truncates an existing file?
+
+    w and w+
+
+
+Q2. Which mode appends?
+
+    a and a+
+
+
+Q3. Which mode requires an existing file?
+
+    r and r+
+
+
+Q4. Which function reads one character?
+
+    fgetc()
+
+
+Q5. Which function writes one character?
+
+    fputc()
+
+
+Q6. Which function reads a line safely into a bounded buffer?
+
+    fgets()
+
+
+Q7. Which function writes a string without automatically adding
+    newline?
+
+    fputs()
+
+
+Q8. Which function performs formatted output to a stream?
+
+    fprintf()
+
+
+Q9. Which function performs formatted input from a stream?
+
+    fscanf()
+
+
+Q10. Which functions handle binary blocks?
+
+    fread()
+    fwrite()
+
+
+Q11. Which function gives the current file position?
+
+    ftell()
+
+
+Q12. Which function changes file position?
+
+    fseek()
+
+
+Q13. Which function returns to the beginning and clears the
+    stream error indicator?
+
+    rewind()
+
+
+Q14. What does SEEK_END represent?
+
+    The end-origin for positioning operations.
+
+
+Q15. Why should fgetc() result be stored in int?
+
+    To represent both character values and EOF.
+
+
+Q16. What does NULL from fopen() mean?
+
+    The file/stream could not be opened successfully.
+
+
+Q17. Difference between EOF and ferror()?
+
+    EOF indicates the end condition was encountered;
+    ferror() indicates an I/O error.
+
+
+══════════════════════════════════════════════════════════════════════
+CHAPTER 18 FINAL REVISION
+══════════════════════════════════════════════════════════════════════
+
+FILE
+ │
+ ├── Text
+ │    ├── fgetc()
+ │    ├── fputc()
+ │    ├── fgets()
+ │    ├── fputs()
+ │    ├── fprintf()
+ │    └── fscanf()
+ │
+ ├── Binary
+ │    ├── fread()
+ │    └── fwrite()
+ │
+ ├── Open/Close
+ │    ├── fopen()
+ │    └── fclose()
+ │
+ ├── Modes
+ │    ├── r
+ │    ├── w
+ │    ├── a
+ │    ├── r+
+ │    ├── w+
+ │    └── a+
+ │
+ ├── Position
+ │    ├── fseek()
+ │    ├── ftell()
+ │    ├── rewind()
+ │    ├── SEEK_SET
+ │    ├── SEEK_CUR
+ │    └── SEEK_END
+ │
+ └── Error handling
+      ├── EOF
+      ├── feof()
+      ├── ferror()
+      ├── errno
+      └── perror()
+
+
+CORE FORMULA:
+
+    fopen()
+       ↓
+    check NULL
+       ↓
+    read/write
+       ↓
+    handle EOF/errors
+       ↓
+    fclose()
+
+
+Chapter 18 complete.
+
+NEXT:
+    CHAPTER 19 — COMMAND-LINE ARGUMENTS
+        19.1 argc
+        19.2 argv
+        19.3 Command-line input
+        19.4 Parsing arguments
+        19.5 Practical command-line programs

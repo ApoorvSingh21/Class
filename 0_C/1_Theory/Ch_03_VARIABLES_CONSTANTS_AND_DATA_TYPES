@@ -1,0 +1,2532 @@
+Absolutely. Here is Chapter 3 — Variables, Constants & Data Types in C, explained from beginner level to job/interview-ready level, with examples and practice.
+
+============================================================
+        C PROGRAMMING — CHAPTER 3
+        VARIABLES, CONSTANTS & DATA TYPES
+============================================================
+
+Goal:
+Understand how C stores data in memory, how variables work,
+how data types determine size/range, and how to choose the
+correct type in real programs.
+
+------------------------------------------------------------
+1. WHAT IS DATA?
+------------------------------------------------------------
+
+Data is information that a program needs to process.
+
+Examples:
+
+    Age          → 22
+    Marks        → 85.5
+    Name         → "Apoorv"
+    Grade        → 'A'
+    Employee ID  → 101
+    IsLoggedIn   → 1
+
+A C program stores and manipulates this data using variables,
+constants, arrays, structures, etc.
+
+
+------------------------------------------------------------
+2. WHAT IS A VARIABLE?
+------------------------------------------------------------
+
+A variable is a named memory location used to store a value
+that can change during program execution.
+
+Example:
+
+    int age = 22;
+
+Here:
+
+    int     → data type
+    age     → variable name
+    22      → initial value
+
+Conceptually:
+
+    Memory
+    +----------------+
+    |      22        |
+    +----------------+
+           ↑
+          age
+
+
+Example:
+
+    int age = 22;
+
+    age = 23;
+
+The value changed from 22 to 23.
+
+
+------------------------------------------------------------
+3. WHY DO WE NEED VARIABLES?
+------------------------------------------------------------
+
+Without variables:
+
+    printf("%d", 25);
+
+With variables:
+
+    int age = 25;
+    printf("%d", age);
+
+Variables make programs:
+
+    - readable
+    - maintainable
+    - reusable
+    - dynamic
+    - easier to debug
+
+
+------------------------------------------------------------
+4. VARIABLE DECLARATION
+------------------------------------------------------------
+
+Syntax:
+
+    data_type variable_name;
+
+Example:
+
+    int age;
+    float salary;
+    char grade;
+
+Declaration tells the compiler that a variable exists and
+specifies its data type.
+
+
+------------------------------------------------------------
+5. VARIABLE INITIALIZATION
+------------------------------------------------------------
+
+Initialization means assigning an initial value when the
+variable is created.
+
+Example:
+
+    int age = 22;
+
+    float salary = 45000.50f;
+
+    char grade = 'A';
+
+
+------------------------------------------------------------
+6. DECLARATION vs INITIALIZATION
+------------------------------------------------------------
+
+Declaration:
+
+    int age;
+
+Initialization:
+
+    int age = 22;
+
+Assignment after declaration:
+
+    age = 23;
+
+
+Example:
+
+    int age;       // declaration
+    age = 22;      // assignment
+    age = 23;      // new assignment
+
+
+Important:
+
+Declaration does NOT necessarily give a variable a useful
+initial value.
+
+For an automatic local variable:
+
+    int x;
+
+Reading x before assigning a value gives an indeterminate
+value and can lead to undefined behavior.
+
+
+------------------------------------------------------------
+7. VARIABLE NAMING RULES
+------------------------------------------------------------
+
+Rules:
+
+1. Name can contain letters, digits and underscore.
+
+2. Name cannot start with a digit.
+
+3. Spaces are not allowed.
+
+4. C is case-sensitive.
+
+5. Keywords cannot be used as variable names.
+
+Valid:
+
+    age
+    student_age
+    marks1
+    _count
+
+Invalid:
+
+    1age
+    student age
+    float
+    student-name
+
+
+------------------------------------------------------------
+8. CASE SENSITIVITY
+------------------------------------------------------------
+
+C is case-sensitive.
+
+These are different identifiers:
+
+    age
+    Age
+    AGE
+    aGe
+
+
+Example:
+
+    int age = 20;
+    int Age = 30;
+
+Both variables are different.
+
+
+------------------------------------------------------------
+9. GOOD VARIABLE NAMING
+------------------------------------------------------------
+
+Bad:
+
+    int x;
+    int a;
+    int p;
+
+Better:
+
+    int age;
+    int marks;
+    int price;
+
+Professional:
+
+    int student_count;
+    float average_marks;
+    double account_balance;
+
+
+General convention in C:
+
+    snake_case
+
+Example:
+
+    total_marks
+    employee_id
+    account_balance
+
+
+------------------------------------------------------------
+10. WHAT IS A DATA TYPE?
+------------------------------------------------------------
+
+A data type tells the compiler:
+
+    1. What kind of data is being stored
+    2. How much memory is required
+    3. What values can be represented
+    4. What operations are appropriate
+
+Example:
+
+    int age = 22;
+
+The compiler knows that age is an integer.
+
+
+------------------------------------------------------------
+11. C DATA TYPE CLASSIFICATION
+------------------------------------------------------------
+
+C data types can broadly be understood as:
+
+                C DATA TYPES
+                     |
+        +------------+-------------+
+        |                          |
+     Basic/Scalar              Derived/User-defined
+        |                          |
+   +----+----+----+----+      +----+----+
+   |    |    |    |           |         |
+  char int float double      array    pointer
+                             
+   Other important types:
+   void, enum, struct, union
+
+
+More formally, C provides:
+
+    Basic types:
+        char
+        integer types
+        floating types
+
+    void
+
+    Derived types:
+        arrays
+        pointers
+        functions
+
+    User-defined/aggregate constructs:
+        struct
+        union
+        enum
+        typedef
+
+
+------------------------------------------------------------
+12. INTEGER DATA TYPES
+------------------------------------------------------------
+
+Integer types store whole numbers.
+
+Examples:
+
+    10
+    -25
+    0
+    1000
+
+
+Common integer types:
+
+    char
+    short
+    int
+    long
+    long long
+
+
+Example:
+
+    int age = 22;
+
+
+------------------------------------------------------------
+13. int
+------------------------------------------------------------
+
+int is the most commonly used integer type.
+
+Example:
+
+    int count = 100;
+
+The exact size is implementation-dependent.
+
+On many modern systems:
+
+    sizeof(int) == 4 bytes
+
+But C does NOT guarantee that int is always exactly 4 bytes.
+
+
+Important minimum range:
+
+    INT_MIN <= value <= INT_MAX
+
+The exact limits depend on the implementation.
+
+Use:
+
+    #include <limits.h>
+
+to access:
+
+    INT_MIN
+    INT_MAX
+
+
+Example:
+
+    #include <stdio.h>
+    #include <limits.h>
+
+    int main(void)
+    {
+        printf("%d\n", INT_MIN);
+        printf("%d\n", INT_MAX);
+
+        return 0;
+    }
+
+
+------------------------------------------------------------
+14. short
+------------------------------------------------------------
+
+short is an integer type that is at least 16 bits.
+
+Example:
+
+    short temperature = 25;
+
+Use when the required range is known to fit and memory
+optimization matters.
+
+
+------------------------------------------------------------
+15. long
+------------------------------------------------------------
+
+long is an integer type with at least as much range as int.
+
+Example:
+
+    long population = 1400000000L;
+
+The size of long depends on the platform.
+
+For example:
+
+    Windows 64-bit:
+        long is commonly 4 bytes
+
+    Many Unix-like 64-bit systems:
+        long is commonly 8 bytes
+
+
+Therefore:
+
+    Never assume sizeof(long) is always 8 bytes.
+
+
+------------------------------------------------------------
+16. long long
+------------------------------------------------------------
+
+long long provides a large integer range.
+
+Example:
+
+    long long distance = 9000000000LL;
+
+At least 64 bits are guaranteed by the C standard.
+
+Suffix:
+
+    LL
+
+Example:
+
+    10000000000LL
+
+
+------------------------------------------------------------
+17. SIGNED INTEGER TYPES
+------------------------------------------------------------
+
+Integer types can generally be:
+
+    signed
+    unsigned
+
+
+Example:
+
+    signed int x = -100;
+    unsigned int y = 100;
+
+
+signed types can represent:
+
+    negative
+    zero
+    positive
+
+
+unsigned types represent:
+
+    zero
+    positive
+
+
+------------------------------------------------------------
+18. UNSIGNED INTEGER TYPES
+------------------------------------------------------------
+
+Example:
+
+    unsigned int count = 100;
+
+Unsigned types provide no negative values, allowing a larger
+positive range for the same width.
+
+For an N-bit unsigned integer:
+
+    range = 0 to 2^N - 1
+
+
+For an N-bit signed integer using the modern two's-complement
+representation commonly used by systems:
+
+    range is typically
+    -2^(N-1) to 2^(N-1)-1
+
+
+But do not blindly assume representation details unless the
+implementation guarantees them.
+
+
+------------------------------------------------------------
+19. unsigned EXAMPLE
+------------------------------------------------------------
+
+    unsigned int age = 22;
+
+This is appropriate when negative values do not make sense.
+
+Example:
+
+    unsigned int employee_count = 500;
+
+
+But be careful:
+
+    unsigned int x = -1;
+
+The conversion does not produce -1 as an unsigned value;
+it produces a value according to unsigned arithmetic rules,
+typically UINT_MAX.
+
+
+------------------------------------------------------------
+20. CHAR DATA TYPE
+------------------------------------------------------------
+
+char is used to store a character.
+
+Example:
+
+    char grade = 'A';
+
+Important:
+
+    'A'
+
+is a character constant.
+
+While:
+
+    "A"
+
+is a string literal.
+
+
+They are NOT the same.
+
+
+------------------------------------------------------------
+21. CHARACTER EXAMPLE
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        char grade = 'A';
+
+        printf("%c\n", grade);
+
+        return 0;
+    }
+
+Output:
+
+    A
+
+
+------------------------------------------------------------
+22. char IS AN INTEGER TYPE
+------------------------------------------------------------
+
+In C, char is an integer type.
+
+A char object can store a character representation.
+
+There are three character types:
+
+    char
+    signed char
+    unsigned char
+
+Important:
+
+    Whether plain char behaves as signed or unsigned is
+    implementation-defined.
+
+Use signed char or unsigned char when you specifically need
+a signed/unsigned 8-bit-like character type, subject to the
+implementation's CHAR_BIT and representation.
+
+
+------------------------------------------------------------
+23. ASCII
+------------------------------------------------------------
+
+ASCII is a character encoding widely used in computing.
+
+Examples:
+
+    'A' → 65
+    'B' → 66
+    'a' → 97
+    '0' → 48
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        char ch = 'A';
+
+        printf("%c\n", ch);
+        printf("%d\n", ch);
+
+        return 0;
+    }
+
+Output commonly:
+
+    A
+    65
+
+Note:
+The C standard does not require ASCII specifically, although
+ASCII-compatible systems are extremely common.
+
+
+------------------------------------------------------------
+24. FLOATING-POINT DATA TYPES
+------------------------------------------------------------
+
+Floating-point types store fractional/real values.
+
+Main types:
+
+    float
+    double
+    long double
+
+
+Example:
+
+    float temperature = 36.5f;
+
+    double pi = 3.141592653589793;
+
+
+------------------------------------------------------------
+25. float
+------------------------------------------------------------
+
+Example:
+
+    float price = 99.50f;
+
+The suffix:
+
+    f
+
+makes the literal a float.
+
+Without f:
+
+    99.50
+
+is normally a double constant.
+
+
+Example:
+
+    float x = 10.5f;
+
+
+------------------------------------------------------------
+26. double
+------------------------------------------------------------
+
+double generally provides more precision than float.
+
+Example:
+
+    double salary = 45678.5678;
+
+It is the default type for most floating-point literals.
+
+Example:
+
+    double x = 10.5;
+
+
+------------------------------------------------------------
+27. long double
+------------------------------------------------------------
+
+long double is a floating-point type with at least as much
+precision/range as double.
+
+Example:
+
+    long double value = 3.141592653589793238L;
+
+
+Its actual precision varies by compiler/platform.
+
+Do not assume a particular number of bytes or precision.
+
+
+------------------------------------------------------------
+28. FLOATING-POINT PRECISION
+------------------------------------------------------------
+
+Floating-point numbers are usually approximations.
+
+Example:
+
+    0.1 + 0.2
+
+may not be represented exactly in binary floating point.
+
+Therefore:
+
+    if (a == b)
+
+can be dangerous when a and b are results of floating-point
+calculations.
+
+
+Better approach:
+
+    compare using an acceptable tolerance.
+
+
+Example:
+
+    if (fabs(a - b) < epsilon)
+
+
+Requires:
+
+    #include <math.h>
+
+
+------------------------------------------------------------
+29. VOID DATA TYPE
+------------------------------------------------------------
+
+void means "no value" or "no type/value".
+
+Common uses:
+
+1. Function returns nothing:
+
+    void display(void)
+    {
+        printf("Hello");
+    }
+
+
+2. Generic pointer:
+
+    void *ptr;
+
+
+3. Function parameter list with no parameters:
+
+    int main(void)
+
+
+------------------------------------------------------------
+30. sizeof OPERATOR
+------------------------------------------------------------
+
+sizeof determines the size, in bytes, of a type or object.
+
+Example:
+
+    printf("%zu\n", sizeof(int));
+
+
+Correct format specifier for sizeof:
+
+    %zu
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("%zu\n", sizeof(char));
+        printf("%zu\n", sizeof(int));
+        printf("%zu\n", sizeof(float));
+        printf("%zu\n", sizeof(double));
+
+        return 0;
+    }
+
+
+Typical output on many systems:
+
+    1
+    4
+    4
+    8
+
+BUT:
+
+These sizes are implementation-dependent except that:
+
+    sizeof(char) == 1
+
+is guaranteed.
+
+
+------------------------------------------------------------
+31. BYTE AND CHAR
+------------------------------------------------------------
+
+In C:
+
+    sizeof(char) == 1
+
+But one C "byte" is not necessarily 8 bits.
+
+The number of bits in a byte is represented by:
+
+    CHAR_BIT
+
+from:
+
+    #include <limits.h>
+
+
+Example:
+
+    printf("%d\n", CHAR_BIT);
+
+
+On most modern systems:
+
+    CHAR_BIT = 8
+
+
+------------------------------------------------------------
+32. DATA TYPE SIZE RELATIONSHIPS
+------------------------------------------------------------
+
+The C standard guarantees ordering relationships such as:
+
+    sizeof(char)
+        <= sizeof(short)
+        <= sizeof(int)
+        <= sizeof(long)
+        <= sizeof(long long)
+
+However, exact byte sizes are implementation-dependent.
+
+
+Floating types have their own required ordering/precision
+relationships.
+
+
+------------------------------------------------------------
+33. TYPE MODIFIERS
+------------------------------------------------------------
+
+Important modifiers:
+
+    signed
+    unsigned
+    short
+    long
+
+
+Examples:
+
+    signed int
+    unsigned int
+    short int
+    long int
+    long long int
+    unsigned long long int
+
+
+Usually:
+
+    int
+
+is equivalent to:
+
+    signed int
+
+
+when signedness is not otherwise specified.
+
+
+------------------------------------------------------------
+34. INTEGER TYPE EXAMPLES
+------------------------------------------------------------
+
+    short int a = 10;
+
+    unsigned int b = 20;
+
+    long int c = 300000L;
+
+    long long int d = 9000000000LL;
+
+    unsigned long long int e = 10000000000ULL;
+
+
+------------------------------------------------------------
+35. INTEGER CONSTANTS
+------------------------------------------------------------
+
+Examples:
+
+    10
+    -20
+    1000
+
+
+Different bases can be written:
+
+Decimal:
+
+    25
+
+Octal:
+
+    031
+
+Hexadecimal:
+
+    0x19
+
+Binary:
+
+    0b11001
+
+Binary integer constants are supported in C23; older C
+standards do not define 0b literals.
+
+
+------------------------------------------------------------
+36. HEXADECIMAL
+------------------------------------------------------------
+
+Hexadecimal uses:
+
+    0-9
+    A-F
+    a-f
+
+
+Example:
+
+    int x = 0xFF;
+
+
+Common use:
+
+    bit manipulation
+    memory addresses
+    embedded systems
+    system programming
+    permissions/flags
+
+
+------------------------------------------------------------
+37. OCTAL
+------------------------------------------------------------
+
+Octal uses digits:
+
+    0-7
+
+
+Example:
+
+    int x = 075;
+
+
+Important:
+
+    075
+
+is NOT decimal 75.
+
+It is octal 75.
+
+
+------------------------------------------------------------
+38. INTEGER SUFFIXES
+------------------------------------------------------------
+
+Integer constants can use suffixes.
+
+Examples:
+
+    100U
+    100L
+    100LL
+    100UL
+    100ULL
+
+
+Meaning:
+
+    U   → unsigned
+    L   → long
+    LL  → long long
+
+
+Example:
+
+    unsigned int x = 100U;
+
+    long y = 100000L;
+
+    long long z = 10000000000LL;
+
+
+------------------------------------------------------------
+39. FLOATING CONSTANT SUFFIXES
+------------------------------------------------------------
+
+Examples:
+
+    3.14      → double
+    3.14f     → float
+    3.14L     → long double
+
+
+Example:
+
+    float a = 3.14f;
+    double b = 3.14;
+    long double c = 3.14L;
+
+
+------------------------------------------------------------
+40. CONSTANT vs VARIABLE
+------------------------------------------------------------
+
+Variable:
+
+    int age = 20;
+
+Value can be changed:
+
+    age = 21;
+
+
+Constant using const:
+
+    const int MAX_AGE = 100;
+
+You cannot modify MAX_AGE through that identifier.
+
+
+------------------------------------------------------------
+41. const QUALIFIER
+------------------------------------------------------------
+
+Syntax:
+
+    const data_type variable = value;
+
+
+Example:
+
+    const int MAX_USERS = 100;
+
+After initialization:
+
+    MAX_USERS = 200;
+
+This is not allowed.
+
+
+------------------------------------------------------------
+42. const POINTER BASICS
+------------------------------------------------------------
+
+You will study pointers deeply later, but understand this
+distinction:
+
+    const int *p;
+
+means pointer to const int.
+
+    int *const p = &x;
+
+means const pointer to int.
+
+    const int *const p = &x;
+
+means const pointer to const int.
+
+
+This becomes very important in C interviews.
+
+
+------------------------------------------------------------
+43. #define CONSTANT
+------------------------------------------------------------
+
+Another traditional way:
+
+    #define MAX_SIZE 100
+
+
+Example:
+
+    #define PI 3.14159
+
+
+Unlike a const variable, this is a preprocessor macro.
+
+The preprocessor replaces the macro name before compilation.
+
+Modern C code often prefers:
+
+    const
+
+or enumeration/constants appropriate to the situation,
+because typed constants are easier to reason about.
+
+
+------------------------------------------------------------
+44. ENUMERATION CONSTANTS
+------------------------------------------------------------
+
+Example:
+
+    enum Day
+    {
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY
+    };
+
+
+By default:
+
+    MONDAY    = 0
+    TUESDAY   = 1
+    WEDNESDAY = 2
+
+
+You can specify values:
+
+    enum Status
+    {
+        SUCCESS = 0,
+        ERROR = 1
+    };
+
+
+enum is useful for representing a fixed set of named values.
+
+
+------------------------------------------------------------
+45. IDENTIFIER vs VARIABLE vs CONSTANT
+------------------------------------------------------------
+
+Identifier:
+
+    Any valid name used to identify program entities.
+
+Examples:
+
+    age
+    calculate_sum
+    Student
+
+
+Variable:
+
+    An object whose stored value can change.
+
+Example:
+
+    int age = 20;
+
+
+Constant:
+
+    A value that should not be modified through a particular
+    mechanism.
+
+Example:
+
+    const int MAX = 100;
+
+
+------------------------------------------------------------
+46. STORAGE AND MEMORY
+------------------------------------------------------------
+
+Suppose:
+
+    int age = 22;
+
+The variable requires storage.
+
+Conceptually:
+
+    Variable name
+          |
+          ↓
+    +-----------+
+    |     22    |
+    +-----------+
+    Memory
+
+
+The compiler determines the required representation and
+alignment according to the type and implementation.
+
+
+------------------------------------------------------------
+47. OBJECT IN C
+------------------------------------------------------------
+
+In C terminology, an object is a region of storage that can
+represent a value.
+
+Example:
+
+    int x = 10;
+
+Here:
+
+    x
+
+designates an object.
+
+
+This terminology becomes important when learning:
+
+    pointers
+    memory management
+    arrays
+    structures
+    const
+    volatile
+    atomic types
+
+
+------------------------------------------------------------
+48. SCOPE OF A VARIABLE
+------------------------------------------------------------
+
+Scope means where an identifier can be accessed in source code.
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int x = 10;
+
+        printf("%d\n", x);
+
+        return 0;
+    }
+
+
+x exists within the scope of main's block.
+
+
+------------------------------------------------------------
+49. BLOCK SCOPE
+------------------------------------------------------------
+
+Example:
+
+    int main(void)
+    {
+        int x = 10;
+
+        {
+            int y = 20;
+
+            printf("%d %d\n", x, y);
+        }
+
+        // y cannot be accessed here
+
+        return 0;
+    }
+
+
+x is accessible in the inner block.
+
+y is only accessible inside the inner block.
+
+
+------------------------------------------------------------
+50. GLOBAL VARIABLE
+------------------------------------------------------------
+
+A variable declared outside all functions has file scope.
+
+Example:
+
+    int counter = 0;
+
+    int main(void)
+    {
+        counter++;
+        return 0;
+    }
+
+
+Global variables can be accessed by functions according to
+their linkage/scope rules.
+
+
+Use global state carefully because excessive global state can
+make software harder to test and maintain.
+
+
+------------------------------------------------------------
+51. LOCAL VARIABLE
+------------------------------------------------------------
+
+A variable declared inside a function/block is commonly
+called a local variable.
+
+Example:
+
+    void test(void)
+    {
+        int x = 10;
+    }
+
+
+x is local to that block.
+
+
+------------------------------------------------------------
+52. VARIABLE LIFETIME
+------------------------------------------------------------
+
+Lifetime means the period during program execution for which
+an object exists.
+
+Important concepts:
+
+    scope      → where the name can be used
+    lifetime   → how long the object exists
+    linkage    → whether declarations refer to the same entity
+                 across scopes/files
+
+
+Do not confuse these three.
+
+
+------------------------------------------------------------
+53. AUTOMATIC VARIABLES
+------------------------------------------------------------
+
+Local variables normally have automatic storage duration.
+
+Example:
+
+    void test(void)
+    {
+        int x = 10;
+    }
+
+
+x is created when execution enters its block and ceases to
+exist when execution leaves the block.
+
+
+------------------------------------------------------------
+54. STATIC VARIABLE
+------------------------------------------------------------
+
+A local static variable retains its value between function
+calls.
+
+Example:
+
+    #include <stdio.h>
+
+    void counter(void)
+    {
+        static int count = 0;
+
+        count++;
+
+        printf("%d\n", count);
+    }
+
+    int main(void)
+    {
+        counter();
+        counter();
+        counter();
+
+        return 0;
+    }
+
+Output:
+
+    1
+    2
+    3
+
+
+Unlike an automatic local variable, count has static storage
+duration.
+
+
+------------------------------------------------------------
+55. EXTERNAL VARIABLE
+------------------------------------------------------------
+
+The extern keyword can declare an object defined elsewhere.
+
+Example:
+
+    extern int counter;
+
+
+It tells the compiler that the definition is provided
+elsewhere.
+
+Useful in multi-file programs.
+
+
+------------------------------------------------------------
+56. VARIABLE INITIALIZATION RULE
+------------------------------------------------------------
+
+Automatic local variable:
+
+    int x;
+
+does not automatically become 0.
+
+Static-storage-duration objects are initialized to zero if no
+explicit initializer is provided.
+
+Example:
+
+    static int count;
+
+count starts as:
+
+    0
+
+
+Global/file-scope objects also receive zero initialization
+when no explicit initializer is provided.
+
+
+------------------------------------------------------------
+57. TYPE CONVERSION PREVIEW
+------------------------------------------------------------
+
+Different data types can interact.
+
+Example:
+
+    int a = 10;
+    double b = 2.5;
+
+    double result = a + b;
+
+
+The int value is converted for the operation.
+
+
+Type conversion will be studied deeply in Chapter 6.
+
+
+------------------------------------------------------------
+58. INTEGER PROMOTION
+------------------------------------------------------------
+
+Small integer types such as char and short are commonly
+promoted to int (or unsigned int where required) during many
+expressions.
+
+Example:
+
+    char a = 10;
+    char b = 20;
+
+    int result = a + b;
+
+
+The expression:
+
+    a + b
+
+does not normally perform char-sized arithmetic.
+
+
+This is important in interviews.
+
+
+------------------------------------------------------------
+59. INTEGER OVERFLOW
+------------------------------------------------------------
+
+Signed integer overflow is a serious issue.
+
+Example:
+
+    int x = INT_MAX;
+
+    x = x + 1;
+
+
+This causes undefined behavior for signed int arithmetic.
+
+
+Unsigned integer arithmetic behaves differently:
+
+    unsigned int x = UINT_MAX;
+
+    x = x + 1;
+
+
+The result wraps modulo 2^N for an N-bit unsigned type.
+
+
+------------------------------------------------------------
+60. DATA TYPE SELECTION
+------------------------------------------------------------
+
+Choose a type based on the data and required range.
+
+Examples:
+
+Age:
+
+    int age;
+
+Employee count:
+
+    unsigned int employee_count;
+
+Very large ID/count:
+
+    unsigned long long id;
+
+Decimal scientific calculation:
+
+    double value;
+
+Single character:
+
+    char grade;
+
+
+Do NOT select types only because they "look small."
+
+
+------------------------------------------------------------
+61. FIXED-WIDTH INTEGER TYPES
+------------------------------------------------------------
+
+For systems programming, exact-width integer types are useful.
+
+Header:
+
+    #include <stdint.h>
+
+
+Examples:
+
+    int8_t
+    int16_t
+    int32_t
+    int64_t
+
+Unsigned:
+
+    uint8_t
+    uint16_t
+    uint32_t
+    uint64_t
+
+
+Example:
+
+    int32_t employee_id = 1001;
+
+
+Important:
+
+These types are provided when the implementation supports
+the requested exact width.
+
+
+------------------------------------------------------------
+62. SIZE TYPES
+------------------------------------------------------------
+
+size_t is an unsigned integer type used for sizes/counts
+where appropriate.
+
+Example:
+
+    size_t length = 100;
+
+
+It is commonly used with:
+
+    sizeof
+    array/string lengths
+    memory allocation
+
+
+Example:
+
+    size_t size = sizeof(int);
+
+
+------------------------------------------------------------
+63. FORMAT SPECIFIERS
+------------------------------------------------------------
+
+When using printf, the format specifier should match the type.
+
+Examples:
+
+    int:
+        %d
+
+    unsigned int:
+        %u
+
+    long:
+        %ld
+
+    long long:
+        %lld
+
+    unsigned long long:
+        %llu
+
+    float:
+        %f
+
+    double:
+        %f
+
+    char:
+        %c
+
+    string:
+        %s
+
+    size_t:
+        %zu
+
+
+For portable integer types such as int32_t, use the macros
+from <inttypes.h> when appropriate.
+
+
+------------------------------------------------------------
+64. COMMON FORMAT SPECIFIER MISTAKES
+------------------------------------------------------------
+
+Example:
+
+    long long x = 100;
+
+Use:
+
+    printf("%lld\n", x);
+
+
+Do not randomly use:
+
+    %d
+
+for every integer type.
+
+The format specifier must correspond appropriately to the
+argument type expected by printf.
+
+
+------------------------------------------------------------
+65. PRACTICAL PROGRAM
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int age = 22;
+        float marks = 85.5f;
+        double salary = 45000.75;
+        char grade = 'A';
+
+        printf("Age    : %d\n", age);
+        printf("Marks  : %f\n", marks);
+        printf("Salary : %f\n", salary);
+        printf("Grade  : %c\n", grade);
+
+        return 0;
+    }
+
+
+Possible output:
+
+    Age    : 22
+    Marks  : 85.500000
+    Salary : 45000.750000
+    Grade  : A
+
+
+------------------------------------------------------------
+66. PRACTICAL STUDENT PROGRAM
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int roll_no = 101;
+        char grade = 'A';
+        float percentage = 87.5f;
+
+        printf("Roll No    : %d\n", roll_no);
+        printf("Grade      : %c\n", grade);
+        printf("Percentage : %.2f\n", percentage);
+
+        return 0;
+    }
+
+
+------------------------------------------------------------
+67. CONSTANT + VARIABLE PROGRAM
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        const double PI = 3.141592653589793;
+        double radius = 5.0;
+
+        double area = PI * radius * radius;
+
+        printf("Area = %.2f\n", area);
+
+        return 0;
+    }
+
+
+------------------------------------------------------------
+68. MULTIPLE DECLARATIONS
+------------------------------------------------------------
+
+You can write:
+
+    int a;
+    int b;
+    int c;
+
+
+or:
+
+    int a, b, c;
+
+
+Initialization:
+
+    int a = 10, b = 20, c = 30;
+
+
+For readability, separate declarations are often preferable
+in larger professional code when variables have different
+roles.
+
+
+------------------------------------------------------------
+69. DECLARATION OF MULTIPLE TYPES
+------------------------------------------------------------
+
+    int age;
+    float salary;
+    double balance;
+    char grade;
+
+
+Each variable has its own type.
+
+
+------------------------------------------------------------
+70. TYPE ALIAS WITH typedef
+------------------------------------------------------------
+
+typedef creates an alias for a type.
+
+Example:
+
+    typedef unsigned long long ull;
+
+Now:
+
+    ull value = 10000000000ULL;
+
+
+Another example:
+
+    typedef unsigned int uint;
+
+    uint count = 100;
+
+
+typedef does not create a completely new type; it provides an
+alternate name for an existing type.
+
+
+------------------------------------------------------------
+71. NULL CHARACTER PREVIEW
+------------------------------------------------------------
+
+Strings in C are character arrays terminated by:
+
+    '\0'
+
+Example:
+
+    char name[] = "Apoorv";
+
+
+Conceptually:
+
+    A  p  o  o  r  v  \0
+
+
+The null character is different from:
+
+    '0'
+
+because:
+
+    '\0' → character with value zero
+    '0'  → character representing digit zero
+
+
+Strings will be covered deeply in Chapter 11.
+
+
+------------------------------------------------------------
+72. CHARACTER CONSTANT vs STRING LITERAL
+------------------------------------------------------------
+
+Character:
+
+    char ch = 'A';
+
+
+String:
+
+    char name[] = "Apoorv";
+
+
+Character:
+
+    'A'
+
+String:
+
+    "A"
+
+
+This is a very common interview question.
+
+
+------------------------------------------------------------
+73. MEMORY ALIGNMENT PREVIEW
+------------------------------------------------------------
+
+Compilers may insert padding between structure members to
+satisfy alignment requirements.
+
+Example:
+
+    struct Example
+    {
+        char c;
+        int x;
+    };
+
+
+You cannot always calculate the structure size simply as:
+
+    sizeof(char) + sizeof(int)
+
+
+The compiler may add padding.
+
+Structures and alignment will be studied later.
+
+
+------------------------------------------------------------
+74. DATA TYPES IN REAL SOFTWARE
+------------------------------------------------------------
+
+Example: Banking application
+
+    double interest_rate;
+    long long account_number;
+    char account_type;
+    unsigned int transaction_count;
+
+
+Example: Embedded system
+
+    uint8_t sensor_value;
+    uint16_t temperature;
+    uint32_t device_id;
+
+
+Example: Web/server application
+
+    size_t request_size;
+    int status_code;
+    char method[16];
+
+
+Choosing appropriate types is an important programming skill.
+
+
+------------------------------------------------------------
+75. COMMON BEGINNER MISTAKES
+------------------------------------------------------------
+
+Mistake 1:
+
+    int age
+    age = 20;
+
+Missing semicolon after declaration.
+
+
+Correct:
+
+    int age;
+    age = 20;
+
+
+Mistake 2:
+
+    char grade = "A";
+
+Wrong because "A" is a string literal.
+
+Correct:
+
+    char grade = 'A';
+
+
+Mistake 3:
+
+    int x = 10.5;
+
+The value is converted to int, losing the fractional part.
+
+Better:
+
+    double x = 10.5;
+
+
+Mistake 4:
+
+    int x;
+    printf("%d", x);
+
+x has an indeterminate value for an automatic local object.
+Do not read it before initialization.
+
+
+Mistake 5:
+
+    const int MAX = 100;
+    MAX = 200;
+
+Not allowed.
+
+
+------------------------------------------------------------
+76. COMMON INTERVIEW QUESTION:
+    WHICH IS BETTER, float OR double?
+------------------------------------------------------------
+
+Usually:
+
+    double
+
+is preferred for general-purpose floating-point calculations
+when extra precision is useful.
+
+Reasons:
+
+    - greater precision than float on common implementations
+    - often natural/default choice for floating literals
+    - generally preferred in many numerical applications
+
+But the correct choice depends on memory, performance,
+hardware, precision, and application requirements.
+
+
+------------------------------------------------------------
+77. COMMON INTERVIEW QUESTION:
+    IS int ALWAYS 4 BYTES?
+------------------------------------------------------------
+
+NO.
+
+The C standard does not require int to be exactly 4 bytes.
+
+On many modern systems:
+
+    sizeof(int) == 4
+
+But C only specifies minimum ranges and relationships.
+
+Always use:
+
+    sizeof(int)
+
+if you need to know the actual size on the current platform.
+
+
+------------------------------------------------------------
+78. COMMON INTERVIEW QUESTION:
+    HOW MANY BYTES IS char?
+------------------------------------------------------------
+
+In C:
+
+    sizeof(char) == 1
+
+is guaranteed.
+
+But one C byte is defined by CHAR_BIT bits, and CHAR_BIT is
+not required to be 8.
+
+
+------------------------------------------------------------
+79. COMMON INTERVIEW QUESTION:
+    DIFFERENCE BETWEEN signed AND unsigned?
+------------------------------------------------------------
+
+signed:
+
+    can represent negative and positive values.
+
+unsigned:
+
+    represents zero and positive values.
+
+Example:
+
+    signed int x = -10;
+
+    unsigned int y = 10;
+
+
+Unsigned types can represent a larger maximum positive value
+for the same number of value bits.
+
+
+------------------------------------------------------------
+80. COMMON INTERVIEW QUESTION:
+    WHAT IS sizeof?
+------------------------------------------------------------
+
+sizeof is an operator that determines the size in bytes of a
+type or object.
+
+Example:
+
+    sizeof(int)
+
+or:
+
+    int x;
+    sizeof(x)
+
+
+The result has type:
+
+    size_t
+
+
+------------------------------------------------------------
+81. COMMON INTERVIEW QUESTION:
+    WHAT IS const?
+------------------------------------------------------------
+
+const qualifies an object so that modification through that
+const-qualified lvalue is not permitted.
+
+Example:
+
+    const int MAX = 100;
+
+
+It communicates an important programming intention:
+
+    "This value should not be modified through this name."
+
+
+------------------------------------------------------------
+82. COMMON INTERVIEW QUESTION:
+    WHAT IS typedef?
+------------------------------------------------------------
+
+typedef creates an alias for an existing type.
+
+Example:
+
+    typedef unsigned long long ull;
+
+Then:
+
+    ull x;
+
+
+------------------------------------------------------------
+83. COMMON INTERVIEW QUESTION:
+    WHAT IS THE DIFFERENCE BETWEEN
+    DECLARATION AND DEFINITION?
+------------------------------------------------------------
+
+Declaration tells the compiler about an entity.
+
+Example:
+
+    extern int x;
+
+
+Definition actually provides the entity/storage in this case:
+
+    int x = 10;
+
+
+For functions:
+
+Declaration:
+
+    int add(int, int);
+
+
+Definition:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+
+------------------------------------------------------------
+84. MINI PROGRAM — EMPLOYEE INFORMATION
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int employee_id = 1001;
+        char grade = 'A';
+        double salary = 55000.75;
+
+        printf("Employee ID : %d\n", employee_id);
+        printf("Grade       : %c\n", grade);
+        printf("Salary      : %.2f\n", salary);
+
+        return 0;
+    }
+
+
+------------------------------------------------------------
+85. MINI PROGRAM — AREA OF CIRCLE
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        const double PI = 3.141592653589793;
+        double radius = 10.0;
+
+        double area = PI * radius * radius;
+
+        printf("Area = %.2f\n", area);
+
+        return 0;
+    }
+
+
+------------------------------------------------------------
+86. MINI PROGRAM — TYPE SIZE CHECK
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("char        = %zu bytes\n", sizeof(char));
+        printf("short       = %zu bytes\n", sizeof(short));
+        printf("int         = %zu bytes\n", sizeof(int));
+        printf("long        = %zu bytes\n", sizeof(long));
+        printf("long long   = %zu bytes\n", sizeof(long long));
+        printf("float       = %zu bytes\n", sizeof(float));
+        printf("double      = %zu bytes\n", sizeof(double));
+        printf("long double = %zu bytes\n", sizeof(long double));
+
+        return 0;
+    }
+
+
+------------------------------------------------------------
+87. JOB-READY CONCEPTS TO REMEMBER
+------------------------------------------------------------
+
+You should now understand:
+
+    Variable
+    Constant
+    Declaration
+    Definition
+    Initialization
+    Assignment
+    Data type
+    char
+    int
+    short
+    long
+    long long
+    float
+    double
+    long double
+    void
+    signed
+    unsigned
+    const
+    sizeof
+    size_t
+    typedef
+    enum
+    Scope
+    Lifetime
+    Static storage duration
+    Automatic storage duration
+    Integer promotion
+    Integer overflow
+    Fixed-width integers
+    Format specifiers
+    Memory representation basics
+
+
+============================================================
+IMPORTANT TABLE
+============================================================
+
+Type             Typical use
+------------------------------------------------------------
+char             Character / small integer
+short            Smaller-range integer
+int              General integer
+long             Larger-range integer, platform-dependent
+long long        Very large integer
+float            Lower-precision floating point
+double           General floating-point calculations
+long double      Extended floating-point precision
+void             No value / generic pointer context
+------------------------------------------------------------
+
+
+============================================================
+IMPORTANT HEADERS
+============================================================
+
+<limits.h>
+
+Provides limits such as:
+
+    INT_MIN
+    INT_MAX
+    UINT_MAX
+    CHAR_BIT
+
+
+<stdint.h>
+
+Provides optional exact-width integer types:
+
+    int8_t
+    int16_t
+    int32_t
+    int64_t
+    uint8_t
+    uint16_t
+    uint32_t
+    uint64_t
+
+
+<inttypes.h>
+
+Provides format macros useful with fixed-width integer types.
+
+
+<stddef.h>
+
+Provides definitions including:
+
+    size_t
+
+
+<math.h>
+
+Provides mathematical functions such as:
+
+    fabs()
+    sqrt()
+    pow()
+
+
+============================================================
+CHAPTER 3 — QUICK REVISION
+============================================================
+
+1. Variable = named object whose stored value can change.
+
+2. Data type determines representation and permitted
+   operations/range.
+
+3. int is commonly used for integers.
+
+4. char is an integer type used to represent characters.
+
+5. float/double/long double represent floating-point values.
+
+6. signed types support negative values.
+
+7. unsigned types represent non-negative values.
+
+8. sizeof returns size in bytes and its result type is size_t.
+
+9. sizeof(char) is always 1.
+
+10. Exact type sizes are implementation-dependent.
+
+11. const prevents modification through a const-qualified
+    lvalue.
+
+12. typedef creates a type alias.
+
+13. Scope and lifetime are different concepts.
+
+14. Automatic local variables must not be read before
+    initialization.
+
+15. Static-storage-duration objects are initialized to zero
+    when no initializer is provided.
+
+16. Signed integer overflow is undefined behavior.
+
+17. Unsigned integer arithmetic wraps modulo 2^N.
+
+18. Floating-point values are generally approximations.
+
+19. Format specifiers must match the expected argument types.
+
+20. <stdint.h> is useful when exact-width integer types are
+    required.
+
+
+============================================================
+PRACTICE QUESTIONS
+============================================================
+
+Q1. What is a variable?
+
+Q2. What is the difference between declaration and
+    initialization?
+
+Q3. Is int always 4 bytes?
+
+Q4. What is the purpose of sizeof?
+
+Q5. What is the difference between 'A' and "A"?
+
+Q6. What is the difference between signed and unsigned?
+
+Q7. What is const?
+
+Q8. What is typedef?
+
+Q9. What is the difference between scope and lifetime?
+
+Q10. What happens if signed int overflows?
+
+Q11. Why is double often preferred over float?
+
+Q12. What is size_t?
+
+Q13. What is CHAR_BIT?
+
+Q14. What is the purpose of <stdint.h>?
+
+Q15. What is integer promotion?
+
+Q16. What is the difference between automatic and static
+     storage duration?
+
+Q17. What is the difference between a variable and a
+     constant?
+
+Q18. Why is this wrong?
+
+        char ch = "A";
+
+Q19. What is the output?
+
+        int x = 10;
+        printf("%d\n", x);
+
+Q20. Predict the output:
+
+        char ch = 'A';
+        printf("%c\n", ch);
+        printf("%d\n", ch);
+
+============================================================
+PRACTICAL ASSIGNMENT
+============================================================
+
+Create a C program that stores and prints:
+
+    Student Name
+    Roll Number
+    Age
+    Percentage
+    Grade
+    M.Tech Semester
+    Whether the student is eligible for placement
+
+Use appropriate data types.
+
+Then print the information in a clean format.
+
+Also print the size of:
+
+    char
+    int
+    float
+    double
+    long
+    long long
+
+Use sizeof().
+
+============================================================
+JOB-READY CHECKLIST
+============================================================
+
+[ ] Understand variables
+[ ] Understand declaration
+[ ] Understand initialization
+[ ] Understand assignment
+[ ] Understand data types
+[ ] Understand signed/unsigned
+[ ] Understand integer types
+[ ] Understand floating-point types
+[ ] Understand char
+[ ] Understand const
+[ ] Understand sizeof
+[ ] Understand size_t
+[ ] Understand typedef
+[ ] Understand scope
+[ ] Understand lifetime
+[ ] Understand static variables
+[ ] Understand integer promotion
+[ ] Understand integer overflow
+[ ] Understand fixed-width integers
+[ ] Understand format specifiers
+[ ] Understand implementation-dependent sizes
+[ ] Can write programs using different data types
+[ ] Can answer basic C interview questions
+
+
+============================================================
+NEXT CHAPTER
+============================================================
+
+CHAPTER 4 — INPUT & OUTPUT
+
+Topics:
+
+    1. printf()
+    2. scanf()
+    3. getchar()
+    4. putchar()
+    5. fgets()
+    6. puts()
+    7. Format specifiers
+    8. Escape sequences
+    9. Input buffer
+    10. scanf() pitfalls
+    11. Reading strings
+    12. Multiple inputs
+    13. Input validation
+    14. Secure input practices
+    15. Practical programs
+    16. Interview questions
+
+============================================================
+END OF CHAPTER 3
+=========================================================

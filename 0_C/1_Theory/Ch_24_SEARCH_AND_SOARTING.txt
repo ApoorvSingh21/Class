@@ -1,0 +1,1873 @@
+Worked for 8s
+
+===============================================================
+        CHAPTER 24 — SEARCHING & SORTING
+        C PROGRAMMING — JOB-READY MASTER SYLLABUS
+===============================================================
+
+SOURCE TOPICS:
+24.1 Searching
+    ├── Linear search
+    └── Binary search
+
+24.2 Sorting
+    ├── Bubble sort
+    ├── Selection sort
+    ├── Insertion sort
+    ├── Merge sort
+    ├── Quick sort
+    ├── Heap sort
+    └── Counting sort basics
+
+24.3 Complexity Comparison
+
+24.4 Stable vs Unstable Sorting
+
+24.5 In-place vs Out-of-place Algorithms
+
+
+===============================================================
+1. WHAT IS SEARCHING?
+===============================================================
+
+Searching means finding whether a particular element exists in
+a collection and, if it exists, determining its position.
+
+Example:
+
+    int a[] = {10, 20, 30, 40, 50};
+
+Search for 30.
+
+Result:
+
+    Found at index 2
+
+Two searching algorithms in this chapter:
+
+    1. Linear Search
+    2. Binary Search
+
+
+===============================================================
+2. LINEAR SEARCH
+===============================================================
+
+Linear search checks elements one by one from beginning to end.
+
+Example:
+
+    Array:
+        10  25  30  45  60
+
+    Search:
+        45
+
+Process:
+
+    10 != 45
+    25 != 45
+    30 != 45
+    45 == 45  → FOUND
+
+The array does NOT need to be sorted.
+
+
+---------------------------------------------------------------
+2.1 ALGORITHM
+---------------------------------------------------------------
+
+    for each element:
+        if element == target:
+            return its index
+
+    return not found
+
+
+---------------------------------------------------------------
+2.2 C IMPLEMENTATION
+---------------------------------------------------------------
+
+#include <stdio.h>
+
+int linearSearch(int arr[], int n, int target)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == target)
+            return i;
+    }
+
+    return -1;
+}
+
+int main()
+{
+    int arr[] = {10, 25, 30, 45, 60};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int target = 45;
+
+    int index = linearSearch(arr, n, target);
+
+    if (index != -1)
+        printf("Found at index %d\n", index);
+    else
+        printf("Not found\n");
+
+    return 0;
+}
+
+
+---------------------------------------------------------------
+2.3 COMPLEXITY
+---------------------------------------------------------------
+
+Best case:
+    O(1)
+
+Target is the first element.
+
+Average case:
+    O(n)
+
+Worst case:
+    O(n)
+
+Target is at the last position or absent.
+
+Space:
+    O(1)
+
+
+---------------------------------------------------------------
+2.4 ADVANTAGES
+---------------------------------------------------------------
+
+    ✓ Very simple
+    ✓ Works on unsorted data
+    ✓ Requires no extra memory
+    ✓ Good for small arrays
+
+
+---------------------------------------------------------------
+2.5 DISADVANTAGES
+---------------------------------------------------------------
+
+    ✗ Slow for large arrays
+    ✗ May need to inspect every element
+
+
+===============================================================
+3. BINARY SEARCH
+===============================================================
+
+Binary search repeatedly divides the search space into two halves.
+
+IMPORTANT:
+
+    Binary search requires the data to be sorted.
+
+Example:
+
+    10  20  30  40  50  60  70
+
+Search for:
+
+    60
+
+
+Step 1:
+
+    low = 0
+    high = 6
+
+    mid = (0 + 6) / 2
+        = 3
+
+    arr[3] = 40
+
+    60 > 40
+
+Therefore discard:
+
+    10 20 30 40
+
+Search remaining:
+
+    50 60 70
+
+
+Step 2:
+
+    low = 4
+    high = 6
+
+    mid = (4 + 6) / 2
+        = 5
+
+    arr[5] = 60
+
+FOUND!
+
+
+===============================================================
+4. BINARY SEARCH ALGORITHM
+===============================================================
+
+Given sorted array:
+
+    arr[0 ... n-1]
+
+Set:
+
+    low = 0
+    high = n - 1
+
+While:
+
+    low <= high
+
+Calculate:
+
+    mid = low + (high - low) / 2
+
+Then:
+
+    if arr[mid] == target
+        FOUND
+
+    else if target < arr[mid]
+        high = mid - 1
+
+    else
+        low = mid + 1
+
+
+IMPORTANT:
+
+Instead of:
+
+    mid = (low + high) / 2
+
+prefer:
+
+    mid = low + (high - low) / 2
+
+because the second form avoids integer overflow for sufficiently
+large integer indices.
+
+
+===============================================================
+5. ITERATIVE BINARY SEARCH IN C
+===============================================================
+
+int binarySearch(int arr[], int n, int target)
+{
+    int low = 0;
+    int high = n - 1;
+
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+
+        else if (target < arr[mid])
+            high = mid - 1;
+
+        else
+            low = mid + 1;
+    }
+
+    return -1;
+}
+
+
+Example:
+
+#include <stdio.h>
+
+int binarySearch(int arr[], int n, int target)
+{
+    int low = 0;
+    int high = n - 1;
+
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+
+        if (target < arr[mid])
+            high = mid - 1;
+        else
+            low = mid + 1;
+    }
+
+    return -1;
+}
+
+int main()
+{
+    int arr[] = {10, 20, 30, 40, 50, 60, 70};
+
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int index = binarySearch(arr, n, 60);
+
+    printf("Index = %d\n", index);
+
+    return 0;
+}
+
+
+===============================================================
+6. BINARY SEARCH COMPLEXITY
+===============================================================
+
+Best case:
+
+    O(1)
+
+Target is exactly at the middle.
+
+Worst case:
+
+    O(log n)
+
+Average:
+
+    O(log n)
+
+Space for iterative version:
+
+    O(1)
+
+
+WHY O(log n)?
+
+Every step approximately halves the search space.
+
+    n
+    n/2
+    n/4
+    n/8
+    n/16
+    ...
+
+After k steps:
+
+    n / 2^k = 1
+
+Therefore:
+
+    2^k = n
+
+    k = log₂(n)
+
+Hence:
+
+    O(log n)
+
+
+===============================================================
+7. LINEAR SEARCH VS BINARY SEARCH
+===============================================================
+
+                    Linear       Binary
+---------------------------------------------------------------
+Sorted required?   No            Yes
+Best case          O(1)          O(1)
+Average            O(n)          O(log n)
+Worst case         O(n)          O(log n)
+Space              O(1)          O(1) iterative
+Implementation     Very easy      More complex
+Data requirement   Any            Sorted/random-access suitable
+
+
+IMPORTANT INTERVIEW POINT:
+
+Binary search is not simply "faster linear search."
+
+It depends on an important condition:
+
+    The search space must support the required ordering and
+    efficient middle-element access.
+
+For a normal C array, this is naturally satisfied.
+
+
+===============================================================
+8. WHAT IS SORTING?
+===============================================================
+
+Sorting means arranging elements according to some ordering.
+
+Ascending:
+
+    10 20 30 40 50
+
+Descending:
+
+    50 40 30 20 10
+
+
+Why sorting is useful:
+
+    ✓ Faster searching
+    ✓ Easier data processing
+    ✓ Duplicate detection
+    ✓ Ranking
+    ✓ Database-like processing
+    ✓ Algorithm optimization
+
+
+The syllabus covers:
+
+    1. Bubble Sort
+    2. Selection Sort
+    3. Insertion Sort
+    4. Merge Sort
+    5. Quick Sort
+    6. Heap Sort
+    7. Counting Sort basics
+
+
+===============================================================
+9. BUBBLE SORT
+===============================================================
+
+Bubble sort repeatedly compares adjacent elements.
+
+If they are in the wrong order, swap them.
+
+Example:
+
+    5  3  8  4
+
+First pass:
+
+    5 3 8 4
+    ↓
+    3 5 8 4
+
+    3 5 8 4
+      ↓
+    3 5 8 4
+
+    3 5 8 4
+        ↓
+    3 5 4 8
+
+Largest element "bubbles" toward the end.
+
+After first pass:
+
+    3 5 4 8
+
+After second:
+
+    3 4 5 8
+
+Sorted.
+
+
+---------------------------------------------------------------
+9.1 C IMPLEMENTATION
+---------------------------------------------------------------
+
+void bubbleSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int swapped = 0;
+
+        for (int j = 0; j < n - 1 - i; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+                swapped = 1;
+            }
+        }
+
+        if (!swapped)
+            break;
+    }
+}
+
+
+---------------------------------------------------------------
+9.2 COMPLEXITY
+---------------------------------------------------------------
+
+Best case with early-exit optimization:
+
+    O(n)
+
+Average:
+
+    O(n²)
+
+Worst:
+
+    O(n²)
+
+Space:
+
+    O(1)
+
+
+The early-exit optimization detects an already sorted array.
+
+
+---------------------------------------------------------------
+9.3 CHARACTERISTICS
+---------------------------------------------------------------
+
+Bubble sort is:
+
+    ✓ Simple
+    ✓ In-place
+    ✓ Stable
+    ✗ Slow for large datasets
+
+
+===============================================================
+10. SELECTION SORT
+===============================================================
+
+Selection sort repeatedly selects the smallest remaining element
+and places it in its correct position.
+
+Example:
+
+    64 25 12 22 11
+
+Find minimum:
+
+    11
+
+Swap with first element:
+
+    11 25 12 22 64
+
+Remaining:
+
+    25 12 22 64
+
+Minimum:
+
+    12
+
+Swap:
+
+    11 12 25 22 64
+
+Continue.
+
+
+---------------------------------------------------------------
+10.1 C IMPLEMENTATION
+---------------------------------------------------------------
+
+void selectionSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int minIndex = i;
+
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] < arr[minIndex])
+                minIndex = j;
+        }
+
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+}
+
+
+---------------------------------------------------------------
+10.2 COMPLEXITY
+---------------------------------------------------------------
+
+Best:
+
+    O(n²)
+
+Average:
+
+    O(n²)
+
+Worst:
+
+    O(n²)
+
+Space:
+
+    O(1)
+
+
+Unlike optimized bubble sort, selection sort still performs
+quadratic comparisons even when the array is already sorted.
+
+
+---------------------------------------------------------------
+10.3 CHARACTERISTICS
+---------------------------------------------------------------
+
+    ✓ In-place
+    ✓ Simple
+    ✓ Uses relatively few swaps
+    ✗ O(n²)
+    ✗ Normally not stable
+
+
+===============================================================
+11. INSERTION SORT
+===============================================================
+
+Insertion sort builds the sorted portion one element at a time.
+
+It works similarly to arranging playing cards.
+
+Example:
+
+    5 3 4 1
+
+Start:
+
+    [5] 3 4 1
+
+Insert 3:
+
+    [3 5] 4 1
+
+Insert 4:
+
+    [3 4 5] 1
+
+Insert 1:
+
+    [1 3 4 5]
+
+
+---------------------------------------------------------------
+11.1 C IMPLEMENTATION
+---------------------------------------------------------------
+
+void insertionSort(int arr[], int n)
+{
+    for (int i = 1; i < n; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+    }
+}
+
+
+---------------------------------------------------------------
+11.2 COMPLEXITY
+---------------------------------------------------------------
+
+Best:
+
+    O(n)
+
+Average:
+
+    O(n²)
+
+Worst:
+
+    O(n²)
+
+Space:
+
+    O(1)
+
+
+---------------------------------------------------------------
+11.3 IMPORTANT PROPERTY
+---------------------------------------------------------------
+
+Insertion sort is:
+
+    ✓ Stable
+    ✓ In-place
+    ✓ Simple
+    ✓ Good for small arrays
+    ✓ Good when data is nearly sorted
+
+This makes insertion sort practically useful despite O(n²)
+worst-case complexity.
+
+
+===============================================================
+12. MERGE SORT
+===============================================================
+
+Merge sort uses the divide-and-conquer strategy.
+
+Three main steps:
+
+    1. Divide
+    2. Recursively sort
+    3. Merge
+
+
+Example:
+
+    8 3 5 4 7 6 1 2
+
+Divide:
+
+    8 3 5 4       7 6 1 2
+
+Again:
+
+    8 3     5 4    7 6     1 2
+
+Again:
+
+    8  3    5  4   7  6    1  2
+
+Now merge sorted pieces:
+
+    3 8
+    4 5
+    6 7
+    1 2
+
+Then:
+
+    3 4 5 8
+    1 2 6 7
+
+Finally:
+
+    1 2 3 4 5 6 7 8
+
+
+===============================================================
+13. MERGE SORT IN C
+===============================================================
+
+void merge(int arr[], int left, int mid, int right)
+{
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    int L[n1];
+    int R[n2];
+
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    int i = 0;
+    int j = 0;
+    int k = left;
+
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+            arr[k++] = L[i++];
+        else
+            arr[k++] = R[j++];
+    }
+
+    while (i < n1)
+        arr[k++] = L[i++];
+
+    while (j < n2)
+        arr[k++] = R[j++];
+}
+
+void mergeSort(int arr[], int left, int right)
+{
+    if (left < right)
+    {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+}
+
+
+===============================================================
+14. MERGE SORT COMPLEXITY
+===============================================================
+
+Best:
+
+    O(n log n)
+
+Average:
+
+    O(n log n)
+
+Worst:
+
+    O(n log n)
+
+Extra space:
+
+    O(n)
+
+Therefore merge sort provides predictable O(n log n) time but
+usually requires additional memory for merging.
+
+---------------------------------------------------------------
+PROPERTIES
+---------------------------------------------------------------
+
+    ✓ Stable
+    ✗ Usually out-of-place
+    ✓ Predictable performance
+    ✓ Divide and conquer
+    ✓ Useful for linked-list/external sorting scenarios
+
+
+===============================================================
+15. QUICK SORT
+===============================================================
+
+Quick sort is another divide-and-conquer algorithm.
+
+Main idea:
+
+    1. Select a pivot
+    2. Partition elements around pivot
+    3. Recursively sort left part
+    4. Recursively sort right part
+
+
+Example:
+
+    6 3 8 5 2 7 4 1
+
+Suppose pivot = 4.
+
+Partition conceptually:
+
+    values < 4 | 4 | values > 4
+
+       3 2 1 | 4 | 6 8 5 7
+
+Then recursively sort both sides.
+
+
+===============================================================
+16. QUICK SORT C IMPLEMENTATION
+===============================================================
+
+int partition(int arr[], int low, int high)
+{
+    int pivot = arr[high];
+
+    int i = low - 1;
+
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j] < pivot)
+        {
+            i++;
+
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        int p = partition(arr, low, high);
+
+        quickSort(arr, low, p - 1);
+        quickSort(arr, p + 1, high);
+    }
+}
+
+
+===============================================================
+17. QUICK SORT COMPLEXITY
+===============================================================
+
+Best:
+
+    O(n log n)
+
+Average:
+
+    O(n log n)
+
+Worst:
+
+    O(n²)
+
+Worst case can occur when partitioning is highly unbalanced,
+for example with consistently poor pivot choices.
+
+Space:
+
+    Depends on recursion depth.
+
+Average recursion depth:
+
+    O(log n)
+
+Worst recursion depth:
+
+    O(n)
+
+
+---------------------------------------------------------------
+PROPERTIES
+---------------------------------------------------------------
+
+    ✓ Usually very fast in practice
+    ✓ In-place partitioning versions use little auxiliary memory
+    ✗ Worst-case O(n²)
+    ✗ Standard quicksort is generally unstable
+
+
+===============================================================
+18. HEAP SORT
+===============================================================
+
+Heap sort uses a heap data structure.
+
+For ascending sorting, a max heap can be used.
+
+Max heap property:
+
+    Parent >= children
+
+
+Example conceptual max heap:
+
+              90
+            /    \
+          70      80
+         /  \    /  \
+       40   60  50   30
+
+
+For an array representation:
+
+    left child  = 2*i + 1
+    right child = 2*i + 2
+    parent      = (i - 1) / 2
+
+for zero-based indexing.
+
+
+---------------------------------------------------------------
+18.1 HEAP SORT PROCESS
+---------------------------------------------------------------
+
+1. Build a max heap.
+
+2. Largest element is at root.
+
+3. Swap root with last element.
+
+4. Reduce heap size.
+
+5. Heapify the root.
+
+6. Repeat.
+
+
+===============================================================
+19. HEAP SORT C IMPLEMENTATION
+===============================================================
+
+void heapify(int arr[], int n, int i)
+{
+    int largest = i;
+
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i)
+    {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+
+        heapify(arr, n, largest);
+    }
+}
+
+void heapSort(int arr[], int n)
+{
+    /* Build max heap */
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    /* Extract elements */
+    for (int i = n - 1; i > 0; i--)
+    {
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        heapify(arr, i, 0);
+    }
+}
+
+
+===============================================================
+20. HEAP SORT COMPLEXITY
+===============================================================
+
+Best:
+
+    O(n log n)
+
+Average:
+
+    O(n log n)
+
+Worst:
+
+    O(n log n)
+
+Extra auxiliary space:
+
+    O(1) for the standard iterative heap-sort structure;
+    recursive heapify introduces call-stack usage.
+
+Properties:
+
+    ✓ In-place
+    ✗ Not stable
+    ✓ Guaranteed O(n log n)
+    ✓ Does not require a separate O(n) array
+
+
+===============================================================
+21. COUNTING SORT — BASICS
+===============================================================
+
+Counting sort is fundamentally different from comparison-based
+sorting algorithms.
+
+Instead of comparing elements, it counts occurrences of values.
+
+It is suitable when the values lie in a reasonably small,
+known range.
+
+Example:
+
+    arr = {4, 2, 2, 8, 3, 3, 1}
+
+Count occurrences:
+
+    1 → 1
+    2 → 2
+    3 → 2
+    4 → 1
+    5 → 0
+    6 → 0
+    7 → 0
+    8 → 1
+
+Reconstruct:
+
+    1 2 2 3 3 4 8
+
+
+---------------------------------------------------------------
+21.1 BASIC C IMPLEMENTATION
+---------------------------------------------------------------
+
+void countingSort(int arr[], int n, int maxValue)
+{
+    int count[maxValue + 1];
+
+    for (int i = 0; i <= maxValue; i++)
+        count[i] = 0;
+
+    for (int i = 0; i < n; i++)
+        count[arr[i]]++;
+
+    int k = 0;
+
+    for (int value = 0; value <= maxValue; value++)
+    {
+        while (count[value] > 0)
+        {
+            arr[k++] = value;
+            count[value]--;
+        }
+    }
+}
+
+
+IMPORTANT:
+
+This basic implementation assumes non-negative values and a
+manageable range from 0 through maxValue.
+
+The syllabus specifies "Counting sort basics", so the important
+idea here is the frequency-counting approach rather than all
+advanced variants.
+
+
+---------------------------------------------------------------
+21.2 COUNTING SORT COMPLEXITY
+---------------------------------------------------------------
+
+Let:
+
+    n = number of elements
+    k = range of possible values
+
+Time:
+
+    O(n + k)
+
+Space:
+
+    O(k)
+
+Therefore counting sort can outperform comparison sorting when
+k is sufficiently small relative to the input size.
+
+But if the value range is enormous, its memory requirement can
+be impractical.
+
+
+===============================================================
+22. COMPARISON OF SORTING ALGORITHMS
+===============================================================
+
+                    Best       Average       Worst       Extra
+----------------------------------------------------------------
+Bubble              O(n)       O(n²)         O(n²)       O(1)
+Selection           O(n²)      O(n²)         O(n²)       O(1)
+Insertion           O(n)       O(n²)         O(n²)       O(1)
+Merge               O(nlogn)   O(nlogn)      O(nlogn)    O(n)
+Quick               O(nlogn)   O(nlogn)      O(n²)       O(logn)*
+Heap                O(nlogn)   O(nlogn)      O(nlogn)    O(1)**
+Counting            O(n+k)     O(n+k)        O(n+k)      O(k)
+
+* Average recursion stack; worst recursion can reach O(n).
+** Standard in-place implementation; recursive heapify has
+   call-stack usage.
+
+
+===============================================================
+23. STABLE VS UNSTABLE SORTING
+===============================================================
+
+A sorting algorithm is STABLE if equal-key elements preserve their
+relative order.
+
+Suppose records are:
+
+    (A, 50)
+    (B, 30)
+    (C, 50)
+    (D, 20)
+
+Sort according to the second field.
+
+A stable result:
+
+    (D,20)
+    (B,30)
+    (A,50)
+    (C,50)
+
+Notice:
+
+    A came before C before sorting
+    A remains before C after sorting.
+
+
+---------------------------------------------------------------
+COMMON STABILITY
+---------------------------------------------------------------
+
+Typically stable:
+
+    Bubble sort
+    Insertion sort
+    Merge sort
+
+Typically unstable:
+
+    Selection sort
+    Quick sort
+    Heap sort
+
+Counting sort can be implemented stably, but the basic frequency
+reconstruction shown above does not by itself demonstrate the
+stable version.
+
+
+---------------------------------------------------------------
+WHY STABILITY MATTERS
+---------------------------------------------------------------
+
+Suppose records are first sorted by:
+
+    Name
+
+Then sorted by:
+
+    Department
+
+If the second sort is stable, records having the same Department
+retain the ordering established by the first sort.
+
+This is important in multi-key sorting.
+
+
+===============================================================
+24. IN-PLACE VS OUT-OF-PLACE
+===============================================================
+
+IN-PLACE:
+
+An algorithm performs its transformation using only a small
+amount of additional working memory, apart from the input and
+implementation-specific stack requirements.
+
+Examples commonly treated as in-place:
+
+    Bubble sort
+    Selection sort
+    Insertion sort
+    Heap sort
+
+Quick sort is commonly considered in-place with respect to its
+partitioning array operations, although recursion uses stack
+space.
+
+
+---------------------------------------------------------------
+OUT-OF-PLACE
+---------------------------------------------------------------
+
+An algorithm requires additional storage proportional to the
+input or another significant auxiliary structure.
+
+Merge sort typically requires:
+
+    O(n)
+
+additional memory for merging.
+
+
+===============================================================
+25. SEARCHING + SORTING RELATIONSHIP
+===============================================================
+
+Suppose you have:
+
+    1,000,000 unsorted elements
+
+and need to search only once.
+
+Using linear search:
+
+    O(n)
+
+Sorting first:
+
+    O(n log n)
+
+Then binary search:
+
+    O(log n)
+
+Total approximately:
+
+    O(n log n)
+
+For one search, sorting may not be worthwhile.
+
+But if you need many searches, sorting once and using binary search
+can become advantageous.
+
+This leads to an important algorithmic principle:
+
+    Consider the total cost, not just the cost of one operation.
+
+
+===============================================================
+26. WHEN SHOULD YOU USE WHICH ALGORITHM?
+===============================================================
+
+LINEAR SEARCH:
+
+Use when:
+
+    ✓ Data is unsorted
+    ✓ Dataset is small
+    ✓ Only a few searches are needed
+
+
+BINARY SEARCH:
+
+Use when:
+
+    ✓ Data is sorted
+    ✓ Random access is available
+    ✓ Fast searching is important
+
+
+BUBBLE SORT:
+
+Use mainly for:
+
+    ✓ Learning
+    ✓ Very small/simple cases
+
+Not normally preferred for large datasets.
+
+
+SELECTION SORT:
+
+Useful when:
+
+    ✓ Simplicity matters
+    ✓ Number of swaps should be relatively small
+
+Still O(n²).
+
+
+INSERTION SORT:
+
+Excellent for:
+
+    ✓ Small arrays
+    ✓ Nearly sorted arrays
+    ✓ Incrementally maintaining sorted data
+
+
+MERGE SORT:
+
+Useful when:
+
+    ✓ Guaranteed O(n log n) is desired
+    ✓ Stability matters
+    ✓ Extra memory is acceptable
+
+
+QUICK SORT:
+
+Useful when:
+
+    ✓ Excellent practical average performance is desired
+    ✓ In-place partitioning is useful
+    ✓ Pivot selection is handled appropriately
+
+
+HEAP SORT:
+
+Useful when:
+
+    ✓ Guaranteed O(n log n) is needed
+    ✓ In-place sorting is important
+
+
+COUNTING SORT:
+
+Useful when:
+
+    ✓ Values are integers/non-negative in a manageable range
+    ✓ Range k is not excessively large
+
+
+===============================================================
+27. IMPORTANT C IMPLEMENTATION ISSUE
+===============================================================
+
+Never confuse:
+
+    number of elements
+
+with:
+
+    last index
+
+For:
+
+    int arr[5];
+
+Number of elements:
+
+    5
+
+Valid indexes:
+
+    0 1 2 3 4
+
+Therefore:
+
+    n = 5
+    last index = n - 1 = 4
+
+
+A common mistake:
+
+    for (int i = 0; i <= n; i++)
+
+This accesses:
+
+    arr[n]
+
+which is outside the array.
+
+
+Correct:
+
+    for (int i = 0; i < n; i++)
+
+
+===============================================================
+28. IMPORTANT INTERVIEW / GATE CONCEPTS
+===============================================================
+
+Q1. Does binary search work on an unsorted array?
+
+Answer:
+
+    No, not as the standard ordering-based binary search.
+
+---------------------------------------------------------------
+
+Q2. Complexity of binary search?
+
+Answer:
+
+    Best: O(1)
+    Average/Worst: O(log n)
+
+---------------------------------------------------------------
+
+Q3. Which basic sorting algorithm performs well on nearly sorted
+data?
+
+Answer:
+
+    Insertion sort.
+
+---------------------------------------------------------------
+
+Q4. Which covered sorting algorithms guarantee O(n log n)
+worst-case time?
+
+Answer:
+
+    Merge sort
+    Heap sort
+
+---------------------------------------------------------------
+
+Q5. Which covered sorting algorithm can have O(n²) worst case
+despite O(n log n) average case?
+
+Answer:
+
+    Quick sort.
+
+---------------------------------------------------------------
+
+Q6. Which sorting algorithms are commonly stable?
+
+Answer:
+
+    Bubble sort
+    Insertion sort
+    Merge sort
+
+---------------------------------------------------------------
+
+Q7. Which sorting algorithm uses divide and conquer?
+
+Answer:
+
+    Merge sort
+    Quick sort
+
+---------------------------------------------------------------
+
+Q8. Which algorithm is not comparison-based?
+
+Answer:
+
+    Counting sort.
+
+---------------------------------------------------------------
+
+Q9. Complexity of counting sort?
+
+Answer:
+
+    O(n + k)
+
+where k is the value range.
+
+---------------------------------------------------------------
+
+Q10. Is selection sort stable?
+
+Answer:
+
+    Standard selection sort is generally unstable.
+
+---------------------------------------------------------------
+
+Q11. Is insertion sort in-place?
+
+Answer:
+
+    Yes.
+
+---------------------------------------------------------------
+
+Q12. Is merge sort usually in-place?
+
+Answer:
+
+    Standard array merge sort generally requires O(n) auxiliary
+    storage, so it is usually considered out-of-place.
+
+
+===============================================================
+29. COMMON MISTAKES
+===============================================================
+
+1. Applying binary search to unsorted data.
+
+2. Writing:
+
+       mid = (low + high) / 2
+
+   without considering possible integer overflow.
+
+   Prefer:
+
+       mid = low + (high - low) / 2
+
+
+3. Forgetting:
+
+       high = mid - 1
+
+   or:
+
+       low = mid + 1
+
+4. Creating an infinite binary-search loop by failing to shrink
+   the search interval.
+
+5. Using <= incorrectly in array loops.
+
+6. Forgetting that C arrays are zero-indexed.
+
+7. Assuming quick sort always takes O(n log n).
+
+8. Assuming every O(n log n) algorithm is stable.
+
+9. Assuming counting sort works efficiently for every integer
+   dataset.
+
+10. Ignoring extra memory requirements.
+
+11. Forgetting recursion-stack cost when analyzing recursive
+    implementations.
+
+12. Confusing "in-place" with "uses absolutely zero extra
+    memory".
+
+
+===============================================================
+30. MASTER COMPLEXITY CHEAT SHEET
+===============================================================
+
+SEARCHING:
+
+Linear Search:
+
+    Best       O(1)
+    Average    O(n)
+    Worst      O(n)
+    Space      O(1)
+
+
+Binary Search:
+
+    Best       O(1)
+    Average    O(log n)
+    Worst      O(log n)
+    Space      O(1) iterative
+
+
+SORTING:
+
+Bubble:
+
+    Best       O(n)*
+    Average    O(n²)
+    Worst      O(n²)
+
+Selection:
+
+    Best       O(n²)
+    Average    O(n²)
+    Worst      O(n²)
+
+Insertion:
+
+    Best       O(n)
+    Average    O(n²)
+    Worst      O(n²)
+
+Merge:
+
+    Best       O(n log n)
+    Average    O(n log n)
+    Worst      O(n log n)
+    Extra      O(n)
+
+Quick:
+
+    Best       O(n log n)
+    Average    O(n log n)
+    Worst      O(n²)
+
+Heap:
+
+    Best       O(n log n)
+    Average    O(n log n)
+    Worst      O(n log n)
+
+Counting:
+
+    O(n + k)
+
+
+*With the early-exit optimization used in our implementation.
+
+
+===============================================================
+31. BIG PICTURE
+===============================================================
+
+                    SEARCHING
+                       |
+              +--------+--------+
+              |                 |
+           Linear             Binary
+              |                 |
+           O(n)             O(log n)
+                              |
+                         Sorted data
+
+
+                    SORTING
+                       |
+     +---------+-------+-------+---------+
+     |         |       |       |         |
+   Bubble  Selection Insertion Merge   Quick
+                                  |       |
+                               O(nlogn) O(nlogn) avg
+                                  |
+                                Heap
+                                  |
+                              O(nlogn)
+
+                       +
+                 Counting Sort
+                       |
+                    O(n + k)
+
+
+===============================================================
+32. CHAPTER 24 — FINAL REVISION
+===============================================================
+
+SEARCHING:
+
+    Linear Search
+        ↓
+    Works on unsorted data
+        ↓
+    O(n)
+
+    Binary Search
+        ↓
+    Requires sorted data
+        ↓
+    O(log n)
+
+
+SORTING:
+
+    Bubble
+        → simple, stable, O(n²) average/worst
+
+    Selection
+        → simple, O(n²), generally unstable
+
+    Insertion
+        → excellent for small/nearly sorted data
+
+    Merge
+        → divide & conquer, stable, O(n log n)
+
+    Quick
+        → divide & conquer, O(n log n) average,
+          O(n²) worst
+
+    Heap
+        → heap-based, O(n log n) worst, in-place
+
+    Counting
+        → non-comparison based, O(n+k)
+
+
+KEY PROPERTIES:
+
+    Stable:
+        Bubble
+        Insertion
+        Merge
+
+    Generally unstable:
+        Selection
+        Quick
+        Heap
+
+    Typically in-place:
+        Bubble
+        Selection
+        Insertion
+        Heap
+        Quick partitioning
+
+    Typically requires O(n) auxiliary storage:
+        Merge
+
+
+===============================================================
+33. JOB-READY TAKEAWAY
+===============================================================
+
+You should now be able to explain:
+
+    ✓ Linear search
+    ✓ Binary search
+    ✓ Why binary search requires sorted data
+    ✓ Bubble sort
+    ✓ Selection sort
+    ✓ Insertion sort
+    ✓ Merge sort
+    ✓ Quick sort
+    ✓ Heap sort
+    ✓ Counting sort basics
+    ✓ Best/average/worst-case complexity
+    ✓ Stable vs unstable sorting
+    ✓ In-place vs out-of-place
+    ✓ When to choose each algorithm
+    ✓ Common searching/sorting interview traps
+
+The most important practical progression is:
+
+    Linear Search
+          ↓
+    Binary Search
+          ↓
+    Simple O(n²) Sorting
+          ↓
+    Insertion Sort
+          ↓
+    Merge Sort
+          ↓
+    Quick Sort
+          ↓
+    Heap Sort
+          ↓
+    Counting Sort
+          ↓
+    Complexity + algorithm selection
+
+
+===============================================================
+END OF CHAPTER 24
+===============================================================
+
+NEXT:
+    CHAPTER 25 — ERROR HANDLING & DEBUGGING
+
+Topics:
+    25.1 Types of Errors
+        ├── Syntax error
+        ├── Compilation error
+        ├── Linker error
+        ├── Runtime error
+        └── Logical error
+
+    25.2 Debugging
+        ├── Debugger basics
+        ├── Breakpoints
+        ├── Step over
+        ├── Step into
+        ├── Watch variables
+        └── Call stack
+
+    25.3 Common C Bugs
+        ├── Segmentation fault
+        ├── Buffer overflow
+        ├── Null dereference
+        ├── Memory leak
+        ├── Dangling pointer
+        ├── Uninitialized variable
+        ├── Integer overflow
+        └── Undefined behavior
+===============================================================

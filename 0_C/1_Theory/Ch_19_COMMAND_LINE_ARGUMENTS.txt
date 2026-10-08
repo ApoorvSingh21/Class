@@ -1,0 +1,1530 @@
+Worked for 8s
+
+╔══════════════════════════════════════════════════════════════════════╗
+║             CHAPTER 19 — COMMAND-LINE ARGUMENTS IN C               ║
+║                    Job-Ready Master Explanation                    ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+SOURCE STRUCTURE:
+    19.1 argc
+    19.2 argv
+    19.3 Command-line input
+    19.4 Parsing arguments
+    19.5 Practical command-line programs
+
+
+══════════════════════════════════════════════════════════════════════
+19.1 argc — ARGUMENT COUNT
+══════════════════════════════════════════════════════════════════════
+
+Normally we write:
+
+    int main(void)
+
+But C also allows main() to receive information from the command line:
+
+    int main(int argc, char *argv[])
+
+Here:
+
+    argc = argument count
+
+It tells us how many command-line arguments are available.
+
+Example command:
+
+    ./program hello 123
+
+
+Arguments are:
+
+    ./program
+    hello
+    123
+
+Therefore:
+
+    argc = 3
+
+
+IMPORTANT:
+
+The program name is normally included as argv[0].
+
+So:
+
+    argc = number of elements in argv
+
+
+Conceptually:
+
+        argc = 3
+
+        argv
+         │
+         ▼
+    ┌──────────────┐
+    │ argv[0]      │ ───► "./program"
+    ├──────────────┤
+    │ argv[1]      │ ───► "hello"
+    ├──────────────┤
+    │ argv[2]      │ ───► "123"
+    └──────────────┘
+
+
+Basic program:
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        printf("argc = %d\n", argc);
+
+        return 0;
+    }
+
+
+Running:
+
+    ./program hello world
+
+Output:
+
+    argc = 3
+
+
+══════════════════════════════════════════════════════════════════════
+19.2 argv — ARGUMENT VECTOR
+══════════════════════════════════════════════════════════════════════
+
+argv means:
+
+    argument vector
+
+It provides access to individual command-line arguments.
+
+Declaration:
+
+    char *argv[]
+
+
+This can also be written as:
+
+    char **argv
+
+
+These forms are equivalent as a function parameter.
+
+So:
+
+    int main(int argc, char *argv[])
+
+and:
+
+    int main(int argc, char **argv)
+
+represent the same parameter types for main().
+
+
+Each command-line argument is represented as a string.
+
+Example:
+
+    ./program apple 25
+
+
+Conceptually:
+
+    argv[0] → "./program"
+    argv[1] → "apple"
+    argv[2] → "25"
+
+
+Notice:
+
+    "25"
+
+is a STRING.
+
+It is NOT automatically an integer.
+
+
+Therefore:
+
+    argv[2]
+
+has a character-string representation.
+
+If you need the integer:
+
+    25
+
+you must parse/convert the string.
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        for (int i = 0; i < argc; i++)
+        {
+            printf("argv[%d] = %s\n", i, argv[i]);
+        }
+
+        return 0;
+    }
+
+
+Command:
+
+    ./program hello 25 C
+
+
+Output:
+
+    argv[0] = ./program
+    argv[1] = hello
+    argv[2] = 25
+    argv[3] = C
+
+
+Therefore:
+
+    argc = 4
+
+
+══════════════════════════════════════════════════════════════════════
+IMPORTANT RELATION BETWEEN argc AND argv
+══════════════════════════════════════════════════════════════════════
+
+If:
+
+    argc = N
+
+then valid indexes are:
+
+    0
+    1
+    2
+    ...
+    N-1
+
+
+So:
+
+    argv[argc - 1]
+
+is the last argument.
+
+
+But:
+
+    argv[argc]
+
+is a null pointer.
+
+This provides a useful termination condition when traversing argv.
+
+
+Example:
+
+    int i = 0;
+
+    while (argv[i] != NULL)
+    {
+        printf("%s\n", argv[i]);
+        i++;
+    }
+
+
+However, using:
+
+    i < argc
+
+is often clearer because argc explicitly gives the number of
+arguments.
+
+
+══════════════════════════════════════════════════════════════════════
+19.3 COMMAND-LINE INPUT
+══════════════════════════════════════════════════════════════════════
+
+Command-line input means supplying data when starting the program
+from a shell/terminal.
+
+Example:
+
+    ./calculator 10 20
+
+
+Instead of:
+
+    Enter first number:
+    10
+
+    Enter second number:
+    20
+
+the values are supplied directly in the command.
+
+The shell starts the program and passes these arguments to main().
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        printf("Number of arguments: %d\n", argc);
+
+        for (int i = 0; i < argc; i++)
+        {
+            printf("%s\n", argv[i]);
+        }
+
+        return 0;
+    }
+
+
+Command:
+
+    ./program C Programming
+
+
+Possible output:
+
+    Number of arguments: 3
+
+    ./program
+    C
+    Programming
+
+
+Notice that spaces separate arguments.
+
+If the shell supports quoting, a quoted sequence can be passed as
+one argument.
+
+Example:
+
+    ./program "C Programming"
+
+
+Then:
+
+    argc = 2
+
+and:
+
+    argv[1] = "C Programming"
+
+
+This is an important practical shell behavior.
+
+
+══════════════════════════════════════════════════════════════════════
+COMMAND-LINE ARGUMENTS ARE STRINGS
+══════════════════════════════════════════════════════════════════════
+
+Suppose:
+
+    ./program 100 200
+
+
+We get:
+
+    argv[1] = "100"
+    argv[2] = "200"
+
+
+NOT:
+
+    argv[1] = 100
+    argv[2] = 200
+
+
+They are character strings.
+
+Therefore this is incorrect:
+
+    int x = argv[1];
+
+
+Why?
+
+Because:
+
+    argv[1]
+
+has type:
+
+    char *
+
+
+while:
+
+    x
+
+has type:
+
+    int
+
+
+You need conversion/parsing.
+
+
+══════════════════════════════════════════════════════════════════════
+19.4 PARSING ARGUMENTS
+══════════════════════════════════════════════════════════════════════
+
+Parsing means interpreting the strings received from the command line.
+
+Example:
+
+    ./program 100 200
+
+
+The program receives:
+
+    "100"
+    "200"
+
+
+To perform arithmetic, we need numerical values.
+
+For example:
+
+    100 + 200 = 300
+
+
+One traditional conversion function is:
+
+    atoi()
+
+
+Example:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(int argc, char *argv[])
+    {
+        if (argc != 3)
+        {
+            printf("Usage: %s <num1> <num2>\n", argv[0]);
+            return 1;
+        }
+
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+
+        printf("Sum = %d\n", a + b);
+
+        return 0;
+    }
+
+
+Command:
+
+    ./program 100 200
+
+
+Output:
+
+    Sum = 300
+
+
+But there is an important limitation with atoi():
+
+    atoi()
+
+does not provide robust error reporting for invalid numeric input.
+
+For serious/job-ready programs, more robust parsing functions such
+as strtol() are generally preferable.
+
+
+══════════════════════════════════════════════════════════════════════
+USING strtol() FOR ROBUST PARSING
+══════════════════════════════════════════════════════════════════════
+
+A stronger approach is:
+
+    strtol()
+
+
+Header:
+
+    #include <stdlib.h>
+
+Basic form:
+
+    long value = strtol(string, &endptr, base);
+
+
+Example:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <errno.h>
+    #include <limits.h>
+
+    int main(int argc, char *argv[])
+    {
+        if (argc != 2)
+        {
+            printf("Usage: %s <integer>\n", argv[0]);
+            return 1;
+        }
+
+        char *end;
+        errno = 0;
+
+        long value = strtol(argv[1], &end, 10);
+
+        if (errno == ERANGE ||
+            end == argv[1] ||
+            *end != '\0' ||
+            value < INT_MIN ||
+            value > INT_MAX)
+        {
+            printf("Invalid integer: %s\n", argv[1]);
+            return 1;
+        }
+
+        printf("Value = %ld\n", value);
+
+        return 0;
+    }
+
+
+Why is this better?
+
+It can detect situations such as:
+
+    ./program abc
+
+    ./program 123abc
+
+    ./program <number outside range>
+
+
+This is much closer to production-quality input handling.
+
+
+══════════════════════════════════════════════════════════════════════
+PARSING DIFFERENT TYPES
+══════════════════════════════════════════════════════════════════════
+
+COMMAND-LINE ARGUMENT
+        │
+        ▼
+     STRING
+        │
+        ├── integer
+        │      ↓
+        │    strtol()
+        │
+        ├── unsigned integer
+        │      ↓
+        │    strtoul()
+        │
+        ├── floating-point
+        │      ↓
+        │    strtod()
+        │
+        └── custom format
+               ↓
+             custom parser
+
+
+The important idea:
+
+    argv provides text.
+
+    Your program decides how that text should be interpreted.
+
+
+══════════════════════════════════════════════════════════════════════
+VALIDATING argc
+══════════════════════════════════════════════════════════════════════
+
+Suppose a program requires:
+
+    ./calculator 10 20
+
+
+It expects:
+
+    argc == 3
+
+
+Therefore:
+
+    if (argc != 3)
+    {
+        printf("Usage: %s <num1> <num2>\n", argv[0]);
+        return 1;
+    }
+
+
+Why is this important?
+
+Without validation, this could happen:
+
+    argv[1]
+
+when the user runs:
+
+    ./calculator
+
+
+There is no valid argument at index 1.
+
+Therefore:
+
+    ALWAYS validate argc BEFORE accessing required argv elements.
+
+
+══════════════════════════════════════════════════════════════════════
+USAGE MESSAGE
+══════════════════════════════════════════════════════════════════════
+
+A professional command-line program should tell the user how to use
+it.
+
+Example:
+
+    printf("Usage: %s <source> <destination>\n", argv[0]);
+
+
+If executable name is:
+
+    ./copy
+
+the output becomes:
+
+    Usage: ./copy <source> <destination>
+
+
+This is a common CLI convention.
+
+
+══════════════════════════════════════════════════════════════════════
+19.5 PRACTICAL COMMAND-LINE PROGRAMS
+══════════════════════════════════════════════════════════════════════
+
+
+──────────────────────────────────────────────────────────────────────
+PROGRAM 1 — DISPLAY ALL ARGUMENTS
+──────────────────────────────────────────────────────────────────────
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        for (int i = 0; i < argc; i++)
+        {
+            printf("Argument %d: %s\n", i, argv[i]);
+        }
+
+        return 0;
+    }
+
+
+Run:
+
+    ./program Apple Banana Mango
+
+
+Output:
+
+    Argument 0: ./program
+    Argument 1: Apple
+    Argument 2: Banana
+    Argument 3: Mango
+
+
+Concept tested:
+
+    argc
+    argv
+    loop
+
+
+──────────────────────────────────────────────────────────────────────
+PROGRAM 2 — ADD TWO NUMBERS
+──────────────────────────────────────────────────────────────────────
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(int argc, char *argv[])
+    {
+        if (argc != 3)
+        {
+            printf("Usage: %s <num1> <num2>\n", argv[0]);
+            return 1;
+        }
+
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+
+        printf("Sum = %d\n", a + b);
+
+        return 0;
+    }
+
+
+Run:
+
+    ./program 15 25
+
+
+Output:
+
+    Sum = 40
+
+
+Flow:
+
+    argc
+      ↓
+    validate arguments
+      ↓
+    argv[1], argv[2]
+      ↓
+    convert strings
+      ↓
+    arithmetic
+      ↓
+    output
+
+
+──────────────────────────────────────────────────────────────────────
+PROGRAM 3 — SIMPLE CALCULATOR
+──────────────────────────────────────────────────────────────────────
+
+Command:
+
+    ./calc 10 + 20
+
+
+Arguments:
+
+    argv[0] → "./calc"
+    argv[1] → "10"
+    argv[2] → "+"
+    argv[3] → "20"
+
+Therefore:
+
+    argc = 4
+
+
+Program:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+
+    int main(int argc, char *argv[])
+    {
+        if (argc != 4)
+        {
+            printf("Usage: %s <num1> <operator> <num2>\n", argv[0]);
+            return 1;
+        }
+
+        int a = atoi(argv[1]);
+        int b = atoi(argv[3]);
+
+        if (strcmp(argv[2], "+") == 0)
+        {
+            printf("%d\n", a + b);
+        }
+        else if (strcmp(argv[2], "-") == 0)
+        {
+            printf("%d\n", a - b);
+        }
+        else if (strcmp(argv[2], "*") == 0)
+        {
+            printf("%d\n", a * b);
+        }
+        else if (strcmp(argv[2], "/") == 0)
+        {
+            if (b == 0)
+            {
+                printf("Division by zero\n");
+                return 1;
+            }
+
+            printf("%d\n", a / b);
+        }
+        else
+        {
+            printf("Unknown operator: %s\n", argv[2]);
+            return 1;
+        }
+
+        return 0;
+    }
+
+
+Run:
+
+    ./calc 10 + 20
+
+Output:
+
+    30
+
+
+Run:
+
+    ./calc 10 '*' 20
+
+Depending on the shell, quoting/escaping '*' can be necessary
+because '*' may otherwise be expanded by the shell into filenames.
+
+
+══════════════════════════════════════════════════════════════════════
+PROGRAM 4 — FILE COPY USING COMMAND-LINE ARGUMENTS
+══════════════════════════════════════════════════════════════════════
+
+This combines Chapter 18 and Chapter 19.
+
+Command:
+
+    ./copy source.txt destination.txt
+
+
+Program:
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        if (argc != 3)
+        {
+            printf("Usage: %s <source> <destination>\n", argv[0]);
+            return 1;
+        }
+
+        FILE *src = fopen(argv[1], "rb");
+
+        if (src == NULL)
+        {
+            perror("Source file");
+            return 1;
+        }
+
+        FILE *dest = fopen(argv[2], "wb");
+
+        if (dest == NULL)
+        {
+            perror("Destination file");
+            fclose(src);
+            return 1;
+        }
+
+        int ch;
+
+        while ((ch = fgetc(src)) != EOF)
+        {
+            if (fputc(ch, dest) == EOF)
+            {
+                perror("Write error");
+                fclose(src);
+                fclose(dest);
+                return 1;
+            }
+        }
+
+        if (ferror(src))
+        {
+            perror("Read error");
+        }
+
+        fclose(src);
+        fclose(dest);
+
+        return 0;
+    }
+
+
+This is a very useful job-ready example because it combines:
+
+    argc
+    argv
+    validation
+    files
+    fopen()
+    fgetc()
+    fputc()
+    EOF
+    error handling
+    fclose()
+
+
+══════════════════════════════════════════════════════════════════════
+PROGRAM 5 — COUNT ARGUMENTS
+══════════════════════════════════════════════════════════════════════
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        printf("Program name: %s\n", argv[0]);
+        printf("Number of user arguments: %d\n", argc - 1);
+
+        return 0;
+    }
+
+
+Command:
+
+    ./program A B C
+
+
+Output:
+
+    Program name: ./program
+    Number of user arguments: 3
+
+
+Why argc - 1?
+
+Because:
+
+    argv[0]
+
+is normally the program name.
+
+
+══════════════════════════════════════════════════════════════════════
+PROGRAM 6 — SUM MULTIPLE COMMAND-LINE NUMBERS
+══════════════════════════════════════════════════════════════════════
+
+Command:
+
+    ./sum 10 20 30 40
+
+
+Expected:
+
+    100
+
+
+Basic implementation:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(int argc, char *argv[])
+    {
+        long sum = 0;
+
+        for (int i = 1; i < argc; i++)
+        {
+            sum += atoi(argv[i]);
+        }
+
+        printf("Sum = %ld\n", sum);
+
+        return 0;
+    }
+
+
+Notice:
+
+    i = 1
+
+because:
+
+    argv[0]
+
+is the program name.
+
+
+══════════════════════════════════════════════════════════════════════
+COMMAND-LINE ARGUMENT MEMORY MODEL
+══════════════════════════════════════════════════════════════════════
+
+Suppose:
+
+    ./program hello world
+
+
+Conceptually:
+
+    argc = 3
+
+    argv
+      │
+      ▼
+    ┌──────────────┐
+    │ argv[0] ─────┼────► "./program\0"
+    ├──────────────┤
+    │ argv[1] ─────┼────► "hello\0"
+    ├──────────────┤
+    │ argv[2] ─────┼────► "world\0"
+    ├──────────────┤
+    │ argv[3] ─────┼────► NULL
+    └──────────────┘
+
+
+Important:
+
+    argv is an array of pointers to character strings.
+
+
+Therefore:
+
+    argv
+       ↓
+    char *
+
+and:
+
+    argv[i]
+       ↓
+    char *
+
+
+And:
+
+    argv[i][j]
+
+accesses an individual character.
+
+
+Example:
+
+    argv[1] = "hello"
+
+Then:
+
+    argv[1][0] → 'h'
+    argv[1][1] → 'e'
+    argv[1][2] → 'l'
+    argv[1][3] → 'l'
+    argv[1][4] → 'o'
+    argv[1][5] → '\0'
+
+
+══════════════════════════════════════════════════════════════════════
+argv AND POINTERS
+══════════════════════════════════════════════════════════════════════
+
+This chapter connects directly with pointers.
+
+Declaration:
+
+    char *argv[]
+
+
+As a function parameter, it is adjusted to:
+
+    char **argv
+
+
+So command-line arguments are an important real-world example
+of pointer-to-pointer concepts.
+
+
+Relationship:
+
+    argv
+      │
+      ▼
+    char **
+      │
+      ├──► char *
+      │      │
+      │      └──► characters
+      │
+      ├──► char *
+      │      │
+      │      └──► characters
+      │
+      └──► char *
+             │
+             └──► characters
+
+
+This is one reason argc/argv is frequently asked in C interviews.
+
+
+══════════════════════════════════════════════════════════════════════
+COMMON MISTAKES
+══════════════════════════════════════════════════════════════════════
+
+MISTAKE 1
+─────────
+
+Using argv without checking argc:
+
+    printf("%s\n", argv[1]);
+
+
+If no argument was supplied, this is invalid usage.
+
+Better:
+
+    if (argc > 1)
+    {
+        printf("%s\n", argv[1]);
+    }
+
+
+MISTAKE 2
+─────────
+
+Assuming numbers are automatically integers:
+
+    int x = argv[1];       // WRONG
+
+
+Correct concept:
+
+    int x = atoi(argv[1]);
+
+
+Or for robust parsing:
+
+    strtol()
+
+
+MISTAKE 3
+─────────
+
+Forgetting argv[0]:
+
+    ./program hello world
+
+does NOT mean:
+
+    argv[0] = hello
+
+Normally:
+
+    argv[0] = ./program
+    argv[1] = hello
+    argv[2] = world
+
+
+MISTAKE 4
+─────────
+
+Accessing:
+
+    argv[argc]
+
+
+The argument strings are:
+
+    argv[0] ... argv[argc-1]
+
+and argv[argc] is the null terminator pointer.
+
+
+MISTAKE 5
+─────────
+
+Using atoi() without understanding validation.
+
+For production-quality parsing, consider:
+
+    strtol()
+
+
+MISTAKE 6
+─────────
+
+Forgetting shell interpretation.
+
+For example:
+
+    ./program *
+
+may not pass the literal "*" as argv[1].
+
+The shell can expand it to filenames.
+
+To pass literal * in many shells:
+
+    ./program '*'
+
+
+MISTAKE 7
+─────────
+
+Confusing:
+
+    argc
+
+with:
+
+    number of user-supplied arguments
+
+Because argc normally includes argv[0].
+
+Thus:
+
+    user arguments = argc - 1
+
+
+══════════════════════════════════════════════════════════════════════
+INTERVIEW / GATE CONCEPTS
+══════════════════════════════════════════════════════════════════════
+
+Q1. What is argc?
+
+    Number of command-line arguments passed to the program,
+    including argv[0].
+
+
+Q2. What is argv?
+
+    An array of pointers to null-terminated character strings
+    representing command-line arguments.
+
+
+Q3. What is argv[0]?
+
+    Conventionally, the program name used to invoke the program.
+
+
+Q4. What is argv[argc]?
+
+    A null pointer that terminates the argument vector.
+
+
+Q5. Is argv[1] an integer if the user enters 100?
+
+    No.
+
+    It is a string containing "100".
+
+
+Q6. How do you convert it to an integer?
+
+    atoi(), or preferably a properly checked conversion such as
+    strtol() for robust programs.
+
+
+Q7. Difference:
+
+    char *argv[]
+
+    and
+
+    char **argv
+
+    in main()?
+
+
+    As function parameters, they are equivalent representations.
+
+
+Q8. If command is:
+
+    ./a.out A B C
+
+    what are argc and argv?
+
+    argc = 4
+
+    argv[0] = "./a.out"
+    argv[1] = "A"
+    argv[2] = "B"
+    argv[3] = "C"
+    argv[4] = NULL
+
+
+Q9. How many user arguments are supplied?
+
+    argc - 1
+
+
+Q10. Why are command-line arguments useful?
+
+    They allow programs to receive configuration/data/options from
+    the command line without interactive input.
+
+
+══════════════════════════════════════════════════════════════════════
+GATE-STYLE TRACING
+══════════════════════════════════════════════════════════════════════
+
+Suppose:
+
+    ./prog C language 2026
+
+
+Then:
+
+    argc = 4
+
+and:
+
+    argv[0] = "./prog"
+    argv[1] = "C"
+    argv[2] = "language"
+    argv[3] = "2026"
+    argv[4] = NULL
+
+
+Question:
+
+    strlen(argv[2])
+
+
+Answer:
+
+    8
+
+because:
+
+    "language"
+
+contains:
+
+    l a n g u a g e
+
+8 characters.
+
+
+Question:
+
+    argv[3][0]
+
+
+Answer:
+
+    '2'
+
+
+Question:
+
+    argv[3][3]
+
+
+Answer:
+
+    '6'
+
+
+Question:
+
+    atoi(argv[3])
+
+
+Answer:
+
+    2026
+
+
+══════════════════════════════════════════════════════════════════════
+JOB-READY CLI DESIGN
+══════════════════════════════════════════════════════════════════════
+
+A good command-line program generally follows:
+
+    START
+      │
+      ▼
+    Read argc/argv
+      │
+      ▼
+    Validate argument count
+      │
+      ▼
+    Validate argument format
+      │
+      ▼
+    Parse/convert values
+      │
+      ▼
+    Execute operation
+      │
+      ▼
+    Handle errors
+      │
+      ▼
+    Exit with appropriate status
+
+
+Example:
+
+    ./app input.txt output.txt
+
+
+The program should:
+
+    1. Check argc
+    2. Obtain input filename
+    3. Obtain output filename
+    4. Validate/open input
+    5. Validate/open output
+    6. Perform operation
+    7. Handle errors
+    8. Close resources
+    9. Return status
+
+
+This pattern is fundamental for CLI tools.
+
+
+══════════════════════════════════════════════════════════════════════
+CHAPTER 19 MASTER MAP
+══════════════════════════════════════════════════════════════════════
+
+                  COMMAND-LINE ARGUMENTS
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+           argc                        argv
+             │                           │
+      argument count             argument vector
+             │                           │
+             │                    ┌──────┴──────┐
+             │                    │             │
+             │                 argv[0]       argv[i]
+             │                    │             │
+             │                program name    strings
+             │                                  │
+             │                                  ▼
+             │                              Parsing
+             │                                  │
+             │                    ┌─────────────┼─────────────┐
+             │                    │             │             │
+             │                  atoi()       strtol()      strtod()
+             │
+             ▼
+       Validate count
+             │
+             ▼
+       Practical CLI
+             │
+      ┌──────┼─────────┐
+      │      │         │
+   Calculator  File    Utilities
+               Copy
+
+
+══════════════════════════════════════════════════════════════════════
+CHAPTER 19 FINAL REVISION
+══════════════════════════════════════════════════════════════════════
+
+CORE SYNTAX:
+
+    int main(int argc, char *argv[])
+
+
+KEY FACTS:
+
+    argc
+        → number of command-line arguments
+
+    argv
+        → array of argument strings
+
+    argv[0]
+        → normally program name
+
+    argv[1] ... argv[argc-1]
+        → user-supplied arguments
+
+    argv[argc]
+        → NULL pointer
+
+    argv[i]
+        → string, not automatically a number
+
+    atoi()
+        → simple integer conversion
+
+    strtol()
+        → more robust integer parsing
+
+    argc validation
+        → must happen before accessing required argv elements
+
+
+MOST IMPORTANT PATTERN:
+
+    int main(int argc, char *argv[])
+    {
+        if (argc != expected)
+        {
+            printf("Usage: %s ...\n", argv[0]);
+            return 1;
+        }
+
+        /* parse argv */
+        /* perform operation */
+
+        return 0;
+    }
+
+
+CONNECTION WITH PREVIOUS CHAPTER:
+
+    Chapter 18:
+        FILE HANDLING
+
+    Chapter 19:
+        COMMAND-LINE ARGUMENTS
+
+Together:
+
+    ./program input.txt output.txt
+              │         │
+              │         └── argv[2]
+              └──────────── argv[1]
+
+Then:
+
+    argv
+      ↓
+    fopen()
+      ↓
+    file processing
+
+
+This combination is the foundation for many real-world C
+command-line utilities.
+
+
+══════════════════════════════════════════════════════════════════════
+CHAPTER 19 COMPLETE
+══════════════════════════════════════════════════════════════════════
+
+NEXT:
+
+    CHAPTER 20 — C MEMORY MODEL
+
+    20.1 Program Memory Layout
+        ├── Text/Code segment
+        ├── Read-only data
+        ├── Initialized data
+        ├── BSS
+        ├── Heap
+        └── Stack
+
+    20.2 Stack
+    20.3 Heap
+    20.4 Global/Static Memory
+    20.5 Stack Frames
+    20.6 Function Call Stack
+    20.7 Recursion and Stack
+    20.8 Memory Alignment
+    20.9 Padding
+    20.10 Endianness
+        ├── Little endian
+        └── Big endian

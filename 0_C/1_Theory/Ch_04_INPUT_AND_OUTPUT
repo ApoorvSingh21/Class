@@ -1,0 +1,3192 @@
+Chapter 4 — Input & Output in C
+
+============================================================
+              C PROGRAMMING — CHAPTER 4
+                 INPUT & OUTPUT (I/O)
+============================================================
+
+Goal:
+Learn how a C program communicates with the user through
+standard input and standard output.
+
+By the end of this chapter, you should be able to:
+
+    - Print formatted output
+    - Take integer, floating-point and character input
+    - Read strings safely
+    - Understand scanf() deeply
+    - Understand the input buffer
+    - Handle whitespace/newlines correctly
+    - Validate user input
+    - Avoid common scanf() bugs
+    - Write menu-driven console programs
+    - Answer C I/O interview questions
+
+
+============================================================
+1. WHAT IS INPUT AND OUTPUT?
+============================================================
+
+Input:
+    Data provided TO the program.
+
+Output:
+    Data produced BY the program.
+
+Example:
+
+    User enters:
+        25
+
+    Program calculates:
+        25 * 2
+
+    Program displays:
+        50
+
+
+Conceptually:
+
+        INPUT
+          |
+          v
+    +-------------+
+    |   PROGRAM   |
+    +-------------+
+          |
+          v
+        OUTPUT
+
+
+In C, standard I/O is mainly provided through:
+
+    #include <stdio.h>
+
+
+============================================================
+2. STANDARD INPUT, OUTPUT AND ERROR
+============================================================
+
+C programs commonly use three standard streams:
+
+    stdin
+        Standard input
+
+    stdout
+        Standard output
+
+    stderr
+        Standard error
+
+
+Usually:
+
+    stdin  → keyboard
+    stdout → terminal
+    stderr → terminal
+
+
+But these can be redirected by the operating system.
+
+
+Example:
+
+    printf("Hello");
+
+
+Normally goes to:
+
+    stdout
+
+
+Example:
+
+    fprintf(stderr, "Error!\n");
+
+
+Goes to:
+
+    stderr
+
+
+============================================================
+3. HEADER FILE: stdio.h
+============================================================
+
+Most basic C input/output functions are declared in:
+
+    #include <stdio.h>
+
+
+Important functions:
+
+    printf()
+    scanf()
+    getchar()
+    putchar()
+    fgets()
+    puts()
+    fprintf()
+    fscanf()
+    fputc()
+    fgetc()
+
+
+We will focus first on console I/O.
+
+
+============================================================
+4. printf()
+============================================================
+
+printf() is used for formatted output.
+
+Syntax:
+
+    printf("format string", arguments);
+
+
+Example:
+
+    printf("Hello World\n");
+
+
+Output:
+
+    Hello World
+
+
+Example:
+
+    int age = 22;
+
+    printf("Age = %d\n", age);
+
+
+Output:
+
+    Age = 22
+
+
+============================================================
+5. FORMAT STRING
+============================================================
+
+The first argument of printf() is usually a format string.
+
+Example:
+
+    printf("Age = %d", age);
+
+
+Here:
+
+    "Age = %d"
+
+is the format string.
+
+    %d
+
+is a conversion specification.
+
+
+============================================================
+6. IMPORTANT printf() FORMAT SPECIFIERS
+============================================================
+
+Common examples:
+
+    %d      signed int
+    %i      signed int
+    %u      unsigned int
+    %ld     long
+    %lu     unsigned long
+    %lld    long long
+    %llu    unsigned long long
+    %f      floating-point output
+    %c      character
+    %s      string
+    %p      pointer
+    %zu     size_t
+
+
+Example:
+
+    int age = 22;
+    float marks = 85.5f;
+    char grade = 'A';
+
+    printf("Age = %d\n", age);
+    printf("Marks = %f\n", marks);
+    printf("Grade = %c\n", grade);
+
+
+============================================================
+7. printf() WITH MULTIPLE VARIABLES
+============================================================
+
+Example:
+
+    int age = 22;
+    float marks = 87.5f;
+    char grade = 'A';
+
+    printf("Age = %d, Marks = %.2f, Grade = %c\n",
+           age, marks, grade);
+
+
+Output:
+
+    Age = 22, Marks = 87.50, Grade = A
+
+
+The arguments correspond to the conversion specifications
+in order.
+
+
+============================================================
+8. NEWLINE \n
+============================================================
+
+    \n
+
+moves the cursor to a new line.
+
+Example:
+
+    printf("Hello\n");
+    printf("World\n");
+
+
+Output:
+
+    Hello
+    World
+
+
+Without newline:
+
+    printf("Hello");
+    printf("World");
+
+
+Output may appear as:
+
+    HelloWorld
+
+
+============================================================
+9. COMMON ESCAPE SEQUENCES
+============================================================
+
+    \n      newline
+    \t      horizontal tab
+    \\      backslash
+    \"      double quote
+    \'      single quote
+    \a      alert
+    \b      backspace
+    \r      carriage return
+    \f      form feed
+    \v      vertical tab
+    \0      null character
+
+
+Example:
+
+    printf("Name:\tApoorv\n");
+
+
+Output:
+
+    Name:   Apoorv
+
+
+============================================================
+10. PRINTING A PERCENTAGE SYMBOL
+============================================================
+
+To print:
+
+    %
+
+using printf():
+
+    %%
+
+Example:
+
+    printf("Progress = 90%%\n");
+
+
+Output:
+
+    Progress = 90%
+
+
+Important:
+
+    %
+
+has special meaning inside a printf format string.
+
+
+============================================================
+11. FIELD WIDTH
+============================================================
+
+You can specify minimum output width.
+
+Example:
+
+    printf("%5d\n", 42);
+
+
+Output:
+
+       42
+
+
+The value occupies at least 5 character positions.
+
+
+Example:
+
+    printf("%10d\n", 123);
+
+
+Output:
+
+           123
+
+
+============================================================
+12. LEFT ALIGNMENT
+============================================================
+
+Use:
+
+    -
+
+Example:
+
+    printf("%-10dEND\n", 123);
+
+
+Conceptually:
+
+    123       END
+
+
+Useful for creating tables.
+
+
+============================================================
+13. ZERO PADDING
+============================================================
+
+Example:
+
+    printf("%05d\n", 42);
+
+
+Output:
+
+    00042
+
+
+Another example:
+
+    printf("%08d\n", 1234);
+
+
+Output:
+
+    00001234
+
+
+============================================================
+14. PRECISION FOR FLOATING POINT
+============================================================
+
+Example:
+
+    double value = 3.1415926535;
+
+    printf("%.2f\n", value);
+
+
+Output:
+
+    3.14
+
+
+Examples:
+
+    %.1f
+    %.2f
+    %.3f
+    %.4f
+
+
+Example:
+
+    printf("%.3f\n", 10.56789);
+
+
+Output:
+
+    10.568
+
+
+============================================================
+15. FLOAT vs DOUBLE WITH printf()
+============================================================
+
+Important concept:
+
+For printf(), a float argument is promoted to double because
+of the default argument promotions.
+
+Therefore:
+
+    printf("%f", float_variable);
+
+is correct.
+
+For scanf(), however:
+
+    float  → %f
+    double → %lf
+
+This difference is VERY important.
+
+
+============================================================
+16. RETURN VALUE OF printf()
+============================================================
+
+printf() returns the number of characters transmitted,
+excluding the terminating null character.
+
+Example:
+
+    int n;
+
+    n = printf("Hello");
+
+Typically:
+
+    n = 5
+
+
+This can occasionally be useful in advanced programming.
+
+
+============================================================
+17. getchar()
+============================================================
+
+getchar() reads one character from stdin.
+
+Syntax:
+
+    int ch;
+
+    ch = getchar();
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int ch;
+
+        printf("Enter a character: ");
+
+        ch = getchar();
+
+        printf("You entered: %c\n", ch);
+
+        return 0;
+    }
+
+
+============================================================
+18. WHY getchar() RETURNS int
+============================================================
+
+A common interview question.
+
+getchar() returns:
+
+    int
+
+rather than char because it must be able to represent:
+
+    - every possible unsigned char value
+    - EOF
+
+
+EOF means:
+
+    End Of File
+
+
+Therefore:
+
+    int ch;
+
+is the preferred type for storing getchar()'s result.
+
+
+============================================================
+19. putchar()
+============================================================
+
+putchar() writes one character to stdout.
+
+Example:
+
+    putchar('A');
+
+
+Output:
+
+    A
+
+
+Example:
+
+    char ch = 'X';
+
+    putchar(ch);
+
+
+============================================================
+20. getchar() + putchar()
+============================================================
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int ch;
+
+        ch = getchar();
+
+        putchar(ch);
+
+        return 0;
+    }
+
+
+If user enters:
+
+    A
+
+Output:
+
+    A
+
+
+This is the foundation of character-by-character processing.
+
+
+============================================================
+21. scanf()
+============================================================
+
+scanf() is used for formatted input.
+
+Syntax:
+
+    scanf("format", addresses_of_variables);
+
+
+Example:
+
+    int age;
+
+    scanf("%d", &age);
+
+
+Important:
+
+    &age
+
+provides the address of age.
+
+
+scanf() needs an address so that it can store the input value
+in the variable.
+
+
+============================================================
+22. WHY & IS USED WITH scanf()
+============================================================
+
+Suppose:
+
+    int age;
+
+Memory conceptually:
+
+    +-------------+
+    |      ?      |
+    +-------------+
+          ^
+          |
+        age
+
+
+scanf():
+
+    scanf("%d", &age);
+
+
+passes the address of age.
+
+scanf() can then store:
+
+    22
+
+inside that memory location.
+
+
+This is an early and important application of pointers.
+
+
+============================================================
+23. scanf() FOR INTEGER
+============================================================
+
+Example:
+
+    int age;
+
+    printf("Enter age: ");
+    scanf("%d", &age);
+
+    printf("Age = %d\n", age);
+
+
+User:
+
+    22
+
+
+Output:
+
+    Age = 22
+
+
+============================================================
+24. scanf() FOR FLOAT
+============================================================
+
+Example:
+
+    float marks;
+
+    scanf("%f", &marks);
+
+
+Important:
+
+For scanf():
+
+    float  → %f
+
+
+============================================================
+25. scanf() FOR DOUBLE
+============================================================
+
+Example:
+
+    double salary;
+
+    scanf("%lf", &salary);
+
+
+Important:
+
+For scanf():
+
+    float  → %f
+    double → %lf
+
+
+This is one of the most frequently asked C interview
+questions.
+
+
+============================================================
+26. scanf() FOR CHARACTER
+============================================================
+
+Example:
+
+    char grade;
+
+    scanf(" %c", &grade);
+
+
+Notice the space before:
+
+    %c
+
+
+Why?
+
+Because scanf(" %c", ...) tells scanf() to skip leading
+whitespace characters before reading the character.
+
+
+============================================================
+27. scanf() FOR STRING
+============================================================
+
+Example:
+
+    char name[50];
+
+    scanf("%49s", name);
+
+
+Notice:
+
+    name
+
+not:
+
+    &name
+
+
+For an array, the array expression normally converts to a
+pointer to its first element.
+
+
+However, scanf("%s", name) reads only one whitespace-delimited
+word.
+
+
+Input:
+
+    Apoorv Singh
+
+
+Result:
+
+    name = "Apoorv"
+
+
+"Singh" remains in the input stream.
+
+
+============================================================
+28. WHY scanf("%s", name) CAN BE DANGEROUS
+============================================================
+
+This is dangerous:
+
+    char name[10];
+
+    scanf("%s", name);
+
+
+If user enters more than 9 characters, scanf() may write beyond
+the array bounds.
+
+That can cause:
+
+    - buffer overflow
+    - memory corruption
+    - security vulnerabilities
+    - undefined behavior
+
+
+Safer:
+
+    scanf("%9s", name);
+
+
+But for general line input, fgets() is usually preferable.
+
+
+============================================================
+29. fgets()
+============================================================
+
+fgets() reads a line/string from a stream.
+
+Syntax:
+
+    fgets(buffer, size, stdin);
+
+
+Example:
+
+    char name[50];
+
+    fgets(name, sizeof name, stdin);
+
+
+This is generally safer than an unrestricted %s scanf() for
+reading text lines because the buffer size is supplied.
+
+
+============================================================
+30. fgets() EXAMPLE
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        char name[50];
+
+        printf("Enter your name: ");
+
+        if (fgets(name, sizeof name, stdin) != NULL)
+        {
+            printf("Hello, %s", name);
+        }
+
+        return 0;
+    }
+
+
+Input:
+
+    Apoorv Singh
+
+
+Output:
+
+    Hello, Apoorv Singh
+
+
+Unlike %s, fgets() can read spaces.
+
+
+============================================================
+31. IMPORTANT: fgets() MAY STORE '\n'
+============================================================
+
+Suppose user enters:
+
+    Apoorv\n
+
+
+fgets() may store:
+
+    'A' 'p' 'o' 'o' 'r' 'v' '\n' '\0'
+
+
+Therefore output formatting can sometimes look unexpected.
+
+
+============================================================
+32. REMOVING NEWLINE FROM fgets()
+============================================================
+
+Common approach:
+
+    #include <stdio.h>
+    #include <string.h>
+
+    char name[50];
+
+    if (fgets(name, sizeof name, stdin) != NULL)
+    {
+        name[strcspn(name, "\n")] = '\0';
+    }
+
+
+Then:
+
+    "Apoorv\n"
+
+becomes:
+
+    "Apoorv"
+
+
+This technique uses:
+
+    strcspn()
+
+from:
+
+    <string.h>
+
+
+Strings will be studied deeply in Chapter 11.
+
+
+============================================================
+33. puts()
+============================================================
+
+puts() writes a string followed by a newline.
+
+Example:
+
+    puts("Hello World");
+
+
+Output:
+
+    Hello World
+
+
+Equivalent conceptually to:
+
+    printf("%s\n", "Hello World");
+
+
+But puts() is specifically designed for strings.
+
+
+============================================================
+34. fputs()
+============================================================
+
+fputs() writes a string to a specified stream.
+
+Example:
+
+    fputs("Hello", stdout);
+
+
+Unlike puts(), fputs() does NOT automatically append a newline.
+
+
+Example:
+
+    fputs("Hello\n", stdout);
+
+
+============================================================
+35. BASIC INPUT PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int age;
+
+        printf("Enter your age: ");
+        scanf("%d", &age);
+
+        printf("Your age is %d\n", age);
+
+        return 0;
+    }
+
+
+============================================================
+36. MULTIPLE INTEGER INPUT
+============================================================
+
+Example:
+
+    int a, b;
+
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+
+Input:
+
+    10 20
+
+
+Output:
+
+    a = 10
+    b = 20
+
+
+Whitespace in scanf format generally matches zero or more
+whitespace characters in the input.
+
+
+============================================================
+37. INPUT WITH NEWLINE
+============================================================
+
+You can enter:
+
+    10 20
+
+
+or:
+
+    10
+    20
+
+
+For:
+
+    scanf("%d %d", &a, &b);
+
+
+Both can work because whitespace in the format string allows
+whitespace in the input.
+
+
+============================================================
+38. RETURN VALUE OF scanf()
+============================================================
+
+Very important.
+
+scanf() returns the number of input items successfully
+assigned.
+
+Example:
+
+    int age;
+
+    int result = scanf("%d", &age);
+
+
+If user enters:
+
+    25
+
+then:
+
+    result == 1
+
+
+If user enters:
+
+    abc
+
+then:
+
+    result == 0
+
+
+If input ends before any assignment:
+
+    result == EOF
+
+
+This is extremely useful for input validation.
+
+
+============================================================
+39. INPUT VALIDATION WITH scanf()
+============================================================
+
+Bad:
+
+    scanf("%d", &age);
+
+
+Better:
+
+    if (scanf("%d", &age) == 1)
+    {
+        printf("Valid input\n");
+    }
+    else
+    {
+        printf("Invalid input\n");
+    }
+
+
+This checks whether an integer was successfully read.
+
+
+============================================================
+40. THE INPUT BUFFER
+============================================================
+
+Suppose:
+
+    int age;
+
+    scanf("%d", &age);
+
+
+User enters:
+
+    25\n
+
+
+scanf("%d", &age) consumes:
+
+    25
+
+
+The newline:
+
+    \n
+
+may remain in the input stream.
+
+
+This becomes important when the next operation reads a
+character.
+
+
+============================================================
+41. CLASSIC scanf() + getchar() PROBLEM
+============================================================
+
+Example:
+
+    int age;
+    char ch;
+
+    scanf("%d", &age);
+
+    ch = getchar();
+
+
+User enters:
+
+    25\n
+
+
+scanf("%d", &age) reads:
+
+    25
+
+
+The newline remains.
+
+Then:
+
+    getchar()
+
+reads:
+
+    '\n'
+
+
+Therefore ch may contain newline instead of the character
+the user intended.
+
+
+============================================================
+42. SOLUTION FOR CHARACTER INPUT
+============================================================
+
+Use:
+
+    scanf(" %c", &ch);
+
+
+The leading space tells scanf() to skip whitespace.
+
+
+Example:
+
+    int age;
+    char grade;
+
+    scanf("%d", &age);
+    scanf(" %c", &grade);
+
+
+Now input such as:
+
+    22
+    A
+
+
+can be handled correctly.
+
+
+============================================================
+43. IMPORTANT: DO NOT USE fflush(stdin)
+============================================================
+
+Many beginner tutorials suggest:
+
+    fflush(stdin);
+
+
+Do NOT use this as a portable way to clear keyboard input.
+
+The behavior of fflush() is defined for output streams; using
+fflush(stdin) to discard unread input is not portable C.
+
+
+Instead:
+
+    - design input carefully
+    - validate scanf() results
+    - use fgets() for line-oriented input
+    - parse the resulting string when necessary
+
+
+============================================================
+44. BETTER INPUT STRATEGY
+============================================================
+
+For robust programs, a good general strategy is:
+
+    1. Read a complete line using fgets()
+    2. Validate/parse the text
+    3. Convert it into the required type
+
+
+Useful functions include:
+
+    strtol()
+    strtoul()
+    strtoll()
+    strtod()
+
+
+These are available through:
+
+    <stdlib.h>
+
+
+This approach gives much better control over malformed input.
+
+
+============================================================
+45. scanf() vs fgets()
+============================================================
+
+scanf():
+
+    Good for:
+        simple formatted input
+        basic exercises
+        controlled input
+
+    Problems:
+        leftover input
+        difficult error recovery
+        %s buffer overflow if width omitted
+        newline/whitespace surprises
+
+
+fgets():
+
+    Good for:
+        reading complete lines
+        user-facing programs
+        safer string input
+        controlled parsing
+
+
+Professional programs often prefer:
+
+    fgets()
+    +
+    strtol()/strtod()/other parsing functions
+
+
+for robust text input.
+
+
+============================================================
+46. READING AN INTEGER WITH fgets() + strtol()
+============================================================
+
+Example:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <errno.h>
+    #include <limits.h>
+
+    int main(void)
+    {
+        char buffer[100];
+        char *end;
+        long value;
+
+        printf("Enter an integer: ");
+
+        if (fgets(buffer, sizeof buffer, stdin) == NULL)
+            return 1;
+
+        errno = 0;
+        value = strtol(buffer, &end, 10);
+
+        if (end == buffer)
+        {
+            printf("No number was entered.\n");
+            return 1;
+        }
+
+        if (errno == ERANGE ||
+            value < INT_MIN ||
+            value > INT_MAX)
+        {
+            printf("Number is out of int range.\n");
+            return 1;
+        }
+
+        printf("You entered: %ld\n", value);
+
+        return 0;
+    }
+
+
+This is more advanced and closer to robust production-style
+input handling.
+
+
+============================================================
+47. getchar() FOR LINE INPUT
+------------------------------------------------------------
+
+You can manually read characters:
+
+    int ch;
+
+    while ((ch = getchar()) != '\n' && ch != EOF)
+    {
+        ...
+    }
+
+
+This pattern is often used when processing or discarding
+characters from an input stream.
+
+
+============================================================
+48. EOF
+============================================================
+
+EOF means:
+
+    End Of File
+
+
+It is a special negative integer value returned by input
+functions when the end of an input stream is reached or an
+input error occurs, depending on the function/context.
+
+
+Example:
+
+    int ch;
+
+    while ((ch = getchar()) != EOF)
+    {
+        putchar(ch);
+    }
+
+
+This program copies standard input to standard output until
+EOF is received.
+
+
+On many terminals:
+
+    Linux/macOS:
+        Ctrl+D
+
+    Windows console:
+        Ctrl+Z followed by Enter
+
+
+These are terminal conventions, not C language syntax.
+
+
+============================================================
+49. stderr
+============================================================
+
+Errors should often be written to stderr.
+
+Example:
+
+    fprintf(stderr, "Error: Invalid input\n");
+
+
+Why?
+
+Because stdout and stderr are separate streams and can be
+redirected independently.
+
+
+Example:
+
+    fprintf(stdout, "Normal output\n");
+    fprintf(stderr, "Error output\n");
+
+
+============================================================
+50. fprintf()
+============================================================
+
+fprintf() is like printf(), but allows you to specify the
+output stream.
+
+Syntax:
+
+    fprintf(stream, "format", arguments);
+
+
+Example:
+
+    fprintf(stdout, "Hello\n");
+
+    fprintf(stderr, "Error occurred\n");
+
+
+Later, the same function is useful for file I/O.
+
+
+============================================================
+51. fscanf()
+============================================================
+
+fscanf() is similar to scanf(), but reads from a specified
+stream.
+
+Syntax:
+
+    fscanf(stream, "format", ...);
+
+
+Example:
+
+    fscanf(stdin, "%d", &age);
+
+
+Conceptually similar to:
+
+    scanf("%d", &age);
+
+
+It becomes particularly useful with files.
+
+
+============================================================
+52. fgetc()
+============================================================
+
+fgetc() reads one character from a stream.
+
+Example:
+
+    int ch;
+
+    ch = fgetc(stdin);
+
+
+Similar idea to:
+
+    getchar();
+
+
+getchar() can be thought of as character input from stdin.
+
+
+============================================================
+53. fputc()
+============================================================
+
+fputc() writes one character to a stream.
+
+Example:
+
+    fputc('A', stdout);
+
+
+Output:
+
+    A
+
+
+============================================================
+54. SIMPLE STUDENT INPUT PROGRAM
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int roll_no;
+        int age;
+        float percentage;
+        char grade;
+
+        printf("Enter roll number: ");
+        scanf("%d", &roll_no);
+
+        printf("Enter age: ");
+        scanf("%d", &age);
+
+        printf("Enter percentage: ");
+        scanf("%f", &percentage);
+
+        printf("Enter grade: ");
+        scanf(" %c", &grade);
+
+        printf("\n----- STUDENT DATA -----\n");
+        printf("Roll No    : %d\n", roll_no);
+        printf("Age        : %d\n", age);
+        printf("Percentage : %.2f\n", percentage);
+        printf("Grade      : %c\n", grade);
+
+        return 0;
+    }
+
+
+============================================================
+55. READING A FULL NAME
+============================================================
+
+Use fgets():
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        char name[100];
+
+        printf("Enter full name: ");
+
+        if (fgets(name, sizeof name, stdin) != NULL)
+        {
+            printf("Name: %s", name);
+        }
+
+        return 0;
+    }
+
+
+Input:
+
+    Apoorv Singh Rathor
+
+
+Output:
+
+    Name: Apoorv Singh Rathor
+
+
+============================================================
+56. MIXING scanf() AND fgets()
+============================================================
+
+This is a common beginner problem.
+
+Example:
+
+    int age;
+    char name[50];
+
+    scanf("%d", &age);
+    fgets(name, sizeof name, stdin);
+
+
+User:
+
+    22\n
+
+
+scanf() consumes:
+
+    22
+
+but leaves:
+
+    \n
+
+
+Then fgets() immediately reads that newline.
+
+
+Result:
+
+    name may become "\n"
+
+
+============================================================
+57. BETTER APPROACH
+============================================================
+
+For interactive applications, one clean approach is:
+
+    Use fgets() for ALL user input.
+
+Then parse the values.
+
+Example:
+
+    char buffer[100];
+
+    fgets(buffer, sizeof buffer, stdin);
+
+
+Then parse:
+
+    strtol()
+    strtod()
+    etc.
+
+
+This avoids many scanf()/newline problems.
+
+
+============================================================
+58. INPUT VALIDATION
+============================================================
+
+Never assume user input is valid.
+
+Example:
+
+    Age should be:
+
+        >= 0
+        <= 150
+
+
+Instead of blindly doing:
+
+    scanf("%d", &age);
+
+
+Validate the result and range.
+
+
+Example:
+
+    if (age < 0 || age > 150)
+    {
+        printf("Invalid age\n");
+    }
+
+
+But first make sure the conversion itself succeeded.
+
+
+============================================================
+59. RANGE VALIDATION
+============================================================
+
+Example:
+
+    int marks;
+
+    if (scanf("%d", &marks) == 1)
+    {
+        if (marks >= 0 && marks <= 100)
+        {
+            printf("Valid marks\n");
+        }
+        else
+        {
+            printf("Marks must be between 0 and 100\n");
+        }
+    }
+    else
+    {
+        printf("Invalid input\n");
+    }
+
+
+============================================================
+60. MENU-DRIVEN PROGRAM
+============================================================
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int choice;
+
+        printf("===== MENU =====\n");
+        printf("1. Add\n");
+        printf("2. Delete\n");
+        printf("3. Exit\n");
+
+        printf("Enter choice: ");
+
+        if (scanf("%d", &choice) != 1)
+        {
+            printf("Invalid input\n");
+            return 1;
+        }
+
+        switch (choice)
+        {
+            case 1:
+                printf("Add selected\n");
+                break;
+
+            case 2:
+                printf("Delete selected\n");
+                break;
+
+            case 3:
+                printf("Exit selected\n");
+                break;
+
+            default:
+                printf("Invalid choice\n");
+        }
+
+        return 0;
+    }
+
+
+This combines:
+
+    input
+    output
+    conditionals
+    switch
+
+
+============================================================
+61. SIMPLE CALCULATOR
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        double a, b;
+        char op;
+
+        printf("Enter expression: ");
+
+        if (scanf("%lf %c %lf", &a, &op, &b) != 3)
+        {
+            printf("Invalid input\n");
+            return 1;
+        }
+
+        switch (op)
+        {
+            case '+':
+                printf("Result = %.2f\n", a + b);
+                break;
+
+            case '-':
+                printf("Result = %.2f\n", a - b);
+                break;
+
+            case '*':
+                printf("Result = %.2f\n", a * b);
+                break;
+
+            case '/':
+                if (b == 0.0)
+                    printf("Cannot divide by zero\n");
+                else
+                    printf("Result = %.2f\n", a / b);
+                break;
+
+            default:
+                printf("Unknown operator\n");
+        }
+
+        return 0;
+    }
+
+
+Input:
+
+    10 + 5
+
+
+Output:
+
+    Result = 15.00
+
+
+============================================================
+62. printf() FORMAT SUMMARY
+============================================================
+
+    Type                    printf()
+
+    int                     %d / %i
+    unsigned int            %u
+    long                    %ld
+    unsigned long           %lu
+    long long               %lld
+    unsigned long long      %llu
+    float                   %f
+    double                  %f
+    long double             %Lf
+    char                    %c
+    string                  %s
+    pointer                 %p
+    size_t                  %zu
+
+
+============================================================
+63. scanf() FORMAT SUMMARY
+============================================================
+
+    Type                    scanf()
+
+    int                     %d
+    unsigned int            %u
+    long                    %ld
+    unsigned long           %lu
+    long long               %lld
+    unsigned long long      %llu
+    float                   %f
+    double                  %lf
+    long double             %Lf
+    char                    %c
+    string                  %s
+
+
+For scanf(), remember:
+
+    float   → %f
+    double  → %lf
+
+
+============================================================
+64. ADDRESS-OF OPERATOR &
+============================================================
+
+Example:
+
+    int age;
+
+    scanf("%d", &age);
+
+
+    &age
+
+means:
+
+    address of age
+
+
+This concept will become very important in:
+
+    pointers
+    arrays
+    functions
+    dynamic memory
+    structures
+
+
+============================================================
+65. ARRAY INPUT PREVIEW
+============================================================
+
+Example:
+
+    int marks[5];
+
+    for (int i = 0; i < 5; i++)
+    {
+        scanf("%d", &marks[i]);
+    }
+
+
+Notice:
+
+    &marks[i]
+
+
+Each element has its own memory location.
+
+
+Arrays will be covered in Chapter 10.
+
+
+============================================================
+66. STRING INPUT PREVIEW
+============================================================
+
+Character array:
+
+    char name[50];
+
+
+Using scanf:
+
+    scanf("%49s", name);
+
+
+Using fgets:
+
+    fgets(name, sizeof name, stdin);
+
+
+For full lines, fgets() is generally safer and more flexible.
+
+
+============================================================
+67. BUFFER OVERFLOW
+============================================================
+
+Buffer:
+
+    A fixed-size region of memory used to store data.
+
+
+Example:
+
+    char name[10];
+
+
+It can hold at most:
+
+    9 normal characters + '\0'
+
+when storing a C string.
+
+
+If input exceeds the available space and isn't properly
+bounded, memory outside the array may be overwritten.
+
+
+This is a major security issue.
+
+
+============================================================
+68. FORMAT STRING VULNERABILITY
+============================================================
+
+Never do:
+
+    printf(user_input);
+
+
+if user_input is controlled by an untrusted user.
+
+Why?
+
+printf() interprets the string as a format string.
+
+Safer:
+
+    printf("%s", user_input);
+
+
+This is an important security concept.
+
+
+============================================================
+69. EXAMPLE OF UNSAFE CODE
+============================================================
+
+Dangerous:
+
+    char input[100];
+
+    fgets(input, sizeof input, stdin);
+
+    printf(input);
+
+
+Better:
+
+    printf("%s", input);
+
+
+The format string should normally be controlled by the
+programmer, not arbitrary user input.
+
+
+============================================================
+70. OUTPUT BUFFERING
+============================================================
+
+stdout may be buffered.
+
+This means output may not immediately appear on the terminal
+depending on buffering mode.
+
+Example:
+
+    printf("Hello");
+
+
+A newline often helps in terminal interaction:
+
+    printf("Hello\n");
+
+
+You can explicitly flush stdout:
+
+    fflush(stdout);
+
+
+This is valid because stdout is an output stream.
+
+
+============================================================
+71. INTERACTIVE PROMPT
+============================================================
+
+Example:
+
+    printf("Enter value: ");
+    fflush(stdout);
+
+
+Flushing can ensure the prompt is displayed before a blocking
+input operation in environments where stdout is buffered.
+
+
+============================================================
+72. fprintf(stderr, ...)
+============================================================
+
+For diagnostics:
+
+    fprintf(stderr, "Error: File not found\n");
+
+
+This is preferable to mixing errors with normal output when
+stream separation matters.
+
+
+============================================================
+73. COMMON scanf() MISTAKE #1
+============================================================
+
+Wrong:
+
+    int age;
+
+    scanf("%d", age);
+
+
+Correct:
+
+    scanf("%d", &age);
+
+
+Because scanf() needs the address where it should store the
+result.
+
+
+============================================================
+74. COMMON scanf() MISTAKE #2
+============================================================
+
+Wrong:
+
+    double salary;
+
+    scanf("%f", &salary);
+
+
+Correct:
+
+    scanf("%lf", &salary);
+
+
+For scanf:
+
+    float  → %f
+    double → %lf
+
+
+============================================================
+75. COMMON scanf() MISTAKE #3
+============================================================
+
+Wrong:
+
+    char name[20];
+
+    scanf("%s", &name);
+
+
+For %s, the expected argument is a pointer to the first
+character.
+
+Correct:
+
+    scanf("%19s", name);
+
+
+Do not confuse:
+
+    name
+
+with:
+
+    &name
+
+They have different pointer types.
+
+
+============================================================
+76. COMMON scanf() MISTAKE #4
+============================================================
+
+Wrong:
+
+    char ch;
+
+    scanf("%c", &ch);
+
+after previous numeric input, when the intention is to read
+the next non-whitespace character.
+
+Better:
+
+    scanf(" %c", &ch);
+
+
+============================================================
+77. COMMON scanf() MISTAKE #5
+============================================================
+
+Dangerous:
+
+    char name[10];
+
+    scanf("%s", name);
+
+
+Safer:
+
+    scanf("%9s", name);
+
+
+Even better for line input:
+
+    fgets(name, sizeof name, stdin);
+
+
+============================================================
+78. COMMON scanf() MISTAKE #6
+============================================================
+
+Wrong assumption:
+
+    scanf() always successfully reads the requested value.
+
+
+Not true.
+
+Always consider:
+
+    scanf(...) == expected_number_of_assignments
+
+
+Example:
+
+    if (scanf("%d", &x) != 1)
+    {
+        printf("Invalid integer\n");
+    }
+
+
+============================================================
+79. printf() vs puts()
+============================================================
+
+printf():
+
+    formatted output
+
+Example:
+
+    printf("Age = %d\n", age);
+
+
+puts():
+
+    simple string output + newline
+
+Example:
+
+    puts("Hello");
+
+
+Use printf() when formatting is required.
+
+
+============================================================
+80. getchar() vs scanf("%c")
+============================================================
+
+Both can read characters, but they behave differently in
+important ways because scanf() processes input according to
+its format string.
+
+getchar():
+
+    reads one character from stdin.
+
+
+scanf("%c", &ch):
+
+    also reads one character, including whitespace.
+
+
+scanf(" %c", &ch):
+
+    skips leading whitespace and then reads a character.
+
+
+============================================================
+81. scanf() vs getchar()
+============================================================
+
+scanf():
+
+    formatted conversion
+
+
+getchar():
+
+    one character
+
+
+Example:
+
+    int ch = getchar();
+
+
+This may read:
+
+    'A'
+
+or:
+
+    '\n'
+
+or:
+
+    EOF
+
+
+============================================================
+82. fgets() vs gets()
+============================================================
+
+gets() was historically available but is unsafe because it
+cannot know the size of the destination buffer.
+
+It was removed from the C standard in C11.
+
+Never use:
+
+    gets()
+
+
+Use:
+
+    fgets()
+
+
+instead.
+
+
+============================================================
+83. ROBUST LINE INPUT PATTERN
+============================================================
+
+    char buffer[100];
+
+    if (fgets(buffer, sizeof buffer, stdin) == NULL)
+    {
+        fprintf(stderr, "Input error or EOF\n");
+        return 1;
+    }
+
+
+Then process the contents.
+
+
+This is a strong pattern to remember for job interviews.
+
+
+============================================================
+84. COMPLETE INPUT VALIDATION EXAMPLE
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int age;
+
+        printf("Enter your age: ");
+
+        if (scanf("%d", &age) != 1)
+        {
+            fprintf(stderr, "Invalid integer input.\n");
+            return 1;
+        }
+
+        if (age < 0 || age > 150)
+        {
+            fprintf(stderr, "Age out of valid range.\n");
+            return 1;
+        }
+
+        printf("Valid age: %d\n", age);
+
+        return 0;
+    }
+
+
+============================================================
+85. OUTPUT TABLE EXAMPLE
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("%-10s %-10s %-10s\n",
+               "ID", "Marks", "Grade");
+
+        printf("%-10d %-10.2f %-10c\n",
+               101, 88.50, 'A');
+
+        printf("%-10d %-10.2f %-10c\n",
+               102, 76.25, 'B');
+
+        return 0;
+    }
+
+
+Output:
+
+    ID         Marks      Grade
+    101        88.50      A
+    102        76.25      B
+
+
+This technique is useful for console applications.
+
+
+============================================================
+86. CONSOLE I/O PROJECT
+============================================================
+
+Build:
+
+    STUDENT MANAGEMENT CONSOLE PROGRAM
+
+
+Features:
+
+    1. Add student
+    2. Display student
+    3. Calculate average marks
+    4. Display grade
+    5. Exit
+
+
+Input:
+
+    Roll number
+    Name
+    Marks
+
+
+Output:
+
+    Student details
+    Total
+    Average
+    Grade
+
+
+Concepts used:
+
+    printf()
+    scanf()
+    fgets()
+    input validation
+    variables
+    if/else
+    switch
+    loops
+
+
+Later this project can be expanded using:
+
+    arrays
+    structures
+    functions
+    files
+
+
+============================================================
+87. PROFESSIONAL INPUT PRINCIPLE
+============================================================
+
+Never trust external input.
+
+External input includes:
+
+    user input
+    file input
+    network input
+    command-line arguments
+    environment variables
+    API data
+
+
+Always consider:
+
+    - Is it syntactically valid?
+    - Is it within range?
+    - Is it too long?
+    - Is it malicious?
+    - Is conversion successful?
+
+
+This principle becomes extremely important in
+software development and security.
+
+
+============================================================
+88. IMPORTANT DIFFERENCE:
+    FORMAT STRING vs ARGUMENT
+============================================================
+
+Example:
+
+    printf("Age = %d", age);
+
+
+Format string:
+
+    "Age = %d"
+
+
+Argument:
+
+    age
+
+
+The format specifier tells printf() how to interpret the
+corresponding argument.
+
+
+============================================================
+89. FORMAT STRING AND TYPE SAFETY
+============================================================
+
+C's printf()/scanf() interfaces are variadic functions.
+
+The compiler cannot always fully check the relationship
+between format strings and arguments.
+
+Modern compilers can detect many mistakes when format strings
+are literal and warnings are enabled.
+
+Compile with warnings:
+
+    gcc -Wall -Wextra -Wpedantic program.c -o program
+
+
+Warnings are extremely important in professional C.
+
+
+============================================================
+90. COMPILER WARNING EXAMPLE
+============================================================
+
+Potential mistake:
+
+    int x = 10;
+
+    printf("%f\n", x);
+
+
+The format does not match the argument type expected by
+printf().
+
+Compile with warnings:
+
+    gcc -Wall -Wextra -Wpedantic program.c -o program
+
+
+Compiler diagnostics can help identify the problem.
+
+
+============================================================
+91. COMMAND-LINE INPUT PREVIEW
+============================================================
+
+C programs can receive arguments from the command line.
+
+Example:
+
+    int main(int argc, char *argv[])
+    {
+        ...
+    }
+
+
+Command:
+
+    ./program Apoorv
+
+
+Then:
+
+    argc
+    argv
+
+
+contain command-line information.
+
+This will be studied in:
+
+    Chapter 19 — Command-Line Arguments
+
+
+============================================================
+92. I/O ERROR HANDLING
+============================================================
+
+Input/output operations can fail.
+
+Examples:
+
+    EOF
+    invalid input
+    stream error
+    interrupted operation
+    file error
+
+
+Many I/O functions provide return values that should be
+checked.
+
+
+Examples:
+
+    scanf()
+    fgets()
+    getchar()
+    printf()
+    fprintf()
+
+
+Do not ignore return values when correctness matters.
+
+
+============================================================
+93. printf() ERROR CHECKING
+============================================================
+
+printf() returns a negative value if an output error occurs.
+
+Example:
+
+    if (printf("Hello\n") < 0)
+    {
+        fprintf(stderr, "Output error\n");
+    }
+
+
+In simple programs this is often omitted, but robust software
+should consider I/O errors where appropriate.
+
+
+============================================================
+94. BUFFERED vs UNBUFFERED CONCEPT
+============================================================
+
+Streams can be buffered.
+
+Common buffering modes include:
+
+    fully buffered
+    line buffered
+    unbuffered
+
+
+The exact behavior depends on the stream and environment.
+
+Understanding buffering becomes important for:
+
+    terminal applications
+    logging
+    files
+    pipes
+    networking
+
+
+============================================================
+95. JOB-READY I/O RULES
+============================================================
+
+Rule 1:
+
+    Always match format specifier with the type.
+
+
+Rule 2:
+
+    Use & for scalar variables with scanf().
+
+
+Rule 3:
+
+    Do not use & before an array name for %s.
+
+
+Rule 4:
+
+    Prefer fgets() for line-oriented string input.
+
+
+Rule 5:
+
+    Never use gets().
+
+
+Rule 6:
+
+    Do not use fflush(stdin) as a portable input-clearing
+    technique.
+
+
+Rule 7:
+
+    Check scanf() return value.
+
+
+Rule 8:
+
+    Validate ranges.
+
+
+Rule 9:
+
+    Never trust user input.
+
+
+Rule 10:
+
+    Compile with warnings.
+
+
+============================================================
+96. COMPILATION PRACTICE
+============================================================
+
+Program:
+
+    input.c
+
+
+Compile:
+
+    gcc -Wall -Wextra -Wpedantic input.c -o input
+
+
+Run Linux/macOS:
+
+    ./input
+
+
+Windows:
+
+    input.exe
+
+
+Recommended warning flags:
+
+    -Wall
+    -Wextra
+    -Wpedantic
+
+
+For debugging:
+
+    -g
+
+
+Example:
+
+    gcc -Wall -Wextra -Wpedantic -g input.c -o input
+
+
+============================================================
+97. INTERVIEW QUESTIONS
+============================================================
+
+Q1. What is printf()?
+
+Answer:
+
+    printf() is a formatted output function declared in
+    <stdio.h>.
+
+
+Q2. What is scanf()?
+
+Answer:
+
+    scanf() is a formatted input function that reads data from
+    stdin according to a format string.
+
+
+Q3. Why is & used in scanf()?
+
+Answer:
+
+    scanf() needs the address of an object so it can store the
+    converted input value there.
+
+
+Q4. Why don't we normally use & with a char array in %s?
+
+Answer:
+
+    An array expression generally converts to a pointer to
+    its first element, which is what %s expects.
+
+
+Q5. Difference between %f in printf and scanf?
+
+Answer:
+
+    printf():
+        float is promoted to double, so %f is used.
+
+    scanf():
+        %f expects float*
+        %lf expects double*
+
+
+Q6. What does scanf() return?
+
+Answer:
+
+    Number of input items successfully assigned, or EOF if
+    input ends before the first conversion/assignment.
+
+
+Q7. What is EOF?
+
+Answer:
+
+    A special negative int value used by input functions to
+    indicate end-of-file or an input failure condition where
+    applicable.
+
+
+Q8. Why is getchar() return type int?
+
+Answer:
+
+    Because it must represent every possible unsigned-char
+    value plus EOF.
+
+
+Q9. What is the difference between getchar() and putchar()?
+
+Answer:
+
+    getchar() reads one character.
+    putchar() writes one character.
+
+
+Q10. Why is gets() unsafe?
+
+Answer:
+
+    It has no parameter specifying the destination buffer size,
+    so it can overflow the buffer. It was removed from C11.
+
+
+============================================================
+98. MORE INTERVIEW QUESTIONS
+============================================================
+
+Q11. Why does scanf("%d", &x) leave newline sometimes?
+
+Q12. How do you read a complete line in C?
+
+Q13. What is the difference between scanf() and fgets()?
+
+Q14. What is a buffer overflow?
+
+Q15. What is a format string vulnerability?
+
+Q16. Why should user input not be passed directly to printf()
+     as the format string?
+
+Q17. What is stderr?
+
+Q18. Difference between stdout and stderr?
+
+Q19. What is fprintf()?
+
+Q20. What is fscanf()?
+
+Q21. What is the difference between %c and " %c" in scanf()?
+
+Q22. Why is fflush(stdin) not portable?
+
+Q23. What is field width in printf()?
+
+Q24. What does %.2f mean?
+
+Q25. What does %05d mean?
+
+Q26. What is the return value of printf()?
+
+Q27. What is the purpose of fflush(stdout)?
+
+Q28. Why is input validation important?
+
+Q29. How can you safely read an integer from a line?
+
+Q30. What is the difference between fgets() and gets()?
+
+
+============================================================
+99. OUTPUT PREDICTION PRACTICE
+============================================================
+
+Question 1:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("%d\n", 10 + 20);
+        return 0;
+    }
+
+Output?
+
+    30
+
+
+------------------------------------------------------------
+
+Question 2:
+
+    printf("%.2f\n", 3.14159);
+
+Output?
+
+    3.14
+
+
+------------------------------------------------------------
+
+Question 3:
+
+    printf("%05d\n", 42);
+
+Output?
+
+    00042
+
+
+------------------------------------------------------------
+
+Question 4:
+
+    char ch = 'A';
+
+    printf("%c %d\n", ch, ch);
+
+On an ASCII system:
+
+    A 65
+
+
+------------------------------------------------------------
+
+Question 5:
+
+    printf("Hello\tWorld\n");
+
+Output contains:
+
+    Hello
+        World
+
+with a horizontal tab between the words.
+
+
+============================================================
+100. PRACTICE PROGRAMS
+============================================================
+
+Beginner:
+
+    1. Read and print age
+    2. Read two integers and print their sum
+    3. Read two numbers and calculate average
+    4. Read character and print it
+    5. Read name and print it
+    6. Read marks and calculate percentage
+    7. Read radius and calculate circle area
+    8. Read temperature and convert units
+    9. Create a simple calculator
+    10. Create a menu-driven program
+
+
+Intermediate:
+
+    11. Validate age
+    12. Validate marks
+    13. Read full name using fgets()
+    14. Remove newline from fgets()
+    15. Read integer using fgets() + strtol()
+    16. Create formatted student table
+    17. Build a menu-driven student program
+    18. Create an employee information program
+    19. Create a simple billing program
+    20. Create a console-based ATM menu
+
+
+Advanced:
+
+    21. Robust input parser
+    22. Command-line input
+    23. File input/output
+    24. Error reporting using stderr
+    25. Logging system
+    26. Interactive command interpreter
+
+
+============================================================
+101. MINI PROJECT
+============================================================
+
+PROJECT:
+
+    STUDENT REPORT CARD SYSTEM
+
+
+Input:
+
+    Student name
+    Roll number
+    Marks in 5 subjects
+
+
+Calculate:
+
+    Total
+    Average
+    Percentage
+    Grade
+
+
+Display:
+
+    +--------------------------------+
+    |       STUDENT REPORT           |
+    +--------------------------------+
+    | Name       : Apoorv Singh      |
+    | Roll No    : 101               |
+    | Subject 1  : 85                |
+    | Subject 2  : 90                |
+    | Subject 3  : 78                |
+    | Subject 4  : 88                |
+    | Subject 5  : 92                |
+    | Total      : 433               |
+    | Percentage : 86.60             |
+    | Grade      : A                 |
+    +--------------------------------+
+
+
+Use:
+
+    printf()
+    scanf()
+    fgets()
+    input validation
+    format specifiers
+
+
+Later improve it with:
+
+    arrays
+    structures
+    functions
+    files
+
+
+============================================================
+102. CHAPTER 4 — MASTER SUMMARY
+============================================================
+
+STANDARD I/O:
+
+    stdin
+    stdout
+    stderr
+
+
+OUTPUT:
+
+    printf()
+    puts()
+    putchar()
+    fprintf()
+    fputc()
+
+
+INPUT:
+
+    scanf()
+    fgets()
+    getchar()
+    fscanf()
+    fgetc()
+
+
+IMPORTANT:
+
+    scanf("%d", &x);
+
+    scanf("%f", &f);
+
+    scanf("%lf", &d);
+
+    scanf(" %c", &ch);
+
+    scanf("%9s", name);
+
+
+For strings:
+
+    fgets(name, sizeof name, stdin);
+
+
+For robust numeric parsing:
+
+    fgets()
+        +
+    strtol()/strtod()
+
+
+============================================================
+103. MOST IMPORTANT CONCEPTS FOR INTERVIEW
+============================================================
+
+                    C I/O
+                      |
+       +--------------+--------------+
+       |                             |
+    OUTPUT                         INPUT
+       |                             |
+   printf()                       scanf()
+   puts()                         fgets()
+   putchar()                      getchar()
+   fprintf()                      fscanf()
+   fputc()                        fgetc()
+       |
+       +-------------+
+                     |
+              FORMAT SPECIFIERS
+                     |
+       +-------------+-------------+
+       |             |             |
+      %d            %f            %lf
+      int           float         double
+
+
+Remember:
+
+    printf("%f", float_value);
+
+    scanf("%f", &float_value);
+
+    scanf("%lf", &double_value);
+
+
+============================================================
+104. CHAPTER 4 JOB-READY CHECKLIST
+============================================================
+
+[ ] Understand stdin
+[ ] Understand stdout
+[ ] Understand stderr
+[ ] Understand printf()
+[ ] Understand scanf()
+[ ] Understand getchar()
+[ ] Understand putchar()
+[ ] Understand fgets()
+[ ] Understand puts()
+[ ] Understand fprintf()
+[ ] Understand fscanf()
+[ ] Understand fgetc()
+[ ] Understand fputc()
+[ ] Know format specifiers
+[ ] Know escape sequences
+[ ] Understand scanf() return value
+[ ] Understand EOF
+[ ] Understand input buffering
+[ ] Understand newline problems
+[ ] Know why " %c" is used
+[ ] Know why & is used with scanf()
+[ ] Know why arrays don't use & with %s
+[ ] Know why gets() is unsafe
+[ ] Know why fflush(stdin) is non-portable
+[ ] Know buffer overflow
+[ ] Know format string vulnerability
+[ ] Know input validation
+[ ] Know fgets() + strtol()
+[ ] Can create a calculator
+[ ] Can create menu-driven programs
+[ ] Can create formatted reports
+[ ] Can handle invalid input
+[ ] Can compile with warnings
+
+
+============================================================
+                 END OF CHAPTER 4
+============================================================
+
+NEXT:
+
+    CHAPTER 5 — OPERATORS & EXPRESSIONS
+
+Topics:
+
+    1. Arithmetic operators
+    2. Relational operators
+    3. Logical operators
+    4. Assignment operators
+    5. Increment/decrement
+    6. Bitwise operators
+    7. Conditional operator
+    8. sizeof operator
+    9. Comma operator
+    10. Operator precedence
+    11. Operator associativity
+    12. Expressions
+    13. lvalue/rvalue concepts
+    14. Integer arithmetic
+    15. Short-circuit evaluation
+    16. Side effects
+    17. Common operator mistakes
+    18. Interview questions
+    19. Coding practice
+    20. Job-ready problems
+
+============================================================

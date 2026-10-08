@@ -1,0 +1,3186 @@
+Worked for 7s
+
+================================================================
+CHAPTER 23 — DATA STRUCTURES USING C
+================================================================
+
+SOURCE STRUCTURE:
+
+23.1 Complexity Basics
+    ├── Time complexity
+    ├── Space complexity
+    ├── Big-O
+    ├── Big-Theta
+    └── Big-Omega
+
+23.2 Linked List
+    ├── Singly linked list
+    ├── Doubly linked list
+    ├── Circular linked list
+    ├── Insertion
+    ├── Deletion
+    ├── Searching
+    └── Reversal
+
+23.3 Stack
+    ├── Array implementation
+    ├── Linked-list implementation
+    ├── Push
+    ├── Pop
+    ├── Peek
+    └── Applications
+
+23.4 Queue
+    ├── Simple queue
+    ├── Circular queue
+    ├── Deque
+    ├── Priority queue
+    └── Implementations
+
+23.5 Trees
+    ├── Binary tree
+    ├── Tree traversal
+    ├── BST
+    ├── Insertion
+    ├── Deletion
+    └── Searching
+
+23.6 Heap
+    ├── Min heap
+    ├── Max heap
+    └── Heap operations
+
+23.7 Hashing
+    ├── Hash function
+    ├── Collision
+    ├── Chaining
+    └── Open addressing
+
+23.8 Graph Fundamentals
+    ├── Representation
+    ├── Adjacency matrix
+    ├── Adjacency list
+    ├── BFS
+    └── DFS
+
+
+================================================================
+23.1 COMPLEXITY BASICS
+================================================================
+
+Data structures are not only about storing data.
+
+We also need to ask:
+
+    • How fast is an operation?
+    • How much memory does it use?
+    • How does performance change when input becomes large?
+
+This is where complexity analysis is used.
+
+
+---------------------------------------------------------------
+TIME COMPLEXITY
+---------------------------------------------------------------
+
+Time complexity describes how the amount of work performed by an
+algorithm grows as input size grows.
+
+Let:
+
+    n = input size
+
+
+Example:
+
+    for (int i = 0; i < n; i++)
+        printf("%d ", i);
+
+
+The loop executes approximately n times.
+
+Therefore:
+
+    Time Complexity = O(n)
+
+
+Example:
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            printf("%d %d", i, j);
+        }
+    }
+
+
+Outer loop:
+
+    n
+
+
+Inner loop:
+
+    n
+
+
+Total:
+
+    n × n = n²
+
+
+Therefore:
+
+    O(n²)
+
+
+---------------------------------------------------------------
+SPACE COMPLEXITY
+---------------------------------------------------------------
+
+Space complexity describes how much additional memory an algorithm
+requires as input size grows.
+
+Example:
+
+    int sum = 0;
+
+    for (int i = 0; i < n; i++)
+        sum += i;
+
+
+Only a constant number of extra variables are used.
+
+Therefore auxiliary space:
+
+    O(1)
+
+
+Example:
+
+    int *arr = malloc(n * sizeof *arr);
+
+
+Additional memory grows with n.
+
+Therefore:
+
+    O(n)
+
+
+IMPORTANT:
+
+Space complexity can be discussed in terms of:
+
+    • total memory
+    • auxiliary/extra memory
+
+In algorithm analysis, auxiliary space is often the more useful
+measure.
+
+
+================================================================
+BIG-O
+================================================================
+
+Big-O gives an asymptotic upper bound.
+
+Common complexities:
+
+    O(1)
+    O(log n)
+    O(n)
+    O(n log n)
+    O(n²)
+    O(n³)
+    O(2^n)
+    O(n!)
+
+
+Typical growth:
+
+    O(1)
+       ↓
+    O(log n)
+       ↓
+    O(n)
+       ↓
+    O(n log n)
+       ↓
+    O(n²)
+       ↓
+    O(2^n)
+       ↓
+    O(n!)
+
+
+Smaller growth is generally preferable for large n.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    int find(int arr[], int n, int target)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] == target)
+                return i;
+        }
+
+        return -1;
+    }
+
+
+Worst case:
+
+    target is at the end
+    or does not exist
+
+
+Operations:
+
+    approximately n
+
+
+Therefore:
+
+    O(n)
+
+
+Best case:
+
+    O(1)
+
+
+But the worst-case asymptotic complexity remains:
+
+    O(n)
+
+
+================================================================
+BIG-THETA
+================================================================
+
+Big-Theta represents a tight asymptotic bound.
+
+If an algorithm grows proportionally to n, we can write:
+
+    Θ(n)
+
+
+For example:
+
+    for (int i = 0; i < n; i++)
+        printf("%d", i);
+
+
+The loop always executes n times.
+
+Therefore:
+
+    Θ(n)
+
+
+Relationship conceptually:
+
+    O(n)
+        → upper-bound notation
+
+    Θ(n)
+        → tight-bound notation
+
+    Ω(n)
+        → lower-bound notation
+
+
+================================================================
+BIG-OMEGA
+================================================================
+
+Big-Omega represents an asymptotic lower bound.
+
+For example, an algorithm that must inspect at least n elements
+has:
+
+    Ω(n)
+
+
+Example:
+
+    for (int i = 0; i < n; i++)
+        process(arr[i]);
+
+
+The algorithm must process all n elements.
+
+Therefore:
+
+    Ω(n)
+
+
+For this particular loop, we can also say:
+
+    Θ(n)
+
+because it has both:
+
+    O(n)
+
+and:
+
+    Ω(n)
+
+
+================================================================
+23.2 LINKED LIST
+================================================================
+
+An array stores elements in contiguous memory.
+
+A linked list stores elements in separate nodes connected through
+pointers.
+
+Typical node:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+
+Conceptually:
+
+    +------+-------+     +------+-------+     +------+------+
+    | data | next  | --> | data | next  | --> | data | NULL |
+    +------+-------+     +------+-------+     +------+------+
+
+       Node 1                Node 2              Node 3
+
+
+The nodes do not need to be contiguous in memory.
+
+
+---------------------------------------------------------------
+WHY LINKED LIST?
+---------------------------------------------------------------
+
+Advantages:
+
+    • Dynamic size
+    • Easy insertion/deletion at known positions
+    • Does not require contiguous storage
+
+Disadvantages:
+
+    • Extra pointer memory
+    • No direct indexing
+    • Pointer traversal required
+    • Poorer cache locality than arrays in many cases
+
+
+Array:
+
+    arr[5]
+
+can directly access the fifth element.
+
+Linked list:
+
+    head → node1 → node2 → node3 → ...
+
+must traverse nodes to reach later elements.
+
+
+================================================================
+SINGLY LINKED LIST
+================================================================
+
+Each node contains:
+
+    data
+    next
+
+
+Example:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+
+Create a node:
+
+    struct Node *node =
+        malloc(sizeof *node);
+
+
+Initialize:
+
+    node->data = 10;
+    node->next = NULL;
+
+
+A head pointer identifies the first node:
+
+    struct Node *head = node;
+
+
+Diagram:
+
+    head
+     |
+     v
+    [10 | NULL]
+
+
+================================================================
+CREATING A LINKED LIST
+================================================================
+
+Example:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+    int main(void)
+    {
+        struct Node *head = NULL;
+
+        struct Node *a = malloc(sizeof *a);
+        struct Node *b = malloc(sizeof *b);
+
+        a->data = 10;
+        b->data = 20;
+
+        a->next = b;
+        b->next = NULL;
+
+        head = a;
+
+        return 0;
+    }
+
+
+Structure:
+
+    head
+     |
+     v
+    [10 | •] ---> [20 | NULL]
+
+
+Remember to eventually free every dynamically allocated node.
+
+
+================================================================
+TRAVERSING A LINKED LIST
+================================================================
+
+    struct Node *current = head;
+
+    while (current != NULL)
+    {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+
+
+Process:
+
+    current → node 1
+       ↓
+    current → node 2
+       ↓
+    current → node 3
+       ↓
+    NULL
+
+
+Time complexity:
+
+    O(n)
+
+
+Auxiliary space:
+
+    O(1)
+
+
+================================================================
+SEARCHING IN A LINKED LIST
+================================================================
+
+    struct Node *search(
+        struct Node *head,
+        int target
+    )
+    {
+        struct Node *current = head;
+
+        while (current != NULL)
+        {
+            if (current->data == target)
+                return current;
+
+            current = current->next;
+        }
+
+        return NULL;
+    }
+
+
+Worst-case time:
+
+    O(n)
+
+
+Because the target may be at the end or absent.
+
+
+================================================================
+INSERTION AT FRONT
+================================================================
+
+Suppose:
+
+    head → A → B → C
+
+
+We want to insert X.
+
+First:
+
+    new->next = head;
+
+
+Then:
+
+    head = new;
+
+
+Result:
+
+    head → X → A → B → C
+
+
+Code:
+
+    void push_front(struct Node **head, int value)
+    {
+        struct Node *new_node =
+            malloc(sizeof *new_node);
+
+        if (new_node == NULL)
+            return;
+
+        new_node->data = value;
+        new_node->next = *head;
+
+        *head = new_node;
+    }
+
+
+Why:
+
+    struct Node **head
+
+?
+
+Because the function needs to modify the caller's head pointer.
+
+This connects directly to Chapter 21's pointer-to-pointer concept.
+
+
+Time complexity:
+
+    O(1)
+
+
+================================================================
+INSERTION AT END
+================================================================
+
+Suppose:
+
+    A → B → C
+
+
+To insert D:
+
+    A → B → C → D
+
+
+Without a tail pointer, we traverse to the final node.
+
+Time:
+
+    O(n)
+
+
+With a maintained tail pointer:
+
+    O(1)
+
+for insertion at the end, assuming the tail is maintained correctly.
+
+
+================================================================
+DELETION
+================================================================
+
+Suppose:
+
+    A → B → C
+
+
+Delete B.
+
+We need to reconnect:
+
+    A → C
+
+
+In a singly linked list, we usually need access to the node before
+the node being deleted.
+
+
+General idea:
+
+    previous->next = current->next;
+
+
+Then:
+
+    free(current);
+
+
+Very important:
+
+    unlink first
+    then free
+
+
+Do not access the node after it has been freed.
+
+
+================================================================
+REVERSING A SINGLY LINKED LIST
+================================================================
+
+Original:
+
+    A → B → C → NULL
+
+
+Desired:
+
+    NULL ← A ← B ← C
+
+
+After reversal:
+
+    C → B → A → NULL
+
+
+Classic iterative algorithm:
+
+    struct Node *prev = NULL;
+    struct Node *current = head;
+
+    while (current != NULL)
+    {
+        struct Node *next = current->next;
+
+        current->next = prev;
+
+        prev = current;
+        current = next;
+    }
+
+    head = prev;
+
+
+Three important pointers:
+
+    prev
+    current
+    next
+
+
+The temporary next pointer is necessary so that we do not lose the
+rest of the list.
+
+
+Time:
+
+    O(n)
+
+
+Extra space:
+
+    O(1)
+
+
+This is a classic interview problem.
+
+
+================================================================
+DOUBLY LINKED LIST
+================================================================
+
+A doubly linked-list node contains:
+
+    previous pointer
+    data
+    next pointer
+
+
+Example:
+
+    struct Node
+    {
+        int data;
+        struct Node *prev;
+        struct Node *next;
+    };
+
+
+Diagram:
+
+       +------+-------+------+
+    ←  | prev | data  | next |  →
+       +------+-------+------+
+
+Example:
+
+    NULL ← A ⇄ B ⇄ C → NULL
+
+
+Advantages:
+
+    • Can traverse forward
+    • Can traverse backward
+    • Deletion can be easier when node is known
+
+
+Disadvantages:
+
+    • Extra pointer
+    • More complicated insertion/deletion
+    • More pointer updates
+
+
+================================================================
+CIRCULAR LINKED LIST
+================================================================
+
+In a circular linked list, the last node points back to the first.
+
+Instead of:
+
+    A → B → C → NULL
+
+
+we have:
+
+    A → B → C
+    ↑       ↓
+    └───────┘
+
+
+So:
+
+    C->next = A
+
+
+There is no NULL at the end of the cycle.
+
+
+Important:
+
+    traversal must have an appropriate stopping condition.
+
+Do not simply write:
+
+    while (current != NULL)
+
+because current may never become NULL.
+
+
+================================================================
+LINKED LIST COMPLEXITY
+================================================================
+
+Operation              Singly List
+-----------------------------------
+Access by index         O(n)
+Search                  O(n)
+Insert at front         O(1)
+Delete at front         O(1)
+Insert after known node O(1)
+Delete after known node O(1)
+Insert at end           O(n)
+Reverse                 O(n)
+
+
+These complexities assume the relevant node/pointers are already
+available where appropriate.
+
+
+================================================================
+23.3 STACK
+================================================================
+
+A stack follows:
+
+    LIFO
+
+which means:
+
+    Last In, First Out
+
+
+Real-world analogy:
+
+    stack of plates
+
+
+If:
+
+    A
+    B
+    C
+
+are pushed in that order:
+
+    push A
+    push B
+    push C
+
+
+Then:
+
+    pop → C
+    pop → B
+    pop → A
+
+
+Main operations:
+
+    push
+    pop
+    peek
+
+
+================================================================
+STACK — ARRAY IMPLEMENTATION
+================================================================
+
+Example:
+
+    #define MAX 100
+
+    int stack[MAX];
+    int top = -1;
+
+
+Empty stack:
+
+    top = -1
+
+
+Push:
+
+    stack[++top] = value;
+
+
+Pop:
+
+    value = stack[top--];
+
+
+Peek:
+
+    stack[top]
+
+
+But always check overflow and underflow.
+
+
+================================================================
+STACK PUSH
+================================================================
+
+    int push(int stack[], int *top, int value)
+    {
+        if (*top == MAX - 1)
+            return 0;       // overflow
+
+        stack[++(*top)] = value;
+
+        return 1;
+    }
+
+
+Complexity:
+
+    O(1)
+
+
+================================================================
+STACK POP
+================================================================
+
+    int pop(int stack[], int *top, int *value)
+    {
+        if (*top == -1)
+            return 0;       // underflow
+
+        *value = stack[(*top)--];
+
+        return 1;
+    }
+
+
+Complexity:
+
+    O(1)
+
+
+================================================================
+STACK PEEK
+================================================================
+
+Peek means:
+
+    inspect top element
+    without removing it
+
+
+Conceptually:
+
+    if (top != -1)
+        value = stack[top];
+
+
+Complexity:
+
+    O(1)
+
+
+================================================================
+STACK USING LINKED LIST
+================================================================
+
+A stack can also use a linked list.
+
+Top:
+
+    top → C → B → A → NULL
+
+
+Push:
+
+    add at front
+
+
+Pop:
+
+    remove from front
+
+
+Both:
+
+    O(1)
+
+
+This avoids a fixed array capacity, although dynamic allocation and
+memory availability become relevant.
+
+
+================================================================
+STACK APPLICATIONS
+================================================================
+
+Stacks are used for:
+
+    • Function-call stack
+    • Recursion
+    • Expression evaluation
+    • Parentheses matching
+    • Undo operations
+    • Backtracking
+    • Depth-first search
+    • Syntax processing
+
+
+Example:
+
+    ( [ { } ] )
+
+can be checked using a stack.
+
+
+Opening bracket:
+
+    push
+
+
+Closing bracket:
+
+    compare with top
+    then pop
+
+
+================================================================
+23.4 QUEUE
+================================================================
+
+A queue follows:
+
+    FIFO
+
+which means:
+
+    First In, First Out
+
+
+Real-world analogy:
+
+    people waiting in a line
+
+
+If:
+
+    A enters
+    B enters
+    C enters
+
+
+Then:
+
+    A leaves first
+    B leaves second
+    C leaves third
+
+
+Main operations:
+
+    enqueue
+    dequeue
+
+
+================================================================
+SIMPLE QUEUE
+================================================================
+
+Array representation:
+
+    int queue[MAX];
+
+Maintain:
+
+    front
+    rear
+
+
+Conceptually:
+
+    front → A B C ← rear
+
+
+Enqueue:
+
+    add at rear
+
+
+Dequeue:
+
+    remove from front
+
+
+================================================================
+PROBLEM WITH SIMPLE ARRAY QUEUE
+================================================================
+
+Suppose:
+
+    MAX = 5
+
+
+Initially:
+
+    [A][B][C][D][E]
+     ↑           ↑
+    front       rear
+
+
+Remove A, B, C:
+
+    [ ][ ][ ][D][E]
+           ↑     ↑
+          front rear
+
+
+There may be unused space at the beginning.
+
+A naïve implementation may incorrectly report the queue as full
+even though there is free space.
+
+This motivates the:
+
+    circular queue.
+
+
+================================================================
+CIRCULAR QUEUE
+================================================================
+
+A circular queue treats the array as circular.
+
+After the final array position:
+
+    next position = first position
+
+
+For capacity N:
+
+    next index:
+
+    (index + 1) % N
+
+
+Example:
+
+    0 1 2 3 4
+    └───────┐
+            │
+            └── back to 0
+
+
+This allows previously freed positions to be reused.
+
+
+================================================================
+DEQUE
+================================================================
+
+Deque means:
+
+    Double-Ended Queue
+
+
+Insertion and deletion can occur at both ends.
+
+Conceptually:
+
+    front ⇄ A B C ⇄ rear
+
+
+Operations include:
+
+    insert_front
+    insert_rear
+    delete_front
+    delete_rear
+
+
+A deque can support behavior similar to both:
+
+    stack
+    queue
+
+
+depending on how operations are used.
+
+
+================================================================
+PRIORITY QUEUE
+================================================================
+
+In a normal queue:
+
+    first arrival generally gets served first.
+
+
+In a priority queue:
+
+    elements are served according to priority.
+
+
+Example:
+
+    Patient A → priority 2
+    Patient B → priority 5
+    Patient C → priority 1
+
+
+If higher number means higher priority:
+
+    B
+    A
+    C
+
+
+A priority queue is commonly implemented using a:
+
+    heap
+
+
+which will be covered in section 23.6.
+
+
+================================================================
+23.5 TREES
+================================================================
+
+A tree is a hierarchical data structure.
+
+Unlike a linked list:
+
+    one-dimensional chain
+
+
+a tree can branch.
+
+
+Example:
+
+             A
+           /   \
+          B     C
+         / \
+        D   E
+
+
+Terms:
+
+    A → root
+
+    B, C → children of A
+
+    A → parent of B and C
+
+    D, E → leaves
+
+
+A leaf has:
+
+    no children
+
+
+================================================================
+BINARY TREE
+================================================================
+
+A binary tree is a tree in which each node has at most two children.
+
+Typically:
+
+    left
+    right
+
+
+Node:
+
+    struct Node
+    {
+        int data;
+        struct Node *left;
+        struct Node *right;
+    };
+
+
+Example:
+
+             10
+            /  \
+           5    20
+          / \
+         2   7
+
+
+Each node has at most:
+
+    2 children
+
+
+================================================================
+TREE TRAVERSAL
+================================================================
+
+Traversal means visiting all nodes in a systematic order.
+
+Important traversals:
+
+    • Preorder
+    • Inorder
+    • Postorder
+
+Breadth-first traversal is also commonly used and is covered with
+graphs/BFS concepts later in this chapter.
+
+
+================================================================
+PREORDER
+================================================================
+
+Order:
+
+    Root
+    Left
+    Right
+
+
+Abbreviation:
+
+    N L R
+
+
+For:
+
+             10
+            /  \
+           5    20
+          / \
+         2   7
+
+
+Preorder:
+
+    10 5 2 7 20
+
+
+Recursive form:
+
+    preorder(root)
+    {
+        visit(root);
+        preorder(root->left);
+        preorder(root->right);
+    }
+
+
+================================================================
+INORDER
+================================================================
+
+Order:
+
+    Left
+    Root
+    Right
+
+
+Abbreviation:
+
+    L N R
+
+
+For:
+
+             10
+            /  \
+           5    20
+          / \
+         2   7
+
+
+Inorder:
+
+    2 5 7 10 20
+
+
+For a Binary Search Tree, inorder traversal produces values in
+sorted order.
+
+
+This is an extremely important interview/GATE fact.
+
+
+================================================================
+POSTORDER
+================================================================
+
+Order:
+
+    Left
+    Right
+    Root
+
+
+Abbreviation:
+
+    L R N
+
+
+For:
+
+             10
+            /  \
+           5    20
+          / \
+         2   7
+
+
+Postorder:
+
+    2 7 5 20 10
+
+
+Postorder is useful for tasks such as deleting/freeing a tree,
+because children can be processed before the parent.
+
+
+================================================================
+TREE TRAVERSAL CODE
+================================================================
+
+Preorder:
+
+    void preorder(struct Node *root)
+    {
+        if (root == NULL)
+            return;
+
+        printf("%d ", root->data);
+
+        preorder(root->left);
+        preorder(root->right);
+    }
+
+
+Inorder:
+
+    void inorder(struct Node *root)
+    {
+        if (root == NULL)
+            return;
+
+        inorder(root->left);
+
+        printf("%d ", root->data);
+
+        inorder(root->right);
+    }
+
+
+Postorder:
+
+    void postorder(struct Node *root)
+    {
+        if (root == NULL)
+            return;
+
+        postorder(root->left);
+        postorder(root->right);
+
+        printf("%d ", root->data);
+    }
+
+
+These are naturally recursive.
+
+
+================================================================
+BINARY SEARCH TREE — BST
+================================================================
+
+A Binary Search Tree is a binary tree with an ordering property.
+
+For a node:
+
+    values in left subtree
+        < node value
+
+and:
+
+    values in right subtree
+        > node value
+
+assuming a policy where duplicate values are not stored.
+
+
+Example:
+
+             50
+            /  \
+          30    70
+         / \    / \
+       20  40  60  80
+
+
+Left of 50:
+
+    values < 50
+
+
+Right of 50:
+
+    values > 50
+
+
+================================================================
+BST SEARCH
+================================================================
+
+Suppose:
+
+             50
+            /  \
+          30    70
+         / \
+       20  40
+
+
+Search:
+
+    40
+
+
+Start:
+
+    50
+
+
+40 < 50
+
+go left.
+
+
+At:
+
+    30
+
+
+40 > 30
+
+go right.
+
+
+At:
+
+    40
+
+
+Found.
+
+
+Instead of searching every node, we eliminate an entire subtree at
+each step when the tree is appropriately balanced.
+
+
+================================================================
+BST SEARCH CODE
+================================================================
+
+    struct Node *search(
+        struct Node *root,
+        int key
+    )
+    {
+        if (root == NULL ||
+            root->data == key)
+        {
+            return root;
+        }
+
+        if (key < root->data)
+            return search(root->left, key);
+
+        return search(root->right, key);
+    }
+
+
+Average/balanced-tree search:
+
+    O(log n)
+
+
+Worst-case for a highly skewed BST:
+
+    O(n)
+
+
+Example of a skewed tree:
+
+    10
+      \
+       20
+         \
+          30
+            \
+             40
+
+
+This behaves similarly to a linked list.
+
+
+================================================================
+BST INSERTION
+================================================================
+
+Suppose:
+
+             50
+            /  \
+          30    70
+
+
+Insert:
+
+    40
+
+
+40 < 50
+
+go left.
+
+
+40 > 30
+
+go right.
+
+
+Right of 30 is empty.
+
+Insert there.
+
+
+Result:
+
+             50
+            /  \
+          30    70
+            \
+             40
+
+
+Recursive implementation:
+
+    struct Node *insert(
+        struct Node *root,
+        int key
+    )
+    {
+        if (root == NULL)
+        {
+            struct Node *new_node =
+                malloc(sizeof *new_node);
+
+            if (new_node == NULL)
+                return NULL;
+
+            new_node->data = key;
+            new_node->left = NULL;
+            new_node->right = NULL;
+
+            return new_node;
+        }
+
+        if (key < root->data)
+            root->left = insert(root->left, key);
+        else if (key > root->data)
+            root->right = insert(root->right, key);
+
+        return root;
+    }
+
+
+================================================================
+BST DELETION
+================================================================
+
+Deletion has three major cases.
+
+
+CASE 1:
+
+    Node is a leaf.
+
+
+Example:
+
+             50
+            /  \
+          30    70
+
+Delete 30.
+
+Simply remove it.
+
+
+---------------------------------------------------------------
+CASE 2:
+
+Node has one child.
+
+
+Example:
+
+        50
+       /
+      30
+        \
+         40
+
+
+Delete 30.
+
+
+Replace 30 with:
+
+    40
+
+
+Result:
+
+    50
+   /
+  40
+
+
+---------------------------------------------------------------
+CASE 3:
+
+Node has two children.
+
+
+Example:
+
+             50
+            /  \
+          30    70
+         / \
+       20  40
+
+
+Delete:
+
+    30
+
+
+It has two children.
+
+A common approach is to replace it with its:
+
+    inorder successor
+
+
+The inorder successor is the smallest value in the right subtree.
+
+Here:
+
+    40
+
+
+Then remove the original 40 node.
+
+
+Result:
+
+             50
+            /  \
+          40    70
+         /
+        20
+
+
+================================================================
+BST COMPLEXITY
+================================================================
+
+For a balanced BST:
+
+    Search     O(log n)
+    Insert     O(log n)
+    Delete     O(log n)
+
+
+Worst-case skewed BST:
+
+    Search     O(n)
+    Insert     O(n)
+    Delete     O(n)
+
+
+This is why balanced search trees are important in advanced data
+structures.
+
+
+================================================================
+23.6 HEAP
+================================================================
+
+A heap is a tree-based data structure commonly represented using an
+array.
+
+Two major types:
+
+    Min heap
+    Max heap
+
+
+A heap is commonly a:
+
+    complete binary tree
+
+
+In a min heap:
+
+    parent <= children
+
+
+In a max heap:
+
+    parent >= children
+
+
+================================================================
+MIN HEAP
+================================================================
+
+Example:
+
+             10
+            /  \
+          20    30
+         / \
+       40  50
+
+
+Every parent is <= its children.
+
+
+Therefore the minimum element is at the root:
+
+    10
+
+
+================================================================
+MAX HEAP
+================================================================
+
+Example:
+
+             50
+            /  \
+          30    40
+         / \
+        10  20
+
+
+Every parent is >= its children.
+
+
+Therefore the maximum element is at the root:
+
+    50
+
+
+================================================================
+HEAP ARRAY REPRESENTATION
+================================================================
+
+For a zero-based array:
+
+    parent(i) = (i - 1) / 2
+
+    left(i)   = 2*i + 1
+
+    right(i)  = 2*i + 2
+
+
+Example:
+
+    index:   0   1   2   3   4
+    value:  50  30  40  10  20
+
+
+Tree:
+
+             50
+            /  \
+          30    40
+         / \
+        10  20
+
+
+No explicit pointers are required for the tree structure.
+
+
+================================================================
+HEAP OPERATIONS
+================================================================
+
+Important operations:
+
+    Insert
+    Delete root
+    Heapify
+    Peek root
+
+
+Insertion:
+
+    1. Add element at the end.
+    2. Compare with parent.
+    3. Move upward while heap property is violated.
+
+This is called:
+
+    heapify-up
+    or
+    sift-up
+
+
+Complexity:
+
+    O(log n)
+
+
+---------------------------------------------------------------
+DELETE ROOT
+---------------------------------------------------------------
+
+To remove the root:
+
+    1. Move last element to root.
+    2. Remove last position.
+    3. Restore heap property by moving downward.
+
+This is:
+
+    heapify-down
+    or
+    sift-down
+
+
+Complexity:
+
+    O(log n)
+
+
+Peek:
+
+    O(1)
+
+
+because root is directly available.
+
+
+================================================================
+23.7 HASHING
+================================================================
+
+Hashing maps a key to a position using a hash function.
+
+Conceptually:
+
+    index = hash(key)
+
+
+Example:
+
+    table size = 10
+
+    hash(key) = key % 10
+
+
+For:
+
+    key = 27
+
+
+Index:
+
+    27 % 10 = 7
+
+
+Therefore key 27 is associated with slot 7.
+
+
+Hashing is useful for fast average-case:
+
+    search
+    insertion
+    deletion
+
+
+================================================================
+HASH FUNCTION
+================================================================
+
+A hash function maps a key to a hash value/index.
+
+Simple example:
+
+    int hash(int key, int size)
+    {
+        return key % size;
+    }
+
+
+A good hash function should distribute keys reasonably across the
+table.
+
+
+A poor function may create many collisions.
+
+
+================================================================
+COLLISION
+================================================================
+
+A collision occurs when two different keys map to the same index.
+
+
+Example:
+
+    table size = 10
+
+
+    hash(27) = 7
+    hash(37) = 7
+
+
+Therefore:
+
+    27
+    37
+
+collide.
+
+
+A hash table needs a collision-resolution strategy.
+
+
+Two important approaches from the source:
+
+    • Chaining
+    • Open addressing
+
+
+================================================================
+SEPARATE CHAINING
+================================================================
+
+Each table slot can point to a linked list.
+
+Example:
+
+    index 7:
+
+        27 → 37 → 47 → NULL
+
+
+Table:
+
+    0 → NULL
+    1 → NULL
+    2 → ...
+    7 → 27 → 37 → 47
+    8 → NULL
+    9 → NULL
+
+
+This combines:
+
+    hash table
+    +
+    linked list
+
+
+Insertion is typically straightforward.
+
+
+Average search can be approximately:
+
+    O(1)
+
+
+but depends on hash quality and load factor.
+
+
+Worst case:
+
+    O(n)
+
+
+if many keys end up in one chain.
+
+
+================================================================
+OPEN ADDRESSING
+================================================================
+
+Instead of storing a linked list at each slot, all entries are kept
+inside the table itself.
+
+When a collision occurs, another position is searched.
+
+Common strategies include:
+
+    • Linear probing
+    • Quadratic probing
+    • Double hashing
+
+
+Example with linear probing:
+
+    initial index = 7
+
+
+If occupied:
+
+    try 8
+
+
+If occupied:
+
+    try 9
+
+
+Then:
+
+    try 0
+
+
+because the table wraps around.
+
+
+Conceptually:
+
+    index = (hash(key) + i) % table_size
+
+
+where:
+
+    i = 0, 1, 2, ...
+
+
+================================================================
+HASHING COMPLEXITY
+================================================================
+
+Average-case:
+
+    Search      O(1)
+    Insert      O(1)
+    Delete      O(1)
+
+
+Worst-case:
+
+    O(n)
+
+
+The actual performance depends on:
+
+    • hash function
+    • load factor
+    • collision strategy
+    • table size
+
+
+Do not say that hashing is unconditionally O(1).
+
+
+The precise statement is usually:
+
+    expected/average O(1)
+    under suitable assumptions.
+
+
+================================================================
+23.8 GRAPH FUNDAMENTALS
+================================================================
+
+A graph consists of:
+
+    vertices
+    +
+    edges
+
+
+Example:
+
+        A ----- B
+        |       |
+        |       |
+        C ----- D
+
+
+Vertices:
+
+    A, B, C, D
+
+
+Edges:
+
+    A-B
+    A-C
+    B-D
+    C-D
+
+
+Graphs can represent:
+
+    • networks
+    • roads
+    • social connections
+    • dependencies
+    • communication systems
+    • state transitions
+
+
+================================================================
+GRAPH TERMINOLOGY
+================================================================
+
+Vertex:
+
+    node in graph
+
+
+Edge:
+
+    connection between vertices
+
+
+Degree:
+
+    number of incident edges in an undirected graph
+
+
+Directed graph:
+
+    edges have direction
+
+
+Example:
+
+    A → B
+
+
+Undirected graph:
+
+    A — B
+
+
+Weighted graph:
+
+    edges have associated weights.
+
+
+Example:
+
+    A --5--> B
+
+
+================================================================
+GRAPH REPRESENTATION
+================================================================
+
+The source lists two major representations:
+
+    1. Adjacency matrix
+    2. Adjacency list
+
+
+================================================================
+ADJACENCY MATRIX
+================================================================
+
+For n vertices, create:
+
+    n × n
+
+
+matrix.
+
+
+Example graph:
+
+    A --- B
+    |
+    C
+
+
+Matrix:
+
+          A B C
+        --------
+    A |  0 1 1
+    B |  1 0 0
+    C |  1 0 0
+
+
+For an unweighted undirected graph:
+
+    1 = edge exists
+    0 = no edge
+
+
+Advantages:
+
+    • Simple
+    • Checking whether an edge exists is O(1)
+
+
+Space:
+
+    O(V²)
+
+
+where:
+
+    V = number of vertices
+
+
+Best suited conceptually for:
+
+    dense graphs
+
+
+================================================================
+ADJACENCY LIST
+================================================================
+
+Each vertex stores its neighboring vertices.
+
+For:
+
+        A ----- B
+        |
+        C
+
+
+We can represent:
+
+    A → B → C
+    B → A
+    C → A
+
+
+In C, this can be implemented using arrays, linked lists, or other
+structures.
+
+
+Space is approximately:
+
+    O(V + E)
+
+
+where:
+
+    V = vertices
+    E = edges
+
+
+This is generally preferable for sparse graphs.
+
+
+================================================================
+ADJACENCY MATRIX VS LIST
+================================================================
+
+                     Matrix        List
+------------------------------------------------
+Space                O(V²)         O(V + E)
+Edge lookup          O(1)          O(degree)
+Sparse graph         less ideal    efficient
+Dense graph          useful        can be larger
+Implementation       simple        more involved
+
+
+The appropriate representation depends on the graph and operations
+required.
+
+
+================================================================
+BFS — BREADTH-FIRST SEARCH
+================================================================
+
+BFS explores a graph level by level.
+
+It uses a:
+
+    QUEUE
+
+
+Example:
+
+             A
+           /   \
+          B     C
+         / \     \
+        D   E     F
+
+
+Starting at A:
+
+    Visit A
+
+Then:
+
+    B, C
+
+Then:
+
+    D, E, F
+
+
+Traversal:
+
+    A B C D E F
+
+
+Conceptually:
+
+    enqueue(start)
+
+    while queue is not empty:
+        vertex = dequeue()
+        process(vertex)
+
+        for each unvisited neighbor:
+            mark visited
+            enqueue(neighbor)
+
+
+================================================================
+WHY MARK VISITED?
+================================================================
+
+Graphs can contain cycles.
+
+Example:
+
+    A → B → C
+    ↑       |
+    └───────┘
+
+
+Without a visited structure, traversal could repeatedly visit:
+
+    A
+    B
+    C
+    A
+    B
+    C
+    ...
+
+
+Therefore BFS/DFS generally track:
+
+    visited[vertex]
+
+
+================================================================
+BFS COMPLEXITY
+================================================================
+
+With an adjacency list:
+
+    Time:  O(V + E)
+    Space: O(V)
+
+
+Why?
+
+Each vertex is processed a bounded number of times, and each edge
+is examined as part of traversal.
+
+
+With an adjacency matrix, traversal typically takes:
+
+    O(V²)
+
+
+because neighbors may require scanning an entire row.
+
+
+================================================================
+DFS — DEPTH-FIRST SEARCH
+================================================================
+
+DFS explores as deeply as possible before backtracking.
+
+It can be implemented using:
+
+    • recursion
+    • explicit stack
+
+
+Example:
+
+             A
+           /   \
+          B     C
+         / \
+        D   E
+
+
+One possible DFS:
+
+    A
+    B
+    D
+    E
+    C
+
+
+The exact traversal can depend on neighbor ordering.
+
+
+================================================================
+DFS RECURSIVE FORM
+================================================================
+
+    void dfs(
+        int vertex,
+        bool visited[]
+    )
+    {
+        visited[vertex] = true;
+
+        process(vertex);
+
+        for each neighbor of vertex
+        {
+            if (!visited[neighbor])
+                dfs(neighbor, visited);
+        }
+    }
+
+
+The recursion uses the function call stack.
+
+
+This connects directly to:
+
+    recursion
+    +
+    stack
+    +
+    graph traversal
+
+
+================================================================
+DFS ITERATIVE FORM
+================================================================
+
+Use an explicit stack:
+
+    push(start)
+
+    while stack is not empty:
+        vertex = pop()
+
+        if not visited:
+            mark visited
+            process vertex
+
+            push unvisited neighbors
+
+
+Therefore:
+
+    Recursive DFS
+        ≈
+    implicit call stack
+
+
+while:
+
+    Iterative DFS
+        =
+    explicit stack
+
+
+================================================================
+DFS COMPLEXITY
+================================================================
+
+With adjacency list:
+
+    Time:  O(V + E)
+    Space: O(V)
+
+
+With adjacency matrix:
+
+    Time: O(V²)
+
+
+Again, the representation matters.
+
+
+================================================================
+DATA STRUCTURES — COMPLEXITY OVERVIEW
+================================================================
+
+Linked List:
+
+    Access        O(n)
+    Search        O(n)
+    Front insert  O(1)
+
+
+Stack:
+
+    Push          O(1)
+    Pop           O(1)
+    Peek          O(1)
+
+
+Queue:
+
+    Enqueue       O(1)   with appropriate implementation
+    Dequeue       O(1)
+
+
+Balanced BST:
+
+    Search        O(log n)
+    Insert        O(log n)
+    Delete        O(log n)
+
+
+Heap:
+
+    Peek root     O(1)
+    Insert        O(log n)
+    Delete root   O(log n)
+
+
+Hash table:
+
+    Average search/insert/delete:
+                  O(1)
+
+    Worst case:
+                  O(n)
+
+
+Graph traversal:
+
+    BFS           O(V + E)
+    DFS           O(V + E)
+
+    using adjacency lists.
+
+
+================================================================
+IMPORTANT INTERVIEW DISTINCTIONS
+================================================================
+
+ARRAY vs LINKED LIST
+--------------------
+
+Array:
+
+    • Direct indexing
+    • Contiguous storage
+    • Usually good cache locality
+    • Fixed size for ordinary arrays
+
+Linked list:
+
+    • Dynamic nodes
+    • Pointer overhead
+    • Sequential access
+    • Convenient insertion/deletion when position/node is known
+
+
+STACK vs QUEUE
+--------------
+
+Stack:
+
+    LIFO
+
+Queue:
+
+    FIFO
+
+
+TREE vs GRAPH
+-------------
+
+A tree is a hierarchical structure with stronger constraints.
+
+A general graph can have:
+
+    • cycles
+    • arbitrary connections
+    • disconnected components
+
+
+BST vs HEAP
+-----------
+
+BST:
+
+    ordered according to search property
+
+
+Heap:
+
+    parent-child priority property
+
+
+A heap is NOT a binary search tree.
+
+
+HASH TABLE vs BST
+-----------------
+
+Hash table:
+
+    average lookup O(1)
+
+
+BST:
+
+    balanced lookup O(log n)
+
+
+Hashing does not naturally maintain sorted order.
+
+BSTs can support ordered traversal.
+
+
+================================================================
+COMMON MISTAKES
+================================================================
+
+1. Thinking linked-list access by index is O(1).
+
+Wrong.
+
+    O(n)
+
+
+2. Forgetting to free deleted linked-list nodes.
+
+Can cause memory leaks.
+
+
+3. Freeing a node before saving the next pointer while traversing.
+
+Potentially loses access to the rest of the list.
+
+
+4. Forgetting to update head during front insertion/deletion.
+
+
+5. Confusing stack:
+
+    LIFO
+
+with queue:
+
+    FIFO
+
+
+6. Assuming every BST operation is always O(log n).
+
+Wrong.
+
+A skewed BST can become:
+
+    O(n)
+
+
+7. Assuming a heap is fully sorted.
+
+Wrong.
+
+A heap guarantees a heap property, not complete sorted order.
+
+
+8. Saying hash-table lookup is always O(1).
+
+More precise:
+
+    average/expected O(1)
+    under suitable assumptions.
+
+
+9. BFS using a stack.
+
+Wrong.
+
+BFS uses:
+
+    queue
+
+
+10. DFS necessarily requires recursion.
+
+Wrong.
+
+DFS can use:
+
+    recursion
+    or
+    explicit stack
+
+
+11. Forgetting visited tracking in graph traversal.
+
+
+12. Assuming adjacency matrix is always better than adjacency list.
+
+
+================================================================
+GATE / INTERVIEW CONCEPTS
+================================================================
+
+QUESTION:
+
+What is the time complexity of searching an unsorted linked list?
+
+ANSWER:
+
+    O(n)
+
+
+QUESTION:
+
+What is the complexity of inserting at the head of a linked list?
+
+ANSWER:
+
+    O(1)
+
+
+QUESTION:
+
+Which data structure follows LIFO?
+
+ANSWER:
+
+    Stack
+
+
+QUESTION:
+
+Which data structure follows FIFO?
+
+ANSWER:
+
+    Queue
+
+
+QUESTION:
+
+Which data structure is naturally used by BFS?
+
+ANSWER:
+
+    Queue
+
+
+QUESTION:
+
+Which data structure is naturally used by iterative DFS?
+
+ANSWER:
+
+    Stack
+
+
+QUESTION:
+
+What traversal of a BST gives sorted order?
+
+ANSWER:
+
+    Inorder
+
+
+QUESTION:
+
+What is the average lookup complexity of a well-designed hash table?
+
+ANSWER:
+
+    O(1)
+
+
+QUESTION:
+
+What is the worst-case search complexity of a normal BST?
+
+ANSWER:
+
+    O(n)
+
+
+QUESTION:
+
+What is the root of a min heap?
+
+ANSWER:
+
+    Minimum element
+
+
+QUESTION:
+
+What is the root of a max heap?
+
+ANSWER:
+
+    Maximum element
+
+
+QUESTION:
+
+Space complexity of an adjacency matrix?
+
+ANSWER:
+
+    O(V²)
+
+
+QUESTION:
+
+Space complexity of an adjacency list?
+
+ANSWER:
+
+    O(V + E)
+
+
+QUESTION:
+
+BFS/DFS complexity using adjacency lists?
+
+ANSWER:
+
+    O(V + E)
+
+
+================================================================
+MASTER VISUAL MAP
+================================================================
+
+                         DATA STRUCTURES
+                               |
+        ┌──────────────────────┼───────────────────────┐
+        |                      |                       |
+        ▼                      ▼                       ▼
+     LINEAR                HIERARCHICAL              GRAPH
+        |                      |                       |
+   ┌────┼────┐             ┌───┼───┐              ┌──┴──┐
+   |    |    |             |       |              |     |
+ Array List Stack         Tree    Heap            BFS   DFS
+          |
+        Queue
+
+
+LINKED LIST
+    |
+    ├── Singly
+    ├── Doubly
+    └── Circular
+
+
+STACK
+    |
+    ├── Array
+    └── Linked List
+
+
+QUEUE
+    |
+    ├── Simple
+    ├── Circular
+    ├── Deque
+    └── Priority Queue
+
+
+TREE
+    |
+    ├── Binary Tree
+    └── BST
+
+
+HEAP
+    |
+    ├── Min Heap
+    └── Max Heap
+
+
+HASHING
+    |
+    ├── Hash Function
+    ├── Collision
+    ├── Chaining
+    └── Open Addressing
+
+
+GRAPH
+    |
+    ├── Matrix
+    ├── List
+    ├── BFS
+    └── DFS
+
+
+================================================================
+CHAPTER 23 — FINAL REVISION
+================================================================
+
+COMPLEXITY
+----------
+
+    O(1)       Constant
+    O(log n)   Logarithmic
+    O(n)       Linear
+    O(n log n) Linearithmic
+    O(n²)      Quadratic
+
+
+LINKED LIST
+-----------
+
+    Node = data + pointer(s)
+
+    Search       O(n)
+    Access       O(n)
+    Front insert O(1)
+
+
+STACK
+-----
+
+    LIFO
+
+    Push  O(1)
+    Pop   O(1)
+    Peek  O(1)
+
+
+QUEUE
+-----
+
+    FIFO
+
+    Enqueue O(1)
+    Dequeue O(1)
+
+    Circular queue avoids wasted front space in array
+    implementations.
+
+
+TREE
+----
+
+    Binary tree:
+        at most 2 children
+
+    Traversals:
+
+        Preorder  = Root Left Right
+        Inorder   = Left Root Right
+        Postorder = Left Right Root
+
+
+BST
+---
+
+    left  < root < right
+
+    Balanced:
+        Search/Insert/Delete ≈ O(log n)
+
+    Worst case:
+        O(n)
+
+
+HEAP
+----
+
+    Min heap:
+        parent <= children
+
+    Max heap:
+        parent >= children
+
+    Root access:
+        O(1)
+
+    Insert:
+        O(log n)
+
+    Delete root:
+        O(log n)
+
+
+HASHING
+-------
+
+    key → hash function → index
+
+    Collision strategies:
+
+        Chaining
+        Open addressing
+
+    Average:
+        O(1)
+
+    Worst case:
+        O(n)
+
+
+GRAPH
+-----
+
+    Vertices + Edges
+
+    Representations:
+
+        Adjacency Matrix
+            O(V²) space
+
+        Adjacency List
+            O(V + E) space
+
+
+    BFS:
+        Queue
+        O(V + E) with adjacency list
+
+
+    DFS:
+        Recursion/Stack
+        O(V + E) with adjacency list
+
+
+================================================================
+CHAPTER 23 COMPLETE
+================================================================
+
+NEXT:
+
+    CHAPTER 24 — SEARCHING & SORTING
+
+The next chapter moves from data structures to algorithmic
+searching and sorting techniques.
+================================================================

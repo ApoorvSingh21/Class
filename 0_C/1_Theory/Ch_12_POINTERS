@@ -1,0 +1,2923 @@
+============================================================
+              CHAPTER 12 — POINTERS IN C
+       Complete Deep-Dive | Job-Ready | Interview Ready
+============================================================
+
+Pointers are one of the MOST IMPORTANT topics in C.
+
+They are heavily used in:
+    • Dynamic memory allocation
+    • Arrays and strings
+    • Functions
+    • Data structures
+    • Operating systems
+    • Embedded systems
+    • System programming
+    • File handling
+    • Linked lists, trees, graphs
+    • Low-level programming
+
+------------------------------------------------------------
+1. WHAT IS A POINTER?
+------------------------------------------------------------
+
+A pointer is a variable that stores the address of another object.
+
+Example:
+
+    int x = 10;
+    int *p = &x;
+
+Memory concept:
+
+    x
+    +------+
+    |  10  |
+    +------+
+      ^
+      |
+      |
+    p stores the address of x
+
+Here:
+
+    x       -> integer object
+    &x      -> address of x
+    p       -> pointer containing address of x
+    *p      -> value stored at the address in p
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int x = 10;
+        int *p = &x;
+
+        printf("x  = %d\n", x);
+        printf("&x = %p\n", (void *)&x);
+        printf("p  = %p\n", (void *)p);
+        printf("*p = %d\n", *p);
+
+        return 0;
+    }
+
+Possible output:
+
+    x  = 10
+    &x = 0x...
+    p  = 0x...
+    *p = 10
+
+The exact address is different every time/program/system.
+
+------------------------------------------------------------
+2. WHY DO WE NEED POINTERS?
+------------------------------------------------------------
+
+Pointers allow a program to work with memory addresses.
+
+Major uses:
+
+1. Modify variables inside functions
+2. Work efficiently with arrays
+3. Process strings
+4. Dynamic memory allocation
+5. Create linked lists
+6. Create trees and graphs
+7. Function pointers/callbacks
+8. System programming
+9. Hardware/embedded programming
+10. Avoid unnecessary copying
+
+Example:
+
+    int x = 10;
+    int *p = &x;
+
+    *p = 50;
+
+Now:
+
+    x == 50
+
+Because *p accesses x itself.
+
+------------------------------------------------------------
+3. MEMORY ADDRESS
+------------------------------------------------------------
+
+Every object stored in memory has an address.
+
+Example:
+
+    int x = 100;
+
+Conceptually:
+
+    Address        Value
+    ---------------------
+    0x1000          100
+
+If:
+
+    int *p = &x;
+
+then:
+
+    p = 0x1000
+
+and:
+
+    *p = 100
+
+IMPORTANT:
+
+Never assume a real memory address such as 0x1000.
+The actual address depends on the system and execution.
+
+------------------------------------------------------------
+4. ADDRESS-OF OPERATOR &
+------------------------------------------------------------
+
+The & operator obtains the address of an object.
+
+Example:
+
+    int x = 25;
+
+    printf("%p\n", (void *)&x);
+
+Correct format for an object pointer:
+
+    %p
+
+and cast to:
+
+    (void *)
+
+Example:
+
+    int x = 25;
+    int *p = &x;
+
+Here:
+
+    &x -> address of x
+
+------------------------------------------------------------
+5. DEREFERENCE OPERATOR *
+------------------------------------------------------------
+
+The * operator can dereference a pointer.
+
+Example:
+
+    int x = 25;
+    int *p = &x;
+
+    printf("%d\n", *p);
+
+Output:
+
+    25
+
+You can also modify x:
+
+    *p = 100;
+
+Now:
+
+    x == 100
+
+Important distinction:
+
+    int *p;     // declaration: p is pointer to int
+
+    *p          // expression: dereference p
+
+    &x          // address of x
+
+------------------------------------------------------------
+6. POINTER DECLARATION
+------------------------------------------------------------
+
+Syntax:
+
+    data_type *pointer_name;
+
+Examples:
+
+    int *p;
+    char *c;
+    float *f;
+    double *d;
+
+Meaning:
+
+    int *p
+        p points to int
+
+    char *c
+        c points to char
+
+    float *f
+        f points to float
+
+    double *d
+        d points to double
+
+The pointer's type tells C what kind of object the pointer
+is intended to point to and affects operations such as
+dereferencing and pointer arithmetic.
+
+------------------------------------------------------------
+7. INITIALIZING A POINTER
+------------------------------------------------------------
+
+Never use an uninitialized pointer.
+
+BAD:
+
+    int *p;
+    *p = 10;       // Undefined behavior
+
+Why?
+
+Because p contains an indeterminate value.
+
+GOOD:
+
+    int x = 10;
+    int *p = &x;
+
+Or:
+
+    int *p = NULL;
+
+Then assign a valid address later.
+
+------------------------------------------------------------
+8. NULL POINTER
+------------------------------------------------------------
+
+A NULL pointer represents that the pointer does not currently
+point to a valid object.
+
+Example:
+
+    int *p = NULL;
+
+You must NOT dereference it:
+
+    *p = 10;       // Undefined behavior
+
+Always check when appropriate:
+
+    if (p != NULL)
+    {
+        printf("%d\n", *p);
+    }
+
+NULL is a null pointer constant/macro, while '\0' is the
+null character used to terminate C strings.
+
+Do not confuse:
+
+    NULL
+    '\0'
+    0
+
+They have different roles.
+
+------------------------------------------------------------
+9. POINTER TYPES
+------------------------------------------------------------
+
+Different pointer types can point to different object types.
+
+Example:
+
+    int x = 10;
+    char c = 'A';
+    double d = 3.14;
+
+    int *p1 = &x;
+    char *p2 = &c;
+    double *p3 = &d;
+
+Conceptually:
+
+    p1 -> int
+    p2 -> char
+    p3 -> double
+
+Pointer arithmetic depends on the pointed-to type.
+
+------------------------------------------------------------
+10. POINTER SIZE
+------------------------------------------------------------
+
+On many modern 64-bit systems, object pointers are commonly
+8 bytes, but this is NOT guaranteed by the C language.
+
+Example:
+
+    printf("%zu\n", sizeof(int *));
+    printf("%zu\n", sizeof(char *));
+    printf("%zu\n", sizeof(double *));
+
+Do not assume all pointer sizes universally.
+
+Use:
+
+    sizeof(pointer)
+
+to determine the size on the current implementation.
+
+------------------------------------------------------------
+11. POINTER AND DATA TYPE
+------------------------------------------------------------
+
+Example:
+
+    int x = 100;
+    int *p = &x;
+
+    printf("%d\n", *p);
+
+The compiler knows that p points to an int.
+
+This matters for:
+
+    *p
+    p + 1
+    p - 1
+
+------------------------------------------------------------
+12. POINTER ARITHMETIC
+------------------------------------------------------------
+
+Pointer arithmetic is especially useful with arrays.
+
+Example:
+
+    int arr[] = {10, 20, 30, 40};
+
+    int *p = arr;
+
+Then:
+
+    *p       -> 10
+    *(p + 1) -> 20
+    *(p + 2) -> 30
+    *(p + 3) -> 40
+
+The pointer increment moves by the size of the pointed-to
+object, not simply one byte.
+
+If:
+
+    sizeof(int) == 4
+
+then conceptually:
+
+    p       -> address A
+    p + 1   -> A + 4 bytes
+    p + 2   -> A + 8 bytes
+
+But do not manually assume sizeof(int) is always 4.
+
+------------------------------------------------------------
+13. POINTER INCREMENT
+------------------------------------------------------------
+
+Example:
+
+    int arr[] = {10, 20, 30};
+
+    int *p = arr;
+
+    printf("%d\n", *p);
+
+    p++;
+
+    printf("%d\n", *p);
+
+Output:
+
+    10
+    20
+
+Again:
+
+    p++
+
+moves to the next int object.
+
+------------------------------------------------------------
+14. POINTER DECREMENT
+------------------------------------------------------------
+
+Example:
+
+    int arr[] = {10, 20, 30};
+
+    int *p = &arr[2];
+
+    printf("%d\n", *p);
+
+    p--;
+
+    printf("%d\n", *p);
+
+Output:
+
+    30
+    20
+
+------------------------------------------------------------
+15. POINTER + INTEGER
+------------------------------------------------------------
+
+Example:
+
+    int arr[] = {10, 20, 30, 40};
+
+    int *p = arr;
+
+    printf("%d\n", *(p + 2));
+
+Output:
+
+    30
+
+Equivalent:
+
+    arr[2]
+
+because:
+
+    arr[i] == *(arr + i)
+
+------------------------------------------------------------
+16. POINTER - INTEGER
+------------------------------------------------------------
+
+Example:
+
+    int arr[] = {10, 20, 30, 40};
+
+    int *p = &arr[3];
+
+    printf("%d\n", *(p - 2));
+
+Output:
+
+    20
+
+------------------------------------------------------------
+17. POINTER - POINTER
+------------------------------------------------------------
+
+Two pointers into the same array can be subtracted.
+
+Example:
+
+    int arr[] = {10, 20, 30, 40, 50};
+
+    int *p = &arr[4];
+    int *q = &arr[1];
+
+    printf("%td\n", p - q);
+
+Output:
+
+    3
+
+Because there are three array-element positions between them.
+
+Pointer subtraction is meaningful when the pointers point into
+the same array object (or one past it).
+
+The result type is:
+
+    ptrdiff_t
+
+from:
+
+    <stddef.h>
+
+------------------------------------------------------------
+18. POINTER COMPARISON
+------------------------------------------------------------
+
+Pointers can be compared in certain meaningful contexts.
+
+For pointers into the same array:
+
+    p < q
+    p > q
+    p <= q
+    p >= q
+
+can be used to compare their positions.
+
+Equality comparisons:
+
+    p == q
+    p != q
+
+can be used to determine whether two pointers represent the
+same address.
+
+Do not treat arbitrary unrelated object pointers as if they
+were positions in one common array for relational comparison.
+
+------------------------------------------------------------
+19. POINTERS AND ARRAYS
+------------------------------------------------------------
+
+One of the most important relationships in C:
+
+For most expressions, an array expression is converted to a
+pointer to its first element.
+
+Example:
+
+    int arr[4] = {10, 20, 30, 40};
+
+    int *p = arr;
+
+This is equivalent to:
+
+    int *p = &arr[0];
+
+Therefore:
+
+    arr[0]
+    *(arr + 0)
+
+are equivalent.
+
+Similarly:
+
+    arr[2]
+    *(arr + 2)
+
+are equivalent.
+
+------------------------------------------------------------
+20. ARRAY TRAVERSAL USING POINTERS
+------------------------------------------------------------
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int arr[] = {10, 20, 30, 40, 50};
+        size_t n = sizeof arr / sizeof arr[0];
+
+        for (size_t i = 0; i < n; i++)
+        {
+            printf("%d ", *(arr + i));
+        }
+
+        return 0;
+    }
+
+Output:
+
+    10 20 30 40 50
+
+------------------------------------------------------------
+21. POINTER WALKING
+------------------------------------------------------------
+
+Instead of using an index:
+
+    for (size_t i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+
+you can use a pointer:
+
+    int *p = arr;
+
+    for (size_t i = 0; i < n; i++)
+    {
+        printf("%d ", *p);
+        p++;
+    }
+
+Another common form:
+
+    int *end = arr + n;
+
+    for (int *p = arr; p < end; p++)
+    {
+        printf("%d ", *p);
+    }
+
+This is useful in low-level C programming.
+
+------------------------------------------------------------
+22. ARRAY-TO-POINTER CONVERSION
+------------------------------------------------------------
+
+Given:
+
+    int arr[5];
+
+In most expressions:
+
+    arr
+
+becomes:
+
+    &arr[0]
+
+But there are important exceptions.
+
+For example:
+
+    sizeof(arr)
+
+does NOT convert arr to a pointer.
+
+Also:
+
+    &arr
+
+gives the address of the entire array.
+
+This difference is extremely important.
+
+------------------------------------------------------------
+23. arr vs &arr
+------------------------------------------------------------
+
+Example:
+
+    int arr[5];
+
+Then:
+
+    arr
+        type in most expressions:
+        pointer to first element, int *
+
+    &arr
+        type:
+        pointer to entire array, int (*)[5]
+
+They may have the same numeric address, but their types differ.
+
+Example:
+
+    printf("%p\n", (void *)arr);
+    printf("%p\n", (void *)&arr);
+
+Addresses are commonly numerically equal, but the pointer
+types and pointer arithmetic are different.
+
+------------------------------------------------------------
+24. POINTER TO POINTER
+------------------------------------------------------------
+
+A pointer can point to another pointer.
+
+Example:
+
+    int x = 10;
+
+    int *p = &x;
+
+    int **pp = &p;
+
+Conceptually:
+
+    x
+    ^
+    |
+    p
+    ^
+    |
+    pp
+
+Access:
+
+    x      -> 10
+    *p     -> 10
+    **pp   -> 10
+
+Example:
+
+    **pp = 50;
+
+Now:
+
+    x == 50
+
+------------------------------------------------------------
+25. MULTIPLE INDIRECTION
+------------------------------------------------------------
+
+You can have:
+
+    int *p;
+    int **pp;
+    int ***ppp;
+
+Example:
+
+    int x = 10;
+
+    int *p = &x;
+    int **pp = &p;
+    int ***ppp = &pp;
+
+Then:
+
+    *p       -> x
+    **pp     -> x
+    ***ppp   -> x
+
+Multiple pointers are used in advanced data structures and
+functions that need to modify pointer variables.
+
+------------------------------------------------------------
+26. POINTERS AND FUNCTIONS
+------------------------------------------------------------
+
+C passes function arguments by value.
+
+Pointers allow a function to modify an object owned by the
+caller.
+
+Example:
+
+    void change(int *p)
+    {
+        *p = 100;
+    }
+
+    int main(void)
+    {
+        int x = 10;
+
+        change(&x);
+
+        printf("%d\n", x);
+
+        return 0;
+    }
+
+Output:
+
+    100
+
+Important:
+
+C does NOT have pass-by-reference in the C++ sense.
+
+Instead:
+
+    address is passed by value
+
+and the function uses that address to access the caller's
+object.
+
+------------------------------------------------------------
+27. SWAP TWO VARIABLES USING POINTERS
+------------------------------------------------------------
+
+Example:
+
+    void swap(int *a, int *b)
+    {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+
+Usage:
+
+    int x = 10;
+    int y = 20;
+
+    swap(&x, &y);
+
+After:
+
+    x = 20
+    y = 10
+
+This is a classic interview question.
+
+------------------------------------------------------------
+28. PASSING ARRAYS TO FUNCTIONS
+------------------------------------------------------------
+
+Example:
+
+    void printArray(const int arr[], size_t n)
+    {
+        for (size_t i = 0; i < n; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+    }
+
+Call:
+
+    int a[] = {10, 20, 30};
+
+    printArray(a, 3);
+
+Inside a function parameter list:
+
+    int arr[]
+
+is adjusted to:
+
+    int *arr
+
+Therefore the function does NOT automatically know the array
+length.
+
+You normally pass the length separately.
+
+------------------------------------------------------------
+29. const WITH POINTERS
+------------------------------------------------------------
+
+There are three important forms.
+
+A) Pointer to const:
+
+    const int *p;
+
+B) Const pointer:
+
+    int *const p = &x;
+
+C) Const pointer to const:
+
+    const int *const p = &x;
+
+Understand these carefully.
+
+------------------------------------------------------------
+30. POINTER TO CONST
+------------------------------------------------------------
+
+    const int *p;
+
+Means:
+
+    You can change where p points,
+    but you cannot modify the int through p.
+
+Example:
+
+    int a = 10;
+    int b = 20;
+
+    const int *p = &a;
+
+    p = &b;       // OK
+
+    *p = 30;      // ERROR
+
+But:
+
+    b = 30;       // OK
+
+The const applies to the pointed-to int through this pointer.
+
+------------------------------------------------------------
+31. CONST POINTER
+------------------------------------------------------------
+
+    int *const p = &x;
+
+Means:
+
+    p cannot point somewhere else,
+    but the object can be modified through p.
+
+Example:
+
+    int x = 10;
+    int y = 20;
+
+    int *const p = &x;
+
+    *p = 50;      // OK
+
+    p = &y;       // ERROR
+
+------------------------------------------------------------
+32. CONST POINTER TO CONST
+------------------------------------------------------------
+
+    const int *const p = &x;
+
+Means:
+
+    p cannot change its target
+
+AND:
+
+    *p cannot modify the target
+
+Example:
+
+    int x = 10;
+
+    const int *const p = &x;
+
+    *p = 20;      // ERROR
+    p = NULL;     // ERROR
+
+------------------------------------------------------------
+33. VOID POINTER
+------------------------------------------------------------
+
+A void pointer:
+
+    void *
+
+can hold the address of an object of any object type.
+
+Example:
+
+    int x = 10;
+
+    void *p = &x;
+
+But you cannot directly dereference a void pointer in standard C
+because its pointed-to type is unknown.
+
+You can convert it to an appropriate pointer type:
+
+    printf("%d\n", *(int *)p);
+
+void * is heavily used by generic library functions such as:
+
+    malloc()
+    qsort()
+    bsearch()
+
+------------------------------------------------------------
+34. POINTER CASTING
+------------------------------------------------------------
+
+Example:
+
+    int x = 10;
+
+    void *vp = &x;
+
+    int *ip = vp;
+
+In C, conversion from void * to an object pointer type is
+implicit.
+
+Explicit cast:
+
+    int *ip = (int *)vp;
+
+For normal C code, unnecessary casts of malloc's return value
+are generally discouraged:
+
+    int *p = malloc(10 * sizeof *p);
+
+not:
+
+    int *p = (int *)malloc(10 * sizeof *p);
+
+------------------------------------------------------------
+35. POINTERS AND STRINGS
+------------------------------------------------------------
+
+Strings are character arrays.
+
+Example:
+
+    char str[] = "Hello";
+
+You can use:
+
+    char *p = str;
+
+Then:
+
+    *p       -> 'H'
+    *(p + 1) -> 'e'
+    *(p + 2) -> 'l'
+
+Example:
+
+    while (*p != '\0')
+    {
+        putchar(*p);
+        p++;
+    }
+
+Output:
+
+    Hello
+
+------------------------------------------------------------
+36. char ARRAY VS char POINTER
+------------------------------------------------------------
+
+Important difference:
+
+    char str[] = "Hello";
+
+This creates a modifiable array initialized with the characters
+of the string literal.
+
+But:
+
+    const char *p = "Hello";
+
+p points to a string literal. The program must not modify that
+literal.
+
+Therefore:
+
+    str[0] = 'Y';      // OK
+
+while:
+
+    p[0] = 'Y';       // Undefined behavior
+
+Use:
+
+    const char *p
+
+when pointing to a string literal.
+
+------------------------------------------------------------
+37. POINTER TO STRUCTURE
+------------------------------------------------------------
+
+Example:
+
+    struct Student
+    {
+        int age;
+        float marks;
+    };
+
+    struct Student s = {22, 90.5f};
+
+    struct Student *p = &s;
+
+Access:
+
+    (*p).age
+
+or more conveniently:
+
+    p->age
+
+Similarly:
+
+    p->marks
+
+------------------------------------------------------------
+38. . VS ->
+------------------------------------------------------------
+
+For an actual structure object:
+
+    s.age
+
+For a pointer to structure:
+
+    p->age
+
+This:
+
+    p->age
+
+is equivalent to:
+
+    (*p).age
+
+The parentheses are necessary in the expanded form.
+
+------------------------------------------------------------
+39. DYNAMIC MEMORY AND POINTERS
+------------------------------------------------------------
+
+Pointers are essential for dynamic memory.
+
+Main functions:
+
+    malloc()
+    calloc()
+    realloc()
+    free()
+
+Header:
+
+    #include <stdlib.h>
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+If allocation succeeds:
+
+    p[0]
+    p[1]
+    p[2]
+    p[3]
+    p[4]
+
+can be used.
+
+Always check allocation when failure matters:
+
+    if (p == NULL)
+    {
+        /* handle allocation failure */
+    }
+
+------------------------------------------------------------
+40. malloc()
+------------------------------------------------------------
+
+Syntax:
+
+    malloc(number_of_bytes)
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+malloc allocates uninitialized storage.
+
+The allocated bytes have indeterminate values for ordinary
+object use until appropriately initialized.
+
+Initialize them yourself.
+
+Example:
+
+    for (size_t i = 0; i < 5; i++)
+    {
+        p[i] = 0;
+    }
+
+------------------------------------------------------------
+41. calloc()
+------------------------------------------------------------
+
+Syntax:
+
+    calloc(number_of_elements, element_size)
+
+Example:
+
+    int *p = calloc(5, sizeof *p);
+
+The allocated storage is initialized to all-bits-zero.
+
+For integer types, this commonly corresponds to zero, but do not
+generalize "all-bits-zero" as a universal representation for
+every possible C type.
+
+------------------------------------------------------------
+42. realloc()
+------------------------------------------------------------
+
+realloc changes the size of a previously allocated block.
+
+Example:
+
+    int *temp = realloc(p, 10 * sizeof *p);
+
+Good practice:
+
+    int *temp = realloc(p, 10 * sizeof *p);
+
+    if (temp != NULL)
+    {
+        p = temp;
+    }
+    else
+    {
+        /* p is still valid */
+    }
+
+Do NOT immediately overwrite p like:
+
+    p = realloc(p, new_size);
+
+if you need to preserve p on allocation failure.
+
+------------------------------------------------------------
+43. free()
+------------------------------------------------------------
+
+Dynamic memory must eventually be released.
+
+Example:
+
+    int *p = malloc(10 * sizeof *p);
+
+    if (p != NULL)
+    {
+        /* use p */
+
+        free(p);
+        p = NULL;
+    }
+
+Setting the pointer to NULL after free can help prevent accidental
+reuse of that pointer variable.
+
+------------------------------------------------------------
+44. DANGLING POINTER
+------------------------------------------------------------
+
+A dangling pointer points to an object whose lifetime has ended.
+
+Example:
+
+    int *p = malloc(sizeof *p);
+
+    free(p);
+
+Now p still contains the old address, but that storage is no
+longer owned by the program.
+
+Therefore:
+
+    *p = 10;       // Undefined behavior
+
+Safer:
+
+    free(p);
+    p = NULL;
+
+------------------------------------------------------------
+45. WILD POINTER
+------------------------------------------------------------
+
+A wild pointer is an uninitialized pointer.
+
+Example:
+
+    int *p;
+
+    *p = 100;      // Undefined behavior
+
+Correct:
+
+    int x;
+    int *p = &x;
+
+or:
+
+    int *p = NULL;
+
+------------------------------------------------------------
+46. MEMORY LEAK
+------------------------------------------------------------
+
+A memory leak occurs when dynamically allocated memory becomes
+unreachable without being freed.
+
+Example:
+
+    int *p = malloc(100 * sizeof *p);
+
+    p = NULL;
+
+The allocated block can no longer be reached.
+
+That memory is leaked until the process ends.
+
+Correct:
+
+    int *p = malloc(100 * sizeof *p);
+
+    free(p);
+    p = NULL;
+
+------------------------------------------------------------
+47. DOUBLE FREE
+------------------------------------------------------------
+
+Calling free twice on the same allocated object is invalid.
+
+BAD:
+
+    int *p = malloc(sizeof *p);
+
+    free(p);
+    free(p);       // Undefined behavior
+
+Safer pattern:
+
+    free(p);
+    p = NULL;
+
+Then:
+
+    free(p);       // free(NULL) is safe
+
+But do not rely on this to hide incorrect ownership design.
+
+------------------------------------------------------------
+48. USE-AFTER-FREE
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(sizeof *p);
+
+    *p = 10;
+
+    free(p);
+
+    printf("%d\n", *p);     // Undefined behavior
+
+The object lifetime has ended.
+
+------------------------------------------------------------
+49. POINTER ALIASING
+------------------------------------------------------------
+
+Two pointers may point to the same object.
+
+Example:
+
+    int x = 10;
+
+    int *p = &x;
+    int *q = &x;
+
+Then:
+
+    *p = 50;
+
+Therefore:
+
+    *q == 50
+
+because both point to x.
+
+Aliasing is powerful but can make programs harder to reason
+about.
+
+------------------------------------------------------------
+50. RESTRICT
+------------------------------------------------------------
+
+C provides the restrict qualifier.
+
+Example:
+
+    void add(size_t n,
+             int *restrict dst,
+             const int *restrict src)
+    {
+        for (size_t i = 0; i < n; i++)
+            dst[i] += src[i];
+    }
+
+restrict tells the compiler about intended access relationships
+under the rules of the C language and can enable optimization.
+
+Using restrict incorrectly can result in undefined behavior.
+
+It is an advanced topic and should be learned after basic pointers
+and aliasing.
+
+------------------------------------------------------------
+51. POINTER TO ARRAY
+------------------------------------------------------------
+
+Example:
+
+    int arr[3][4];
+
+    int (*p)[4] = arr;
+
+Here:
+
+    p
+
+is a pointer to an array of 4 int.
+
+Then:
+
+    p + 1
+
+moves to the next row.
+
+This is different from:
+
+    int *p;
+
+------------------------------------------------------------
+52. ARRAY OF POINTERS
+------------------------------------------------------------
+
+Example:
+
+    const char *names[] =
+    {
+        "Apoorv",
+        "Rahul",
+        "Amit"
+    };
+
+Here:
+
+    names
+
+is an array whose elements are pointers to char
+(and the pointed-to string literals should not be modified).
+
+Conceptually:
+
+    names[0] -> "Apoorv"
+    names[1] -> "Rahul"
+    names[2] -> "Amit"
+
+------------------------------------------------------------
+53. POINTER TO POINTER WITH FUNCTIONS
+------------------------------------------------------------
+
+A pointer-to-pointer is useful when a function must change the
+caller’s pointer.
+
+Example:
+
+    void allocate_int(int **pp)
+    {
+        *pp = malloc(sizeof **pp);
+
+        if (*pp != NULL)
+        {
+            **pp = 100;
+        }
+    }
+
+Usage:
+
+    int *p = NULL;
+
+    allocate_int(&p);
+
+After successful allocation:
+
+    p != NULL
+    *p == 100
+
+This technique is common in linked-list operations.
+
+------------------------------------------------------------
+54. LINKED LIST CONNECTION
+------------------------------------------------------------
+
+A linked-list node commonly contains a pointer to another node.
+
+Example:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+Conceptually:
+
+    [10 | next] -> [20 | next] -> [30 | NULL]
+
+This is one of the biggest practical reasons to master pointers.
+
+------------------------------------------------------------
+55. FUNCTION POINTERS
+------------------------------------------------------------
+
+A function pointer stores the address of a function.
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int (*fp)(int, int) = add;
+
+Then:
+
+    printf("%d\n", fp(10, 20));
+
+Output:
+
+    30
+
+Equivalent call:
+
+    (*fp)(10, 20)
+
+------------------------------------------------------------
+56. CALLBACK FUNCTIONS
+------------------------------------------------------------
+
+A callback is a function passed to another function through a
+function pointer.
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int multiply(int a, int b)
+    {
+        return a * b;
+    }
+
+    int calculate(int a, int b,
+                  int (*operation)(int, int))
+    {
+        return operation(a, b);
+    }
+
+Usage:
+
+    printf("%d\n", calculate(5, 3, add));
+    printf("%d\n", calculate(5, 3, multiply));
+
+Output:
+
+    8
+    15
+
+Callbacks are heavily used in:
+
+    qsort()
+    event systems
+    GUI programming
+    operating systems
+    libraries
+    asynchronous programming
+
+------------------------------------------------------------
+57. COMPLEX POINTER DECLARATIONS
+------------------------------------------------------------
+
+Example:
+
+    int *p;
+
+Read:
+
+    p is a pointer to int.
+
+Example:
+
+    int **p;
+
+Read:
+
+    p is a pointer to pointer to int.
+
+Example:
+
+    int (*p)[5];
+
+Read:
+
+    p is a pointer to an array of 5 int.
+
+Example:
+
+    int *p[5];
+
+Read:
+
+    p is an array of 5 pointers to int.
+
+These two are VERY different:
+
+    int (*p)[5];
+
+    int *p[5];
+
+Remember:
+
+    [] and () bind more tightly than *
+
+------------------------------------------------------------
+58. POINTER CASTING AND TYPE SAFETY
+------------------------------------------------------------
+
+Avoid unnecessary pointer casts.
+
+Bad style:
+
+    int *p = (int *)some_pointer;
+
+unless the conversion is actually needed and correct.
+
+Wrong pointer interpretation can cause:
+
+    • Misalignment
+    • Incorrect object representation
+    • Strict aliasing violations
+    • Undefined behavior
+
+Pointers are not simply "integers containing addresses."
+
+------------------------------------------------------------
+59. ALIGNMENT
+------------------------------------------------------------
+
+Objects may require particular memory alignment.
+
+For example:
+
+    int
+
+may have stricter alignment requirements than:
+
+    char
+
+Do not create arbitrary typed pointers by taking an arbitrary byte
+address and assuming it is correctly aligned.
+
+Incorrect alignment can cause undefined behavior on implementations
+where the required alignment is not satisfied.
+
+------------------------------------------------------------
+60. EFFECTIVE TYPE / ALIASING BASICS
+------------------------------------------------------------
+
+C has rules about how an object's stored value may be accessed
+through different types.
+
+Do not assume this is always safe:
+
+    int x = 10;
+
+    float *p = (float *)&x;
+
+    printf("%f\n", *p);    // problematic/undefined behavior
+
+The fact that two types occupy similar numbers of bytes does not
+make such type-punning automatically valid.
+
+For raw byte inspection/copying, character types have special
+status under C's object representation rules.
+
+------------------------------------------------------------
+61. memcpy AND POINTERS
+------------------------------------------------------------
+
+Example:
+
+    int source[] = {1, 2, 3};
+    int destination[3];
+
+    memcpy(destination,
+           source,
+           sizeof source);
+
+Header:
+
+    #include <string.h>
+
+For overlapping regions:
+
+    memcpy()      -> not valid for overlap
+    memmove()     -> designed for overlap
+
+------------------------------------------------------------
+62. POINTER AND sizeof
+------------------------------------------------------------
+
+Example:
+
+    int arr[10];
+
+    sizeof(arr)
+
+returns the total size of the array.
+
+But:
+
+    int *p = arr;
+
+    sizeof(p)
+
+returns the size of the pointer.
+
+Therefore:
+
+    sizeof(arr) != sizeof(p)
+
+in general.
+
+This is a common interview question.
+
+------------------------------------------------------------
+63. ARRAY LENGTH VS POINTER
+------------------------------------------------------------
+
+This works:
+
+    int arr[] = {10, 20, 30, 40};
+
+    size_t n = sizeof arr / sizeof arr[0];
+
+But this does NOT work inside a function parameter after
+array-to-pointer adjustment:
+
+    void test(int arr[])
+    {
+        sizeof(arr)       // size of pointer, not entire array
+    }
+
+Therefore pass the size:
+
+    void test(const int arr[], size_t n)
+
+------------------------------------------------------------
+64. ONE-PAST-THE-END POINTER
+------------------------------------------------------------
+
+For:
+
+    int arr[5];
+
+This is valid:
+
+    int *end = arr + 5;
+
+But:
+
+    *end
+
+is NOT valid because it does not point to an element.
+
+You can use it as a boundary:
+
+    for (int *p = arr; p < end; p++)
+    {
+        printf("%d ", *p);
+    }
+
+The one-past pointer may be formed and compared/subtracted
+appropriately, but must not be dereferenced.
+
+------------------------------------------------------------
+65. POINTER AND NULL TERMINATED STRING
+------------------------------------------------------------
+
+Example:
+
+    char str[] = "Hello";
+
+Memory:
+
+    H
+    e
+    l
+    l
+    o
+    \0
+
+Pointer traversal:
+
+    char *p = str;
+
+    while (*p != '\0')
+    {
+        putchar(*p);
+        p++;
+    }
+
+This is the fundamental mechanism behind many string functions.
+
+------------------------------------------------------------
+66. COMMON POINTER BUG #1
+------------------------------------------------------------
+
+BAD:
+
+    int *p;
+
+    printf("%d", *p);
+
+Problem:
+
+    p is uninitialized.
+
+Fix:
+
+    int x = 10;
+    int *p = &x;
+
+------------------------------------------------------------
+67. COMMON POINTER BUG #2
+------------------------------------------------------------
+
+BAD:
+
+    int *p = NULL;
+
+    *p = 10;
+
+Problem:
+
+    dereferencing NULL.
+
+------------------------------------------------------------
+68. COMMON POINTER BUG #3
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(sizeof *p);
+
+    free(p);
+
+    *p = 10;
+
+Problem:
+
+    use-after-free.
+
+------------------------------------------------------------
+69. COMMON POINTER BUG #4
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(10 * sizeof *p);
+
+    p = NULL;
+
+Problem:
+
+    memory leak.
+
+Correct:
+
+    free(p);
+    p = NULL;
+
+------------------------------------------------------------
+70. COMMON POINTER BUG #5
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(10 * sizeof *p);
+
+    free(p);
+    free(p);
+
+Problem:
+
+    double free / undefined behavior.
+
+------------------------------------------------------------
+71. COMMON POINTER BUG #6
+------------------------------------------------------------
+
+BAD:
+
+    int *getValue(void)
+    {
+        int x = 10;
+        return &x;
+    }
+
+The lifetime of x ends when the function returns.
+
+Returning its address creates an invalid/dangling pointer.
+
+------------------------------------------------------------
+72. STATIC STORAGE EXAMPLE
+------------------------------------------------------------
+
+Returning a pointer to static storage can be valid:
+
+    int *getValue(void)
+    {
+        static int x = 10;
+        return &x;
+    }
+
+Here x has static storage duration.
+
+However, this introduces shared state and is not automatically
+the best design.
+
+------------------------------------------------------------
+73. POINTER OWNERSHIP
+------------------------------------------------------------
+
+In larger programs, always ask:
+
+    Who allocated this memory?
+    Who owns it?
+    Who is responsible for freeing it?
+    How long is it valid?
+    Can another pointer alias it?
+    Can it become NULL?
+    Can the object be modified?
+
+A large percentage of real-world C memory bugs are ownership
+and lifetime bugs.
+
+------------------------------------------------------------
+74. POINTER LIFETIME
+------------------------------------------------------------
+
+A pointer itself has a lifetime.
+
+The object it points to has its own lifetime.
+
+These are not necessarily the same.
+
+Example:
+
+    int *p;
+
+    {
+        int x = 10;
+        p = &x;
+    }
+
+After the block ends:
+
+    x no longer exists
+
+Therefore:
+
+    p
+
+becomes a dangling pointer.
+
+------------------------------------------------------------
+75. STACK VS HEAP EXAMPLE
+------------------------------------------------------------
+
+Automatic/local:
+
+    void test(void)
+    {
+        int x = 10;
+        int *p = &x;
+    }
+
+x normally has automatic storage duration.
+
+Dynamic:
+
+    int *p = malloc(sizeof *p);
+
+The allocated object exists until:
+
+    free(p);
+
+The exact physical implementation of "stack" and "heap" is
+implementation-dependent, but this distinction is useful for
+understanding typical systems.
+
+------------------------------------------------------------
+76. PRACTICAL PROGRAM 1 — MODIFY VALUE
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    void change(int *p)
+    {
+        *p = 100;
+    }
+
+    int main(void)
+    {
+        int x = 10;
+
+        change(&x);
+
+        printf("%d\n", x);
+
+        return 0;
+    }
+
+Output:
+
+    100
+
+------------------------------------------------------------
+77. PRACTICAL PROGRAM 2 — SWAP
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    void swap(int *a, int *b)
+    {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+
+    int main(void)
+    {
+        int a = 10;
+        int b = 20;
+
+        swap(&a, &b);
+
+        printf("a = %d\n", a);
+        printf("b = %d\n", b);
+
+        return 0;
+    }
+
+------------------------------------------------------------
+78. PRACTICAL PROGRAM 3 — ARRAY SUM USING POINTER
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stddef.h>
+
+    int sum(const int *arr, size_t n)
+    {
+        int total = 0;
+
+        for (size_t i = 0; i < n; i++)
+        {
+            total += arr[i];
+        }
+
+        return total;
+    }
+
+    int main(void)
+    {
+        int arr[] = {10, 20, 30, 40};
+
+        printf("%d\n", sum(arr, sizeof arr / sizeof arr[0]));
+
+        return 0;
+    }
+
+Output:
+
+    100
+
+------------------------------------------------------------
+79. PRACTICAL PROGRAM 4 — REVERSE ARRAY
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stddef.h>
+
+    void reverse(int *arr, size_t n)
+    {
+        if (n == 0)
+            return;
+
+        int *left = arr;
+        int *right = arr + n - 1;
+
+        while (left < right)
+        {
+            int temp = *left;
+            *left = *right;
+            *right = temp;
+
+            left++;
+            right--;
+        }
+    }
+
+    int main(void)
+    {
+        int arr[] = {1, 2, 3, 4, 5};
+
+        reverse(arr, sizeof arr / sizeof arr[0]);
+
+        for (size_t i = 0; i < sizeof arr / sizeof arr[0]; i++)
+            printf("%d ", arr[i]);
+
+        return 0;
+    }
+
+Output:
+
+    5 4 3 2 1
+
+------------------------------------------------------------
+80. PRACTICAL PROGRAM 5 — DYNAMIC ARRAY
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        size_t n = 5;
+
+        int *arr = malloc(n * sizeof *arr);
+
+        if (arr == NULL)
+        {
+            return 1;
+        }
+
+        for (size_t i = 0; i < n; i++)
+        {
+            arr[i] = (int)(i + 1) * 10;
+        }
+
+        for (size_t i = 0; i < n; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+
+        free(arr);
+        arr = NULL;
+
+        return 0;
+    }
+
+Output:
+
+    10 20 30 40 50
+
+------------------------------------------------------------
+81. PRACTICAL PROGRAM 6 — POINTER TO POINTER
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int x = 10;
+
+        int *p = &x;
+        int **pp = &p;
+
+        printf("%d\n", x);
+        printf("%d\n", *p);
+        printf("%d\n", **pp);
+
+        **pp = 100;
+
+        printf("%d\n", x);
+
+        return 0;
+    }
+
+Output:
+
+    10
+    10
+    10
+    100
+
+------------------------------------------------------------
+82. PRACTICAL PROGRAM 7 — POINTER AND STRING
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        char str[] = "Apoorv";
+
+        char *p = str;
+
+        while (*p != '\0')
+        {
+            putchar(*p);
+            p++;
+        }
+
+        putchar('\n');
+
+        return 0;
+    }
+
+Output:
+
+    Apoorv
+
+------------------------------------------------------------
+83. PRACTICAL PROGRAM 8 — FUNCTION POINTER
+------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int main(void)
+    {
+        int (*operation)(int, int) = add;
+
+        printf("%d\n", operation(10, 20));
+
+        return 0;
+    }
+
+Output:
+
+    30
+
+------------------------------------------------------------
+84. INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q1. What is a pointer?
+
+Answer:
+
+A pointer is an object whose stored value is the address of
+another object or function, depending on pointer type/context.
+
+------------------------------------------------------------
+Q2. What is the difference between & and *?
+
+Answer:
+
+    &x
+        obtains address of x
+
+    *p
+        accesses the object pointed to by p
+
+------------------------------------------------------------
+Q3. What is a NULL pointer?
+
+Answer:
+
+A pointer value that represents a null pointer and does not
+point to a valid object/function.
+
+------------------------------------------------------------
+Q4. What is a dangling pointer?
+
+Answer:
+
+A pointer whose referenced object has already ceased to exist
+or whose allocated storage has already been released.
+
+------------------------------------------------------------
+Q5. What is a wild pointer?
+
+Answer:
+
+An uninitialized pointer containing an indeterminate value.
+
+------------------------------------------------------------
+Q6. What is pointer arithmetic?
+
+Answer:
+
+Arithmetic operations such as +, -, ++ and -- on pointers,
+subject to C's rules for array objects and pointer types.
+
+------------------------------------------------------------
+Q7. Difference between:
+
+    int *p[5];
+
+and:
+
+    int (*p)[5];
+
+Answer:
+
+    int *p[5]
+        array of 5 pointers to int
+
+    int (*p)[5]
+        pointer to array of 5 int
+
+------------------------------------------------------------
+Q8. What is a void pointer?
+
+Answer:
+
+    void *
+
+is a generic object pointer capable of holding the address of
+objects of different types.
+
+It must be converted to an appropriate object-pointer type before
+dereferencing.
+
+------------------------------------------------------------
+Q9. Can we dereference NULL?
+
+Answer:
+
+No.
+
+Dereferencing a null pointer results in undefined behavior.
+
+------------------------------------------------------------
+Q10. Can a pointer be NULL after free()?
+
+Answer:
+
+The pointer variable is not automatically changed to NULL by free.
+
+Therefore:
+
+    free(p);
+
+does not make:
+
+    p == NULL
+
+You can explicitly write:
+
+    free(p);
+    p = NULL;
+
+------------------------------------------------------------
+Q11. What is pointer to pointer?
+
+Answer:
+
+A pointer that stores the address of another pointer.
+
+Example:
+
+    int **pp;
+
+------------------------------------------------------------
+Q12. Why are pointers used with functions?
+
+Answer:
+
+To allow a function to access or modify caller-owned objects and
+to avoid copying large objects in some designs.
+
+------------------------------------------------------------
+Q13. Does C support pass-by-reference?
+
+Answer:
+
+C passes arguments by value.
+
+Reference-like behavior is achieved by passing pointers.
+
+------------------------------------------------------------
+Q14. What is a function pointer?
+
+Answer:
+
+A pointer that stores the address of a function with a compatible
+function type.
+
+------------------------------------------------------------
+Q15. What is a memory leak?
+
+Answer:
+
+Allocated memory that can no longer be reached and therefore
+cannot be properly freed.
+
+------------------------------------------------------------
+85. GATE / OUTPUT-BASED QUESTIONS
+------------------------------------------------------------
+
+Question 1:
+
+    int x = 10;
+    int *p = &x;
+
+    printf("%d", *p);
+
+Answer:
+
+    10
+
+------------------------------------------------------------
+
+Question 2:
+
+    int x = 10;
+    int *p = &x;
+
+    *p = 20;
+
+    printf("%d", x);
+
+Answer:
+
+    20
+
+------------------------------------------------------------
+
+Question 3:
+
+    int arr[] = {10, 20, 30};
+
+    printf("%d", *(arr + 1));
+
+Answer:
+
+    20
+
+------------------------------------------------------------
+
+Question 4:
+
+    int x = 10;
+    int *p = &x;
+    int **pp = &p;
+
+    **pp = 50;
+
+    printf("%d", x);
+
+Answer:
+
+    50
+
+------------------------------------------------------------
+
+Question 5:
+
+    int arr[] = {10, 20, 30, 40};
+
+    int *p = &arr[2];
+
+    printf("%d", *(p - 1));
+
+Answer:
+
+    20
+
+------------------------------------------------------------
+
+Question 6:
+
+    int arr[5];
+
+    printf("%zu", sizeof(arr));
+
+Answer:
+
+    5 * sizeof(int)
+
+The exact numeric result depends on the implementation.
+
+------------------------------------------------------------
+
+Question 7:
+
+    int arr[5];
+    int *p = arr;
+
+    printf("%zu", sizeof(p));
+
+Answer:
+
+    Size of pointer p
+
+NOT the size of the entire array.
+
+------------------------------------------------------------
+
+Question 8:
+
+    int x = 10;
+    int *p = &x;
+
+    printf("%d", *p + 5);
+
+Answer:
+
+    15
+
+------------------------------------------------------------
+
+Question 9:
+
+    int x = 10;
+    int *p = &x;
+
+    printf("%d", (*p)++);
+
+What happens?
+
+The old value 10 is printed and x becomes 11.
+
+------------------------------------------------------------
+
+Question 10:
+
+    int arr[] = {1, 2, 3, 4};
+
+    int *p = arr;
+
+    printf("%d", p[2]);
+
+Answer:
+
+    3
+
+Because:
+
+    p[2] == *(p + 2)
+
+------------------------------------------------------------
+86. VERY IMPORTANT POINTER RULES
+------------------------------------------------------------
+
+RULE 1:
+
+Never dereference an uninitialized pointer.
+
+RULE 2:
+
+Never dereference NULL.
+
+RULE 3:
+
+Never use memory after free.
+
+RULE 4:
+
+Do not free the same allocation twice.
+
+RULE 5:
+
+Every successful dynamic allocation needs an ownership plan.
+
+RULE 6:
+
+Do not modify a string literal.
+
+RULE 7:
+
+Do not return the address of a local automatic variable.
+
+RULE 8:
+
+Do not perform pointer arithmetic outside the permitted array
+object boundaries.
+
+RULE 9:
+
+A one-past-the-end pointer can be formed but not dereferenced.
+
+RULE 10:
+
+Do not assume all pointers have the same size on every system.
+
+RULE 11:
+
+Do not confuse:
+
+    array
+    pointer
+    pointer to array
+    array of pointers
+
+RULE 12:
+
+Do not assume casting makes an invalid pointer access safe.
+
+------------------------------------------------------------
+87. POINTER MEMORY MODEL
+------------------------------------------------------------
+
+Think in this pattern:
+
+    Variable
+       |
+       | &
+       v
+    Address
+       |
+       v
+    Pointer
+       |
+       | *
+       v
+    Original object
+
+Example:
+
+    int x = 100;
+    int *p = &x;
+
+Conceptually:
+
+    x = 100
+
+    &x
+     |
+     v
+
+    p = address of x
+
+    *p
+     |
+     v
+
+    100
+
+This model should become automatic in your mind.
+
+------------------------------------------------------------
+88. POINTER LEARNING ORDER
+------------------------------------------------------------
+
+Master pointers in this order:
+
+    1. Address
+    2. &
+    3. *
+    4. Pointer declaration
+    5. Pointer initialization
+    6. NULL
+    7. Pointer arithmetic
+    8. Arrays + pointers
+    9. Strings + pointers
+    10. Function parameters + pointers
+    11. Pointer to pointer
+    12. Structure pointers
+    13. Dynamic memory
+    14. const pointers
+    15. void *
+    16. Function pointers
+    17. Callbacks
+    18. Pointer-to-array
+    19. Array-of-pointers
+    20. Memory/lifetime/ownership
+    21. Aliasing
+    22. Advanced pointer rules
+
+------------------------------------------------------------
+89. JOB-READY PRACTICE PROGRAMS
+------------------------------------------------------------
+
+Practice these WITHOUT looking at solutions:
+
+1. Print address of a variable.
+
+2. Print value using a pointer.
+
+3. Modify a variable using a pointer.
+
+4. Swap two numbers using pointers.
+
+5. Find maximum of two numbers using pointers.
+
+6. Find maximum element of an array using pointers.
+
+7. Find minimum element of an array.
+
+8. Calculate array sum using pointers.
+
+9. Reverse an array using pointers.
+
+10. Search an array using pointer traversal.
+
+11. Count even and odd elements.
+
+12. Reverse a string using pointers.
+
+13. Check palindrome using pointers.
+
+14. Count vowels using pointers.
+
+15. Implement strlen using pointers.
+
+16. Implement strcpy using pointers.
+
+17. Implement strcmp using pointers.
+
+18. Dynamically allocate an integer array.
+
+19. Resize a dynamic array using realloc.
+
+20. Create a linked list using pointers.
+
+21. Insert a node into linked list.
+
+22. Delete a node from linked list.
+
+23. Reverse linked list.
+
+24. Implement stack using dynamic memory.
+
+25. Implement queue using dynamic memory.
+
+26. Use function pointers to perform arithmetic operations.
+
+27. Implement callback-based array processing.
+
+------------------------------------------------------------
+90. DEBUGGING POINTER PROGRAMS
+------------------------------------------------------------
+
+When a pointer program crashes, check:
+
+    1. Was pointer initialized?
+    2. Is pointer NULL?
+    3. Is pointer dangling?
+    4. Was memory already freed?
+    5. Was memory allocated?
+    6. Is array index valid?
+    7. Is pointer arithmetic valid?
+    8. Is the pointed-to object still alive?
+    9. Is alignment correct?
+    10. Is the pointer type correct?
+    11. Is there a buffer overflow?
+    12. Is there an ownership problem?
+
+Useful tools:
+
+    GCC warnings
+    AddressSanitizer
+    UndefinedBehaviorSanitizer
+    Valgrind
+    GDB
+
+Example GCC debugging build:
+
+    gcc -Wall -Wextra -Wpedantic -g program.c -o program
+
+AddressSanitizer example:
+
+    gcc -Wall -Wextra -g \
+        -fsanitize=address,undefined \
+        program.c -o program
+
+These tools are extremely valuable for becoming job-ready.
+
+------------------------------------------------------------
+91. MOST IMPORTANT INTERVIEW DIFFERENCES
+------------------------------------------------------------
+
+                ARRAY              POINTER
+------------------------------------------------------------
+Storage        actual elements     pointer object
+sizeof         whole array size    pointer size
+Assignment     cannot assign       can assign
+arr++          invalid             valid if appropriate
+arr = p        invalid             valid
+p = arr        valid               valid
+
+Remember:
+
+    Array is NOT a pointer.
+
+But array expressions often convert to a pointer to their first
+element.
+
+------------------------------------------------------------
+92. FINAL CHAPTER SUMMARY
+------------------------------------------------------------
+
+You should now understand:
+
+    ✓ What a pointer is
+    ✓ Memory addresses
+    ✓ &
+    ✓ *
+    ✓ Pointer declaration
+    ✓ Pointer initialization
+    ✓ NULL pointers
+    ✓ Pointer arithmetic
+    ✓ Pointer increment/decrement
+    ✓ Pointer comparison
+    ✓ Arrays and pointers
+    ✓ Array-to-pointer conversion
+    ✓ Pointer-to-pointer
+    ✓ Function parameters
+    ✓ Modifying caller data
+    ✓ Array parameters
+    ✓ Structure pointers
+    ✓ -> operator
+    ✓ const with pointers
+    ✓ void pointers
+    ✓ String pointers
+    ✓ malloc
+    ✓ calloc
+    ✓ realloc
+    ✓ free
+    ✓ Dangling pointers
+    ✓ Wild pointers
+    ✓ Memory leaks
+    ✓ Double free
+    ✓ Use-after-free
+    ✓ Pointer aliasing
+    ✓ restrict basics
+    ✓ Pointer-to-array
+    ✓ Array-of-pointers
+    ✓ Function pointers
+    ✓ Callback functions
+    ✓ Pointer lifetime
+    ✓ Ownership
+    ✓ Common pointer bugs
+    ✓ Pointer debugging
+    ✓ Interview questions
+    ✓ GATE-level pointer problems
+
+============================================================
+             JOB-READY POINTER CHECKLIST
+============================================================
+
+Before moving ahead, you should be able to write programs
+using pointers WITHOUT confusion about:
+
+        &x
+        *p
+        p
+        p + 1
+        *(p + 1)
+        **pp
+        p->member
+        malloc()
+        calloc()
+        realloc()
+        free()
+
+And you should be able to explain:
+
+    "Why is arr not exactly the same thing as a pointer?"
+
+    "Why does sizeof(arr) differ from sizeof(p)?"
+
+    "Why can p + 1 move by more than one byte?"
+
+    "Why is *p dangerous when p is NULL?"
+
+    "Why is returning &local_variable wrong?"
+
+    "Why are pointers essential for linked lists?"
+
+============================================================
+NEXT CHAPTER
+============================================================
+
+CHAPTER 13 — DYNAMIC MEMORY ALLOCATION
+
+Topics:
+
+    1. Stack vs heap
+    2. Static vs automatic vs allocated storage
+    3. malloc()
+    4. calloc()
+    5. realloc()
+    6. free()
+    7. sizeof and allocation
+    8. Allocation failure
+    9. Dynamic arrays
+    10. Dynamic strings
+    11. Dynamic 2D arrays
+    12. Array of pointers
+    13. Memory ownership
+    14. Lifetime
+    15. Memory leaks
+    16. Dangling pointers
+    17. Double free
+    18. Use-after-free
+    19. realloc pitfalls
+    20. Memory fragmentation
+    21. Flexible array members
+    22. calloc vs malloc
+    23. Safe allocation patterns
+    24. Debugging memory errors
+    25. AddressSanitizer
+    26. Valgrind
+    27. GDB
+    28. Interview questions
+    29. GATE-level problems
+    30. Job-ready memory-management projects
+============================================================

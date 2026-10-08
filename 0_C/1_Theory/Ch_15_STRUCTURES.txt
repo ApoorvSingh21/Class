@@ -1,0 +1,1445 @@
+Worked for a couple of seconds
+
+===============================================================
+CHAPTER 15 — STRUCTURES IN C
+===============================================================
+
+This chapter is based on the uploaded C Programming —
+Job-Ready Master Syllabus.
+
+15.1 STRUCTURE FUNDAMENTALS
+15.2 STRUCTURE DECLARATION
+15.3 STRUCTURE INITIALIZATION
+15.4 ACCESSING STRUCTURE MEMBERS
+15.5 ARRAY OF STRUCTURES
+15.6 NESTED STRUCTURES
+15.7 STRUCTURE AND FUNCTION
+15.8 POINTER TO STRUCTURE
+15.9 STRUCTURE POINTER OPERATOR ->
+15.10 DYNAMIC STRUCTURES
+15.11 SELF-REFERENTIAL STRUCTURES
+
+Applications:
+    ├── Student management
+    ├── Employee management
+    ├── Banking records
+    └── Linked lists
+
+
+===============================================================
+15.1 STRUCTURE FUNDAMENTALS
+===============================================================
+
+A structure is a user-defined data type in C that allows us
+to group multiple variables of different data types under
+one logical unit.
+
+For example, a student may have:
+
+    roll number  -> int
+    name         -> char array
+    marks        -> float
+
+Instead of maintaining unrelated variables:
+
+    int roll;
+    char name[50];
+    float marks;
+
+we can group them:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+Now Student represents a logical record.
+
+
+---------------------------------------------------------------
+WHY DO WE NEED STRUCTURES?
+---------------------------------------------------------------
+
+Consider 100 students.
+
+Without structures:
+
+    int roll1, roll2, roll3, ...;
+    char name1[50], name2[50], ...;
+    float marks1, marks2, ...;
+
+This quickly becomes difficult to manage.
+
+With structures:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+    struct Student students[100];
+
+This gives us a clean representation of records.
+
+
+===============================================================
+15.2 STRUCTURE DECLARATION
+===============================================================
+
+Basic syntax:
+
+    struct StructureName
+    {
+        data_type member1;
+        data_type member2;
+        data_type member3;
+    };
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+Here:
+
+    struct       -> keyword
+    Student      -> structure tag
+    roll         -> structure member
+    name         -> structure member
+    marks        -> structure member
+
+IMPORTANT:
+
+Declaring a structure type does not necessarily create a
+structure object.
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+At this point we have defined the structure type.
+
+To create an object:
+
+    struct Student s1;
+
+
+---------------------------------------------------------------
+STRUCTURE OBJECT
+---------------------------------------------------------------
+
+Example:
+
+    struct Student s1;
+
+Memory is allocated for the members of s1.
+
+Conceptually:
+
+    s1
+    +----------------+
+    | roll           |
+    +----------------+
+    | name[50]       |
+    +----------------+
+    | marks          |
+    +----------------+
+
+
+---------------------------------------------------------------
+MULTIPLE STRUCTURE OBJECTS
+---------------------------------------------------------------
+
+We can declare multiple objects:
+
+    struct Student s1, s2, s3;
+
+or:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    } s1, s2, s3;
+
+
+===============================================================
+15.3 STRUCTURE INITIALIZATION
+===============================================================
+
+A structure can be initialized when it is declared.
+
+Example:
+
+    struct Student s1 = {101, "Apoorv", 85.5f};
+
+Members are initialized in declaration order:
+
+    roll  = 101
+    name  = "Apoorv"
+    marks = 85.5
+
+
+---------------------------------------------------------------
+DESIGNATED INITIALIZATION
+---------------------------------------------------------------
+
+C also supports designated initializers:
+
+    struct Student s1 =
+    {
+        .roll = 101,
+        .marks = 85.5f,
+        .name = "Apoorv"
+    };
+
+The order does not need to match the declaration order.
+
+
+---------------------------------------------------------------
+PARTIAL INITIALIZATION
+---------------------------------------------------------------
+
+Example:
+
+    struct Student s1 = {101};
+
+Then:
+
+    s1.roll  = 101
+    s1.name  = zero-initialized
+    s1.marks = 0
+
+For automatic objects, members not explicitly initialized
+are initialized according to the rules of aggregate
+initialization; for a simple `{101}` initialization,
+remaining members receive zero values.
+
+
+===============================================================
+15.4 ACCESSING STRUCTURE MEMBERS
+===============================================================
+
+The dot operator `.` is used to access members of a structure
+object.
+
+Example:
+
+    struct Student s1;
+
+    s1.roll = 101;
+    s1.marks = 90.5f;
+
+For reading:
+
+    printf("%d\n", s1.roll);
+    printf("%.2f\n", s1.marks);
+
+
+---------------------------------------------------------------
+STRING MEMBER
+---------------------------------------------------------------
+
+Suppose:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+We can use:
+
+    strcpy(s1.name, "Apoorv");
+
+because name is an array.
+
+We cannot do:
+
+    s1.name = "Apoorv";
+
+because arrays cannot be assigned using `=` after declaration.
+
+
+---------------------------------------------------------------
+STRUCTURE MEMBER ACCESS MAP
+---------------------------------------------------------------
+
+For:
+
+    struct Student s;
+
+Use:
+
+    s.roll
+    s.name
+    s.marks
+
+The general form is:
+
+    structure_object.member
+
+
+===============================================================
+15.5 ARRAY OF STRUCTURES
+===============================================================
+
+One of the most important applications of structures is
+creating an array of records.
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+    struct Student students[3];
+
+This creates three Student objects:
+
+    students[0]
+    students[1]
+    students[2]
+
+
+---------------------------------------------------------------
+ACCESSING ARRAY OF STRUCTURES
+---------------------------------------------------------------
+
+Example:
+
+    students[0].roll = 101;
+    students[1].roll = 102;
+    students[2].roll = 103;
+
+
+A loop can process all students:
+
+    for (int i = 0; i < 3; i++)
+    {
+        printf("%d\n", students[i].roll);
+    }
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+    int main(void)
+    {
+        struct Student students[3] =
+        {
+            {101, "A", 85.5f},
+            {102, "B", 91.0f},
+            {103, "C", 78.5f}
+        };
+
+        for (int i = 0; i < 3; i++)
+        {
+            printf("Roll: %d\n", students[i].roll);
+            printf("Name: %s\n", students[i].name);
+            printf("Marks: %.2f\n\n", students[i].marks);
+        }
+
+        return 0;
+    }
+
+
+===============================================================
+15.6 NESTED STRUCTURES
+===============================================================
+
+A structure can contain another structure as a member.
+
+Example:
+
+    struct Date
+    {
+        int day;
+        int month;
+        int year;
+    };
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        struct Date dob;
+    };
+
+Now Student contains a Date structure.
+
+
+---------------------------------------------------------------
+ACCESSING NESTED MEMBERS
+---------------------------------------------------------------
+
+Example:
+
+    struct Student s;
+
+    s.roll = 101;
+    s.dob.day = 10;
+    s.dob.month = 5;
+    s.dob.year = 2000;
+
+Notice:
+
+    s.dob.day
+
+means:
+
+    Student
+       |
+       +-- dob
+             |
+             +-- day
+
+
+---------------------------------------------------------------
+WHY NESTED STRUCTURES?
+---------------------------------------------------------------
+
+They allow hierarchical data representation.
+
+Example:
+
+    Employee
+       |
+       +-- personal information
+       |
+       +-- address
+       |     +-- city
+       |     +-- state
+       |     +-- pin
+       |
+       +-- salary information
+
+
+===============================================================
+15.7 STRUCTURE AND FUNCTION
+===============================================================
+
+Structures can be passed to functions.
+
+There are several common approaches:
+
+    1. Pass structure member
+    2. Pass complete structure
+    3. Pass pointer to structure
+
+
+---------------------------------------------------------------
+PASSING A STRUCTURE MEMBER
+---------------------------------------------------------------
+
+Example:
+
+    void displayMarks(float marks)
+    {
+        printf("%.2f\n", marks);
+    }
+
+Call:
+
+    displayMarks(s1.marks);
+
+
+---------------------------------------------------------------
+PASSING COMPLETE STRUCTURE
+---------------------------------------------------------------
+
+Example:
+
+    void display(struct Student s)
+    {
+        printf("Roll = %d\n", s.roll);
+        printf("Name = %s\n", s.name);
+        printf("Marks = %.2f\n", s.marks);
+    }
+
+Call:
+
+    display(s1);
+
+
+IMPORTANT:
+
+When a structure is passed by value, the function receives
+a copy of the structure.
+
+Changing the parameter does not modify the original object.
+
+Example:
+
+    void change(struct Student s)
+    {
+        s.roll = 999;
+    }
+
+The caller's object is not changed by this assignment.
+
+
+---------------------------------------------------------------
+PASSING POINTER TO STRUCTURE
+---------------------------------------------------------------
+
+Instead of copying the complete structure, pass its address:
+
+    void change(struct Student *s)
+    {
+        s->roll = 999;
+    }
+
+Call:
+
+    change(&s1);
+
+Now the function can modify the original structure.
+
+
+===============================================================
+15.8 POINTER TO STRUCTURE
+===============================================================
+
+A pointer can store the address of a structure object.
+
+Example:
+
+    struct Student s1;
+
+    struct Student *ptr = &s1;
+
+
+Conceptually:
+
+    s1
+    +----------------+
+    | roll           |
+    +----------------+
+    | name           |
+    +----------------+
+    | marks          |
+    +----------------+
+          ^
+          |
+         ptr
+
+
+---------------------------------------------------------------
+ACCESS USING POINTER
+---------------------------------------------------------------
+
+There are two equivalent forms.
+
+Using dereference + dot:
+
+    (*ptr).roll
+
+Using arrow:
+
+    ptr->roll
+
+Therefore:
+
+    (*ptr).roll
+
+is equivalent to:
+
+    ptr->roll
+
+
+===============================================================
+15.9 STRUCTURE POINTER OPERATOR ->
+===============================================================
+
+The `->` operator is specifically used to access a structure
+member through a pointer to that structure.
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        float marks;
+    };
+
+    struct Student s = {101, 90.5f};
+
+    struct Student *p = &s;
+
+    printf("%d\n", p->roll);
+    printf("%.2f\n", p->marks);
+
+
+---------------------------------------------------------------
+RELATIONSHIP
+---------------------------------------------------------------
+
+If:
+
+    struct Student *p;
+
+then:
+
+    p->roll
+
+means:
+
+    (*p).roll
+
+
+This is one of the most frequently tested C concepts.
+
+
+---------------------------------------------------------------
+DOT VS ARROW
+---------------------------------------------------------------
+
+Object:
+
+    s.roll
+
+Pointer:
+
+    p->roll
+
+Equivalent pointer expression:
+
+    (*p).roll
+
+
+Common mistake:
+
+    p.roll
+
+If p is a pointer, this is incorrect for member access.
+
+Correct:
+
+    p->roll
+
+
+===============================================================
+15.10 DYNAMIC STRUCTURES
+===============================================================
+
+Structures can also be allocated dynamically using dynamic
+memory allocation.
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        float marks;
+    };
+
+    struct Student *p;
+
+    p = malloc(sizeof(struct Student));
+
+After successful allocation:
+
+    p->roll = 101;
+    p->marks = 95.5f;
+
+
+The complete pattern is conceptually:
+
+    struct Student *p =
+        malloc(sizeof *p);
+
+    if (p != NULL)
+    {
+        p->roll = 101;
+        p->marks = 95.5f;
+    }
+
+
+When the dynamically allocated object is no longer required:
+
+    free(p);
+
+After `free(p)`, the pointer must not be dereferenced.
+
+
+---------------------------------------------------------------
+WHY DYNAMIC STRUCTURES?
+---------------------------------------------------------------
+
+They are useful when the number of objects is not known at
+compile time.
+
+Examples:
+
+    Student records
+    Employee records
+    Dynamic lists
+    Trees
+    Graph nodes
+    Linked lists
+
+
+===============================================================
+15.11 SELF-REFERENTIAL STRUCTURES
+===============================================================
+
+A structure can contain a pointer to another object of the
+same structure type.
+
+This is called a self-referential structure.
+
+Example:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+
+Conceptually:
+
+    +---------+---------+
+    | data    | next --------+
+    +---------+---------+     |
+                              |
+                              v
+                       +---------+---------+
+                       | data    | next    |
+                       +---------+---------+
+
+
+This is the fundamental building block of a linked list.
+
+
+---------------------------------------------------------------
+WHY CAN'T WE WRITE THIS?
+---------------------------------------------------------------
+
+Incorrect:
+
+    struct Node
+    {
+        int data;
+        struct Node next;
+    };
+
+Why?
+
+Because `next` would contain another complete Node, which would
+contain another complete Node, and so on forever.
+
+The compiler cannot determine a finite size.
+
+But a pointer has a known finite size for the target
+architecture, so:
+
+    struct Node *next;
+
+works.
+
+
+===============================================================
+STRUCTURES AND LINKED LISTS
+===============================================================
+
+A basic linked-list node:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+
+A node can point to another node:
+
+    node1 -> node2 -> node3 -> NULL
+
+
+Conceptually:
+
+    node1
+    +------+------+
+    | 10   |  ----|----+
+    +------+------+    |
+                       v
+                    node2
+                    +------+------+
+                    | 20   |  ----|----+
+                    +------+------+    |
+                                       v
+                                    node3
+                                    +------+------+
+                                    | 30   | NULL |
+                                    +------+------+
+
+
+This topic becomes important in the later Data Structures
+chapter of the syllabus.
+
+
+===============================================================
+STRUCTURE MEMORY
+===============================================================
+
+A structure generally contains its members in memory with
+possible padding inserted by the implementation.
+
+Example:
+
+    struct Example
+    {
+        char c;
+        int x;
+    };
+
+It is dangerous to assume:
+
+    sizeof(struct Example)
+        ==
+    sizeof(char) + sizeof(int)
+
+because alignment and padding may increase the structure size.
+
+For example, an implementation may arrange memory conceptually
+like:
+
+    c       padding       int x
+    |          |           |
+    v          v           v
+    +----+----+----+----+----+----+----+----+
+    | c  | P  | P  | P  |    x               |
+    +----+----+----+----+--------------------+
+
+The exact layout depends on the implementation and its
+alignment requirements.
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+Do not assume that structure members are always packed
+back-to-back without padding.
+
+This becomes especially important in:
+
+    memory optimization
+    binary formats
+    embedded systems
+    networking
+    low-level programming
+
+
+===============================================================
+STRUCTURE VS ARRAY
+===============================================================
+
+ARRAY:
+
+    Same data type
+
+Example:
+
+    int marks[5];
+
+All elements are int.
+
+STRUCTURE:
+
+    Can contain different data types
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+
+Comparison:
+
+    Array:
+        collection of similar elements
+
+    Structure:
+        collection of logically related members,
+        potentially of different types
+
+
+===============================================================
+STRUCTURE VS POINTER TO STRUCTURE
+===============================================================
+
+Structure object:
+
+    struct Student s;
+
+Access:
+
+    s.roll
+
+
+Pointer:
+
+    struct Student *p = &s;
+
+Access:
+
+    p->roll
+
+
+Equivalent:
+
+    (*p).roll
+    p->roll
+
+
+===============================================================
+STRUCTURE COPY
+===============================================================
+
+Structures of the same type can be assigned.
+
+Example:
+
+    struct Student s1 = {101, "Apoorv", 90.0f};
+    struct Student s2;
+
+    s2 = s1;
+
+This copies the structure value.
+
+After:
+
+    s2.roll
+    s2.name
+    s2.marks
+
+contain corresponding values from s1.
+
+IMPORTANT:
+
+This is a structure assignment.
+
+It is different from:
+
+    s1.name = s2.name;
+
+because arrays cannot be assigned this way.
+
+
+---------------------------------------------------------------
+STRUCTURE COMPARISON
+---------------------------------------------------------------
+
+A common trap:
+
+    if (s1 == s2)
+
+Structures cannot generally be compared using `==` in C.
+
+If you need logical comparison, compare the relevant members
+explicitly.
+
+Example:
+
+    if (s1.roll == s2.roll &&
+        s1.marks == s2.marks)
+    {
+        ...
+    }
+
+
+===============================================================
+STRUCTURE RETURN FROM FUNCTION
+===============================================================
+
+A function can return a structure.
+
+Example:
+
+    struct Point
+    {
+        int x;
+        int y;
+    };
+
+    struct Point createPoint(int x, int y)
+    {
+        struct Point p = {x, y};
+        return p;
+    }
+
+Usage:
+
+    struct Point p1 = createPoint(10, 20);
+
+
+This is useful when a function needs to produce multiple
+related values as one logical object.
+
+
+===============================================================
+PRACTICAL EXAMPLE — STUDENT RECORD
+===============================================================
+
+    #include <stdio.h>
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+    void display(struct Student *s)
+    {
+        printf("Roll  : %d\n", s->roll);
+        printf("Name  : %s\n", s->name);
+        printf("Marks : %.2f\n", s->marks);
+    }
+
+    int main(void)
+    {
+        struct Student s =
+        {
+            101,
+            "Apoorv",
+            92.5f
+        };
+
+        display(&s);
+
+        return 0;
+    }
+
+
+Execution idea:
+
+    main()
+      |
+      | creates s
+      v
+    display(&s)
+      |
+      | s is accessed through pointer
+      v
+    s->roll
+    s->name
+    s->marks
+
+
+===============================================================
+PRACTICAL APPLICATIONS
+===============================================================
+
+The syllabus specifically identifies:
+
+    1. Student management
+    2. Employee management
+    3. Banking records
+    4. Linked lists
+
+
+Example banking record:
+
+    struct Account
+    {
+        int accountNumber;
+        char name[50];
+        double balance;
+    };
+
+
+Example employee:
+
+    struct Employee
+    {
+        int id;
+        char name[50];
+        float salary;
+    };
+
+
+The key idea is:
+
+    Real-world entity
+          |
+          v
+    Structure
+          |
+          v
+    Collection of related data
+
+
+===============================================================
+COMMON INTERVIEW TRAPS
+===============================================================
+
+TRAP 1:
+    What is the difference between `.` and `->`?
+
+ANSWER:
+
+    .   -> structure object
+    ->  -> pointer to structure
+
+
+TRAP 2:
+
+    p->x
+
+is equivalent to:
+
+    (*p).x
+
+NOT:
+
+    *p.x
+
+because operator precedence matters.
+
+
+TRAP 3:
+
+Can structures contain pointers to themselves?
+
+YES:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+Can they contain an object of their own type directly?
+
+NO, because that would require infinite size.
+
+
+TRAP 4:
+
+Can structures contain arrays?
+
+YES.
+
+Example:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+    };
+
+
+TRAP 5:
+
+Can one structure contain another structure?
+
+YES.
+
+Example:
+
+    struct Date
+    {
+        int day;
+        int month;
+        int year;
+    };
+
+    struct Student
+    {
+        int roll;
+        struct Date dob;
+    };
+
+
+TRAP 6:
+
+Can structures be passed to functions?
+
+YES.
+
+They can be passed by value or a pointer can be passed.
+
+
+TRAP 7:
+
+Can a structure be returned from a function?
+
+YES.
+
+
+TRAP 8:
+
+Can structures of the same type be assigned?
+
+YES.
+
+Example:
+
+    s2 = s1;
+
+
+TRAP 9:
+
+Can structures be compared directly using `==`?
+
+NO, not as a whole structure in C.
+
+
+TRAP 10:
+
+Does `sizeof(struct)` necessarily equal the sum of member
+sizes?
+
+NO.
+
+Padding/alignment can make the structure larger.
+
+
+===============================================================
+IMPORTANT CONCEPT MAP
+===============================================================
+
+                    STRUCTURE
+                        |
+        +---------------+---------------+
+        |               |               |
+     Members          Object          Type
+        |               |               |
+   int/char/...      s1, s2,...    struct Student
+                        |
+                 +------+------+
+                 |             |
+                `.`           pointer
+                               |
+                              `->`
+                               |
+                         struct pointer
+                               |
+                        +------+------+
+                        |             |
+                    dynamic       self-reference
+                    structure         |
+                                     Node
+                                      |
+                                      v
+                                  Linked List
+
+
+===============================================================
+GATE / INTERVIEW LEVEL THINKING
+===============================================================
+
+Question:
+
+    struct A
+    {
+        char c;
+        int x;
+    };
+
+    printf("%zu", sizeof(struct A));
+
+Can you always predict the exact number?
+
+NO.
+
+You need to consider:
+
+    sizeof(char)
+    sizeof(int)
+    alignment
+    padding
+    implementation/ABI
+
+
+---------------------------------------------------------------
+
+Question:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+Why is this valid?
+
+Because `next` is a pointer whose size is finite.
+
+---------------------------------------------------------------
+
+Question:
+
+    void update(struct Student s)
+    {
+        s.roll = 100;
+    }
+
+Does this necessarily modify the caller's Student?
+
+NO.
+
+`s` is a copy.
+
+To modify the caller's object:
+
+    void update(struct Student *s)
+    {
+        s->roll = 100;
+    }
+
+Call:
+
+    update(&student);
+
+
+===============================================================
+CHAPTER 15 MASTER REVISION
+===============================================================
+
+STRUCTURE
+    |
+    +-- groups related data
+    |
+    +-- can contain different data types
+    |
+    +-- defined using struct
+    |
+    +-- members accessed using .
+    |
+    +-- pointer members accessed using ->
+    |
+    +-- can be passed to functions
+    |
+    +-- can be returned from functions
+    |
+    +-- can form arrays
+    |
+    +-- can contain nested structures
+    |
+    +-- can be dynamically allocated
+    |
+    +-- can be self-referential through pointers
+    |
+    +-- fundamental for linked lists
+
+
+MOST IMPORTANT SYNTAX:
+
+    struct Student
+    {
+        int roll;
+        char name[50];
+        float marks;
+    };
+
+    struct Student s;
+
+    s.roll = 101;
+
+
+POINTER:
+
+    struct Student *p = &s;
+
+    p->roll = 101;
+
+
+EQUIVALENCE:
+
+    p->roll
+        ==
+    (*p).roll
+
+
+SELF-REFERENTIAL:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+
+===============================================================
+CHAPTER 15 COMPLETE
+===============================================================
+
+Core concepts mastered:
+
+    ✓ Structure fundamentals
+    ✓ Structure declaration
+    ✓ Structure initialization
+    ✓ Member access
+    ✓ Array of structures
+    ✓ Nested structures
+    ✓ Structures and functions
+    ✓ Pointer to structure
+    ✓ -> operator
+    ✓ Dynamic structures
+    ✓ Self-referential structures
+    ✓ Linked-list foundation
+    ✓ Structure copying
+    ✓ Structure memory/padding
+    ✓ Interview traps
+    ✓ GATE-level concepts
+
+NEXT CHAPTER FROM THE SYLLABUS:
+
+    CHAPTER 16 — UNION & ENUMERATION
+
+Topics:
+
+    16.1 Union
+        ├── Definition
+        ├── Declaration
+        ├── Initialization
+        ├── Memory behavior
+        └── Structure vs Union
+
+    16.2 enum
+        ├── Enumeration
+        ├── enum constants
+        └── Practical usage
+
+    16.3 typedef
+        ├── Type aliases
+        ├── typedef with structures
+        └── typedef with pointers
+===============================================================

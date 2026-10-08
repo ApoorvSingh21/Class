@@ -1,0 +1,2643 @@
+======================================================================
+                    C PROGRAMMING — CHAPTER 02
+             C LANGUAGE SYNTAX & BASIC BUILDING BLOCKS
+======================================================================
+
+LEVEL:
+    Beginner → Strong Foundation → Job Ready
+
+PREREQUISITE:
+    Chapter 1 — Introduction to Programming & C
+
+OBJECTIVES:
+    After completing this chapter, you should be able to:
+
+    ✓ Understand the basic syntax of C
+    ✓ Understand C tokens
+    ✓ Identify keywords and identifiers
+    ✓ Understand constants and literals
+    ✓ Understand operators as tokens
+    ✓ Understand punctuators/special symbols
+    ✓ Understand statements and blocks
+    ✓ Understand declarations
+    ✓ Understand expressions
+    ✓ Understand comments
+    ✓ Understand case sensitivity
+    ✓ Understand whitespace
+    ✓ Understand the basic structure of a C program
+    ✓ Identify common syntax mistakes
+    ✓ Read and analyze simple C programs
+    ✓ Write syntactically correct basic C programs
+
+
+======================================================================
+2.1 WHAT IS SYNTAX?
+======================================================================
+
+Syntax means the set of rules that define how a program
+must be written in a programming language.
+
+Think about human language:
+
+    Correct:
+        "I am learning C."
+
+    Incorrect:
+        "Learning C am I."
+
+Programming languages also have rules.
+
+Example of valid C:
+
+    int age = 25;
+
+Example of invalid C:
+
+    int = age 25;
+
+
+The compiler checks whether your source code follows
+the rules of the C language.
+
+
+IMPORTANT:
+
+    Syntax = Structure/form of the code
+
+    Semantics = Meaning/behavior of the code
+
+
+Example:
+
+    int x = 10;
+
+This is syntactically valid and has a meaningful operation:
+    Declare an integer variable x and initialize it to 10.
+
+
+======================================================================
+2.2 BASIC C PROGRAM
+======================================================================
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Hello World\n");
+
+        return 0;
+    }
+
+
+Breakdown:
+
+    #include <stdio.h>
+        → Preprocessor directive
+
+    int
+        → Return type
+
+    main
+        → Function name
+
+    (void)
+        → No parameters
+
+    {
+        ...
+    }
+        → Function body
+
+    printf(...)
+        → Function call
+
+    ;
+        → Statement terminator
+
+    return 0;
+        → Return statement
+
+
+======================================================================
+2.3 C TOKENS
+======================================================================
+
+A TOKEN is one of the smallest meaningful lexical elements
+recognized by the C language.
+
+Major categories include:
+
+    1. Keywords
+    2. Identifiers
+    3. Constants
+    4. String literals
+    5. Operators
+    6. Punctuators
+
+
+Example:
+
+    int age = 25;
+
+
+Tokens:
+
+    int
+    age
+    =
+    25
+    ;
+
+
+Another example:
+
+    sum = a + b;
+
+
+Tokens:
+
+    sum
+    =
+    a
+    +
+    b
+    ;
+
+
+Understanding tokens is important because the compiler
+first performs lexical analysis of the source code.
+
+
+======================================================================
+2.4 LEXICAL ANALYSIS — BASIC IDEA
+======================================================================
+
+When a C program is compiled, one of the early stages
+is lexical analysis.
+
+Conceptually:
+
+    Source code
+         ↓
+    Characters
+         ↓
+    Lexical analysis
+         ↓
+    Tokens
+         ↓
+    Parsing / syntax analysis
+         ↓
+    Further compilation
+
+
+Example:
+
+    int sum = a + b;
+
+
+Lexical analysis recognizes approximately:
+
+    KEYWORD       → int
+    IDENTIFIER    → sum
+    OPERATOR      → =
+    IDENTIFIER    → a
+    OPERATOR      → +
+    IDENTIFIER    → b
+    PUNCTUATOR    → ;
+
+
+You do not manually perform lexical analysis;
+the compiler does it.
+
+
+======================================================================
+2.5 KEYWORDS
+======================================================================
+
+Keywords are reserved words that have predefined meaning
+in the C language.
+
+You cannot normally use a keyword as an identifier.
+
+Examples:
+
+    int
+    char
+    float
+    double
+    void
+    if
+    else
+    switch
+    case
+    default
+    for
+    while
+    do
+    break
+    continue
+    return
+    struct
+    union
+    enum
+    typedef
+    static
+    extern
+    const
+    sizeof
+
+
+Example:
+
+    int age = 25;
+
+Here:
+
+    int
+        → keyword
+
+    age
+        → identifier
+
+    25
+        → integer constant
+
+
+======================================================================
+2.6 IMPORTANT C KEYWORDS
+======================================================================
+
+Some commonly used keywords:
+
+    auto
+    break
+    case
+    char
+    const
+    continue
+    default
+    do
+    double
+    else
+    enum
+    extern
+    float
+    for
+    goto
+    if
+    inline
+    int
+    long
+    register
+    restrict
+    return
+    short
+    signed
+    sizeof
+    static
+    struct
+    switch
+    typedef
+    union
+    unsigned
+    void
+    volatile
+    while
+
+
+Modern C standards contain additional keywords,
+including underscore-prefixed forms such as:
+
+    _Bool
+    _Complex
+    _Imaginary
+    _Alignas
+    _Alignof
+    _Atomic
+    _Generic
+    _Noreturn
+    _Static_assert
+    _Thread_local
+
+Exact keyword availability depends on the C standard
+being used.
+
+
+======================================================================
+2.7 IDENTIFIERS
+======================================================================
+
+An IDENTIFIER is a name given to a program element.
+
+Examples:
+
+    age
+    total
+    sum
+    studentName
+    calculateSum
+
+
+Identifiers can name:
+
+    • Variables
+    • Functions
+    • Structures
+    • Enumerations
+    • Labels
+    • Other declared entities
+
+
+Example:
+
+    int age = 25;
+
+Here:
+
+    age
+        → identifier
+
+
+======================================================================
+2.8 RULES FOR IDENTIFIERS
+======================================================================
+
+Basic rules:
+
+    1. Identifier may contain letters.
+    2. Identifier may contain digits.
+    3. Underscore (_) is allowed.
+    4. Identifier cannot start with a digit.
+    5. Spaces are not allowed.
+    6. Keywords cannot be used as identifiers.
+    7. C identifiers are case-sensitive.
+
+
+Valid examples:
+
+    age
+    total
+    student_name
+    studentName
+    marks1
+    _count
+
+
+Invalid examples:
+
+    1age
+        → starts with digit
+
+    student name
+        → contains space
+
+    total-marks
+        → '-' is not part of an identifier
+
+    int
+        → keyword
+
+    my@name
+        → '@' is not valid in a standard identifier
+
+
+======================================================================
+2.9 CASE SENSITIVITY
+======================================================================
+
+C is case-sensitive.
+
+Therefore:
+
+    age
+    Age
+    AGE
+    aGe
+
+are different identifiers.
+
+Example:
+
+    int age = 20;
+    int Age = 30;
+
+These are two different variables.
+
+
+Similarly:
+
+    main
+    Main
+
+are different names.
+
+
+INTERVIEW POINT:
+
+    C is case-sensitive.
+
+
+======================================================================
+2.10 NAMING CONVENTIONS
+======================================================================
+
+Naming conventions are not generally syntax rules.
+They are programming style practices.
+
+Poor:
+
+    int x;
+    int a;
+    int q;
+
+Better:
+
+    int age;
+    int totalMarks;
+    int studentCount;
+
+
+Common styles:
+
+    camelCase:
+        totalMarks
+        studentCount
+
+    snake_case:
+        total_marks
+        student_count
+
+
+For job-ready programming:
+
+    Prefer descriptive names.
+
+Instead of:
+
+    int x;
+
+Prefer:
+
+    int studentCount;
+
+
+Instead of:
+
+    int a;
+
+Prefer:
+
+    int totalMarks;
+
+
+======================================================================
+2.11 CONSTANTS
+======================================================================
+
+A constant is a value that does not change during
+the relevant execution/context of a program.
+
+Examples:
+
+    10
+    3.14
+    'A'
+    "Hello"
+
+
+Example:
+
+    int age = 25;
+
+
+Here:
+
+    25
+        → integer constant
+
+
+Different types of constants/literals include:
+
+    Integer constants
+    Floating constants
+    Character constants
+    String literals
+
+
+======================================================================
+2.12 INTEGER CONSTANTS
+======================================================================
+
+Examples:
+
+    10
+    25
+    -50
+    0
+    1000
+
+
+Integer constants can also be written in different bases.
+
+Decimal:
+
+    25
+
+
+Octal:
+
+    031
+
+
+Hexadecimal:
+
+    0x19
+
+
+Binary:
+
+    0b11001
+
+Binary integer constants are supported in newer C standards
+such as C23; older C standards do not define 0b literals.
+
+
+All represent the same numerical value:
+
+    25
+
+
+======================================================================
+2.13 SUFFIXES FOR INTEGER CONSTANTS
+======================================================================
+
+Integer constants can use suffixes.
+
+Examples:
+
+    10U
+    10L
+    10UL
+    10LL
+    10ULL
+
+
+Meaning:
+
+    U
+        → unsigned
+
+    L
+        → long
+
+    LL
+        → long long
+
+
+Example:
+
+    unsigned int x = 100U;
+
+    long y = 100L;
+
+    long long z = 100LL;
+
+
+======================================================================
+2.14 FLOATING CONSTANTS
+======================================================================
+
+Examples:
+
+    3.14
+    10.5
+    0.25
+    -5.75
+
+
+Scientific notation:
+
+    1.5e3
+
+means:
+
+    1.5 × 10^3
+    = 1500
+
+
+Examples:
+
+    2.5e2
+        = 250
+
+    3.0e-2
+        = 0.03
+
+
+Suffixes:
+
+    3.14f
+        → float literal
+
+    3.14L
+        → long double literal
+
+
+Without a suffix:
+
+    3.14
+
+is normally a double constant.
+
+
+======================================================================
+2.15 CHARACTER CONSTANTS
+======================================================================
+
+A character constant is written using single quotes.
+
+Examples:
+
+    'A'
+    'B'
+    '1'
+    '#'
+    '\n'
+
+
+Important:
+
+    'A'
+        → character constant
+
+    "A"
+        → string literal
+
+
+They are NOT the same thing.
+
+
+Example:
+
+    char grade = 'A';
+
+
+Escape characters can also be used:
+
+    '\n'
+    '\t'
+    '\\'
+    '\''
+    '\"'
+    '\0'
+
+
+======================================================================
+2.16 STRING LITERALS
+======================================================================
+
+A string literal is written inside double quotes.
+
+Examples:
+
+    "Hello"
+    "C Programming"
+    "M.Tech"
+    "12345"
+
+
+Example:
+
+    printf("Hello World");
+
+
+Here:
+
+    "Hello World"
+        → string literal
+
+
+A C string is represented as a sequence of characters
+terminated by a null character '\0'.
+
+
+Conceptually:
+
+    "CAT"
+
+is stored as:
+
+    'C' 'A' 'T' '\0'
+
+
+Strings will be studied in detail in the Strings chapter.
+
+
+======================================================================
+2.17 OPERATORS
+======================================================================
+
+Operators are symbols or keywords used to perform operations
+on operands.
+
+Example:
+
+    a + b
+
+
+Here:
+
+    a
+        → operand
+
+    +
+        → operator
+
+    b
+        → operand
+
+
+Common operator categories:
+
+    Arithmetic
+    Relational
+    Logical
+    Assignment
+    Increment/Decrement
+    Bitwise
+    Conditional
+    Special operators
+
+
+Examples:
+
+    +
+    -
+    *
+    /
+    %
+    ==
+    !=
+    >
+    <
+    &&
+    ||
+    !
+    =
+    ++
+    --
+    &
+    |
+    ^
+    ~
+    <<
+    >>
+    ?:
+
+
+Detailed operators will be studied in Chapter 5.
+
+
+======================================================================
+2.18 PUNCTUATORS / SPECIAL SYMBOLS
+======================================================================
+
+C uses various punctuation symbols to structure programs.
+
+Examples:
+
+    ;
+    ,
+    ()
+    {}
+    []
+    :
+    .
+    ->
+    ...
+
+
+Examples:
+
+    int x = 10;
+
+    ;
+        → terminates a statement
+
+
+    printf("%d", x);
+
+    ()
+        → function call / parameter grouping
+
+
+    int arr[5];
+
+    []
+        → array declaration/indexing
+
+
+    if (x > 0)
+    {
+        ...
+    }
+
+    {}
+        → block
+
+
+======================================================================
+2.19 STATEMENTS
+======================================================================
+
+A statement is an instruction that forms part of a C program.
+
+Example:
+
+    int x = 10;
+
+This is a declaration statement.
+
+Example:
+
+    x = x + 5;
+
+This is an expression statement.
+
+
+Example:
+
+    return 0;
+
+This is a return statement.
+
+
+Multiple statements:
+
+    int a = 10;
+    int b = 20;
+    int sum = a + b;
+    printf("%d\n", sum);
+
+
+Each performs a specific action.
+
+
+======================================================================
+2.20 DECLARATION
+======================================================================
+
+A declaration tells the compiler about an identifier
+and its type or other properties.
+
+Example:
+
+    int age;
+
+
+Here:
+
+    int
+        → type
+
+    age
+        → identifier
+
+
+Another example:
+
+    int calculateSum(int, int);
+
+
+This declares a function.
+
+
+Declaration and definition are related but different concepts.
+
+
+======================================================================
+2.21 INITIALIZATION
+======================================================================
+
+Initialization gives an object its initial value
+at the time it is created/defined.
+
+Example:
+
+    int age = 25;
+
+
+Here:
+
+    int
+        → type
+
+    age
+        → identifier
+
+    =
+        → initialization syntax
+
+    25
+        → initial value
+
+
+Another example:
+
+    int x = 10;
+
+
+======================================================================
+2.22 ASSIGNMENT
+======================================================================
+
+Assignment changes the stored value of an already existing
+modifiable object.
+
+Example:
+
+    int x = 10;
+
+    x = 20;
+
+
+First:
+
+    x = 10
+
+initializes x.
+
+
+Then:
+
+    x = 20
+
+assigns a new value to x.
+
+
+Important distinction:
+
+    Initialization:
+        int x = 10;
+
+    Assignment:
+        x = 20;
+
+
+======================================================================
+2.23 EXPRESSIONS
+======================================================================
+
+An expression is a combination of operands, operators,
+function calls, constants, etc., that represents a value
+or computation.
+
+Examples:
+
+    10 + 20
+
+    a + b
+
+    x * y
+
+    x > 10
+
+    a = b + c
+
+    functionCall()
+
+
+Example:
+
+    int sum = a + b;
+
+
+Expression:
+
+    a + b
+
+
+It calculates a value that is then used for initialization.
+
+
+======================================================================
+2.24 BLOCKS
+======================================================================
+
+A block is a sequence of declarations and statements
+enclosed in braces.
+
+Example:
+
+    {
+        int x = 10;
+        printf("%d", x);
+    }
+
+
+Function body:
+
+    int main(void)
+    {
+        printf("Hello");
+        return 0;
+    }
+
+
+Conditional block:
+
+    if (x > 0)
+    {
+        printf("Positive");
+    }
+
+
+Blocks create scopes for many declared identifiers.
+
+
+======================================================================
+2.25 WHITE SPACE
+======================================================================
+
+Whitespace includes things such as:
+
+    Spaces
+    Tabs
+    Newlines
+
+
+Example:
+
+    int x = 10;
+
+
+and:
+
+    int
+    x
+    =
+    10
+    ;
+
+
+may represent the same tokens, although formatting
+strongly affects readability.
+
+
+Whitespace is often used to separate tokens and improve
+human readability.
+
+
+Good style:
+
+    int totalMarks = 500;
+
+
+Poor style:
+
+    int totalMarks=500;
+
+
+Both can be valid, but the first is easier to read.
+
+
+======================================================================
+2.26 INDENTATION
+======================================================================
+
+C does not generally use indentation to define blocks.
+
+Braces define blocks.
+
+Example:
+
+    if (age >= 18)
+    {
+        printf("Adult");
+    }
+
+
+This formatting is recommended because it makes the
+structure easy to understand.
+
+
+Bad formatting:
+
+    if(age>=18){printf("Adult");}
+
+
+It may still be valid, but it is harder to read.
+
+
+Job-ready rule:
+
+    Write readable code.
+
+
+======================================================================
+2.27 COMMENTS
+======================================================================
+
+Comments are ignored as normal executable instructions.
+
+Two common forms:
+
+    1. Single-line comment
+    2. Multi-line comment
+
+
+Single-line:
+
+    // This is a comment
+
+
+Multi-line:
+
+    /*
+       This is a
+       multi-line comment
+    */
+
+
+Example:
+
+    int age = 25;  // Student age
+
+
+======================================================================
+2.28 WHY USE COMMENTS?
+======================================================================
+
+Comments can explain:
+
+    • Why something is done
+    • Complex logic
+    • Assumptions
+    • Important constraints
+    • TODO items
+
+
+Good comment:
+
+    // Convert temperature from Celsius to Fahrenheit.
+
+
+Poor comment:
+
+    // Add 1 to x
+    x = x + 1;
+
+
+The second comment merely repeats obvious code.
+
+
+JOB-READY RULE:
+
+    Write useful comments, not comments for every line.
+
+
+======================================================================
+2.29 CASE SENSITIVITY — PRACTICE
+======================================================================
+
+Consider:
+
+    int age = 20;
+    int Age = 30;
+    int AGE = 40;
+
+
+These are three separate identifiers.
+
+Therefore:
+
+    printf("%d", age);
+
+prints:
+
+    20
+
+
+    printf("%d", Age);
+
+prints:
+
+    30
+
+
+    printf("%d", AGE);
+
+prints:
+
+    40
+
+
+======================================================================
+2.30 C IS NOT WHITESPACE-SENSITIVE LIKE PYTHON
+======================================================================
+
+C uses braces to define blocks.
+
+Example:
+
+    if (x > 0)
+    {
+        printf("Positive");
+    }
+
+
+The braces define the block.
+
+Indentation is for readability.
+
+
+However:
+
+    Good indentation
+        =
+    Good professional practice.
+
+
+======================================================================
+2.31 EMPTY STATEMENT
+======================================================================
+
+A standalone semicolon can form an empty statement.
+
+Example:
+
+    ;
+
+
+This does nothing.
+
+Example:
+
+    while (condition)
+        ;
+
+
+This may intentionally create an empty loop body,
+although such code should be written carefully.
+
+
+======================================================================
+2.32 COMPOUND STATEMENT
+======================================================================
+
+A compound statement is a block:
+
+    {
+        statement1;
+        statement2;
+        statement3;
+    }
+
+
+Example:
+
+    {
+        int x = 10;
+        int y = 20;
+
+        printf("%d\n", x + y);
+    }
+
+
+Compound statements are used extensively with:
+
+    if
+    else
+    while
+    for
+    functions
+
+
+======================================================================
+2.33 SIMPLE C PROGRAM — ANALYSIS
+======================================================================
+
+Program:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int age = 25;
+
+        printf("Age = %d\n", age);
+
+        return 0;
+    }
+
+
+TOKEN ANALYSIS:
+
+    #include
+        → preprocessor directive
+
+    stdio.h
+        → standard I/O header
+
+    int
+        → keyword
+
+    main
+        → identifier/function name
+
+    void
+        → keyword
+
+    int
+        → keyword
+
+    age
+        → identifier
+
+    =
+        → assignment/initialization operator
+
+    25
+        → integer constant
+
+    printf
+        → identifier/function name
+
+    "Age = %d\n"
+        → string literal
+
+    return
+        → keyword
+
+    0
+        → integer constant
+
+
+PUNCTUATORS:
+
+    #
+    <
+    >
+    (
+    )
+    {
+    }
+    ;
+    etc.
+
+
+======================================================================
+2.34 ANOTHER EXAMPLE
+======================================================================
+
+Program:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 10;
+        int b = 20;
+        int sum;
+
+        sum = a + b;
+
+        printf("Sum = %d\n", sum);
+
+        return 0;
+    }
+
+
+Program flow:
+
+    Start
+      ↓
+    main()
+      ↓
+    a = 10
+      ↓
+    b = 20
+      ↓
+    Declare sum
+      ↓
+    sum = a + b
+      ↓
+    printf()
+      ↓
+    return 0
+      ↓
+    End
+
+
+======================================================================
+2.35 DECLARATION vs DEFINITION
+======================================================================
+
+This distinction becomes important in interviews.
+
+
+DECLARATION:
+
+    Tells the compiler about an entity.
+
+Example:
+
+    int add(int, int);
+
+
+DEFINITION:
+
+    Provides the actual implementation/storage,
+    depending on the kind of entity.
+
+Function definition:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+
+Variable definition:
+
+    int x = 10;
+
+
+For job interviews, remember:
+
+    Declaration:
+        "This exists and has this type."
+
+    Definition:
+        "Here is the actual definition/implementation
+         or storage for it."
+
+
+======================================================================
+2.36 HEADER FILES — BASIC INTRODUCTION
+======================================================================
+
+A header file typically contains declarations,
+macros, type definitions, etc., intended to be shared
+across source files.
+
+Examples:
+
+    <stdio.h>
+    <stdlib.h>
+    <string.h>
+    <math.h>
+
+
+Example:
+
+    #include <stdio.h>
+
+
+This provides declarations associated with standard
+input/output facilities.
+
+
+User-defined headers can also be included:
+
+    #include "myheader.h"
+
+
+Difference:
+
+    <header.h>
+        → commonly searches implementation/system
+          include paths
+
+    "header.h"
+        → commonly searches local/source-related paths
+          first, then implementation-defined include paths
+
+
+Exact search rules depend on the implementation.
+
+
+======================================================================
+2.37 PREPROCESSOR DIRECTIVES
+======================================================================
+
+Preprocessor directives begin with #.
+
+Examples:
+
+    #include
+    #define
+    #if
+    #ifdef
+    #ifndef
+    #endif
+
+
+Example:
+
+    #define PI 3.14159
+
+
+The preprocessor handles such directives before
+the main compilation process.
+
+
+Detailed preprocessor concepts will be covered later.
+
+
+======================================================================
+2.38 ESCAPE SEQUENCES
+======================================================================
+
+Escape sequences represent special characters
+inside character/string literals.
+
+Important ones:
+
+    \n
+        Newline
+
+    \t
+        Horizontal tab
+
+    \\
+        Backslash
+
+    \"
+        Double quote
+
+    \'
+        Single quote
+
+    \0
+        Null character
+
+
+Example:
+
+    printf("Hello\nWorld");
+
+
+Output:
+
+    Hello
+    World
+
+
+Example:
+
+    printf("Name:\tApoorv");
+
+
+Output conceptually:
+
+    Name:    Apoorv
+
+
+======================================================================
+2.39 CHARACTER vs STRING
+======================================================================
+
+VERY IMPORTANT INTERVIEW CONCEPT:
+
+
+Character:
+
+    'A'
+
+
+String:
+
+    "A"
+
+
+Character:
+
+    'A'
+    → one character
+
+
+String:
+
+    "A"
+    → character A followed by '\0'
+
+
+Conceptually:
+
+    'A'
+
+    vs.
+
+    'A' '\0'
+
+
+Therefore:
+
+    char ch = 'A';
+
+is different from:
+
+    char str[] = "A";
+
+
+======================================================================
+2.40 SPECIAL CHARACTER CASE
+======================================================================
+
+To print a double quote:
+
+    printf("\"Hello\"");
+
+
+Output:
+
+    "Hello"
+
+
+To print a backslash:
+
+    printf("\\");
+
+
+Output:
+
+    \
+
+
+To print a percentage sign with printf:
+
+    printf("100%%");
+
+
+Output:
+
+    100%
+
+
+======================================================================
+2.41 COMMON SYNTAX ERRORS
+======================================================================
+
+ERROR 1:
+
+    Missing semicolon
+
+    int x = 10
+
+
+Correct:
+
+    int x = 10;
+
+
+ERROR 2:
+
+    Missing closing brace
+
+    int main(void)
+    {
+        printf("Hello");
+
+
+Correct:
+
+    int main(void)
+    {
+        printf("Hello");
+        return 0;
+    }
+
+
+ERROR 3:
+
+    Invalid identifier
+
+    int 1age;
+
+
+Correct:
+
+    int age1;
+
+
+ERROR 4:
+
+    Using a keyword as identifier
+
+    int int = 10;
+
+
+Invalid.
+
+
+ERROR 5:
+
+    Wrong quote type
+
+    char grade = "A";
+
+
+This is not a correct way to initialize a single char.
+
+
+Correct:
+
+    char grade = 'A';
+
+
+ERROR 6:
+
+    String using single quotes
+
+    printf('Hello');
+
+
+Correct:
+
+    printf("Hello");
+
+
+======================================================================
+2.42 COMMON BEGINNER MISTAKES
+======================================================================
+
+Mistake 1:
+
+    Forgetting ;
+
+Mistake 2:
+
+    Using = when == is intended
+
+    if (x = 10)
+
+Mistake 3:
+
+    Confusing:
+
+        'A'
+
+    with:
+
+        "A"
+
+Mistake 4:
+
+    Writing:
+
+        1student
+
+Mistake 5:
+
+    Ignoring case sensitivity:
+
+        Age
+        age
+
+Mistake 6:
+
+    Forgetting braces or mismatching braces.
+
+Mistake 7:
+
+    Forgetting the terminating '\0' concept for strings.
+
+Mistake 8:
+
+    Using unclear variable names.
+
+Mistake 9:
+
+    Ignoring compiler warnings.
+
+Mistake 10:
+
+    Writing code without understanding the logic.
+
+
+======================================================================
+2.43 C PROGRAM STRUCTURE — PROFESSIONAL VIEW
+======================================================================
+
+A larger C project may look like:
+
+    project/
+    |
+    +-- include/
+    |     |
+    |     +-- calculator.h
+    |
+    +-- src/
+    |     |
+    |     +-- main.c
+    |     +-- calculator.c
+    |
+    +-- tests/
+    |
+    +-- Makefile
+    |
+    +-- README.md
+
+
+main.c:
+
+    #include "calculator.h"
+
+    int main(void)
+    {
+        ...
+    }
+
+
+calculator.h:
+
+    declarations
+
+
+calculator.c:
+
+    implementations
+
+
+This modular organization becomes important
+in professional C development.
+
+
+======================================================================
+2.44 LEXICAL ELEMENTS — QUICK TABLE
+======================================================================
+
+CATEGORY             EXAMPLE
+
+Keyword              int
+Identifier           age
+Integer constant     25
+Floating constant    3.14
+Character constant   'A'
+String literal       "Hello"
+Operator             +
+Punctuator            ;
+Comment              // comment
+Preprocessor          #include <stdio.h>
+
+
+======================================================================
+2.45 STATEMENT TYPES — BASIC OVERVIEW
+======================================================================
+
+C provides different kinds of statements.
+
+1. Expression statement
+
+    x = x + 1;
+
+2. Compound statement
+
+    {
+        ...
+    }
+
+3. Selection statement
+
+    if (...)
+    {
+        ...
+    }
+
+    switch (...)
+    {
+        ...
+    }
+
+4. Iteration statement
+
+    for (...)
+    {
+        ...
+    }
+
+    while (...)
+    {
+        ...
+    }
+
+    do
+    {
+        ...
+    }
+    while (...);
+
+5. Jump statement
+
+    break;
+
+    continue;
+
+    return 0;
+
+    goto label;
+
+
+These will be studied in detail in later chapters.
+
+
+======================================================================
+2.46 C PROGRAM READING SKILL
+======================================================================
+
+For job interviews, learn to read code token by token.
+
+Example:
+
+    int result = a + b;
+
+
+Read as:
+
+    int
+        → integer type
+
+    result
+        → variable/identifier
+
+    =
+        → assignment
+
+    a
+        → operand
+
+    +
+        → addition operator
+
+    b
+        → operand
+
+    ;
+        → statement termination
+
+
+This habit will help with:
+
+    • Output questions
+    • Debugging
+    • Interviews
+    • Code reviews
+    • Competitive programming
+
+
+======================================================================
+2.47 PRACTICE PROGRAM 1
+======================================================================
+
+Task:
+
+    Print your name.
+
+Code:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Apoorv Singh\n");
+        return 0;
+    }
+
+
+Expected output:
+
+    Apoorv Singh
+
+
+======================================================================
+2.48 PRACTICE PROGRAM 2
+======================================================================
+
+Task:
+
+    Print multiple lines.
+
+Code:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Name: Apoorv Singh\n");
+        printf("Course: M.Tech\n");
+        printf("Year: First Year\n");
+        printf("Goal: Job Ready\n");
+
+        return 0;
+    }
+
+
+======================================================================
+2.49 PRACTICE PROGRAM 3
+======================================================================
+
+Task:
+
+    Print a formatted message.
+
+Code:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("========================\n");
+        printf("      LEARNING C        \n");
+        printf("========================\n");
+
+        return 0;
+    }
+
+
+======================================================================
+2.50 PRACTICE PROGRAM 4
+======================================================================
+
+Identify the tokens:
+
+    int total = 100;
+
+
+Answer:
+
+    int
+        → keyword
+
+    total
+        → identifier
+
+    =
+        → operator
+
+    100
+        → integer constant
+
+    ;
+        → punctuator
+
+
+======================================================================
+2.51 PRACTICE PROGRAM 5
+======================================================================
+
+Identify the tokens:
+
+    result = a + b;
+
+
+Answer:
+
+    result
+        → identifier
+
+    =
+        → operator
+
+    a
+        → identifier
+
+    +
+        → operator
+
+    b
+        → identifier
+
+    ;
+        → punctuator
+
+
+======================================================================
+2.52 OUTPUT PREDICTION PRACTICE
+======================================================================
+
+Question:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("C\n");
+        printf("Programming\n");
+
+        return 0;
+    }
+
+
+Output:
+
+    C
+    Programming
+
+
+Reason:
+
+    \n moves the cursor to the next line.
+
+
+======================================================================
+2.53 OUTPUT PREDICTION PRACTICE
+======================================================================
+
+Question:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("A\tB\n");
+
+        return 0;
+    }
+
+
+Output conceptually:
+
+    A    B
+
+
+Reason:
+
+    \t represents a horizontal tab.
+
+
+======================================================================
+2.54 INTERVIEW QUESTIONS
+======================================================================
+
+Q1. What is syntax?
+
+    Syntax is the set of rules that determine the valid
+    structure of C source code.
+
+
+Q2. What is a token?
+
+    A token is a basic lexical element recognized by
+    the compiler during lexical analysis.
+
+
+Q3. What are the major categories of C tokens?
+
+    Common categories:
+
+        • Keywords
+        • Identifiers
+        • Constants
+        • String literals
+        • Operators
+        • Punctuators
+
+
+Q4. What is an identifier?
+
+    A name used to identify a program entity.
+
+
+Q5. Is C case-sensitive?
+
+    Yes.
+
+
+Q6. Can an identifier start with a number?
+
+    No.
+
+
+Q7. Can a keyword be used as a variable name?
+
+    No.
+
+
+Q8. Difference between 'A' and "A"?
+
+    'A' is a character constant.
+
+    "A" is a string literal containing A followed
+    by a terminating null character.
+
+
+Q9. What is a statement?
+
+    A statement is an executable/declarative construct
+    forming part of a C program.
+
+
+Q10. What is a block?
+
+    A sequence of declarations/statements enclosed
+    in braces.
+
+
+Q11. What is an expression?
+
+    A combination of operands, operators, function calls,
+    constants, etc., that represents a computation/value.
+
+
+Q12. What is initialization?
+
+    Giving an object its initial value when it is defined.
+
+
+Q13. What is assignment?
+
+    Storing a new value into an already existing
+    modifiable object.
+
+
+Q14. What is a header file?
+
+    A file containing declarations, macros, types,
+    and related interfaces intended to be shared
+    among source files.
+
+
+Q15. What is the purpose of #include?
+
+    It is a preprocessing directive used to include
+    the contents of a header file into the translation unit.
+
+
+======================================================================
+2.55 JOB-READY INTERVIEW TRAPS
+======================================================================
+
+TRAP 1:
+
+    int age = 20;
+
+Question:
+
+    Which is the keyword?
+
+Answer:
+
+    int
+
+
+TRAP 2:
+
+    int Age = 20;
+
+    int age = 30;
+
+Question:
+
+    Same variable?
+
+Answer:
+
+    NO.
+
+    C is case-sensitive.
+
+
+TRAP 3:
+
+    char ch = 'A';
+
+Question:
+
+    What is 'A'?
+
+Answer:
+
+    Character constant.
+
+
+TRAP 4:
+
+    printf("A");
+
+Question:
+
+    What is "A"?
+
+Answer:
+
+    String literal.
+
+
+TRAP 5:
+
+    int 2value = 10;
+
+Question:
+
+    Valid?
+
+Answer:
+
+    NO.
+
+    An identifier cannot start with a digit.
+
+
+TRAP 6:
+
+    int student_name = 10;
+
+Question:
+
+    Valid?
+
+Answer:
+
+    YES.
+
+    Underscore is allowed.
+
+
+TRAP 7:
+
+    int totalMarks = 100;
+
+Question:
+
+    Is totalMarks a keyword?
+
+Answer:
+
+    NO.
+
+    It is an identifier.
+
+
+======================================================================
+2.56 CHAPTER 2 — CORE CONCEPT MAP
+======================================================================
+
+                        C SOURCE CODE
+                              |
+                              v
+                     LEXICAL ANALYSIS
+                              |
+                              v
+                           TOKENS
+                              |
+       +----------+-----------+-----------+----------+
+       |          |           |           |          |
+    Keywords  Identifiers  Constants  Operators  Punctuators
+                              |
+                              |
+                         String Literals
+                              |
+                              v
+                     SYNTAX ANALYSIS
+                              |
+                              v
+                         C PROGRAM
+                              |
+                              v
+                         COMPILER
+                              |
+                              v
+                     OBJECT / EXECUTABLE
+
+
+======================================================================
+2.57 CHAPTER 2 — MOST IMPORTANT POINTS
+======================================================================
+
+Remember these:
+
+    1. Syntax defines the valid structure of C programs.
+
+    2. C is case-sensitive.
+
+    3. Tokens are the basic lexical elements of C.
+
+    4. Important token categories include:
+           Keywords
+           Identifiers
+           Constants
+           String literals
+           Operators
+           Punctuators
+
+    5. Keywords are reserved words.
+
+    6. Identifiers are names given to program entities.
+
+    7. Identifiers cannot start with a digit.
+
+    8. Spaces are not allowed inside identifiers.
+
+    9. 'A' is a character constant.
+
+   10. "A" is a string literal.
+
+   11. Semicolon usually terminates a statement.
+
+   12. Braces define blocks.
+
+   13. Expressions represent computations/values.
+
+   14. Initialization gives an object its initial value.
+
+   15. Assignment changes the value of an existing
+       modifiable object.
+
+   16. Comments are used to explain code.
+
+   17. #include is a preprocessing directive.
+
+   18. C does not use indentation to define blocks;
+       braces do that.
+
+   19. Readable formatting is still essential for
+       professional programming.
+
+   20. Compiler warnings should be taken seriously.
+
+
+======================================================================
+2.58 PRACTICE QUESTIONS
+======================================================================
+
+SECTION A — BASIC
+
+1. What is syntax?
+
+2. What is a token?
+
+3. List the major categories of C tokens.
+
+4. What is a keyword?
+
+5. What is an identifier?
+
+6. Why is C called case-sensitive?
+
+7. What are constants?
+
+8. What is a string literal?
+
+9. What is an expression?
+
+10. What is a statement?
+
+
+SECTION B — IDENTIFIER PRACTICE
+
+Identify whether each identifier is valid or invalid:
+
+    1. age
+    2. student_name
+    3. 1student
+    4. student1
+    5. totalMarks
+    6. student name
+    7. _count
+    8. int
+    9. marks_2026
+   10. total-marks
+
+
+SECTION C — TOKEN PRACTICE
+
+Identify the tokens:
+
+    int x = 10;
+
+    float price = 99.5f;
+
+    result = a + b;
+
+    char grade = 'A';
+
+    printf("Hello");
+
+
+SECTION D — OUTPUT PRACTICE
+
+Predict the output:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Hello\n");
+        printf("C Programming\n");
+
+        return 0;
+    }
+
+
+======================================================================
+2.59 MINI ASSIGNMENT
+======================================================================
+
+Create a C program that prints:
+
+    =================================
+           C PROGRAMMING
+    =================================
+
+    Name     : Your Name
+    Course   : M.Tech
+    Year     : First Year
+    Goal     : Job Ready Developer
+
+    =================================
+
+
+Requirements:
+
+    ✓ Use #include <stdio.h>
+    ✓ Use main()
+    ✓ Use printf()
+    ✓ Use comments
+    ✓ Use proper indentation
+    ✓ End statements correctly
+    ✓ Compile without warnings
+
+
+======================================================================
+2.60 JOB-READY SKILL CHECK
+======================================================================
+
+Before moving to Chapter 3, you should be able to:
+
+    [ ] Explain syntax
+    [ ] Explain tokens
+    [ ] Identify keywords
+    [ ] Identify identifiers
+    [ ] Create valid identifiers
+    [ ] Identify invalid identifiers
+    [ ] Explain case sensitivity
+    [ ] Explain integer constants
+    [ ] Explain floating constants
+    [ ] Explain character constants
+    [ ] Explain string literals
+    [ ] Explain operators
+    [ ] Explain punctuators
+    [ ] Explain statements
+    [ ] Explain expressions
+    [ ] Explain blocks
+    [ ] Explain declaration
+    [ ] Explain initialization
+    [ ] Explain assignment
+    [ ] Write comments
+    [ ] Understand #include
+    [ ] Read a basic C program
+    [ ] Identify common syntax errors
+    [ ] Compile a basic C program
+
+
+======================================================================
+2.61 WHAT COMES NEXT?
+======================================================================
+
+CHAPTER 1:
+    Introduction to Programming & C
+        ↓
+CHAPTER 2:
+    C Syntax & Basic Building Blocks
+        ↓
+CHAPTER 3:
+    Variables, Constants & Data Types
+        ↓
+CHAPTER 4:
+    Input & Output
+        ↓
+CHAPTER 5:
+    Operators & Expressions
+        ↓
+CHAPTER 6:
+    Type Conversion & Type Casting
+        ↓
+CHAPTER 7:
+    Conditional Statements
+        ↓
+CHAPTER 8:
+    Loops
+        ↓
+CHAPTER 9:
+    Functions
+        ↓
+CHAPTER 10:
+    Arrays
+        ↓
+CHAPTER 11:
+    Strings
+        ↓
+CHAPTER 12:
+    Pointers
+        ↓
+...
+        ↓
+JOB READY C PROGRAMMER
+
+
+======================================================================
+END OF CHAPTER 02
+======================================================================

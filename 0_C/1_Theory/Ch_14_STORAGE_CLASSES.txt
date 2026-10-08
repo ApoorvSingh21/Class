@@ -1,0 +1,1360 @@
+Worked for a couple of seconds
+
+CHAPTER 14 — STORAGE CLASSES
+
+══════════════════════════════════════════════════════════════════════
+                    CHAPTER 14 — STORAGE CLASSES
+══════════════════════════════════════════════════════════════════════
+
+According to the C Programming — Job-Ready Master Syllabus:
+
+14.1 auto
+14.2 static
+14.3 extern
+14.4 register
+
+14.5 Scope vs Lifetime
+14.6 Storage Duration
+14.7 Linkage
+14.8 Static Local Variables
+14.9 Static Global Variables
+14.10 extern Variables
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.1 WHAT IS A STORAGE CLASS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A storage-class specifier provides information about how an
+identifier relates to:
+
+        • scope
+        • storage duration
+        • linkage
+        • declaration/use of an object or function
+
+The main storage-class specifiers in this chapter are:
+
+        auto
+        static
+        extern
+        register
+
+
+IMPORTANT:
+
+Do not memorize storage class as simply "where the variable is
+stored."
+
+Storage class is more about the properties of an identifier/object
+and its storage duration/linkage.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.2 auto
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+auto is the default storage-class specifier for ordinary local
+variables declared inside a block.
+
+Example:
+
+        int main(void)
+        {
+            auto int x = 10;
+
+            printf("%d", x);
+
+            return 0;
+        }
+
+Here:
+
+        auto int x = 10;
+
+is equivalent in ordinary meaning to:
+
+        int x = 10;
+
+
+Therefore:
+
+        auto
+
+is rarely written explicitly.
+
+
+──────────────────────────────────────────────────────────────────────
+CHARACTERISTICS OF AUTO LOCAL VARIABLES
+──────────────────────────────────────────────────────────────────────
+
+Typical block-scope auto object:
+
+        • block scope
+        • automatic storage duration
+        • no linkage
+        • created when execution enters its block
+        • lifetime ends when execution leaves its block
+
+
+Example:
+
+        void test(void)
+        {
+            int x = 10;
+
+            printf("%d\n", x);
+        }
+
+When test() is entered:
+
+        x comes into existence.
+
+When the block ends:
+
+        x's lifetime ends.
+
+
+──────────────────────────────────────────────────────────────────────
+AUTO VARIABLES ARE NOT AUTOMATICALLY ZERO
+──────────────────────────────────────────────────────────────────────
+
+Example:
+
+        void test(void)
+        {
+            int x;
+
+            printf("%d", x);
+        }
+
+x has an indeterminate value.
+
+Do NOT assume:
+
+        x = 0
+
+
+If initialization is required:
+
+        int x = 0;
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.3 static
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+static is one of the most important storage-class specifiers.
+
+Its effect depends on where it is used.
+
+Two major cases:
+
+        1. static local variable
+        2. static file-scope variable/function
+
+
+The key idea:
+
+        static can give an object static storage duration.
+
+At file scope, static also gives internal linkage.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.4 STATIC LOCAL VARIABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Consider:
+
+        void counter(void)
+        {
+            static int count = 0;
+
+            count++;
+
+            printf("%d\n", count);
+        }
+
+
+Calling:
+
+        counter();
+        counter();
+        counter();
+
+
+Output:
+
+        1
+        2
+        3
+
+
+Why?
+
+Because:
+
+        static int count = 0;
+
+is initialized only once.
+
+Its value persists between function calls.
+
+
+──────────────────────────────────────────────────────────────────────
+ORDINARY LOCAL VS STATIC LOCAL
+──────────────────────────────────────────────────────────────────────
+
+Ordinary local:
+
+        void test(void)
+        {
+            int x = 0;
+            x++;
+            printf("%d\n", x);
+        }
+
+
+Repeated calls:
+
+        test();
+        test();
+        test();
+
+
+Output:
+
+        1
+        1
+        1
+
+
+Because x is recreated each time the function/block is entered.
+
+
+Now:
+
+        void test(void)
+        {
+            static int x = 0;
+            x++;
+            printf("%d\n", x);
+        }
+
+
+Repeated calls:
+
+        test();
+        test();
+        test();
+
+
+Output:
+
+        1
+        2
+        3
+
+
+Because static x retains its stored value.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STATIC LOCAL — SCOPE VS LIFETIME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is a very important interview concept.
+
+Example:
+
+        void test(void)
+        {
+            static int x = 10;
+
+            x++;
+        }
+
+
+Scope of x:
+
+        only inside the block/function where it is declared.
+
+
+Lifetime of x:
+
+        entire execution of the program.
+
+
+Therefore:
+
+        SCOPE ≠ LIFETIME
+
+
+A variable can have:
+
+        narrow scope
+
+but:
+
+        long lifetime.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STATIC LOCAL INITIALIZATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Example:
+
+        void test(void)
+        {
+            static int count = 10;
+            count++;
+        }
+
+
+Initialization:
+
+        count = 10
+
+happens once.
+
+Subsequent function calls do not execute the initialization again.
+
+
+Conceptually:
+
+        First call:
+
+        count = 10
+        count++
+        count = 11
+
+
+        Second call:
+
+        initialization does NOT happen again
+        count++
+        count = 12
+
+
+        Third call:
+
+        count = 13
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.5 STATIC GLOBAL / FILE-SCOPE VARIABLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Consider:
+
+        static int count = 100;
+
+at file scope.
+
+This object has:
+
+        static storage duration
+
+and:
+
+        internal linkage
+
+
+Internal linkage means the identifier is associated only with the
+current translation unit.
+
+It is not available for linkage from another translation unit by
+that name.
+
+
+Example:
+
+        /* file1.c */
+
+        static int count = 100;
+
+
+Another source file:
+
+        /* file2.c */
+
+        extern int count;
+
+This does NOT give file2.c access to file1.c's static count through
+external linkage.
+
+Why?
+
+Because:
+
+        static at file scope
+
+gives:
+
+        internal linkage
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.6 extern
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+extern generally declares that an object or function is defined
+elsewhere, allowing use of an identifier with external linkage.
+
+Example:
+
+        /* file1.c */
+
+        int global = 100;
+
+
+        /* file2.c */
+
+        extern int global;
+
+
+Now file2.c can refer to the global object defined in file1.c,
+provided the program is linked consistently.
+
+
+──────────────────────────────────────────────────────────────────────
+IMPORTANT:
+extern IS NOT A MEMORY ALLOCATION COMMAND
+──────────────────────────────────────────────────────────────────────
+
+Consider:
+
+        extern int x;
+
+This is normally a declaration saying:
+
+        x exists somewhere else.
+
+It does not create a new definition of x merely because the
+declaration uses extern.
+
+
+Definition:
+
+        int x = 100;
+
+
+Declaration:
+
+        extern int x;
+
+
+Conceptually:
+
+        definition
+        ↓
+        creates/defines the object
+
+        extern declaration
+        ↓
+        tells compiler about an object defined elsewhere
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.7 REGISTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The register storage-class specifier can be used for an object with
+automatic storage duration.
+
+Example:
+
+        register int counter;
+
+Historically, it was intended to suggest that the implementation
+keep the variable in a CPU register for faster access.
+
+
+Modern compilers generally make their own optimization decisions.
+
+Therefore:
+
+        register
+
+should NOT be viewed as a command forcing the compiler to place a
+variable in a CPU register.
+
+
+──────────────────────────────────────────────────────────────────────
+IMPORTANT REGISTER RULE
+──────────────────────────────────────────────────────────────────────
+
+For a register-qualified object, the program cannot use the unary
+address operator & on that object.
+
+Example:
+
+        register int x = 10;
+
+        printf("%p", (void *)&x);
+
+This is not valid because the address of a register-qualified object
+cannot be requested with &.
+
+
+This is an important interview point.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.8 SCOPE VS LIFETIME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+These two concepts are often confused.
+
+SCOPE:
+
+        Where can the identifier be accessed by name?
+
+
+LIFETIME:
+
+        During what period does the object exist?
+
+
+Example:
+
+        void test(void)
+        {
+            static int x = 0;
+        }
+
+
+Scope:
+
+        block/function containing x
+
+
+Lifetime:
+
+        entire execution of the program
+
+
+Therefore:
+
+        small scope
+        +
+        long lifetime
+
+
+──────────────────────────────────────────────────────────────────────
+ORDINARY LOCAL VARIABLE
+──────────────────────────────────────────────────────────────────────
+
+        void test(void)
+        {
+            int x = 10;
+        }
+
+
+Scope:
+
+        block
+
+
+Lifetime:
+
+        while execution is within the block
+        and the automatic object exists
+
+
+──────────────────────────────────────────────────────────────────────
+GLOBAL VARIABLE
+──────────────────────────────────────────────────────────────────────
+
+        int x = 10;
+
+at file scope.
+
+Its identifier has file scope, and the object has static storage
+duration.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.9 STORAGE DURATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+C has four important storage-duration categories:
+
+        1. Automatic
+        2. Static
+        3. Allocated
+        4. Thread
+
+For this chapter, the most important are:
+
+        automatic
+        static
+
+
+──────────────────────────────────────────────────────────────────────
+AUTOMATIC STORAGE DURATION
+──────────────────────────────────────────────────────────────────────
+
+Typical example:
+
+        void f(void)
+        {
+            int x = 10;
+        }
+
+
+x has automatic storage duration.
+
+Its lifetime is associated with execution of the block.
+
+
+──────────────────────────────────────────────────────────────────────
+STATIC STORAGE DURATION
+──────────────────────────────────────────────────────────────────────
+
+Examples:
+
+        global variables
+
+and:
+
+        static local variables
+
+
+Their lifetime extends across the entire execution of the program.
+
+
+──────────────────────────────────────────────────────────────────────
+ALLOCATED STORAGE DURATION
+──────────────────────────────────────────────────────────────────────
+
+Memory obtained dynamically using:
+
+        malloc()
+        calloc()
+        realloc()
+
+has allocated storage duration.
+
+Its lifetime continues until the allocated storage is released,
+normally with:
+
+        free()
+
+
+This connects Chapter 13 with Chapter 14.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.10 LINKAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Linkage describes whether declarations of the same identifier in
+different scopes or translation units can refer to the same entity.
+
+Important categories:
+
+        • no linkage
+        • internal linkage
+        • external linkage
+
+
+──────────────────────────────────────────────────────────────────────
+NO LINKAGE
+──────────────────────────────────────────────────────────────────────
+
+An identifier with no linkage does not refer to the same entity
+through declarations in other scopes.
+
+Typical local variables have no linkage.
+
+
+Example:
+
+        void f(void)
+        {
+            int x = 10;
+        }
+
+
+x is local and has:
+
+        no linkage
+
+
+──────────────────────────────────────────────────────────────────────
+INTERNAL LINKAGE
+──────────────────────────────────────────────────────────────────────
+
+At file scope:
+
+        static int count = 10;
+
+has:
+
+        internal linkage
+
+
+It is visible by name within the translation unit but is not exported
+for external linkage from other translation units.
+
+
+──────────────────────────────────────────────────────────────────────
+EXTERNAL LINKAGE
+──────────────────────────────────────────────────────────────────────
+
+A file-scope object/function with external linkage can be referred to
+from another translation unit using an appropriate declaration.
+
+Example:
+
+        /* file1.c */
+
+        int total = 100;
+
+
+        /* file2.c */
+
+        extern int total;
+
+
+Both declarations can refer to the same object when linked together.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.11 TRANSLATION UNIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To understand extern and static properly, understand:
+
+        translation unit
+
+A translation unit is essentially the source file after preprocessing
+has included the relevant headers and expanded preprocessing
+directives.
+
+
+For example:
+
+        program.c
+
+after preprocessing becomes a translation unit containing:
+
+        program.c code
+        +
+        included header contents
+        +
+        macro expansions
+        +
+        conditional compilation results
+
+
+The compiler compiles translation units separately.
+
+
+Then the linker combines object files and libraries.
+
+
+This is why:
+
+        static
+
+and:
+
+        extern
+
+become important in multi-file programs.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.12 STATIC VS EXTERN — MULTI-FILE EXAMPLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILE 1:
+
+        /* counter.c */
+
+        int counter = 0;
+
+        void increment(void)
+        {
+            counter++;
+        }
+
+
+FILE 2:
+
+        /* main.c */
+
+        #include <stdio.h>
+
+        extern int counter;
+
+        void increment(void);
+
+        int main(void)
+        {
+            increment();
+
+            printf("%d\n", counter);
+
+            return 0;
+        }
+
+
+Conceptually:
+
+        counter.c
+             │
+             ├── counter definition
+             └── increment()
+
+
+        main.c
+             │
+             ├── extern declaration
+             └── uses counter
+
+
+Linker:
+
+        main.o + counter.o
+                 ↓
+              executable
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT IF counter IS STATIC?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILE 1:
+
+        static int counter = 0;
+
+
+Then:
+
+        counter
+
+has internal linkage.
+
+Another source file cannot access that object through an extern
+declaration expecting external linkage.
+
+
+This is useful for encapsulation.
+
+For example:
+
+        static int internal_state;
+
+can hide implementation details from other source files.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.13 STATIC FUNCTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Although the syllabus emphasizes static variables, static can also be
+applied to a function at file scope.
+
+Example:
+
+        static void helper(void)
+        {
+            printf("Internal helper\n");
+        }
+
+
+This gives the function:
+
+        internal linkage
+
+
+Therefore it can be called only from within the same translation unit.
+
+
+This is commonly used to hide helper functions that should not form
+part of a module's external interface.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.14 DEFAULT INITIALIZATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A very important distinction:
+
+AUTOMATIC LOCAL OBJECT:
+
+        void f(void)
+        {
+            int x;
+        }
+
+x has an indeterminate value.
+
+
+STATIC STORAGE DURATION OBJECT:
+
+        static int x;
+
+is initialized to:
+
+        0
+
+
+Similarly, a file-scope:
+
+        int global;
+
+has static storage duration and is initialized to zero.
+
+
+Example:
+
+        static int a;
+        static double b;
+        static char c;
+
+They are initialized as if:
+
+        a = 0
+        b = 0.0
+        c = '\0'
+
+
+More generally, objects with static storage duration are initialized
+before program startup, and if no explicit initializer is provided,
+they are initialized appropriately to zero/null values.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.15 STORAGE CLASS COMPARISON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                 auto       static local    extern       register
+──────────────────────────────────────────────────────────────────────
+
+Scope            block      block           file/use     block
+
+Storage
+duration         automatic  static          static       automatic
+
+Typical
+linkage          none       none            external     none
+
+Default
+initialization   indeterminate  zero         zero*        indeterminate
+
+Persistence
+between calls    No         Yes             Yes          No
+
+Address with &
+                 Yes        Yes             Yes          No
+
+
+* For an extern declaration itself, initialization belongs to the
+  corresponding definition; an object with static storage duration
+  without an explicit initializer is initialized appropriately to zero.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.16 AUTO VS STATIC — INTERVIEW EXAMPLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Program:
+
+        #include <stdio.h>
+
+        void test(void)
+        {
+            int a = 0;
+            static int b = 0;
+
+            a++;
+            b++;
+
+            printf("%d %d\n", a, b);
+        }
+
+        int main(void)
+        {
+            test();
+            test();
+            test();
+
+            return 0;
+        }
+
+
+Output:
+
+        1 1
+        1 2
+        1 3
+
+
+Why?
+
+        a:
+        automatic
+        recreated each call
+
+
+        b:
+        static
+        retains value between calls
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.17 STATIC LOCAL VARIABLE AND RECURSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Static local variables can behave differently from ordinary locals
+during recursive calls because all invocations share the same static
+object.
+
+Example concept:
+
+        void f(void)
+        {
+            static int count = 0;
+
+            count++;
+
+            if (count < 3)
+                f();
+
+            printf("%d ", count);
+        }
+
+
+Every recursive invocation accesses the same:
+
+        count
+
+not a separate count for each call.
+
+This is fundamentally different from:
+
+        int count = 0;
+
+where each invocation gets its own automatic object.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.18 COMMON MISTAKES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MISTAKE 1:
+
+Thinking static always means "global".
+
+FALSE.
+
+A static variable can be local to a function/block.
+
+
+MISTAKE 2:
+
+Thinking static local is recreated every function call.
+
+FALSE.
+
+Its lifetime continues throughout program execution.
+
+
+MISTAKE 3:
+
+Thinking extern creates memory.
+
+Not by itself.
+
+An extern declaration normally refers to a definition elsewhere.
+
+
+MISTAKE 4:
+
+Thinking register guarantees a CPU register.
+
+FALSE.
+
+It is a request/specification with language restrictions; the compiler
+ultimately controls optimization and register allocation.
+
+
+MISTAKE 5:
+
+Thinking scope and lifetime are identical.
+
+FALSE.
+
+
+MISTAKE 6:
+
+Thinking static at file scope means global external visibility.
+
+FALSE.
+
+It gives internal linkage.
+
+
+MISTAKE 7:
+
+Thinking uninitialized static variables contain garbage.
+
+FALSE.
+
+Static-storage-duration objects without explicit initialization are
+initialized appropriately to zero.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.19 GATE / INTERVIEW TRAPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TRAP 1:
+
+        void f(void)
+        {
+            static int x = 0;
+            x++;
+            printf("%d ", x);
+        }
+
+        int main(void)
+        {
+            f();
+            f();
+            f();
+        }
+
+Output:
+
+        1 2 3
+
+
+TRAP 2:
+
+        void f(void)
+        {
+            int x = 0;
+            x++;
+            printf("%d ", x);
+        }
+
+Output:
+
+        1 1 1
+
+
+TRAP 3:
+
+        static int x;
+
+What is the initial value?
+
+Answer:
+
+        0
+
+
+TRAP 4:
+
+        int x;
+
+at file scope.
+
+Without an explicit initializer, x has static storage duration and is
+initialized to zero.
+
+
+TRAP 5:
+
+        void f(void)
+        {
+            register int x = 10;
+
+            printf("%p", (void *)&x);
+        }
+
+The address operator cannot be applied to a register-qualified
+object.
+
+
+TRAP 6:
+
+FILE 1:
+
+        static int x = 10;
+
+
+FILE 2:
+
+        extern int x;
+
+Can FILE 2 use FILE 1's x through external linkage?
+
+Answer:
+
+        No.
+
+The file-scope static x has internal linkage.
+
+
+TRAP 7:
+
+        extern int x;
+
+Does this necessarily allocate x?
+
+Answer:
+
+        No.
+
+It is a declaration referring to an object defined elsewhere.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14.20 STORAGE DURATION VS SCOPE VS LINKAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+These three concepts must be kept separate.
+
+SCOPE
+  ↓
+Where can the identifier be used by name?
+
+
+STORAGE DURATION
+  ↓
+How long does the object exist?
+
+
+LINKAGE
+  ↓
+Can declarations in different scopes/translation units refer
+to the same entity?
+
+
+Example:
+
+        static int count = 0;
+
+at file scope:
+
+        Scope:
+        file scope
+
+
+        Storage duration:
+        static
+
+
+        Linkage:
+        internal
+
+
+Example:
+
+        void f(void)
+        {
+            static int count = 0;
+        }
+
+
+        Scope:
+        block
+
+
+        Storage duration:
+        static
+
+
+        Linkage:
+        none
+
+
+This distinction is one of the most important concepts in this
+chapter.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHAPTER 14 MASTER REVISION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                         STORAGE CLASSES
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+       auto                 static               extern
+        │                     │                     │
+        │              ┌──────┴──────┐              │
+        │              │             │              │
+      local        static local   file-scope      external
+      object                         static        linkage
+        │              │             │
+        │              │             └── internal linkage
+        │              │
+        │              └── persists across calls
+        │
+        └── automatic duration
+
+
+                       register
+                           │
+                           ├── automatic duration
+                           ├── block scope typically
+                           └── address cannot be taken with &
+
+
+KEY CONCEPTS:
+
+        Scope
+          ↓
+        where name is visible
+
+
+        Lifetime / Storage Duration
+          ↓
+        how long object exists
+
+
+        Linkage
+          ↓
+        whether declarations can refer to same entity
+
+
+IMPORTANT PAIRS:
+
+        auto local
+            ↓
+        recreated during block execution
+
+
+        static local
+            ↓
+        persists for entire program execution
+
+
+        static file-scope
+            ↓
+        internal linkage
+
+
+        extern declaration
+            ↓
+        refers to externally linked definition
+
+
+        register
+            ↓
+        automatic object + address cannot be taken with &
+
+
+══════════════════════════════════════════════════════════════════════
+                    ★ CHAPTER 14 COMPLETE ★
+══════════════════════════════════════════════════════════════════════
+

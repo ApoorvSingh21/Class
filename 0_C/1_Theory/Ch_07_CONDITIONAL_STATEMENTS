@@ -1,0 +1,3181 @@
+============================================================
+CHAPTER 7 — CONDITIONAL STATEMENTS IN C
+============================================================
+
+Goal:
+Learn how a C program makes decisions based on conditions.
+
+After this chapter, you should be able to use:
+
+    if
+    if-else
+    else-if ladder
+    nested if
+    switch-case
+    break
+    default
+    fall-through
+    conditional operator
+    logical conditions
+    nested decision making
+    short-circuit evaluation
+
+These concepts are extremely important for:
+    - C programming
+    - C++ programming
+    - DSA
+    - Competitive programming
+    - Embedded systems
+    - System programming
+    - Software development interviews
+
+
+============================================================
+1. WHAT IS CONDITIONAL STATEMENT?
+============================================================
+
+A conditional statement allows a program to make a decision.
+
+Example:
+
+    If marks >= 40
+        Student passes
+
+    Otherwise
+        Student fails
+
+
+Real-life example:
+
+    If it is raining
+        Take umbrella
+    Otherwise
+        Don't take umbrella
+
+
+Programming example:
+
+    if (marks >= 40)
+    {
+        printf("Pass");
+    }
+
+
+The general idea is:
+
+                    CONDITION
+                        |
+                +-------+-------+
+                |               |
+              TRUE            FALSE
+                |               |
+             ACTION          OTHER ACTION
+
+
+============================================================
+2. CONDITIONS IN C
+============================================================
+
+A condition is an expression whose result determines
+whether a branch executes.
+
+Example:
+
+    x > 10
+
+    x == 20
+
+    age >= 18
+
+    marks >= 40 && attendance >= 75
+
+In C:
+
+    0       → false
+    non-zero → true
+
+
+Example:
+
+    if (10)
+        printf("True");
+
+
+Output:
+
+    True
+
+
+Because 10 is non-zero.
+
+
+Example:
+
+    if (0)
+        printf("True");
+
+
+Nothing is printed because 0 is false.
+
+
+============================================================
+3. BASIC if STATEMENT
+============================================================
+
+Syntax:
+
+    if (condition)
+    {
+        statement;
+    }
+
+
+Example:
+
+    int age = 20;
+
+    if (age >= 18)
+    {
+        printf("Eligible");
+    }
+
+
+Output:
+
+    Eligible
+
+
+Execution:
+
+    age = 20
+       |
+    age >= 18
+       |
+      TRUE
+       |
+    print Eligible
+
+
+============================================================
+4. if WITHOUT BRACES
+============================================================
+
+You can write:
+
+    if (x > 0)
+        printf("Positive");
+
+
+This is valid.
+
+But for professional programming, braces are usually
+recommended:
+
+    if (x > 0)
+    {
+        printf("Positive");
+    }
+
+
+Why?
+
+It prevents mistakes when adding more statements.
+
+
+Example:
+
+    if (x > 0)
+        printf("Positive");
+        printf("Number");
+
+
+Only the first printf belongs to the if.
+
+The second printf executes regardless of the condition.
+
+
+With braces:
+
+    if (x > 0)
+    {
+        printf("Positive");
+        printf("Number");
+    }
+
+
+Both statements belong to the if.
+
+
+============================================================
+5. if-else STATEMENT
+============================================================
+
+Used when there are two possible paths.
+
+Syntax:
+
+    if (condition)
+    {
+        statement1;
+    }
+    else
+    {
+        statement2;
+    }
+
+
+Example:
+
+    int age = 16;
+
+    if (age >= 18)
+    {
+        printf("Adult");
+    }
+    else
+    {
+        printf("Minor");
+    }
+
+
+Output:
+
+    Minor
+
+
+Flow:
+
+             age >= 18?
+              /     \
+           TRUE     FALSE
+            |         |
+          Adult     Minor
+
+
+============================================================
+6. EXAMPLE — EVEN OR ODD
+============================================================
+
+    int n = 10;
+
+    if (n % 2 == 0)
+    {
+        printf("Even");
+    }
+    else
+    {
+        printf("Odd");
+    }
+
+
+Output:
+
+    Even
+
+
+Logic:
+
+    n % 2 == 0
+
+means:
+
+    remainder is zero
+
+
+Therefore:
+
+    even → true
+    odd  → false
+
+
+============================================================
+7. EXAMPLE — POSITIVE, NEGATIVE
+============================================================
+
+    int n = -10;
+
+    if (n > 0)
+    {
+        printf("Positive");
+    }
+    else
+    {
+        printf("Negative or zero");
+    }
+
+
+Output:
+
+    Negative or zero
+
+
+If you need to distinguish zero:
+
+    if (n > 0)
+    {
+        printf("Positive");
+    }
+    else if (n < 0)
+    {
+        printf("Negative");
+    }
+    else
+    {
+        printf("Zero");
+    }
+
+
+============================================================
+8. ELSE-IF LADDER
+============================================================
+
+Used when there are multiple conditions.
+
+Syntax:
+
+    if (condition1)
+    {
+        ...
+    }
+    else if (condition2)
+    {
+        ...
+    }
+    else if (condition3)
+    {
+        ...
+    }
+    else
+    {
+        ...
+    }
+
+
+Example:
+
+    int marks = 85;
+
+    if (marks >= 90)
+    {
+        printf("Grade A+");
+    }
+    else if (marks >= 80)
+    {
+        printf("Grade A");
+    }
+    else if (marks >= 70)
+    {
+        printf("Grade B");
+    }
+    else if (marks >= 60)
+    {
+        printf("Grade C");
+    }
+    else if (marks >= 40)
+    {
+        printf("Grade D");
+    }
+    else
+    {
+        printf("Fail");
+    }
+
+
+Output:
+
+    Grade A
+
+
+============================================================
+9. IMPORTANT PROPERTY OF ELSE-IF
+============================================================
+
+In an if-else-if ladder, once a condition is true,
+its corresponding block executes and the remaining
+else-if conditions are skipped.
+
+Example:
+
+    int x = 85;
+
+    if (x >= 50)
+    {
+        printf("A");
+    }
+    else if (x >= 80)
+    {
+        printf("B");
+    }
+
+
+Output:
+
+    A
+
+
+Why?
+
+First condition:
+
+    85 >= 50
+
+is true.
+
+So the remaining conditions are not evaluated.
+
+
+============================================================
+10. ORDER OF CONDITIONS MATTERS
+============================================================
+
+Bad:
+
+    if (marks >= 40)
+    {
+        printf("Pass");
+    }
+    else if (marks >= 90)
+    {
+        printf("Excellent");
+    }
+
+
+The second condition can never be reached for values
+that satisfy marks >= 90.
+
+Better:
+
+    if (marks >= 90)
+    {
+        printf("Excellent");
+    }
+    else if (marks >= 40)
+    {
+        printf("Pass");
+    }
+    else
+    {
+        printf("Fail");
+    }
+
+
+General rule:
+
+    Put more specific / higher-priority conditions first.
+
+
+============================================================
+11. NESTED if
+============================================================
+
+An if statement inside another if statement is called
+a nested if.
+
+Example:
+
+    int age = 25;
+    int citizen = 1;
+
+    if (age >= 18)
+    {
+        if (citizen)
+        {
+            printf("Eligible");
+        }
+    }
+
+
+Execution:
+
+    age >= 18?
+        |
+       YES
+        |
+    citizen?
+        |
+       YES
+        |
+    Eligible
+
+
+============================================================
+12. NESTED if WITH else
+============================================================
+
+Example:
+
+    int age = 20;
+    int hasLicense = 1;
+
+    if (age >= 18)
+    {
+        if (hasLicense)
+        {
+            printf("Can drive");
+        }
+        else
+        {
+            printf("License required");
+        }
+    }
+    else
+    {
+        printf("Too young");
+    }
+
+
+============================================================
+13. THE "DANGLING ELSE" PROBLEM
+============================================================
+
+Consider:
+
+    if (a)
+        if (b)
+            printf("X");
+        else
+            printf("Y");
+
+
+Question:
+
+Which if does the else belong to?
+
+Answer:
+
+The else belongs to the nearest unmatched if.
+
+Equivalent:
+
+    if (a)
+    {
+        if (b)
+        {
+            printf("X");
+        }
+        else
+        {
+            printf("Y");
+        }
+    }
+
+
+This is called the:
+
+    Dangling else problem
+
+
+Best practice:
+
+Use braces.
+
+
+============================================================
+14. COMPARISON OPERATORS
+============================================================
+
+Conditions commonly use:
+
+    <       less than
+    >       greater than
+    <=      less than or equal
+    >=      greater than or equal
+    ==      equal
+    !=      not equal
+
+
+Example:
+
+    if (age >= 18)
+    {
+        ...
+    }
+
+
+============================================================
+15. == VS =
+============================================================
+
+Very important.
+
+Assignment:
+
+    =
+
+Comparison:
+
+    ==
+
+
+Example:
+
+    int x = 10;
+
+
+means:
+
+    Put 10 into x.
+
+
+But:
+
+    if (x == 10)
+
+
+means:
+
+    Is x equal to 10?
+
+
+============================================================
+16. COMMON BUG — if (x = 10)
+============================================================
+
+Consider:
+
+    if (x = 10)
+    {
+        printf("True");
+    }
+
+
+This is an assignment, not comparison.
+
+It assigns:
+
+    x = 10
+
+The expression evaluates to:
+
+    10
+
+10 is non-zero.
+
+Therefore the condition is true.
+
+
+Correct:
+
+    if (x == 10)
+
+
+Compiler warnings can help detect this.
+
+
+============================================================
+17. LOGICAL AND
+============================================================
+
+Operator:
+
+    &&
+
+
+Meaning:
+
+    AND
+
+
+Both conditions must be true.
+
+Example:
+
+    if (age >= 18 && age <= 60)
+    {
+        printf("Working age range");
+    }
+
+
+Truth table:
+
+    A       B       A && B
+
+    0       0          0
+    0       1          0
+    1       0          0
+    1       1          1
+
+
+============================================================
+18. LOGICAL OR
+============================================================
+
+Operator:
+
+    ||
+
+
+Meaning:
+
+    OR
+
+
+At least one condition must be true.
+
+Example:
+
+    if (day == 6 || day == 7)
+    {
+        printf("Weekend");
+    }
+
+
+Truth table:
+
+    A       B       A || B
+
+    0       0          0
+    0       1          1
+    1       0          1
+    1       1          1
+
+
+============================================================
+19. LOGICAL NOT
+============================================================
+
+Operator:
+
+    !
+
+
+It reverses truth value.
+
+    !0       → 1
+    !nonzero → 0
+
+
+Example:
+
+    int x = 0;
+
+    if (!x)
+    {
+        printf("Zero");
+    }
+
+
+Output:
+
+    Zero
+
+
+============================================================
+20. COMBINING CONDITIONS
+============================================================
+
+Example:
+
+    int age = 25;
+    int income = 50000;
+
+    if (age >= 18 && income >= 30000)
+    {
+        printf("Eligible");
+    }
+
+
+Both conditions must be true.
+
+
+============================================================
+21. COMPLEX CONDITION
+============================================================
+
+Example:
+
+    if ((age >= 18 && citizen) || specialPermission)
+    {
+        printf("Allowed");
+    }
+
+
+Use parentheses to make the intended logic clear.
+
+Even when operator precedence would produce the same result,
+parentheses improve readability.
+
+
+============================================================
+22. OPERATOR PRECEDENCE IN CONDITIONS
+============================================================
+
+Important order:
+
+    !
+    &&
+    ||
+
+
+Example:
+
+    a || b && c
+
+means:
+
+    a || (b && c)
+
+
+not:
+
+    (a || b) && c
+
+
+Best practice:
+
+Use parentheses:
+
+    if (a || (b && c))
+    {
+        ...
+    }
+
+
+============================================================
+23. SHORT-CIRCUIT EVALUATION
+============================================================
+
+C's:
+
+    &&
+    ||
+
+operators use short-circuit evaluation.
+
+For &&:
+
+    If left side is false,
+    right side is NOT evaluated.
+
+
+Example:
+
+    if (x != 0 && y / x > 2)
+    {
+        ...
+    }
+
+
+If:
+
+    x == 0
+
+then:
+
+    x != 0
+
+is false.
+
+Therefore:
+
+    y / x > 2
+
+is not evaluated.
+
+This prevents division by zero in this particular pattern.
+
+
+============================================================
+24. SHORT-CIRCUIT WITH ||
+============================================================
+
+For ||:
+
+    If left side is true,
+    right side is NOT evaluated.
+
+
+Example:
+
+    if (x == 0 || y / x > 2)
+    {
+        ...
+    }
+
+
+If:
+
+    x == 0
+
+then the left side is true.
+
+Therefore the right side is skipped.
+
+
+============================================================
+25. SHORT-CIRCUIT AND POINTERS
+============================================================
+
+Very common pattern:
+
+    if (ptr != NULL && *ptr == 10)
+    {
+        ...
+    }
+
+
+First:
+
+    ptr != NULL
+
+
+If false:
+
+    *ptr == 10
+
+is not evaluated.
+
+Therefore the dereference is avoided.
+
+
+Without short-circuit:
+
+    *ptr
+
+could dereference a null pointer.
+
+
+============================================================
+26. IMPORTANT: & IS NOT &&
+============================================================
+
+Logical AND:
+
+    &&
+
+
+Bitwise AND:
+
+    &
+
+
+Example:
+
+    if (a && b)
+
+
+means logical operation.
+
+
+Example:
+
+    result = a & b;
+
+
+means bitwise operation.
+
+
+Do not confuse them.
+
+
+============================================================
+27. switch STATEMENT
+============================================================
+
+switch is useful when one expression needs to be compared
+against several constant case values.
+
+Syntax:
+
+    switch (expression)
+    {
+        case constant1:
+            statements;
+            break;
+
+        case constant2:
+            statements;
+            break;
+
+        default:
+            statements;
+    }
+
+
+============================================================
+28. SIMPLE switch EXAMPLE
+============================================================
+
+    int day = 2;
+
+    switch (day)
+    {
+        case 1:
+            printf("Monday");
+            break;
+
+        case 2:
+            printf("Tuesday");
+            break;
+
+        case 3:
+            printf("Wednesday");
+            break;
+
+        default:
+            printf("Invalid day");
+    }
+
+
+Output:
+
+    Tuesday
+
+
+============================================================
+29. HOW switch WORKS
+============================================================
+
+Suppose:
+
+    day = 2
+
+
+C evaluates:
+
+    switch(day)
+
+
+Then checks:
+
+    case 1
+    case 2
+    case 3
+    ...
+
+
+Matching case:
+
+    case 2
+
+
+Execution begins there.
+
+
+============================================================
+30. break IN switch
+============================================================
+
+break terminates the switch statement.
+
+Example:
+
+    switch (x)
+    {
+        case 1:
+            printf("One");
+            break;
+
+        case 2:
+            printf("Two");
+            break;
+    }
+
+
+Without break, execution can continue into subsequent cases.
+
+
+============================================================
+31. FALL-THROUGH
+============================================================
+
+Example:
+
+    int x = 1;
+
+    switch (x)
+    {
+        case 1:
+            printf("One");
+
+        case 2:
+            printf("Two");
+
+        case 3:
+            printf("Three");
+    }
+
+
+Output:
+
+    OneTwoThree
+
+
+Why?
+
+There is no break.
+
+After case 1:
+
+    execution continues into case 2
+    then case 3
+
+
+This is called:
+
+    fall-through
+
+
+============================================================
+32. INTENTIONAL FALL-THROUGH
+============================================================
+
+Fall-through can be useful.
+
+Example:
+
+    int day = 6;
+
+    switch (day)
+    {
+        case 6:
+        case 7:
+            printf("Weekend");
+            break;
+
+        default:
+            printf("Weekday");
+    }
+
+
+Both 6 and 7 execute the same block.
+
+
+============================================================
+33. switch WITH MULTIPLE CASES
+============================================================
+
+Example:
+
+    char grade = 'A';
+
+    switch (grade)
+    {
+        case 'A':
+        case 'B':
+            printf("Good");
+            break;
+
+        case 'C':
+            printf("Average");
+            break;
+
+        default:
+            printf("Needs improvement");
+    }
+
+
+If grade is A or B:
+
+    Good
+
+
+============================================================
+34. default CASE
+============================================================
+
+default executes when no case matches.
+
+Example:
+
+    int choice = 10;
+
+    switch (choice)
+    {
+        case 1:
+            printf("Start");
+            break;
+
+        case 2:
+            printf("Exit");
+            break;
+
+        default:
+            printf("Invalid choice");
+    }
+
+
+Output:
+
+    Invalid choice
+
+
+default is optional.
+
+
+============================================================
+35. IS break REQUIRED IN default?
+============================================================
+
+Usually:
+
+    default:
+        printf("Invalid");
+        break;
+
+
+The break is not required if default is the final statement
+of the switch and execution naturally reaches the end.
+
+But including it can make future modifications safer and
+the control flow clearer.
+
+
+============================================================
+36. switch CASE VALUES
+============================================================
+
+case labels must be integer constant expressions.
+
+Common examples:
+
+    case 1:
+    case 2:
+    case 'A':
+    case 100 + 20:
+
+
+Not:
+
+    case x:
+
+if x is an ordinary runtime variable.
+
+
+Also, case labels cannot be duplicate.
+
+
+============================================================
+37. switch DATA TYPES
+============================================================
+
+switch expression generally uses an integer type.
+
+Common:
+
+    int
+    char
+    enum
+
+
+Example:
+
+    char choice;
+
+    switch (choice)
+    {
+        case 'A':
+            ...
+            break;
+
+        case 'B':
+            ...
+            break;
+    }
+
+
+============================================================
+38. switch DOES NOT DIRECTLY SUPPORT STRINGS
+============================================================
+
+This is invalid:
+
+    char *choice = "yes";
+
+    switch (choice)
+    {
+        case "yes":
+            ...
+    }
+
+
+C switch is not a string comparison mechanism.
+
+For strings, use functions such as:
+
+    strcmp()
+
+
+Example:
+
+    if (strcmp(choice, "yes") == 0)
+    {
+        ...
+    }
+
+
+============================================================
+39. switch VS if-else
+============================================================
+
+Use if-else when:
+
+    - Conditions involve ranges
+    - Complex boolean expressions are needed
+    - Relational operators are needed
+
+
+Example:
+
+    if (marks >= 90)
+        ...
+
+
+Use switch when:
+
+    - One expression is compared against discrete constant
+      values
+    - Menu systems are needed
+    - State/command selection is needed
+
+
+Example:
+
+    switch (choice)
+        ...
+
+
+============================================================
+40. switch FOR MENU PROGRAMS
+============================================================
+
+Example:
+
+    int choice;
+
+    printf("1. Add\n");
+    printf("2. Delete\n");
+    printf("3. Search\n");
+    printf("4. Exit\n");
+
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+        case 1:
+            printf("Add selected");
+            break;
+
+        case 2:
+            printf("Delete selected");
+            break;
+
+        case 3:
+            printf("Search selected");
+            break;
+
+        case 4:
+            printf("Exit");
+            break;
+
+        default:
+            printf("Invalid choice");
+    }
+
+
+This pattern is extremely common.
+
+
+============================================================
+41. CONDITIONAL OPERATOR
+============================================================
+
+The conditional operator is:
+
+    ?:
+
+
+Syntax:
+
+    condition ? expression1 : expression2
+
+
+If condition is true:
+
+    expression1
+
+
+Otherwise:
+
+    expression2
+
+
+Example:
+
+    int age = 20;
+
+    const char *result =
+        age >= 18 ? "Adult" : "Minor";
+
+
+============================================================
+42. SIMPLE ?: EXAMPLE
+============================================================
+
+    int a = 10;
+    int b = 20;
+
+    int max = (a > b) ? a : b;
+
+
+Result:
+
+    max = 20
+
+
+Equivalent if-else:
+
+    int max;
+
+    if (a > b)
+    {
+        max = a;
+    }
+    else
+    {
+        max = b;
+    }
+
+
+============================================================
+43. CONDITIONAL OPERATOR VS if
+============================================================
+
+Use ?: for short expressions.
+
+Good:
+
+    int max = a > b ? a : b;
+
+
+Avoid extremely complicated nested ?: expressions.
+
+Bad readability:
+
+    result = a ? b : c ? d : e ? f : g;
+
+
+For complex logic, use if-else.
+
+
+============================================================
+44. NESTED CONDITIONAL OPERATOR
+============================================================
+
+Possible:
+
+    int result =
+        x > 0 ? 1 :
+        x < 0 ? -1 :
+        0;
+
+
+This means:
+
+    if x > 0
+        1
+    else if x < 0
+        -1
+    else
+        0
+
+
+It works, but for beginners and maintainability,
+if-else may be clearer.
+
+
+============================================================
+45. TRUTH VALUES
+============================================================
+
+C conditions use:
+
+    0 → false
+    non-zero → true
+
+
+Examples:
+
+    if (5)
+        ...
+
+true
+
+
+    if (-100)
+        ...
+
+true
+
+
+    if (0)
+        ...
+
+false
+
+
+============================================================
+46. COMPARISON RESULT
+============================================================
+
+Relational and equality operators produce:
+
+    0 → false
+    1 → true
+
+
+Example:
+
+    int result = (10 > 5);
+
+result:
+
+    1
+
+
+Example:
+
+    int result = (10 < 5);
+
+result:
+
+    0
+
+
+============================================================
+47. _Bool AND bool
+============================================================
+
+C99 introduced:
+
+    _Bool
+
+Use:
+
+    #include <stdbool.h>
+
+Then:
+
+    bool flag = true;
+
+Example:
+
+    bool isLoggedIn = true;
+
+    if (isLoggedIn)
+    {
+        printf("Welcome");
+    }
+
+
+This improves readability.
+
+
+============================================================
+48. BOOLEAN NORMALIZATION
+============================================================
+
+Consider:
+
+    int x = 100;
+
+    int result = !!x;
+
+
+First:
+
+    !x → 0
+
+Then:
+
+    !0 → 1
+
+
+Therefore:
+
+    !!x → 1
+
+
+This converts any scalar truth value into exactly:
+
+    0 or 1
+
+
+============================================================
+49. NESTED DECISION MAKING
+============================================================
+
+Example:
+
+    int age = 25;
+    int income = 50000;
+    int creditScore = 750;
+
+    if (age >= 18)
+    {
+        if (income >= 30000)
+        {
+            if (creditScore >= 700)
+            {
+                printf("Eligible");
+            }
+        }
+    }
+
+
+This works but can become difficult to read.
+
+A cleaner version:
+
+    if (age >= 18 &&
+        income >= 30000 &&
+        creditScore >= 700)
+    {
+        printf("Eligible");
+    }
+
+
+============================================================
+50. GUARD CONDITIONS
+============================================================
+
+Instead of deeply nesting code, validate invalid conditions
+early.
+
+Example:
+
+    if (ptr == NULL)
+    {
+        return;
+    }
+
+    if (size == 0)
+    {
+        return;
+    }
+
+    /* Main logic */
+
+
+This style is often called:
+
+    guard clause / early return
+
+
+It can make production code easier to understand.
+
+
+============================================================
+51. RANGE CHECK
+============================================================
+
+To check:
+
+    10 <= x <= 20
+
+Do NOT write:
+
+    if (10 <= x <= 20)
+
+
+This does NOT mean what it appears to mean in C.
+
+
+Correct:
+
+    if (x >= 10 && x <= 20)
+    {
+        ...
+    }
+
+
+============================================================
+52. WHY 10 <= x <= 20 IS WRONG
+============================================================
+
+Suppose:
+
+    x = 15
+
+
+First:
+
+    10 <= 15
+
+becomes:
+
+    1
+
+
+Then:
+
+    1 <= 20
+
+becomes:
+
+    1
+
+
+Now suppose:
+
+    x = 100
+
+
+First:
+
+    10 <= 100
+
+becomes:
+
+    1
+
+
+Then:
+
+    1 <= 20
+
+is also:
+
+    1
+
+
+Therefore it incorrectly accepts 100.
+
+
+Correct:
+
+    x >= 10 && x <= 20
+
+
+============================================================
+53. CHECKING MULTIPLE VALUES
+============================================================
+
+Wrong:
+
+    if (x == 1 || 2 || 3)
+
+
+This does not mean:
+
+    x == 1 OR x == 2 OR x == 3
+
+
+Correct:
+
+    if (x == 1 || x == 2 || x == 3)
+
+
+Or, when appropriate:
+
+    switch (x)
+    {
+        case 1:
+        case 2:
+        case 3:
+            ...
+            break;
+    }
+
+
+============================================================
+54. COMMON BUG — SEMICOLON AFTER if
+============================================================
+
+Wrong:
+
+    if (x > 0);
+    {
+        printf("Positive");
+    }
+
+
+The semicolon terminates the if statement.
+
+The block then executes unconditionally.
+
+
+Correct:
+
+    if (x > 0)
+    {
+        printf("Positive");
+    }
+
+
+============================================================
+55. COMMON BUG — ASSIGNMENT IN CONDITION
+============================================================
+
+Wrong when comparison was intended:
+
+    if (x = 5)
+
+
+Correct:
+
+    if (x == 5)
+
+
+However, assignments inside conditions can be intentional
+in some C idioms, so do not blindly rewrite every assignment.
+
+
+============================================================
+56. COMMON BUG — EMPTY BODY
+============================================================
+
+Example:
+
+    if (x > 0)
+        ;
+
+This intentionally does nothing.
+
+But accidentally writing it can create difficult bugs.
+
+
+============================================================
+57. COMMON BUG — MISSING BRACES
+============================================================
+
+Example:
+
+    if (x > 0)
+        printf("Positive");
+        printf("Valid");
+
+
+Only:
+
+    printf("Positive");
+
+belongs to the if.
+
+
+Better:
+
+    if (x > 0)
+    {
+        printf("Positive");
+        printf("Valid");
+    }
+
+
+============================================================
+58. COMMON BUG — SWITCH FALL-THROUGH
+============================================================
+
+Example:
+
+    switch (choice)
+    {
+        case 1:
+            printf("One");
+
+        case 2:
+            printf("Two");
+            break;
+    }
+
+
+If choice = 1:
+
+    OneTwo
+
+
+If this is not intended, add:
+
+    break;
+
+
+============================================================
+59. COMMON BUG — MISSING default
+============================================================
+
+A switch without default may silently do nothing when
+unexpected input is received.
+
+Example:
+
+    switch (choice)
+    {
+        case 1:
+            ...
+            break;
+
+        case 2:
+            ...
+            break;
+    }
+
+
+For robust programs, consider:
+
+    default:
+        printf("Invalid choice");
+        break;
+
+
+============================================================
+60. if WITH FLOATING-POINT
+============================================================
+
+Avoid:
+
+    if (x == 0.1)
+
+when x resulted from floating-point calculations.
+
+Instead, use an appropriate tolerance.
+
+Example:
+
+    #include <math.h>
+
+    if (fabs(x - 0.1) < 1e-9)
+    {
+        ...
+    }
+
+
+The appropriate tolerance depends on the numerical problem.
+
+
+============================================================
+61. if WITH POINTERS
+============================================================
+
+Example:
+
+    int *ptr = NULL;
+
+    if (ptr != NULL)
+    {
+        printf("%d", *ptr);
+    }
+
+
+Never dereference a null pointer.
+
+A common safe pattern:
+
+    if (ptr != NULL && *ptr == 10)
+    {
+        ...
+    }
+
+
+============================================================
+62. if WITH STRINGS
+============================================================
+
+Do NOT compare strings using:
+
+    if (name == "Apoorv")
+
+
+This compares pointer values, not string contents.
+
+
+Use:
+
+    #include <string.h>
+
+    if (strcmp(name, "Apoorv") == 0)
+    {
+        printf("Match");
+    }
+
+
+============================================================
+63. DECISION TREE EXAMPLE
+============================================================
+
+Student grading:
+
+    marks >= 90 → A+
+    marks >= 80 → A
+    marks >= 70 → B
+    marks >= 60 → C
+    marks >= 40 → D
+    otherwise   → F
+
+
+Implementation:
+
+    if (marks >= 90)
+        printf("A+");
+    else if (marks >= 80)
+        printf("A");
+    else if (marks >= 70)
+        printf("B");
+    else if (marks >= 60)
+        printf("C");
+    else if (marks >= 40)
+        printf("D");
+    else
+        printf("F");
+
+
+============================================================
+64. PRACTICAL PROGRAM — LARGEST OF TWO
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a, b;
+
+        scanf("%d %d", &a, &b);
+
+        if (a > b)
+        {
+            printf("%d is larger\n", a);
+        }
+        else if (b > a)
+        {
+            printf("%d is larger\n", b);
+        }
+        else
+        {
+            printf("Both are equal\n");
+        }
+
+        return 0;
+    }
+
+
+============================================================
+65. PRACTICAL PROGRAM — LARGEST OF THREE
+============================================================
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a, b, c;
+
+        scanf("%d %d %d", &a, &b, &c);
+
+        if (a >= b && a >= c)
+        {
+            printf("%d is largest\n", a);
+        }
+        else if (b >= a && b >= c)
+        {
+            printf("%d is largest\n", b);
+        }
+        else
+        {
+            printf("%d is largest\n", c);
+        }
+
+        return 0;
+    }
+
+
+============================================================
+66. PRACTICAL PROGRAM — LEAP YEAR
+============================================================
+
+Gregorian leap-year rule:
+
+    divisible by 400
+        OR
+    divisible by 4 AND not divisible by 100
+
+
+Implementation:
+
+    int year;
+
+    scanf("%d", &year);
+
+    if ((year % 400 == 0) ||
+        (year % 4 == 0 && year % 100 != 0))
+    {
+        printf("Leap year");
+    }
+    else
+    {
+        printf("Not a leap year");
+    }
+
+
+Examples:
+
+    2000 → leap year
+    1900 → not leap year
+    2024 → leap year
+    2025 → not leap year
+
+
+============================================================
+67. PRACTICAL PROGRAM — VOTING ELIGIBILITY
+============================================================
+
+    int age;
+
+    scanf("%d", &age);
+
+    if (age >= 18)
+    {
+        printf("Eligible to vote");
+    }
+    else
+    {
+        printf("Not eligible");
+    }
+
+
+============================================================
+68. PRACTICAL PROGRAM — LOGIN CHECK
+============================================================
+
+Conceptually:
+
+    if (username_correct && password_correct)
+    {
+        printf("Login successful");
+    }
+    else
+    {
+        printf("Invalid credentials");
+    }
+
+
+For actual applications, never store or compare passwords
+in insecure plaintext.
+
+
+============================================================
+69. PRACTICAL PROGRAM — CALCULATOR
+============================================================
+
+    char op;
+    double a, b;
+
+    scanf("%lf %c %lf", &a, &op, &b);
+
+    switch (op)
+    {
+        case '+':
+            printf("%f", a + b);
+            break;
+
+        case '-':
+            printf("%f", a - b);
+            break;
+
+        case '*':
+            printf("%f", a * b);
+            break;
+
+        case '/':
+            if (b != 0.0)
+            {
+                printf("%f", a / b);
+            }
+            else
+            {
+                printf("Division by zero");
+            }
+            break;
+
+        default:
+            printf("Invalid operator");
+            break;
+    }
+
+
+============================================================
+70. PRACTICAL PROGRAM — MENU
+============================================================
+
+    int choice;
+
+    printf("1. Start\n");
+    printf("2. Settings\n");
+    printf("3. Exit\n");
+
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+        case 1:
+            printf("Starting...");
+            break;
+
+        case 2:
+            printf("Opening settings...");
+            break;
+
+        case 3:
+            printf("Exiting...");
+            break;
+
+        default:
+            printf("Invalid choice");
+            break;
+    }
+
+
+============================================================
+71. if-else vs switch — INTERVIEW
+============================================================
+
+Question:
+
+When should you use switch instead of if-else?
+
+Answer:
+
+Use switch when one expression is being compared against
+multiple discrete constant values.
+
+Use if-else when conditions involve:
+
+    ranges
+    relational operators
+    complex logical expressions
+
+
+Example:
+
+    marks >= 90
+
+requires if-else.
+
+Example:
+
+    menu choice == 1, 2, 3, 4
+
+is suitable for switch.
+
+
+============================================================
+72. switch LIMITATIONS
+============================================================
+
+switch is not ideal for:
+
+    case x > 10
+
+    case x >= 100
+
+    case x == y
+
+    case "hello"
+
+Instead use if-else or another appropriate mechanism.
+
+
+============================================================
+73. break VS continue
+============================================================
+
+break:
+
+    Terminates the nearest loop or switch.
+
+continue:
+
+    Skips the rest of the current loop iteration and
+    proceeds to the next iteration.
+
+Example:
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (i == 2)
+            continue;
+
+        printf("%d ", i);
+    }
+
+
+Output:
+
+    0 1 3 4
+
+
+break is also valid inside switch.
+
+continue is associated with loops.
+
+
+============================================================
+74. return INSIDE if
+============================================================
+
+Example:
+
+    int check(int x)
+    {
+        if (x < 0)
+        {
+            return 0;
+        }
+
+        return 1;
+    }
+
+
+An early return can simplify decision logic.
+
+
+============================================================
+75. GUARD CLAUSE EXAMPLE
+============================================================
+
+Instead of:
+
+    if (ptr != NULL)
+    {
+        if (size > 0)
+        {
+            process(ptr, size);
+        }
+    }
+
+
+You can write:
+
+    if (ptr == NULL)
+        return;
+
+    if (size == 0)
+        return;
+
+    process(ptr, size);
+
+
+This is often easier to maintain.
+
+
+============================================================
+76. CONDITIONAL OPERATOR AND TYPES
+============================================================
+
+Remember Chapter 6.
+
+Example:
+
+    int a = 10;
+    double b = 20.5;
+
+    double result = condition ? a : b;
+
+
+The operands may undergo type conversions.
+
+The conditional operator has its own type rules.
+
+
+============================================================
+77. SHORT-CIRCUIT IS NOT THE SAME AS BITWISE
+============================================================
+
+Logical:
+
+    a && b
+
+may skip b.
+
+
+Bitwise:
+
+    a & b
+
+evaluates both operands because it is an arithmetic/bitwise
+operation, not logical short-circuiting.
+
+
+Similarly:
+
+    a || b
+
+can skip b.
+
+
+    a | b
+
+does not short-circuit.
+
+
+============================================================
+78. SIDE EFFECTS AND CONDITIONS
+============================================================
+
+Avoid overly complicated expressions with side effects.
+
+Example:
+
+    if (i++ < 10 && function())
+    {
+        ...
+    }
+
+
+Although this may be valid, complex side effects can make
+control flow harder to understand.
+
+Prefer readable code.
+
+
+============================================================
+79. COMMON INTERVIEW OUTPUT QUESTION
+============================================================
+
+    int x = 0;
+
+    if (x)
+        printf("A");
+    else
+        printf("B");
+
+
+Output:
+
+    B
+
+
+Reason:
+
+    0 → false
+
+
+------------------------------------------------------------
+
+    int x = -10;
+
+    if (x)
+        printf("A");
+    else
+        printf("B");
+
+
+Output:
+
+    A
+
+
+Reason:
+
+    -10 is non-zero.
+
+
+============================================================
+80. COMMON INTERVIEW OUTPUT QUESTION
+============================================================
+
+    int x = 10;
+
+    if (x > 5)
+        printf("A");
+    else if (x > 8)
+        printf("B");
+    else
+        printf("C");
+
+
+Output:
+
+    A
+
+
+Because the first condition is true.
+
+
+============================================================
+81. COMMON INTERVIEW OUTPUT QUESTION
+============================================================
+
+    int x = 1;
+
+    switch (x)
+    {
+        case 1:
+            printf("A");
+
+        case 2:
+            printf("B");
+
+        default:
+            printf("C");
+    }
+
+
+Output:
+
+    ABC
+
+
+Because of fall-through.
+
+
+============================================================
+82. COMMON INTERVIEW OUTPUT QUESTION
+============================================================
+
+    int x = 10;
+
+    if (x > 0);
+    {
+        printf("Positive");
+    }
+
+
+Output:
+
+    Positive
+
+
+Even if x were negative, the block after the semicolon would
+still execute.
+
+The semicolon ended the if statement.
+
+
+============================================================
+83. COMMON INTERVIEW OUTPUT QUESTION
+============================================================
+
+    int x = 10;
+
+    if (x == 10)
+    {
+        printf("A");
+    }
+
+    if (x > 5)
+    {
+        printf("B");
+    }
+
+
+Output:
+
+    AB
+
+
+These are two independent if statements.
+
+An else-if ladder would execute only one branch.
+
+
+============================================================
+84. if vs else-if
+============================================================
+
+Independent if statements:
+
+    if (x > 0)
+        printf("A");
+
+    if (x > 5)
+        printf("B");
+
+
+If x = 10:
+
+    AB
+
+
+else-if:
+
+    if (x > 0)
+        printf("A");
+    else if (x > 5)
+        printf("B");
+
+
+If x = 10:
+
+    A
+
+
+Only the first matching branch executes.
+
+
+============================================================
+85. NESTED if VS LOGICAL AND
+============================================================
+
+Nested:
+
+    if (a)
+    {
+        if (b)
+        {
+            printf("Yes");
+        }
+    }
+
+
+Equivalent in many simple cases:
+
+    if (a && b)
+    {
+        printf("Yes");
+    }
+
+
+The second form is often cleaner.
+
+
+============================================================
+86. COMPLEX REAL-WORLD CONDITION
+============================================================
+
+Example:
+
+    int age;
+    int hasID;
+    int isMember;
+
+    if (age >= 18 &&
+        hasID &&
+        (isMember || age >= 60))
+    {
+        printf("Allowed");
+    }
+
+
+Break it down:
+
+    age >= 18
+        AND
+    hasID
+        AND
+    (
+        isMember
+        OR
+        age >= 60
+    )
+
+
+Use parentheses for clarity.
+
+
+============================================================
+87. DECISION MAKING IN DSA
+============================================================
+
+Conditional statements are used everywhere in DSA.
+
+Examples:
+
+    if (arr[i] > max)
+        max = arr[i];
+
+
+    if (arr[i] == target)
+        return i;
+
+
+    if (mid < target)
+        low = mid + 1;
+    else
+        high = mid - 1;
+
+
+Therefore, mastering conditions is essential before
+learning advanced algorithms.
+
+
+============================================================
+88. DECISION MAKING IN SYSTEM PROGRAMMING
+============================================================
+
+Example:
+
+    if (ptr == NULL)
+    {
+        return ERROR;
+    }
+
+    if (size > MAX_SIZE)
+    {
+        return ERROR;
+    }
+
+    if (permission != REQUIRED_PERMISSION)
+    {
+        return ERROR;
+    }
+
+
+Conditional logic is heavily used for:
+
+    error handling
+    validation
+    security checks
+    memory checks
+    state management
+    device control
+
+
+============================================================
+89. BEST PRACTICES
+============================================================
+
+1. Always use braces for multi-statement blocks.
+
+2. Use meaningful conditions.
+
+3. Avoid deeply nested if statements.
+
+4. Prefer guard clauses when appropriate.
+
+5. Use switch for discrete constant choices.
+
+6. Always consider break in switch.
+
+7. Use default for unexpected choices.
+
+8. Don't compare strings using ==.
+
+9. Don't write chained mathematical comparisons.
+
+10. Watch signed/unsigned comparisons.
+
+11. Avoid floating-point equality when inappropriate.
+
+12. Use parentheses for complex boolean expressions.
+
+13. Enable compiler warnings.
+
+Recommended:
+
+    gcc -Wall -Wextra -Wconversion -Wsign-conversion file.c
+
+
+============================================================
+90. PRACTICE SET — BEGINNER
+============================================================
+
+Write programs for:
+
+1. Check positive/negative/zero.
+
+2. Check even/odd.
+
+3. Find largest of two numbers.
+
+4. Find largest of three numbers.
+
+5. Check voting eligibility.
+
+6. Check pass/fail.
+
+7. Calculate grade.
+
+8. Check leap year.
+
+9. Check whether a character is vowel/consonant.
+
+10. Create a simple calculator.
+
+
+============================================================
+91. PRACTICE SET — INTERMEDIATE
+============================================================
+
+11. Check whether a number is divisible by 5 and 11.
+
+12. Check whether a character is alphabet/digit/special
+    character.
+
+13. Check whether a year is leap year.
+
+14. Calculate electricity bill using slabs.
+
+15. Calculate income tax using slabs.
+
+16. Create ATM menu using switch.
+
+17. Create calculator using switch.
+
+18. Create restaurant menu using switch.
+
+19. Check triangle validity.
+
+20. Determine triangle type:
+
+        Equilateral
+        Isosceles
+        Scalene
+
+
+============================================================
+92. PRACTICE SET — ADVANCED
+============================================================
+
+21. Determine whether a point lies inside a rectangle.
+
+22. Implement a simple login decision system.
+
+23. Implement student eligibility checking.
+
+24. Implement loan eligibility rules.
+
+25. Implement a traffic-light controller using switch.
+
+26. Implement a command interpreter using switch.
+
+27. Implement range-based grading.
+
+28. Implement nested menu decisions.
+
+29. Implement validation using guard clauses.
+
+30. Solve multiple DSA problems using conditional logic.
+
+
+============================================================
+93. INTERVIEW QUESTIONS
+============================================================
+
+Q1. What is a conditional statement?
+
+Q2. What is the difference between if and if-else?
+
+Q3. What is an else-if ladder?
+
+Q4. What is nested if?
+
+Q5. What is the dangling else problem?
+
+Q6. What is switch?
+
+Q7. Why is break used in switch?
+
+Q8. What is fall-through?
+
+Q9. What is default in switch?
+
+Q10. Can switch use strings directly in C?
+
+Q11. What data types can commonly be used with switch?
+
+Q12. What is the difference between = and ==?
+
+Q13. What is short-circuit evaluation?
+
+Q14. Difference between && and &?
+
+Q15. Difference between || and |?
+
+Q16. What is the conditional operator?
+
+Q17. What does 0 mean in a C condition?
+
+Q18. What does a non-zero value mean in a C condition?
+
+Q19. Why is this wrong?
+
+        if (10 <= x <= 20)
+
+Q20. Why should braces be used?
+
+
+============================================================
+94. GATE-LEVEL CONCEPT
+============================================================
+
+Consider:
+
+    int x = 0;
+
+    if (x = 5)
+        printf("A");
+    else
+        printf("B");
+
+
+Step 1:
+
+    x = 5
+
+
+Step 2:
+
+Expression value:
+
+    5
+
+
+Step 3:
+
+5 is non-zero.
+
+Therefore:
+
+    condition = true
+
+
+Output:
+
+    A
+
+
+============================================================
+95. GATE-LEVEL CONCEPT
+============================================================
+
+Consider:
+
+    int a = 0;
+    int b = 10;
+
+    if (a && b++)
+    {
+        ...
+    }
+
+After evaluation:
+
+    a = 0
+
+Therefore:
+
+    a && b++
+
+short-circuits.
+
+So:
+
+    b++
+
+does NOT execute.
+
+Final:
+
+    b = 10
+
+
+This demonstrates why short-circuit behavior matters.
+
+
+============================================================
+96. GATE-LEVEL CONCEPT
+============================================================
+
+Consider:
+
+    int a = 1;
+    int b = 10;
+
+    if (a || b++)
+    {
+        ...
+    }
+
+Since:
+
+    a = 1
+
+is true:
+
+    b++
+
+is not evaluated.
+
+Final:
+
+    b = 10
+
+
+============================================================
+97. JOB-READY SKILL CHECK
+============================================================
+
+You should now be able to write:
+
+    if
+    if-else
+    else-if
+    nested if
+    switch
+    case
+    default
+    break
+    fall-through
+    ?: operator
+
+And understand:
+
+    truth values
+    logical operators
+    short-circuit evaluation
+    comparison operators
+    nested conditions
+    guard clauses
+    decision trees
+    common condition bugs
+
+
+============================================================
+98. CHAPTER 7 QUICK REVISION
+============================================================
+
+if:
+
+    One-way decision.
+
+if-else:
+
+    Two-way decision.
+
+else-if:
+
+    Multiple mutually exclusive branches.
+
+nested if:
+
+    Decision inside another decision.
+
+switch:
+
+    Multiple discrete constant choices.
+
+case:
+
+    Individual switch option.
+
+default:
+
+    Executes when no case matches.
+
+break:
+
+    Exits switch or loop.
+
+fall-through:
+
+    Execution continues into the next case when break
+    is absent.
+
+&&:
+
+    Logical AND + short-circuit.
+
+||:
+
+    Logical OR + short-circuit.
+
+!:
+
+    Logical NOT.
+
+?:
+
+    Conditional operator.
+
+
+============================================================
+99. MOST IMPORTANT RULES
+============================================================
+
+RULE 1:
+
+    0 = false
+    non-zero = true
+
+
+RULE 2:
+
+    =  means assignment
+    == means comparison
+
+
+RULE 3:
+
+Use:
+
+    x >= 10 && x <= 20
+
+not:
+
+    10 <= x <= 20
+
+
+RULE 4:
+
+Use:
+
+    x == 1 || x == 2 || x == 3
+
+not:
+
+    x == 1 || 2 || 3
+
+
+RULE 5:
+
+    && and || short-circuit.
+
+
+RULE 6:
+
+Use braces to avoid dangling-else and maintenance bugs.
+
+
+RULE 7:
+
+switch uses constant case labels.
+
+
+RULE 8:
+
+Remember break to prevent unintended fall-through.
+
+
+RULE 9:
+
+Use strcmp() for C string content comparison.
+
+
+RULE 10:
+
+Use if-else for ranges and complex conditions.
+
+
+============================================================
+100. CHAPTER 7 COMPLETE
+============================================================
+
+NEXT CHAPTER:
+
+CHAPTER 8 — LOOPS & ITERATION
+
+Topics:
+
+    1. Introduction to loops
+    2. Why loops are required
+    3. while loop
+    4. do-while loop
+    5. for loop
+    6. Infinite loops
+    7. Nested loops
+    8. break
+    9. continue
+    10. loop control
+    11. Counter-controlled loops
+    12. Sentinel-controlled loops
+    13. Input validation loops
+    14. Loop conditions
+    15. Pre-test vs post-test loops
+    16. Off-by-one errors
+    17. Common loop bugs
+    18. Pattern programs
+    19. Number problems
+    20. Array traversal
+    21. Complexity of loops
+    22. Interview questions
+    23. Output prediction
+    24. Job-ready exercises
+============================================================

@@ -1,0 +1,1925 @@
+Worked for a few seconds
+
+╔══════════════════════════════════════════════════════════════════════╗
+║                 CHAPTER 20 — C MEMORY MODEL                         ║
+║                    Job-Ready Master Explanation                    ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+SOURCE TOPICS:
+    20.1 Program Memory Layout
+        ├── Text/Code segment
+        ├── Read-only data
+        ├── Initialized data
+        ├── BSS
+        ├── Heap
+        └── Stack
+    20.2 Stack
+    20.3 Heap
+    20.4 Global/Static Memory
+    20.5 Stack Frames
+    20.6 Function Call Stack
+    20.7 Recursion and Stack
+    20.8 Memory Alignment
+    20.9 Padding
+    20.10 Endianness
+        ├── Little endian
+        └── Big endian
+
+
+══════════════════════════════════════════════════════════════════════
+20.1 PROGRAM MEMORY LAYOUT
+══════════════════════════════════════════════════════════════════════
+
+When a C program executes, its address space is commonly discussed
+using several logical regions.
+
+A simplified conceptual layout is:
+
+             HIGH MEMORY
+        ┌─────────────────────┐
+        │        Stack        │
+        │          ↓          │
+        │                     │
+        │                     │
+        │          ↑          │
+        │         Heap        │
+        ├─────────────────────┤
+        │   BSS               │
+        ├─────────────────────┤
+        │   Initialized Data  │
+        ├─────────────────────┤
+        │   Read-only Data    │
+        ├─────────────────────┤
+        │   Text / Code       │
+        └─────────────────────┘
+             LOW MEMORY
+
+
+IMPORTANT:
+
+This is a conceptual model.
+
+The exact virtual address layout, growth direction, permissions,
+mapping and organization are implementation/OS dependent.
+
+For learning C internals, however, these regions provide a very
+useful mental model.
+
+
+The major regions are:
+
+    1. Text/Code
+    2. Read-only data
+    3. Initialized data
+    4. BSS
+    5. Heap
+    6. Stack
+
+
+──────────────────────────────────────────────────────────────────────
+20.1.1 TEXT / CODE SEGMENT
+──────────────────────────────────────────────────────────────────────
+
+The text segment contains the machine instructions of the program.
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+
+The compiled instructions for add() reside in the program's
+code/text area.
+
+Conceptually:
+
+    ┌─────────────────────────┐
+    │      TEXT / CODE        │
+    │                         │
+    │ machine instructions    │
+    │ for main()              │
+    │ for add()               │
+    │ for other functions     │
+    └─────────────────────────┘
+
+
+Code is commonly mapped as non-writable for normal program execution.
+
+This helps protect instructions from accidental modification.
+
+
+──────────────────────────────────────────────────────────────────────
+20.1.2 READ-ONLY DATA
+──────────────────────────────────────────────────────────────────────
+
+Read-only data commonly contains data that should not be modified,
+such as string literals.
+
+Example:
+
+    char *p = "Hello";
+
+
+The characters of the string literal:
+
+    "Hello"
+
+are commonly placed in a read-only area.
+
+Conceptually:
+
+    "Hello\0"
+
+may be stored in read-only memory.
+
+
+Therefore this is dangerous:
+
+    char *p = "Hello";
+
+    p[0] = 'Y';
+
+
+Attempting to modify a string literal results in undefined behavior.
+
+
+A safer writable array is:
+
+    char p[] = "Hello";
+
+Now the characters are stored in the array itself and can be modified:
+
+    p[0] = 'Y';
+
+
+Then:
+
+    printf("%s", p);
+
+produces:
+
+    Yello
+
+
+This distinction is extremely important in C.
+
+
+──────────────────────────────────────────────────────────────────────
+20.1.3 INITIALIZED DATA
+──────────────────────────────────────────────────────────────────────
+
+The initialized data region commonly contains global/static variables
+that have explicit non-zero initial values.
+
+Example:
+
+    int global_count = 100;
+
+    static int x = 50;
+
+
+Conceptually:
+
+    ┌─────────────────────────┐
+    │ Initialized Data        │
+    │                         │
+    │ global_count = 100      │
+    │ static x = 50           │
+    └─────────────────────────┘
+
+
+These variables have static storage duration.
+
+
+──────────────────────────────────────────────────────────────────────
+20.1.4 BSS
+──────────────────────────────────────────────────────────────────────
+
+BSS commonly contains global/static variables that are:
+
+    • uninitialized, or
+    • initialized to zero
+
+
+Example:
+
+    int global_value;
+
+    static int counter;
+
+
+Conceptually:
+
+    ┌─────────────────────────┐
+    │ BSS                     │
+    │                         │
+    │ global_value = 0        │
+    │ counter = 0             │
+    └─────────────────────────┘
+
+
+A key point:
+
+    Global/static variables without an explicit initializer are
+    initialized to zero before program execution reaches main().
+
+
+Example:
+
+    int x;
+
+    int main(void)
+    {
+        printf("%d\n", x);
+    }
+
+
+Output:
+
+    0
+
+
+Likewise:
+
+    static int y;
+
+has initial value:
+
+    0
+
+
+BSS is historically a useful executable/memory-layout concept.
+The exact implementation details can vary.
+
+
+──────────────────────────────────────────────────────────────────────
+20.1.5 HEAP
+──────────────────────────────────────────────────────────────────────
+
+The heap is used for dynamically allocated storage.
+
+Example:
+
+    int *p = malloc(sizeof(int));
+
+
+The memory returned by malloc() comes from dynamically managed
+storage.
+
+    #include <stdlib.h>
+
+    int *p = malloc(sizeof *p);
+
+    if (p != NULL)
+    {
+        *p = 100;
+    }
+
+    free(p);
+
+
+The important relationship is:
+
+    malloc()
+       ↓
+    dynamically allocated storage
+       ↓
+    free()
+
+
+Heap memory remains allocated until it is explicitly released
+or until the process terminates.
+
+This is different from an automatic local variable.
+
+
+──────────────────────────────────────────────────────────────────────
+20.1.6 STACK
+──────────────────────────────────────────────────────────────────────
+
+The stack is commonly associated with:
+
+    • function calls
+    • automatic local variables
+    • parameters
+    • return/control information
+    • temporary call-related state
+
+
+Example:
+
+    void test(void)
+    {
+        int x = 10;
+    }
+
+
+The local variable:
+
+    x
+
+has automatic storage duration.
+
+Its lifetime is associated with execution of its block/function.
+
+
+Conceptually:
+
+    test()
+      │
+      ▼
+    ┌──────────────────┐
+    │ stack frame      │
+    │                  │
+    │ x = 10           │
+    └──────────────────┘
+
+
+When test() returns, the storage associated with its automatic local
+objects ceases to exist.
+
+
+══════════════════════════════════════════════════════════════════════
+20.2 STACK
+══════════════════════════════════════════════════════════════════════
+
+The stack is a key concept for understanding function execution.
+
+
+Example:
+
+    void foo(void)
+    {
+        int x = 10;
+        int y = 20;
+    }
+
+
+When foo() executes, a call-related stack frame is created.
+
+Conceptually:
+
+    ┌─────────────────────┐
+    │ foo() frame         │
+    │                     │
+    │ x = 10              │
+    │ y = 20              │
+    │ return information  │
+    └─────────────────────┘
+
+
+After foo() returns, that frame is no longer active.
+
+
+Important:
+
+Do not assume that every detail of a stack frame is specified by
+the C language.
+
+The C standard specifies language semantics, while the exact stack
+implementation is largely determined by the compiler, ABI and
+operating system.
+
+
+──────────────────────────────────────────────────────────────────────
+STACK CHARACTERISTICS
+──────────────────────────────────────────────────────────────────────
+
+Typical properties:
+
+    • automatic storage
+    • function-call-related
+    • usually fast
+    • limited in size
+    • automatically reclaimed
+
+
+Example:
+
+    void f(void)
+    {
+        int a = 10;
+        double b = 20.5;
+    }
+
+
+The variables:
+
+    a
+    b
+
+have automatic storage duration.
+
+
+STACK OVERFLOW
+──────────────
+
+If a program consumes excessive stack space, it can run into a
+stack overflow.
+
+Common cause:
+
+    infinite/deep recursion
+
+
+Example:
+
+    void f(void)
+    {
+        f();
+    }
+
+
+There is no terminating condition.
+
+Eventually the implementation may exhaust available stack resources.
+
+
+══════════════════════════════════════════════════════════════════════
+20.3 HEAP
+══════════════════════════════════════════════════════════════════════
+
+Heap storage is used for dynamically allocated objects.
+
+Example:
+
+    int *p = malloc(sizeof(int));
+
+
+Then:
+
+    *p = 500;
+
+
+Memory remains allocated until:
+
+    free(p);
+
+
+Example:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        int *p = malloc(sizeof *p);
+
+        if (p == NULL)
+        {
+            return 1;
+        }
+
+        *p = 500;
+
+        printf("%d\n", *p);
+
+        free(p);
+        p = NULL;
+
+        return 0;
+    }
+
+
+Memory lifecycle:
+
+    malloc()
+       ↓
+    allocated
+       ↓
+    use
+       ↓
+    free()
+       ↓
+    released
+
+
+──────────────────────────────────────────────────────────────────────
+STACK VS HEAP
+──────────────────────────────────────────────────────────────────────
+
+                STACK                    HEAP
+    ─────────────────────────    ─────────────────────────
+    Automatic/local storage      Dynamic allocation
+    Function-call related       malloc/calloc/realloc
+    Automatically reclaimed     Explicit free()
+    Usually limited             Process/resource dependent
+    Lifetime tied to scope      Lifetime controlled by program
+    Very common for locals      Useful for dynamic structures
+
+
+Example:
+
+    void f(void)
+    {
+        int x = 10;
+
+        int *p = malloc(sizeof *p);
+
+        if (p != NULL)
+        {
+            *p = 20;
+            free(p);
+        }
+    }
+
+
+Here:
+
+    x → automatic storage
+
+    *p → dynamically allocated storage
+
+
+══════════════════════════════════════════════════════════════════════
+20.4 GLOBAL / STATIC MEMORY
+══════════════════════════════════════════════════════════════════════
+
+Variables with static storage duration exist for the entire execution
+of the program.
+
+
+Example:
+
+    int global = 100;
+
+
+and:
+
+    static int count = 0;
+
+
+Both have static storage duration.
+
+
+LOCAL STATIC VARIABLE
+─────────────────────
+
+Example:
+
+    void counter(void)
+    {
+        static int count = 0;
+
+        count++;
+
+        printf("%d\n", count);
+    }
+
+
+Calling:
+
+    counter();
+    counter();
+    counter();
+
+
+Produces:
+
+    1
+    2
+    3
+
+
+Why?
+
+Because:
+
+    static int count
+
+is initialized only once and retains its value between function calls.
+
+
+Compare with:
+
+    void counter(void)
+    {
+        int count = 0;
+
+        count++;
+
+        printf("%d\n", count);
+    }
+
+
+Repeated calls produce:
+
+    1
+    1
+    1
+
+
+because the automatic variable is recreated for each invocation.
+
+
+──────────────────────────────────────────────────────────────────────
+GLOBAL STATIC VS LOCAL STATIC
+──────────────────────────────────────────────────────────────────────
+
+Both:
+
+    static int x;
+
+and:
+
+    int global;
+
+can have static storage duration.
+
+But their scope/linkage properties differ.
+
+For example:
+
+    static int file_counter;
+
+
+at file scope has internal linkage.
+
+A file-scope:
+
+    int global;
+
+normally has external linkage unless otherwise affected by the
+program's declarations.
+
+
+This connects directly to Chapter 14 — Storage Classes.
+
+
+══════════════════════════════════════════════════════════════════════
+20.5 STACK FRAMES
+══════════════════════════════════════════════════════════════════════
+
+A stack frame is a conceptual/runtime region associated with a
+particular function invocation.
+
+Suppose:
+
+    int add(int a, int b)
+    {
+        int result = a + b;
+        return result;
+    }
+
+
+When add() is called:
+
+    add(10, 20);
+
+
+a conceptual frame may contain information such as:
+
+    ┌──────────────────────────┐
+    │ add() invocation        │
+    │                          │
+    │ parameters               │
+    │ a = 10                   │
+    │ b = 20                   │
+    │                          │
+    │ local variable           │
+    │ result = 30              │
+    │                          │
+    │ return/control state     │
+    └──────────────────────────┘
+
+
+The exact layout is ABI/compiler dependent.
+
+
+══════════════════════════════════════════════════════════════════════
+20.6 FUNCTION CALL STACK
+══════════════════════════════════════════════════════════════════════
+
+Consider:
+
+    void C(void)
+    {
+        printf("C\n");
+    }
+
+    void B(void)
+    {
+        C();
+    }
+
+    void A(void)
+    {
+        B();
+    }
+
+    int main(void)
+    {
+        A();
+    }
+
+
+Execution:
+
+    main()
+      │
+      ▼
+      A()
+      │
+      ▼
+      B()
+      │
+      ▼
+      C()
+
+
+Conceptual call stack while C() is executing:
+
+    ┌───────────────┐
+    │ C() frame     │
+    ├───────────────┤
+    │ B() frame     │
+    ├───────────────┤
+    │ A() frame     │
+    ├───────────────┤
+    │ main() frame  │
+    └───────────────┘
+
+
+C() returns first.
+
+Then:
+
+    B()
+
+returns.
+
+Then:
+
+    A()
+
+returns.
+
+Finally:
+
+    main()
+
+returns.
+
+
+This is LIFO:
+
+    Last In
+    First Out
+
+
+Exactly like a stack data structure.
+
+
+══════════════════════════════════════════════════════════════════════
+20.7 RECURSION AND STACK
+══════════════════════════════════════════════════════════════════════
+
+Recursion occurs when a function directly or indirectly calls itself.
+
+
+Example:
+
+    void countdown(int n)
+    {
+        if (n == 0)
+            return;
+
+        printf("%d\n", n);
+
+        countdown(n - 1);
+    }
+
+
+Call:
+
+    countdown(3);
+
+
+Conceptual stack:
+
+    countdown(3)
+       ↓
+    countdown(2)
+       ↓
+    countdown(1)
+       ↓
+    countdown(0)
+
+
+Each invocation needs its own call-related state.
+
+
+Conceptually:
+
+    ┌──────────────────────┐
+    │ countdown(0)         │
+    ├──────────────────────┤
+    │ countdown(1)         │
+    ├──────────────────────┤
+    │ countdown(2)         │
+    ├──────────────────────┤
+    │ countdown(3)         │
+    └──────────────────────┘
+
+
+When the base case returns:
+
+    countdown(0)
+        ↓
+    countdown(1)
+        ↓
+    countdown(2)
+        ↓
+    countdown(3)
+
+
+frames are unwound.
+
+
+──────────────────────────────────────────────────────────────────────
+RECURSION WITHOUT BASE CASE
+──────────────────────────────────────────────────────────────────────
+
+Example:
+
+    void f(void)
+    {
+        f();
+    }
+
+
+Call sequence:
+
+    f()
+      ↓
+    f()
+      ↓
+    f()
+      ↓
+    f()
+      ↓
+     ...
+
+
+More and more call state is accumulated.
+
+Eventually the available stack resources may be exhausted.
+
+
+Therefore:
+
+    Recursion
+        +
+    excessive depth
+        ↓
+    possible stack overflow
+
+
+──────────────────────────────────────────────────────────────────────
+RECURSION AND LOCAL VARIABLES
+──────────────────────────────────────────────────────────────────────
+
+Consider:
+
+    void f(int n)
+    {
+        int x = n;
+
+        if (n > 0)
+            f(n - 1);
+    }
+
+
+Each invocation has its own:
+
+    x
+
+
+For:
+
+    f(3)
+
+
+conceptually:
+
+    f(3): x = 3
+    f(2): x = 2
+    f(1): x = 1
+    f(0): x = 0
+
+
+These are distinct automatic objects associated with distinct
+invocations.
+
+
+══════════════════════════════════════════════════════════════════════
+20.8 MEMORY ALIGNMENT
+══════════════════════════════════════════════════════════════════════
+
+Alignment means that objects are placed at addresses suitable for
+their type/implementation requirements.
+
+Suppose an implementation requires an int to be aligned to a
+4-byte boundary.
+
+Possible addresses:
+
+    1000  → aligned
+    1004  → aligned
+    1008  → aligned
+
+But:
+
+    1002
+
+may not satisfy that alignment requirement.
+
+
+Why alignment?
+
+    • Hardware requirements
+    • Efficient memory access
+    • ABI requirements
+    • Performance
+
+
+The exact alignment requirement is implementation-dependent.
+
+
+C provides:
+
+    _Alignof(type)
+
+in modern C to query alignment requirements.
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        printf("Alignment of int = %zu\n", _Alignof(int));
+        return 0;
+    }
+
+
+The exact result depends on the implementation.
+
+
+══════════════════════════════════════════════════════════════════════
+20.9 PADDING
+══════════════════════════════════════════════════════════════════════
+
+Padding is extra unused space inserted between or after structure
+members to satisfy alignment requirements.
+
+
+Example:
+
+    struct Example
+    {
+        char c;
+        int x;
+    };
+
+
+A simplistic expectation might be:
+
+    char → 1 byte
+    int  → 4 bytes
+
+Therefore:
+
+    1 + 4 = 5 bytes
+
+
+But the structure may actually be larger because of padding.
+
+
+Conceptually:
+
+    ┌─────┬─────────────┬──────────────┐
+    │ c   │   padding   │     x        │
+    │ 1 B │             │   int        │
+    └─────┴─────────────┴──────────────┘
+
+
+For example, an implementation could produce:
+
+    sizeof(struct Example) == 8
+
+
+The exact result is implementation-dependent.
+
+
+──────────────────────────────────────────────────────────────────────
+WHY PADDING?
+──────────────────────────────────────────────────────────────────────
+
+Suppose int requires alignment of 4 bytes.
+
+If:
+
+    c
+
+occupies address:
+
+    1000
+
+
+then the next address is:
+
+    1001
+
+
+Placing int at 1001 may violate the desired alignment.
+
+The implementation may insert padding:
+
+    1001
+    1002
+    1003
+
+Then int starts at:
+
+    1004
+
+
+Thus:
+
+    char
+    padding
+    int
+
+
+This improves compatibility with the target architecture/ABI.
+
+
+══════════════════════════════════════════════════════════════════════
+STRUCTURE MEMBER ORDER AND SIZE
+══════════════════════════════════════════════════════════════════════
+
+Compare:
+
+    struct A
+    {
+        char c;
+        int x;
+        char d;
+    };
+
+
+with:
+
+    struct B
+    {
+        int x;
+        char c;
+        char d;
+    };
+
+
+They can have different sizes because member ordering affects
+padding.
+
+
+For example, an implementation might conceptually organize A as:
+
+    c | padding | x | d | padding
+
+
+while B might need less padding:
+
+    x | c | d | padding
+
+
+This is an important low-level optimization concept.
+
+
+However:
+
+    NEVER assume exact structure size from member sizes alone.
+
+Use:
+
+    sizeof(struct A)
+
+
+and:
+
+    sizeof(struct B)
+
+
+to determine the actual implementation result.
+
+
+══════════════════════════════════════════════════════════════════════
+STRUCTURE PADDING AND BINARY FILES
+══════════════════════════════════════════════════════════════════════
+
+This connects Chapter 20 with Chapter 18.
+
+If we write:
+
+    fwrite(&obj, sizeof(obj), 1, fp);
+
+
+the file may contain padding bytes inside the object representation.
+
+
+Therefore raw structure serialization may not be portable between
+different systems/compilers/ABIs.
+
+
+This is one reason robust file formats often define their own
+explicit representation rather than dumping arbitrary structs.
+
+
+══════════════════════════════════════════════════════════════════════
+20.10 ENDIANNESS
+══════════════════════════════════════════════════════════════════════
+
+Endianness describes the ordering of bytes when a multi-byte value is
+stored in memory.
+
+
+Two important forms:
+
+    1. Little endian
+    2. Big endian
+
+
+Consider:
+
+    0x12345678
+
+
+This value consists of bytes:
+
+    12
+    34
+    56
+    78
+
+
+The order in memory depends on endianness.
+
+
+──────────────────────────────────────────────────────────────────────
+LITTLE ENDIAN
+──────────────────────────────────────────────────────────────────────
+
+Least significant byte is stored at the lowest address.
+
+
+Value:
+
+    0x12345678
+
+
+Memory:
+
+    Address       Byte
+
+    1000          78
+    1001          56
+    1002          34
+    1003          12
+
+
+So:
+
+    LOW ADDRESS
+        ↓
+       78 56 34 12
+        ↑
+    least significant byte first
+
+
+Common architectures are often little-endian, but C itself does not
+require a particular endian format.
+
+
+──────────────────────────────────────────────────────────────────────
+BIG ENDIAN
+──────────────────────────────────────────────────────────────────────
+
+Most significant byte is stored at the lowest address.
+
+
+Value:
+
+    0x12345678
+
+
+Memory:
+
+    Address       Byte
+
+    1000          12
+    1001          34
+    1002          56
+    1003          78
+
+
+So:
+
+    LOW ADDRESS
+        ↓
+       12 34 56 78
+        ↑
+    most significant byte first
+
+
+Again, the exact machine representation is implementation-dependent.
+
+
+══════════════════════════════════════════════════════════════════════
+ENDIANNESS EXAMPLE IN C
+══════════════════════════════════════════════════════════════════════
+
+We can inspect the byte representation of an integer.
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        unsigned int x = 0x12345678;
+
+        unsigned char *p = (unsigned char *)&x;
+
+        for (size_t i = 0; i < sizeof x; i++)
+        {
+            printf("%02X ", p[i]);
+        }
+
+        printf("\n");
+
+        return 0;
+    }
+
+
+On a common 32-bit-int little-endian system, this could print:
+
+    78 56 34 12
+
+
+On a big-endian system, it could print:
+
+    12 34 56 78
+
+
+The important lesson is:
+
+    A multi-byte integer's memory representation depends on the
+    implementation's byte order.
+
+
+══════════════════════════════════════════════════════════════════════
+MEMORY REPRESENTATION VS VALUE
+══════════════════════════════════════════════════════════════════════
+
+Suppose:
+
+    unsigned int x = 0x12345678;
+
+
+The abstract VALUE is:
+
+    0x12345678
+
+
+But its byte representation could be:
+
+    Little endian:
+        78 56 34 12
+
+    Big endian:
+        12 34 56 78
+
+
+The value is the same.
+
+The byte ordering differs.
+
+
+This matters in:
+
+    • networking
+    • binary file formats
+    • serialization
+    • embedded systems
+    • operating systems
+    • hardware interfaces
+
+
+══════════════════════════════════════════════════════════════════════
+STACK + HEAP + STATIC MEMORY — COMPLETE VIEW
+══════════════════════════════════════════════════════════════════════
+
+Example:
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int global = 100;
+
+    static int count = 50;
+
+    void test(void)
+    {
+        int local = 10;
+
+        int *p = malloc(sizeof *p);
+
+        if (p != NULL)
+        {
+            *p = 20;
+
+            printf("%d %d %d %d\n",
+                   global,
+                   count,
+                   local,
+                   *p);
+
+            free(p);
+        }
+    }
+
+
+Conceptually:
+
+    Program
+       │
+       ├── Code/Text
+       │      └── test(), main(), etc.
+       │
+       ├── Initialized data
+       │      ├── global
+       │      └── count
+       │
+       ├── Heap
+       │      └── dynamically allocated *p
+       │
+       └── Stack
+              └── local
+                  + call-related state
+
+
+══════════════════════════════════════════════════════════════════════
+STORAGE DURATION VS MEMORY REGION
+══════════════════════════════════════════════════════════════════════
+
+Do not confuse these two ideas.
+
+C defines storage durations such as:
+
+    • automatic
+    • static
+    • allocated
+    • thread (in modern C)
+
+
+The common memory-region model:
+
+    text
+    read-only data
+    data
+    BSS
+    heap
+    stack
+
+is a typical implementation-oriented model.
+
+
+They are related concepts, but they are NOT simply interchangeable
+terms.
+
+
+For example:
+
+    static storage duration
+
+does not mean "must literally be in a region named static."
+
+
+It describes lifetime semantics.
+
+
+══════════════════════════════════════════════════════════════════════
+COMMON MEMORY MISTAKES
+══════════════════════════════════════════════════════════════════════
+
+MISTAKE 1 — RETURNING ADDRESS OF LOCAL VARIABLE
+─────────────────────────────────────────────────
+
+Wrong:
+
+    int *bad(void)
+    {
+        int x = 10;
+        return &x;
+    }
+
+
+Why?
+
+    x
+
+has automatic storage duration.
+
+After the function returns, x's lifetime has ended.
+
+The returned pointer becomes invalid for dereferencing.
+
+
+Correct alternatives depend on the requirement:
+
+    • caller-provided storage
+    • static storage when appropriate
+    • dynamically allocated storage
+    • return by value
+
+
+MISTAKE 2 — MEMORY LEAK
+───────────────────────
+
+    int *p = malloc(sizeof *p);
+
+    if (p != NULL)
+    {
+        *p = 10;
+    }
+
+    // forgot free(p)
+
+
+The allocated storage is not released by the program while it remains
+needed/reachable.
+
+
+MISTAKE 3 — USE AFTER FREE
+───────────────────────────
+
+    int *p = malloc(sizeof *p);
+
+    *p = 10;
+
+    free(p);
+
+    printf("%d\n", *p);      // WRONG
+
+
+After free():
+
+    p
+
+must not be dereferenced as if it still points to a live object.
+
+
+MISTAKE 4 — MODIFYING STRING LITERAL
+─────────────────────────────────────
+
+    char *p = "Hello";
+
+    p[0] = 'Y';              // undefined behavior
+
+
+Use:
+
+    char p[] = "Hello";
+
+
+MISTAKE 5 — ASSUMING STRUCT SIZE
+────────────────────────────────
+
+Wrong assumption:
+
+    sizeof(struct X) == sum of member sizes
+
+
+Padding may exist.
+
+Always use:
+
+    sizeof(struct X)
+
+
+MISTAKE 6 — ASSUMING ENDIANNESS
+───────────────────────────────
+
+Never write portable code that assumes every machine stores:
+
+    0x12345678
+
+in the same byte order.
+
+
+══════════════════════════════════════════════════════════════════════
+GATE / INTERVIEW CONCEPTS
+══════════════════════════════════════════════════════════════════════
+
+Q1. Which memory region commonly stores function instructions?
+
+    Text/code segment.
+
+
+Q2. Where are global variables with explicit non-zero initialization
+    commonly placed?
+
+    Initialized data region.
+
+
+Q3. Where are uninitialized global/static variables commonly placed?
+
+    BSS.
+
+
+Q4. Where does malloc() obtain dynamically allocated storage from?
+
+    Heap/dynamically allocated storage.
+
+
+Q5. Where are automatic local variables commonly associated?
+
+    Stack.
+
+
+Q6. What happens to an automatic local variable after its block
+    finishes?
+
+    Its lifetime ends.
+
+
+Q7. Why does recursion consume stack space?
+
+    Each active function invocation requires its own call-related
+    state/frame.
+
+
+Q8. What is a stack frame?
+
+    A conceptual/runtime region associated with one function
+    invocation containing call-related state, locals and other
+    implementation-dependent information.
+
+
+Q9. What is memory alignment?
+
+    Requirement/preference that objects be located at suitable
+    addresses according to their type/implementation.
+
+
+Q10. What is padding?
+
+    Extra bytes inserted in an object, especially structures, to
+    satisfy alignment requirements.
+
+
+Q11. Can two structures containing the same members have different
+    sizes depending on member ordering?
+
+    Yes, padding can make their sizes differ.
+
+
+Q12. What is little endian?
+
+    The least significant byte is stored at the lowest address.
+
+
+Q13. What is big endian?
+
+    The most significant byte is stored at the lowest address.
+
+
+Q14. Is endianness defined universally by the C language?
+
+    No. It is implementation/platform dependent.
+
+
+Q15. Is stack/heap layout exactly specified by the C standard?
+
+    No. The detailed memory organization is implementation/OS/ABI
+    dependent.
+
+
+══════════════════════════════════════════════════════════════════════
+GATE-STYLE MEMORY TRACE
+══════════════════════════════════════════════════════════════════════
+
+Consider:
+
+    int g = 10;
+
+    static int s = 20;
+
+    void f(void)
+    {
+        int x = 30;
+
+        int *p = malloc(sizeof *p);
+
+        if (p != NULL)
+        {
+            *p = 40;
+            free(p);
+        }
+    }
+
+
+Classify:
+
+    g
+    s
+    x
+    dynamically allocated object
+
+
+Typical conceptual classification:
+
+    g
+        → initialized data/static storage
+
+    s
+        → initialized data/static storage
+
+    x
+        → automatic/stack-associated storage
+
+    *p
+        → dynamically allocated/heap-associated storage
+
+
+The important distinction is:
+
+    g and s live for the entire program execution.
+
+    x lives for the execution of its block/invocation.
+
+    *p lives from successful allocation until deallocation,
+    subject to the program's behavior.
+
+
+══════════════════════════════════════════════════════════════════════
+ALIGNMENT + PADDING INTERVIEW EXAMPLE
+══════════════════════════════════════════════════════════════════════
+
+Suppose an implementation has:
+
+    sizeof(char) = 1
+    sizeof(int)  = 4
+    alignment(int) = 4
+
+
+Structure:
+
+    struct A
+    {
+        char c;
+        int x;
+    };
+
+
+Possible layout:
+
+    Offset:
+
+    0       c
+    1       padding
+    2       padding
+    3       padding
+    4       x
+    5       x
+    6       x
+    7       x
+
+
+Possible size:
+
+    8 bytes
+
+
+Again:
+
+    THIS IS AN EXAMPLE, NOT A UNIVERSAL GUARANTEE.
+
+
+Now:
+
+    struct B
+    {
+        int x;
+        char c;
+    };
+
+
+Possible layout:
+
+    0       x
+    1       x
+    2       x
+    3       x
+    4       c
+    5       padding
+    6       padding
+    7       padding
+
+
+Possible size:
+
+    8 bytes
+
+
+Now consider:
+
+    struct C
+    {
+        int x;
+        char c;
+        char d;
+    };
+
+
+Possible layout:
+
+    0       x
+    1       x
+    2       x
+    3       x
+    4       c
+    5       d
+    6       padding
+    7       padding
+
+
+Possible size:
+
+    8 bytes
+
+
+This demonstrates why member ordering can influence padding and size.
+
+
+══════════════════════════════════════════════════════════════════════
+MEMORY MODEL — MASTER DIAGRAM
+══════════════════════════════════════════════════════════════════════
+
+                    PROCESS ADDRESS SPACE
+                           │
+          ┌────────────────┴────────────────┐
+          │                                 │
+          ▼                                 ▼
+    PROGRAM STORAGE                    DYNAMIC/ACTIVE
+          │                                 │
+    ┌─────┼─────────────┐              ┌────┴────┐
+    │     │             │              │         │
+    ▼     ▼             ▼              ▼         ▼
+  Code   RO Data     Data/BSS        Heap      Stack
+                                      │           │
+                                      │           │
+                                   malloc()     calls
+                                   calloc()     locals
+                                   realloc()    frames
+                                   free()       recursion
+
+
+                    STRUCTURE LAYOUT
+                           │
+                           ▼
+                    Alignment rules
+                           │
+                           ▼
+                       Padding
+                           │
+                           ▼
+                    Object representation
+                           │
+                           ▼
+                       Endianness
+                           │
+                    ┌──────┴──────┐
+                    ▼             ▼
+               Little endian  Big endian
+
+
+══════════════════════════════════════════════════════════════════════
+CHAPTER 20 — FINAL REVISION
+══════════════════════════════════════════════════════════════════════
+
+PROGRAM MEMORY:
+
+    Text/Code
+        → machine instructions
+
+    Read-only Data
+        → commonly string literals and other non-writable data
+
+    Initialized Data
+        → initialized global/static objects
+
+    BSS
+        → commonly zero-initialized/uninitialized global/static data
+
+    Heap
+        → dynamic allocation
+
+    Stack
+        → function calls and automatic storage
+
+
+STACK:
+
+    function calls
+    automatic variables
+    recursion
+    stack frames
+
+
+HEAP:
+
+    malloc()
+    calloc()
+    realloc()
+    free()
+
+
+GLOBAL/STATIC:
+
+    static storage duration
+    entire program execution
+
+
+STACK FRAME:
+
+    one function invocation's call-related state
+
+
+RECURSION:
+
+    multiple active invocations
+        ↓
+    multiple frames
+        ↓
+    possible stack exhaustion
+
+
+ALIGNMENT:
+
+    objects placed at suitable addresses
+
+
+PADDING:
+
+    extra bytes used to satisfy alignment
+
+
+ENDIANNESS:
+
+    Little:
+        least significant byte first at low address
+
+    Big:
+        most significant byte first at low address
+
+
+MOST IMPORTANT CONNECTIONS:
+
+    Chapter 13 — Dynamic Memory
+             ↓
+           HEAP
+
+    Chapter 14 — Storage Classes
+             ↓
+       static/automatic lifetime
+
+    Chapter 18 — File Handling
+             ↓
+       binary representation
+
+    Chapter 20 — Memory Model
+             ↓
+       representation + layout
+
+
+══════════════════════════════════════════════════════════════════════
+CHAPTER 20 COMPLETE
+══════════════════════════════════════════════════════════════════════
+
+NEXT:
+
+    CHAPTER 21 — ADVANCED POINTERS
+
+    21.1 Pointer to Pointer
+    21.2 Pointer Arrays
+    21.3 Array of Pointers
+    21.4 Pointer to Array
+    21.5 Function Pointers
+    21.6 Array of Function Pointers
+    21.7 Callback Functions
+    21.8 Generic Programming using void*
+    21.9 Pointer Casting
+    21.10 Complex Pointer Declarations

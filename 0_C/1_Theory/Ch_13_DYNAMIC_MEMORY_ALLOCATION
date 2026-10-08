@@ -1,0 +1,2530 @@
+============================================================
+       CHAPTER 13 — DYNAMIC MEMORY ALLOCATION IN C
+       Complete Deep-Dive | Job-Ready | Interview Ready
+============================================================
+
+Dynamic Memory Allocation is one of the most important topics
+after pointers.
+
+It allows a C program to request memory at runtime instead of
+deciding the complete memory requirement at compile time.
+
+This chapter connects:
+
+    POINTERS
+        +
+    MEMORY
+        +
+    malloc/calloc/realloc/free
+        +
+    DATA STRUCTURES
+        +
+    MEMORY SAFETY
+
+------------------------------------------------------------
+1. WHAT IS DYNAMIC MEMORY ALLOCATION?
+------------------------------------------------------------
+
+Dynamic Memory Allocation (DMA) means allocating and releasing
+memory during program execution.
+
+Example:
+
+    int *p = malloc(10 * sizeof *p);
+
+The program decides at runtime that it needs space for
+10 integers.
+
+This is different from:
+
+    int arr[10];
+
+where the array size is fixed for that declaration.
+
+Dynamic allocation is useful when:
+
+    • Size is known only at runtime
+    • Data size changes during execution
+    • Large data structures are required
+    • Linked lists are required
+    • Trees/graphs are required
+    • Dynamic strings are required
+    • A program needs flexible memory usage
+
+------------------------------------------------------------
+2. STATIC / AUTOMATIC / DYNAMIC STORAGE
+------------------------------------------------------------
+
+A simplified view of common C storage durations:
+
+    Storage duration
+          |
+          +------------------+
+          |                  |
+       Automatic          Static
+          |
+       local variables
+
+Dynamic allocated objects have allocated storage duration and
+remain allocated until released with free (or until program
+termination, depending on the implementation/environment).
+
+Example:
+
+    void test(void)
+    {
+        int x = 10;              // automatic storage duration
+        static int y = 20;       // static storage duration
+    }
+
+Dynamic:
+
+    int *p = malloc(sizeof *p);
+
+The allocated object exists until:
+
+    free(p);
+
+------------------------------------------------------------
+3. STACK VS HEAP
+------------------------------------------------------------
+
+A common conceptual model:
+
+    STACK
+    --------------------
+    local automatic data
+    function call data
+    --------------------
+
+    HEAP / ALLOCATED STORAGE
+    ------------------------
+    dynamically allocated objects
+    ------------------------
+
+IMPORTANT:
+
+"Stack" and "heap" are common implementation concepts, but the
+C standard describes storage duration and allocation semantics
+rather than requiring a particular physical memory layout.
+
+For interviews, you should understand the practical distinction.
+
+Example:
+
+    void function(void)
+    {
+        int x = 10;
+
+        int *p = malloc(sizeof *p);
+
+        if (p != NULL)
+        {
+            *p = 20;
+            free(p);
+        }
+    }
+
+Here:
+
+    x -> automatic storage duration
+
+    *p -> dynamically allocated object
+
+------------------------------------------------------------
+4. WHY DYNAMIC MEMORY?
+------------------------------------------------------------
+
+Suppose the user enters the number of students:
+
+    Enter number of students: 5000
+
+You don't necessarily want:
+
+    Student students[100000];
+
+Instead:
+
+    size_t n;
+
+    scanf("%zu", &n);
+
+    Student *students = malloc(n * sizeof *students);
+
+Now the required amount can be determined at runtime.
+
+------------------------------------------------------------
+5. malloc()
+------------------------------------------------------------
+
+Header:
+
+    #include <stdlib.h>
+
+Syntax:
+
+    malloc(number_of_bytes)
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+This requests enough storage for 5 int objects.
+
+malloc returns:
+
+    void *
+
+which can be assigned to an object pointer in C without an
+explicit cast.
+
+GOOD:
+
+    int *p = malloc(5 * sizeof *p);
+
+Generally avoid:
+
+    int *p = (int *)malloc(5 * sizeof *p);
+
+The cast is unnecessary in C and can hide a missing declaration
+of malloc if the proper header is not included.
+
+------------------------------------------------------------
+6. malloc() MEMORY IS NOT INITIALIZED
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+Do NOT assume:
+
+    p[0] == 0
+    p[1] == 0
+
+The allocated bytes have indeterminate values until you
+initialize the objects appropriately.
+
+Example:
+
+    for (size_t i = 0; i < 5; i++)
+    {
+        p[i] = 0;
+    }
+
+------------------------------------------------------------
+7. ALWAYS CHECK malloc()
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(100 * sizeof *p);
+
+    if (p == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+Only use p after successful allocation.
+
+------------------------------------------------------------
+8. BASIC malloc PROGRAM
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        int *p = malloc(5 * sizeof *p);
+
+        if (p == NULL)
+        {
+            return 1;
+        }
+
+        for (size_t i = 0; i < 5; i++)
+        {
+            p[i] = (int)(i + 1) * 10;
+        }
+
+        for (size_t i = 0; i < 5; i++)
+        {
+            printf("%d ", p[i]);
+        }
+
+        printf("\n");
+
+        free(p);
+        p = NULL;
+
+        return 0;
+    }
+
+Output:
+
+    10 20 30 40 50
+
+------------------------------------------------------------
+9. sizeof WITH malloc()
+------------------------------------------------------------
+
+Preferred:
+
+    int *p = malloc(10 * sizeof *p);
+
+Why?
+
+Because if the type changes:
+
+    double *p
+
+then:
+
+    malloc(10 * sizeof *p)
+
+automatically uses the correct element size.
+
+Less maintainable:
+
+    malloc(10 * sizeof(int))
+
+Both can be correct, but sizeof *p is often safer against
+type changes.
+
+------------------------------------------------------------
+10. ALLOCATION SIZE CALCULATION
+------------------------------------------------------------
+
+For N elements:
+
+    N * sizeof(type)
+
+Example:
+
+    double *arr = malloc(n * sizeof *arr);
+
+This means:
+
+    n objects × size of one object
+
+------------------------------------------------------------
+11. INTEGER OVERFLOW IN SIZE CALCULATIONS
+------------------------------------------------------------
+
+This is an important security issue.
+
+Potentially dangerous:
+
+    int n = ...;
+
+    malloc(n * sizeof *p);
+
+If the multiplication overflows before being passed to malloc,
+you may allocate less memory than expected and later overflow it.
+
+Use an appropriate unsigned size type such as:
+
+    size_t
+
+and validate the requested size.
+
+For example:
+
+    if (n > SIZE_MAX / sizeof *p)
+    {
+        /* allocation size would overflow */
+    }
+
+You may need:
+
+    #include <stdint.h>
+
+for SIZE_MAX on implementations that provide it there.
+
+------------------------------------------------------------
+12. calloc()
+------------------------------------------------------------
+
+Syntax:
+
+    calloc(number_of_elements, element_size)
+
+Example:
+
+    int *p = calloc(5, sizeof *p);
+
+calloc allocates storage for 5 int objects and initializes the
+allocated bytes to all-bits-zero.
+
+Example:
+
+    int *p = calloc(5, sizeof *p);
+
+Then for integer objects, the resulting values are normally
+zero on conventional implementations.
+
+Important technical point:
+
+calloc guarantees all allocated bytes are initialized to zero.
+Do not turn this into the overly broad claim that every possible
+C type has a zero value represented by all-bits-zero.
+
+------------------------------------------------------------
+13. malloc() VS calloc()
+------------------------------------------------------------
+
+                malloc                 calloc
+------------------------------------------------------------
+Arguments       1                      2
+                bytes                  count + size
+
+Initialization  No initialization     All bytes zeroed
+
+Example:
+
+    malloc(n * sizeof *p)
+
+    calloc(n, sizeof *p)
+
+Use calloc when you specifically want zeroed allocated storage.
+
+------------------------------------------------------------
+14. calloc EXAMPLE
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        size_t n = 5;
+
+        int *arr = calloc(n, sizeof *arr);
+
+        if (arr == NULL)
+        {
+            return 1;
+        }
+
+        for (size_t i = 0; i < n; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+
+        printf("\n");
+
+        free(arr);
+
+        return 0;
+    }
+
+Typical output:
+
+    0 0 0 0 0
+
+------------------------------------------------------------
+15. realloc()
+------------------------------------------------------------
+
+realloc changes the size of an existing allocated object.
+
+Syntax:
+
+    realloc(pointer, new_size)
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+    int *temp = realloc(p, 10 * sizeof *p);
+
+If successful:
+
+    temp
+
+points to the resized allocation.
+
+------------------------------------------------------------
+16. IMPORTANT realloc() RULE
+------------------------------------------------------------
+
+Do NOT normally write:
+
+    p = realloc(p, new_size);
+
+if you need to keep p valid when realloc fails.
+
+Why?
+
+If realloc returns NULL because it cannot allocate the requested
+size, the original allocation is still valid.
+
+But if you overwrite p:
+
+    p = NULL;
+
+you lose the original pointer and leak the original allocation.
+
+Better:
+
+    int *temp = realloc(p, new_size);
+
+    if (temp != NULL)
+    {
+        p = temp;
+    }
+    else
+    {
+        /* p is still valid */
+    }
+
+------------------------------------------------------------
+17. realloc() EXAMPLE
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        size_t n = 5;
+
+        int *arr = malloc(n * sizeof *arr);
+
+        if (arr == NULL)
+        {
+            return 1;
+        }
+
+        for (size_t i = 0; i < n; i++)
+        {
+            arr[i] = (int)(i + 1);
+        }
+
+        size_t new_n = 10;
+
+        int *temp = realloc(arr, new_n * sizeof *arr);
+
+        if (temp == NULL)
+        {
+            free(arr);
+            return 1;
+        }
+
+        arr = temp;
+
+        for (size_t i = n; i < new_n; i++)
+        {
+            arr[i] = 0;
+        }
+
+        for (size_t i = 0; i < new_n; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+
+        printf("\n");
+
+        free(arr);
+
+        return 0;
+    }
+
+------------------------------------------------------------
+18. realloc() CAN MOVE MEMORY
+------------------------------------------------------------
+
+Important:
+
+    realloc()
+
+may:
+
+    • Expand the existing block in place
+
+OR:
+
+    • Allocate a new block
+    • Copy the old contents
+    • Release the old block
+    • Return the new address
+
+Therefore:
+
+    int *old = p;
+
+After realloc:
+
+    p
+
+may have a different address.
+
+Any pointer into the old allocation may become invalid if
+realloc moves the allocation.
+
+------------------------------------------------------------
+19. POINTERS INTO realloc() MEMORY
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+    int *q = &p[2];
+
+    int *temp = realloc(p, 10 * sizeof *p);
+
+If realloc moves the allocation, q is no longer valid.
+
+Therefore, after realloc, pointers into the old block should be
+recomputed from the new base pointer if needed.
+
+------------------------------------------------------------
+20. SHRINKING WITH realloc()
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(10 * sizeof *p);
+
+    int *temp = realloc(p, 5 * sizeof *p);
+
+If successful:
+
+    p = temp;
+
+Now the allocation is large enough for 5 int objects.
+
+Data beyond the new size is no longer part of the allocation.
+
+Never access:
+
+    p[5]
+    p[6]
+    ...
+
+after shrinking to 5 elements.
+
+------------------------------------------------------------
+21. free()
+------------------------------------------------------------
+
+Syntax:
+
+    free(pointer);
+
+Example:
+
+    int *p = malloc(10 * sizeof *p);
+
+    if (p != NULL)
+    {
+        free(p);
+        p = NULL;
+    }
+
+free releases the allocated object.
+
+------------------------------------------------------------
+22. free(NULL)
+------------------------------------------------------------
+
+This is safe:
+
+    int *p = NULL;
+
+    free(p);
+
+No action is performed.
+
+Therefore:
+
+    free(p);
+    p = NULL;
+
+is a useful cleanup pattern.
+
+------------------------------------------------------------
+23. MEMORY LEAK
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(100 * sizeof *p);
+
+    p = NULL;
+
+The allocated object is now unreachable.
+
+This is a memory leak.
+
+Correct:
+
+    int *p = malloc(100 * sizeof *p);
+
+    if (p != NULL)
+    {
+        /* use memory */
+
+        free(p);
+        p = NULL;
+    }
+
+------------------------------------------------------------
+24. DANGLING POINTER
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(sizeof *p);
+
+    if (p != NULL)
+    {
+        *p = 100;
+
+        free(p);
+
+        /* p still contains the old address */
+    }
+
+After free:
+
+    p
+
+is a dangling pointer unless you stop using it.
+
+Safer:
+
+    free(p);
+    p = NULL;
+
+------------------------------------------------------------
+25. USE-AFTER-FREE
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(sizeof *p);
+
+    if (p != NULL)
+    {
+        *p = 10;
+
+        free(p);
+
+        printf("%d\n", *p);
+    }
+
+This accesses an object whose lifetime has ended.
+
+Result:
+
+    Undefined behavior
+
+------------------------------------------------------------
+26. DOUBLE FREE
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(sizeof *p);
+
+    free(p);
+    free(p);
+
+The second free is invalid.
+
+Safer:
+
+    free(p);
+    p = NULL;
+
+------------------------------------------------------------
+27. WILD POINTER
+------------------------------------------------------------
+
+BAD:
+
+    int *p;
+
+    *p = 10;
+
+p is uninitialized.
+
+Correct:
+
+    int x;
+    int *p = &x;
+
+or:
+
+    int *p = NULL;
+
+------------------------------------------------------------
+28. ALLOCATING A SINGLE OBJECT
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(sizeof *p);
+
+    if (p == NULL)
+    {
+        return 1;
+    }
+
+    *p = 100;
+
+    printf("%d\n", *p);
+
+    free(p);
+
+------------------------------------------------------------
+29. ALLOCATING STRUCTURES
+------------------------------------------------------------
+
+Example:
+
+    struct Student
+    {
+        int age;
+        float marks;
+    };
+
+Dynamic allocation:
+
+    struct Student *s =
+        malloc(sizeof *s);
+
+Check:
+
+    if (s == NULL)
+    {
+        return 1;
+    }
+
+Initialize:
+
+    s->age = 22;
+    s->marks = 90.5f;
+
+Use:
+
+    printf("%d %.2f\n",
+           s->age,
+           s->marks);
+
+Release:
+
+    free(s);
+
+------------------------------------------------------------
+30. DYNAMIC ARRAY OF STRUCTURES
+------------------------------------------------------------
+
+Example:
+
+    struct Student
+    {
+        int age;
+        float marks;
+    };
+
+    size_t n = 100;
+
+    struct Student *students =
+        malloc(n * sizeof *students);
+
+Now:
+
+    students[0]
+    students[1]
+    ...
+    students[n - 1]
+
+can be used.
+
+------------------------------------------------------------
+31. DYNAMIC STRING
+------------------------------------------------------------
+
+Suppose the required length is known:
+
+    size_t length = 20;
+
+Allocate:
+
+    char *str = malloc((length + 1) * sizeof *str);
+
+Why +1?
+
+For:
+
+    '\0'
+
+Example:
+
+    char *str = malloc(21);
+
+Then at most 20 characters can be stored plus:
+
+    '\0'
+
+------------------------------------------------------------
+32. DYNAMIC STRING EXAMPLE
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+
+    int main(void)
+    {
+        const char *source = "Apoorv";
+
+        size_t len = strlen(source);
+
+        char *copy = malloc(len + 1);
+
+        if (copy == NULL)
+        {
+            return 1;
+        }
+
+        memcpy(copy, source, len + 1);
+
+        printf("%s\n", copy);
+
+        free(copy);
+
+        return 0;
+    }
+
+Output:
+
+    Apoorv
+
+------------------------------------------------------------
+33. WHY len + 1?
+------------------------------------------------------------
+
+For:
+
+    "Hello"
+
+Memory contains:
+
+    H
+    e
+    l
+    l
+    o
+    \0
+
+strlen gives:
+
+    5
+
+Required capacity:
+
+    6
+
+Therefore:
+
+    strlen(str) + 1
+
+------------------------------------------------------------
+34. DYNAMIC 2D ARRAY — METHOD 1
+------------------------------------------------------------
+
+You can allocate a contiguous 2D array.
+
+Example:
+
+    size_t rows = 3;
+    size_t cols = 4;
+
+    int *matrix =
+        malloc(rows * cols * sizeof *matrix);
+
+Access:
+
+    matrix[i * cols + j]
+
+Example:
+
+    matrix[1 * cols + 2]
+
+represents:
+
+    row 1, column 2
+
+This creates one contiguous allocation.
+
+------------------------------------------------------------
+35. DYNAMIC 2D ARRAY — METHOD 2
+------------------------------------------------------------
+
+Pointer-to-pointer style:
+
+    int **matrix = malloc(rows * sizeof *matrix);
+
+Then allocate each row separately:
+
+    for (size_t i = 0; i < rows; i++)
+    {
+        matrix[i] = malloc(cols * sizeof *matrix[i]);
+    }
+
+Now:
+
+    matrix[i][j]
+
+can be used.
+
+But cleanup must be done row by row:
+
+    for (size_t i = 0; i < rows; i++)
+    {
+        free(matrix[i]);
+    }
+
+    free(matrix);
+
+This is NOT the same memory layout as one contiguous
+rows × cols allocation.
+
+------------------------------------------------------------
+36. DYNAMIC 2D ARRAY — METHOD 3
+------------------------------------------------------------
+
+A pointer to an array can provide convenient indexing while using
+one contiguous allocation.
+
+For a runtime column count, one possible form is:
+
+    size_t rows = 3;
+    size_t cols = 4;
+
+    int (*matrix)[cols] =
+        malloc(rows * sizeof *matrix);
+
+Then:
+
+    matrix[i][j]
+
+can be used.
+
+This uses a variable length array type in the pointer-to-array
+declaration. Support and constraints depend on the C version and
+implementation, so understand this after mastering the simpler
+forms.
+
+------------------------------------------------------------
+37. FLEXIBLE ARRAY MEMBER
+------------------------------------------------------------
+
+C supports flexible array members in structures.
+
+Example:
+
+    struct Packet
+    {
+        size_t length;
+        unsigned char data[];
+    };
+
+A flexible array member can be used when a structure and its
+variable-length trailing data are allocated together.
+
+Conceptually:
+
+    +------------------+
+    | length           |
+    +------------------+
+    | data             |
+    | data             |
+    | data             |
+    +------------------+
+
+This is an advanced but important systems-programming technique.
+
+------------------------------------------------------------
+38. OWNERSHIP
+------------------------------------------------------------
+
+Dynamic memory requires clear ownership.
+
+Ask:
+
+    Who allocated it?
+
+    Who owns it?
+
+    Who can modify it?
+
+    Who frees it?
+
+    How long is it valid?
+
+Example:
+
+    int *create_array(size_t n)
+    {
+        return malloc(n * sizeof(int));
+    }
+
+If the caller receives the returned pointer, the API should make
+it clear that the caller is responsible for:
+
+    free()
+
+when the memory is no longer required.
+
+------------------------------------------------------------
+39. TRANSFERRING OWNERSHIP
+------------------------------------------------------------
+
+Suppose:
+
+    int *p = malloc(100 * sizeof *p);
+
+A function can take ownership:
+
+    void consume(int *p)
+    {
+        /* use p */
+        free(p);
+    }
+
+Then the caller must not use or free p again after ownership has
+been transferred.
+
+Good software design makes ownership rules explicit.
+
+------------------------------------------------------------
+40. ALLOCATION FAILURE
+------------------------------------------------------------
+
+Allocation can fail.
+
+Example:
+
+    int *p = malloc(n * sizeof *p);
+
+    if (p == NULL)
+    {
+        /* handle failure */
+    }
+
+Do not write:
+
+    *p = 10;
+
+before checking p if failure is possible.
+
+In production software, the response to allocation failure depends
+on the application:
+
+    • Return an error
+    • Clean up
+    • Retry smaller allocation
+    • Abort
+    • Use fallback storage
+
+------------------------------------------------------------
+41. MEMORY FRAGMENTATION
+------------------------------------------------------------
+
+Repeated allocation and freeing can create fragmented free space.
+
+Example:
+
+    allocate A
+    allocate B
+    allocate C
+
+    free B
+
+Now there may be a gap between A and C.
+
+The exact behavior depends on the allocator.
+
+Fragmentation can affect:
+
+    • Memory utilization
+    • Allocation performance
+    • Long-running applications
+
+This matters particularly in:
+
+    embedded systems
+    servers
+    operating systems
+    real-time systems
+
+------------------------------------------------------------
+42. malloc(0)
+------------------------------------------------------------
+
+Code such as:
+
+    malloc(0)
+
+has implementation-defined allocation behavior.
+
+It may return NULL or a unique pointer value that can be passed
+to free.
+
+Do not assume it always behaves like a normal nonempty allocation.
+
+If your program needs at least one element, validate the count
+before allocating.
+
+------------------------------------------------------------
+43. realloc(NULL, size)
+------------------------------------------------------------
+
+Important rule:
+
+    realloc(NULL, size)
+
+behaves like:
+
+    malloc(size)
+
+for the allocation semantics.
+
+This can sometimes simplify dynamic-array implementations.
+
+------------------------------------------------------------
+44. realloc(ptr, 0)
+------------------------------------------------------------
+
+Do not build portable modern C code around assuming one particular
+result from realloc(ptr, 0).
+
+The historical and standard-version details are subtle.
+
+For clear code, when you simply want to release an allocation:
+
+    free(ptr);
+    ptr = NULL;
+
+is preferable.
+
+------------------------------------------------------------
+45. SAFE ALLOCATION PATTERN
+------------------------------------------------------------
+
+Example:
+
+    #include <stdlib.h>
+
+    int *create_array(size_t n)
+    {
+        if (n > SIZE_MAX / sizeof(int))
+        {
+            return NULL;
+        }
+
+        return malloc(n * sizeof(int));
+    }
+
+Depending on the implementation/environment, include the header
+providing SIZE_MAX.
+
+A simpler common pattern is:
+
+    int *p = malloc(n * sizeof *p);
+
+but robust code should consider integer overflow when n can be
+untrusted or extremely large.
+
+------------------------------------------------------------
+46. REALLOC SAFE PATTERN
+------------------------------------------------------------
+
+Use:
+
+    int *temp = realloc(p, new_size);
+
+    if (temp == NULL)
+    {
+        /* original p remains valid */
+    }
+    else
+    {
+        p = temp;
+    }
+
+This pattern is essential for professional C programming.
+
+------------------------------------------------------------
+47. DYNAMIC ARRAY GROWTH
+------------------------------------------------------------
+
+Suppose capacity is:
+
+    4
+
+When full:
+
+    capacity = 8
+
+Then:
+
+    16
+    32
+    64
+    ...
+
+This reduces the number of reallocations.
+
+Typical dynamic-array concept:
+
+    size
+    capacity
+    data pointer
+
+Example:
+
+    struct Vector
+    {
+        int *data;
+        size_t size;
+        size_t capacity;
+    };
+
+This is the foundation of vector-like data structures.
+
+------------------------------------------------------------
+48. DYNAMIC ARRAY STRUCTURE
+------------------------------------------------------------
+
+Concept:
+
+    struct Vector
+    {
+        int *data;
+        size_t size;
+        size_t capacity;
+    };
+
+Meaning:
+
+    data
+        allocated memory
+
+    size
+        number of actual elements
+
+    capacity
+        number of elements that can fit before resizing
+
+Example:
+
+    size = 3
+    capacity = 8
+
+Memory:
+
+    [10][20][30][ ][ ][ ][ ][ ]
+
+Only the first 3 are currently elements.
+
+------------------------------------------------------------
+49. MEMORY INITIALIZATION
+------------------------------------------------------------
+
+malloc:
+
+    memory contents are not initialized.
+
+calloc:
+
+    allocated bytes are zeroed.
+
+You can explicitly initialize:
+
+    memset(p, 0, n * sizeof *p);
+
+But be careful:
+
+    memset(p, 1, n * sizeof *p);
+
+does NOT generally mean "set every integer to 1".
+
+It sets every BYTE to 0x01.
+
+For an int array, this commonly produces:
+
+    0x01010101
+
+rather than integer value 1.
+
+------------------------------------------------------------
+50. memset()
+------------------------------------------------------------
+
+Header:
+
+    #include <string.h>
+
+Example:
+
+    char buffer[100];
+
+    memset(buffer, 0, sizeof buffer);
+
+This sets every byte to zero.
+
+For raw byte buffers, this is very useful.
+
+For general typed objects, understand their representation before
+using memset as a value-initialization technique.
+
+------------------------------------------------------------
+51. memcpy() WITH DYNAMIC MEMORY
+------------------------------------------------------------
+
+Example:
+
+    int source[] = {1, 2, 3};
+
+    int *destination =
+        malloc(sizeof source);
+
+    if (destination != NULL)
+    {
+        memcpy(destination,
+               source,
+               sizeof source);
+
+        free(destination);
+    }
+
+The destination must have sufficient storage.
+
+------------------------------------------------------------
+52. memmove() WITH DYNAMIC MEMORY
+------------------------------------------------------------
+
+If source and destination regions overlap:
+
+    memmove()
+
+must be used rather than:
+
+    memcpy()
+
+Example:
+
+    memmove(arr + 1,
+            arr,
+            n * sizeof *arr);
+
+This can safely move overlapping memory ranges.
+
+------------------------------------------------------------
+53. POINTER AFTER free()
+------------------------------------------------------------
+
+Important:
+
+    free(p);
+
+does not modify p itself.
+
+Therefore:
+
+    p != NULL
+
+may still be true after free.
+
+This is why:
+
+    free(p);
+    p = NULL;
+
+is a useful pattern when p remains in scope.
+
+------------------------------------------------------------
+54. MULTIPLE POINTERS TO ONE ALLOCATION
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(sizeof *p);
+
+    int *q = p;
+
+Now:
+
+    p
+    |
+    +----> allocated object
+    |
+    q
+    +---->
+
+If you do:
+
+    free(p);
+
+then q is also dangling.
+
+Setting:
+
+    p = NULL;
+
+does NOT make q safe.
+
+This is why ownership and aliasing matter.
+
+------------------------------------------------------------
+55. MEMORY LEAK THROUGH ALIASING
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(100 * sizeof *p);
+
+    int *q = p;
+
+    free(p);
+
+    p = NULL;
+
+q still contains the old address.
+
+Using q is invalid.
+
+This demonstrates why simply setting one pointer to NULL does
+not solve all ownership problems.
+
+------------------------------------------------------------
+56. RETURNING DYNAMIC MEMORY FROM FUNCTION
+------------------------------------------------------------
+
+Valid:
+
+    int *create_number(void)
+    {
+        int *p = malloc(sizeof *p);
+
+        if (p != NULL)
+        {
+            *p = 100;
+        }
+
+        return p;
+    }
+
+Usage:
+
+    int *p = create_number();
+
+    if (p != NULL)
+    {
+        printf("%d\n", *p);
+        free(p);
+    }
+
+The allocated object's lifetime continues after the function
+returns until free is called.
+
+------------------------------------------------------------
+57. INVALID RETURN OF LOCAL ADDRESS
+------------------------------------------------------------
+
+BAD:
+
+    int *create_number(void)
+    {
+        int x = 100;
+
+        return &x;
+    }
+
+Why?
+
+    x
+
+has automatic storage duration and ceases to exist when the
+function returns.
+
+The returned pointer is dangling.
+
+------------------------------------------------------------
+58. DYNAMIC LINKED LIST NODE
+------------------------------------------------------------
+
+Example:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+Create:
+
+    struct Node *node =
+        malloc(sizeof *node);
+
+Initialize:
+
+    if (node != NULL)
+    {
+        node->data = 10;
+        node->next = NULL;
+    }
+
+This is the basic building block of a linked list.
+
+------------------------------------------------------------
+59. LINKED LIST ALLOCATION
+------------------------------------------------------------
+
+Conceptually:
+
+    head
+     |
+     v
+    +------+------+
+    |  10  |  *---|----+
+    +------+------+    |
+                       v
+                    +------+------+
+                    |  20  |  *---|----> NULL
+                    +------+------+
+
+Each node is dynamically allocated.
+
+Therefore cleanup must eventually free every node.
+
+------------------------------------------------------------
+60. CLEANING A LINKED LIST
+------------------------------------------------------------
+
+Example:
+
+    struct Node *current = head;
+
+    while (current != NULL)
+    {
+        struct Node *next = current->next;
+
+        free(current);
+
+        current = next;
+    }
+
+    head = NULL;
+
+Why save next first?
+
+After:
+
+    free(current);
+
+you cannot safely access:
+
+    current->next
+
+because current's object lifetime has ended.
+
+------------------------------------------------------------
+61. MEMORY SAFETY
+------------------------------------------------------------
+
+Dynamic memory errors include:
+
+    • Buffer overflow
+    • Out-of-bounds access
+    • Use-after-free
+    • Double free
+    • Memory leak
+    • Invalid free
+    • Integer overflow in allocation size
+    • Null dereference
+    • Dangling pointer
+    • Uninitialized memory use
+
+These bugs can cause:
+
+    • Crashes
+    • Data corruption
+    • Security vulnerabilities
+    • Unpredictable behavior
+
+------------------------------------------------------------
+62. INVALID free()
+------------------------------------------------------------
+
+Only pass a pointer to allocated storage returned by an
+appropriate allocation function, or NULL.
+
+BAD:
+
+    int x = 10;
+
+    free(&x);
+
+x was not dynamically allocated.
+
+Result:
+
+    Undefined behavior
+
+------------------------------------------------------------
+63. FREEING MIDDLE OF ALLOCATION
+------------------------------------------------------------
+
+BAD:
+
+    int *p = malloc(10 * sizeof *p);
+
+    free(p + 3);
+
+The pointer passed to free must be the pointer returned by the
+allocation function (or NULL), not an interior pointer.
+
+Correct:
+
+    free(p);
+
+------------------------------------------------------------
+64. BUFFER OVERFLOW
+------------------------------------------------------------
+
+Example:
+
+    int *p = malloc(5 * sizeof *p);
+
+    if (p != NULL)
+    {
+        for (int i = 0; i <= 5; i++)
+        {
+            p[i] = i;
+        }
+    }
+
+Problem:
+
+Valid indices:
+
+    0
+    1
+    2
+    3
+    4
+
+But:
+
+    p[5]
+
+is outside the allocation.
+
+This causes undefined behavior.
+
+Correct:
+
+    i < 5
+
+------------------------------------------------------------
+65. OFF-BY-ONE ERROR
+------------------------------------------------------------
+
+Wrong:
+
+    for (size_t i = 0; i <= n; i++)
+
+Correct:
+
+    for (size_t i = 0; i < n; i++)
+
+This is one of the most common memory bugs in C.
+
+------------------------------------------------------------
+66. MEMORY DEBUGGING — GCC
+------------------------------------------------------------
+
+Compile with warnings:
+
+    gcc -Wall -Wextra -Wpedantic -g program.c -o program
+
+Warnings help detect many programming mistakes.
+
+------------------------------------------------------------
+67. ADDRESSSANITIZER
+------------------------------------------------------------
+
+A very useful debugging tool:
+
+    gcc -Wall -Wextra -g \
+        -fsanitize=address,undefined \
+        program.c -o program
+
+Run:
+
+    ./program
+
+AddressSanitizer can detect many problems such as:
+
+    • Heap buffer overflow
+    • Stack buffer overflow
+    • Use-after-free
+    • Double-free
+    • Some memory leaks
+
+UndefinedBehaviorSanitizer detects many forms of undefined
+behavior.
+
+------------------------------------------------------------
+68. VALGRIND
+------------------------------------------------------------
+
+On systems where Valgrind is available:
+
+    valgrind --leak-check=full ./program
+
+It can help identify:
+
+    • Memory leaks
+    • Invalid reads
+    • Invalid writes
+    • Invalid frees
+
+Availability and behavior depend on the operating system and
+toolchain.
+
+------------------------------------------------------------
+69. GDB
+------------------------------------------------------------
+
+GDB can inspect pointers and memory.
+
+Example commands:
+
+    gdb ./program
+
+Then:
+
+    break main
+    run
+    print p
+    print *p
+    x/10dw p
+
+The exact debugger commands and output depend on the platform.
+
+------------------------------------------------------------
+70. MALLOC DEBUGGING MINDSET
+------------------------------------------------------------
+
+For every malloc:
+
+    WHERE IS THE matching free?
+
+For every pointer:
+
+    WHO OWNS THE OBJECT?
+
+For every access:
+
+    IS THE OBJECT STILL ALIVE?
+
+For every array:
+
+    IS THE INDEX VALID?
+
+For every realloc:
+
+    WHAT HAPPENS IF IT FAILS?
+
+This mindset makes you much stronger in C.
+
+------------------------------------------------------------
+71. PRACTICAL PROGRAM — DYNAMIC ARRAY
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        size_t n;
+
+        printf("Enter number of elements: ");
+
+        if (scanf("%zu", &n) != 1)
+        {
+            return 1;
+        }
+
+        int *arr = malloc(n * sizeof *arr);
+
+        if (arr == NULL && n != 0)
+        {
+            return 1;
+        }
+
+        for (size_t i = 0; i < n; i++)
+        {
+            arr[i] = (int)i;
+        }
+
+        for (size_t i = 0; i < n; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+
+        printf("\n");
+
+        free(arr);
+
+        return 0;
+    }
+
+For production code, if n can be extremely large or untrusted,
+also validate the multiplication for overflow.
+
+------------------------------------------------------------
+72. PRACTICAL PROGRAM — DYNAMIC SUM
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        size_t n;
+
+        scanf("%zu", &n);
+
+        int *arr = malloc(n * sizeof *arr);
+
+        if (arr == NULL && n != 0)
+        {
+            return 1;
+        }
+
+        int sum = 0;
+
+        for (size_t i = 0; i < n; i++)
+        {
+            scanf("%d", &arr[i]);
+            sum += arr[i];
+        }
+
+        printf("Sum = %d\n", sum);
+
+        free(arr);
+
+        return 0;
+    }
+
+------------------------------------------------------------
+73. PRACTICAL PROGRAM — REALLOC GROWTH
+------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void)
+    {
+        size_t capacity = 2;
+        size_t size = 0;
+
+        int *arr = malloc(capacity * sizeof *arr);
+
+        if (arr == NULL)
+        {
+            return 1;
+        }
+
+        for (int value = 1; value <= 10; value++)
+        {
+            if (size == capacity)
+            {
+                size_t new_capacity = capacity * 2;
+
+                int *temp =
+                    realloc(arr,
+                            new_capacity * sizeof *arr);
+
+                if (temp == NULL)
+                {
+                    free(arr);
+                    return 1;
+                }
+
+                arr = temp;
+                capacity = new_capacity;
+            }
+
+            arr[size++] = value;
+        }
+
+        for (size_t i = 0; i < size; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+
+        printf("\n");
+
+        free(arr);
+
+        return 0;
+    }
+
+Output:
+
+    1 2 3 4 5 6 7 8 9 10
+
+------------------------------------------------------------
+74. IMPORTANT REAL-WORLD PATTERN
+------------------------------------------------------------
+
+Dynamic array generally maintains:
+
+    pointer
+    size
+    capacity
+
+Example:
+
+    data     = 0x1234...
+    size     = 5
+    capacity = 8
+
+Operations:
+
+    push
+    pop
+    insert
+    delete
+    resize
+
+This is useful when implementing your own:
+
+    vector
+    stack
+    queue
+    hash table
+    dynamic string
+
+------------------------------------------------------------
+75. INTERVIEW QUESTIONS
+------------------------------------------------------------
+
+Q1. What is dynamic memory allocation?
+
+Answer:
+
+Obtaining and releasing storage during program execution using
+functions such as malloc, calloc, realloc and free.
+
+------------------------------------------------------------
+
+Q2. Which header provides malloc?
+
+Answer:
+
+    <stdlib.h>
+
+------------------------------------------------------------
+
+Q3. Difference between malloc and calloc?
+
+Answer:
+
+malloc takes a byte count and does not initialize the allocated
+storage.
+
+calloc takes an element count and element size and initializes
+the allocated bytes to zero.
+
+------------------------------------------------------------
+
+Q4. Does malloc initialize memory to zero?
+
+Answer:
+
+No.
+
+------------------------------------------------------------
+
+Q5. What happens if malloc fails?
+
+Answer:
+
+It returns NULL.
+
+------------------------------------------------------------
+
+Q6. What does free do?
+
+Answer:
+
+It releases dynamically allocated storage.
+
+------------------------------------------------------------
+
+Q7. Does free make the pointer NULL?
+
+Answer:
+
+No.
+
+Use:
+
+    free(p);
+    p = NULL;
+
+if appropriate.
+
+------------------------------------------------------------
+
+Q8. What is a memory leak?
+
+Answer:
+
+Allocated memory that is no longer reachable and therefore cannot
+be freed normally.
+
+------------------------------------------------------------
+
+Q9. What is a dangling pointer?
+
+Answer:
+
+A pointer that refers to an object whose lifetime has ended.
+
+------------------------------------------------------------
+
+Q10. What is use-after-free?
+
+Answer:
+
+Accessing an object after its allocated lifetime has ended.
+
+------------------------------------------------------------
+
+Q11. Why use a temporary pointer with realloc?
+
+Answer:
+
+To preserve the original allocation if realloc fails.
+
+------------------------------------------------------------
+
+Q12. Can realloc move memory?
+
+Answer:
+
+Yes.
+
+------------------------------------------------------------
+
+Q13. Can realloc(NULL, size) be used?
+
+Answer:
+
+Yes. It has malloc-like allocation semantics.
+
+------------------------------------------------------------
+
+Q14. Can we free stack memory?
+
+Answer:
+
+No.
+
+Do not pass the address of an automatic/local object to free.
+
+------------------------------------------------------------
+
+Q15. Can we free p+1?
+
+Answer:
+
+No, not if p is the pointer returned by malloc and p+1 points
+inside that allocation.
+
+You must free the original pointer returned by the allocation
+function.
+
+------------------------------------------------------------
+76. GATE-LEVEL QUESTION 1
+------------------------------------------------------------
+
+    int *p = malloc(5 * sizeof *p);
+
+    p[5] = 100;
+
+Question:
+
+Is this valid?
+
+Answer:
+
+No.
+
+Valid indices:
+
+    0 through 4
+
+p[5] is out of bounds and causes undefined behavior.
+
+------------------------------------------------------------
+77. GATE-LEVEL QUESTION 2
+------------------------------------------------------------
+
+    int *p = malloc(sizeof *p);
+
+    *p = 10;
+
+    free(p);
+
+    p = NULL;
+
+Question:
+
+Is this valid?
+
+Answer:
+
+Yes.
+
+The allocation is released and p is reset to NULL.
+
+------------------------------------------------------------
+78. GATE-LEVEL QUESTION 3
+------------------------------------------------------------
+
+    int *p = malloc(10 * sizeof *p);
+
+    int *q = p;
+
+    free(p);
+
+    printf("%d", *q);
+
+Answer:
+
+Undefined behavior.
+
+q is dangling after the allocation is freed.
+
+------------------------------------------------------------
+79. GATE-LEVEL QUESTION 4
+------------------------------------------------------------
+
+    int *p = malloc(5 * sizeof *p);
+
+    int *temp = realloc(p, 10 * sizeof *p);
+
+If temp == NULL:
+
+What happens to p?
+
+Answer:
+
+The original allocation remains valid, assuming realloc failed
+to resize it.
+
+This is why temp is used.
+
+------------------------------------------------------------
+80. GATE-LEVEL QUESTION 5
+------------------------------------------------------------
+
+    int *p = malloc(5 * sizeof *p);
+
+    free(p);
+
+    free(p);
+
+Answer:
+
+Undefined behavior.
+
+This is a double free.
+
+------------------------------------------------------------
+81. GATE-LEVEL QUESTION 6
+------------------------------------------------------------
+
+    int *p = malloc(sizeof *p);
+
+    *p = 10;
+
+    int *q = p;
+
+    free(q);
+
+    printf("%d", *p);
+
+Answer:
+
+Undefined behavior.
+
+Both p and q refer to the same allocation.
+
+After free(q), p is dangling too.
+
+------------------------------------------------------------
+82. GATE-LEVEL QUESTION 7
+------------------------------------------------------------
+
+    int *p = malloc(10 * sizeof *p);
+
+    p = NULL;
+
+What happened?
+
+Answer:
+
+The allocated memory has leaked.
+
+The pointer lost the only direct reference to it.
+
+------------------------------------------------------------
+83. SECURITY-IMPORTANT RULE
+------------------------------------------------------------
+
+Never trust allocation sizes from external input.
+
+Example:
+
+    user_count
+
+could be:
+
+    10
+    1000
+    huge_value
+
+Before:
+
+    malloc(user_count * sizeof *p);
+
+consider integer overflow.
+
+A safe design checks:
+
+    user_count <= SIZE_MAX / sizeof *p
+
+before multiplication.
+
+------------------------------------------------------------
+84. DYNAMIC MEMORY CHECKLIST
+------------------------------------------------------------
+
+For every dynamic allocation:
+
+    [ ] Correct size?
+    [ ] Overflow checked?
+    [ ] Allocation failure checked?
+    [ ] Correct initialization?
+    [ ] Ownership defined?
+    [ ] Lifetime understood?
+    [ ] Bounds checked?
+    [ ] Matching free?
+    [ ] No double free?
+    [ ] No use-after-free?
+    [ ] No dangling aliases?
+    [ ] realloc failure handled?
+
+------------------------------------------------------------
+85. MOST IMPORTANT FUNCTIONS
+------------------------------------------------------------
+
+Header:
+
+    #include <stdlib.h>
+
+Functions:
+
+    malloc()
+    calloc()
+    realloc()
+    free()
+
+Related memory functions:
+
+    #include <string.h>
+
+    memcpy()
+    memmove()
+    memset()
+    memcmp()
+
+Debugging:
+
+    AddressSanitizer
+    UndefinedBehaviorSanitizer
+    Valgrind
+    GDB
+
+------------------------------------------------------------
+86. COMPLETE MEMORY MODEL
+------------------------------------------------------------
+
+You should now connect the previous two chapters:
+
+CHAPTER 12:
+
+    POINTERS
+
+            |
+            v
+
+    int *p
+
+            |
+            v
+
+    points to memory
+
+            |
+            v
+
+CHAPTER 13:
+
+    malloc()
+
+            |
+            v
+
+    creates dynamically allocated object
+
+            |
+            v
+
+    pointer receives its address
+
+            |
+            v
+
+    use object
+
+            |
+            v
+
+    free()
+
+            |
+            v
+
+    object lifetime ends
+
+------------------------------------------------------------
+87. FINAL SUMMARY
+------------------------------------------------------------
+
+You should now understand:
+
+    ✓ Dynamic memory allocation
+    ✓ Storage duration
+    ✓ Stack vs heap concept
+    ✓ malloc()
+    ✓ calloc()
+    ✓ realloc()
+    ✓ free()
+    ✓ Allocation failure
+    ✓ sizeof with allocation
+    ✓ Allocation-size overflow
+    ✓ Dynamic arrays
+    ✓ Dynamic strings
+    ✓ Dynamic structures
+    ✓ Dynamic 2D arrays
+    ✓ Flexible array members
+    ✓ Ownership
+    ✓ Lifetime
+    ✓ Memory leaks
+    ✓ Dangling pointers
+    ✓ Wild pointers
+    ✓ Double free
+    ✓ Use-after-free
+    ✓ Invalid free
+    ✓ Buffer overflow
+    ✓ realloc pitfalls
+    ✓ Memory fragmentation
+    ✓ memcpy()
+    ✓ memmove()
+    ✓ memset()
+    ✓ AddressSanitizer
+    ✓ Valgrind
+    ✓ GDB
+    ✓ Linked-list memory management
+    ✓ Interview questions
+    ✓ GATE-level problems
+
+============================================================
+            JOB-READY SKILL CHECK
+============================================================
+
+You should be able to independently implement:
+
+    1. Dynamic integer array
+    2. Dynamic string
+    3. Dynamic structure array
+    4. Dynamic 2D matrix
+    5. Dynamic stack
+    6. Dynamic queue
+    7. Linked list
+    8. Dynamic array/vector
+    9. realloc-based resizing
+    10. Safe memory cleanup
+
+And you should be able to identify:
+
+    Memory leak
+    Dangling pointer
+    Wild pointer
+    Use-after-free
+    Double free
+    Buffer overflow
+    Invalid free
+    Allocation-size overflow
+
+============================================================
+NEXT CHAPTER
+============================================================
+
+CHAPTER 14 — STORAGE CLASSES IN C
+
+Topics:
+
+    1. What is storage class?
+    2. Scope
+    3. Lifetime
+    4. Linkage
+    5. auto
+    6. register
+    7. static
+    8. extern
+    9. Local static variables
+    10. Global static variables
+    11. External linkage
+    12. Internal linkage
+    13. Translation units
+    14. Header files
+    15. static functions
+    16. static variables
+    17. extern declarations
+    18. Declaration vs definition
+    19. Storage duration
+    20. Scope vs lifetime vs linkage
+    21. Common interview traps
+    22. GATE-level questions
+    23. Practical programs
+    24. Job-ready exercises
+
+============================================================

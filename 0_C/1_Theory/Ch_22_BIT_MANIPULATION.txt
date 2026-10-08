@@ -1,0 +1,2600 @@
+# ================================================================
+# CHAPTER 22 — BIT MANIPULATION IN C
+# ================================================================
+#
+# Source topics:
+# 22.1 Binary Representation
+# 22.2 Bitwise AND
+# 22.3 Bitwise OR
+# 22.4 Bitwise XOR
+# 22.5 Bitwise NOT
+# 22.6 Left Shift
+# 22.7 Right Shift
+# 22.8 Important Bit Tricks
+#      • Check odd/even
+#      • Check/set/clear a bit
+#      • Toggle a bit
+#      • Count set bits
+#      • Power of 2
+#      • Swap numbers
+#      • Extract bits
+#      • Masking
+# 22.9 Bit Fields
+# 22.10 Interview Problems on Bit Manipulation
+# ================================================================
+
+
+1. WHAT IS BIT MANIPULATION?
+============================
+
+Bit manipulation means operating directly on the individual bits
+of an integer/object representation.
+
+A bit can contain:
+
+    0
+or
+    1
+
+Example:
+
+    Decimal 5
+
+    Binary:
+        0101
+
+Each position represents a power of 2:
+
+        0  1  0  1
+        │  │  │  │
+        8  4  2  1
+
+Therefore:
+
+    0101
+    = 0×8 + 1×4 + 0×2 + 1×1
+    = 5
+
+
+Bit manipulation is important in:
+
+    • Operating systems
+    • Embedded systems
+    • Device registers
+    • Networking
+    • Cryptography
+    • Compression
+    • Performance-oriented code
+    • Competitive programming
+    • GATE/interviews
+    • Low-level programming
+
+
+---------------------------------------------------------------
+2. BINARY REPRESENTATION
+---------------------------------------------------------------
+
+Binary uses only:
+
+    0 and 1
+
+Decimal uses:
+
+    0 ... 9
+
+
+For an unsigned binary number:
+
+    101101
+
+means:
+
+    1×2^5
+  + 0×2^4
+  + 1×2^3
+  + 1×2^2
+  + 0×2^1
+  + 1×2^0
+
+    = 32 + 8 + 4 + 1
+    = 45
+
+
+Important powers of 2:
+
+    2^0  = 1
+    2^1  = 2
+    2^2  = 4
+    2^3  = 8
+    2^4  = 16
+    2^5  = 32
+    2^6  = 64
+    2^7  = 128
+    ...
+
+
+For an unsigned N-bit value:
+
+    range = 0 to 2^N - 1
+
+
+For example, an 8-bit unsigned value:
+
+    00000000 → 0
+    11111111 → 255
+
+
+---------------------------------------------------------------
+3. BITS ARE NUMBERED FROM THE RIGHT
+---------------------------------------------------------------
+
+Consider:
+
+    10110110
+
+
+Bit positions:
+
+       7 6 5 4 3 2 1 0
+       -----------------
+       1 0 1 1 0 1 1 0
+
+
+The rightmost bit is:
+
+    bit 0
+
+The next:
+
+    bit 1
+
+and so on.
+
+
+Example:
+
+    10110110
+         ↑
+       bit 2
+
+
+Bit 2 is:
+
+    1
+
+
+The value represented by bit position n is:
+
+    2^n
+
+
+Therefore:
+
+    bit 0 → 1
+    bit 1 → 2
+    bit 2 → 4
+    bit 3 → 8
+    ...
+
+
+---------------------------------------------------------------
+4. BITWISE OPERATORS
+---------------------------------------------------------------
+
+C provides:
+
+    &   Bitwise AND
+    |   Bitwise OR
+    ^   Bitwise XOR
+    ~   Bitwise NOT
+    <<  Left shift
+    >>  Right shift
+
+
+These operate on integer operands.
+
+
+IMPORTANT:
+
+Logical operators:
+
+    &&
+    ||
+    !
+
+are different from:
+
+    &
+    |
+    ^ 
+    ~
+
+
+Example:
+
+    && → logical AND
+
+    &  → bitwise AND
+
+
+Do not confuse them.
+
+
+---------------------------------------------------------------
+5. BITWISE AND — &
+---------------------------------------------------------------
+
+AND compares corresponding bits.
+
+Truth table:
+
+    A   B   A & B
+    -------------
+    0   0     0
+    0   1     0
+    1   0     0
+    1   1     1
+
+
+Only:
+
+    1 & 1
+
+produces 1.
+
+
+Example:
+
+    12 = 1100
+     5 = 0101
+
+    12 & 5
+
+       1100
+       0101
+       ----
+       0100
+
+Result:
+
+    4
+
+
+Therefore:
+
+    12 & 5 = 4
+
+
+---------------------------------------------------------------
+6. BITWISE AND — COMMON USE
+---------------------------------------------------------------
+
+AND is frequently used for:
+
+    • checking bits
+    • clearing bits
+    • masking
+    • extracting selected bits
+
+
+Example:
+
+    x = 13
+
+Binary:
+
+    1101
+
+
+Check whether bit 2 is set:
+
+    x & (1 << 2)
+
+
+Calculate:
+
+    1 << 2 = 0100
+
+Then:
+
+    1101
+    0100
+    ----
+    0100
+
+Non-zero result means:
+
+    bit 2 is set.
+
+
+---------------------------------------------------------------
+7. BITWISE OR — |
+---------------------------------------------------------------
+
+OR truth table:
+
+    A   B   A | B
+    -------------
+    0   0     0
+    0   1     1
+    1   0     1
+    1   1     1
+
+
+At least one 1 produces 1.
+
+
+Example:
+
+    12 = 1100
+     5 = 0101
+
+       1100
+       0101
+       ----
+       1101
+
+Result:
+
+    13
+
+
+Therefore:
+
+    12 | 5 = 13
+
+
+---------------------------------------------------------------
+8. OR — SETTING BITS
+---------------------------------------------------------------
+
+OR is commonly used to set a selected bit.
+
+Suppose:
+
+    x = 8
+
+Binary:
+
+    1000
+
+
+Set bit 1:
+
+    x = x | (1 << 1);
+
+
+Mask:
+
+    1 << 1 = 0010
+
+
+Then:
+
+    1000
+    0010
+    ----
+    1010
+
+
+Result:
+
+    10
+
+
+Therefore:
+
+    x |= (1 << n);
+
+sets bit n.
+
+
+---------------------------------------------------------------
+9. BITWISE XOR — ^
+---------------------------------------------------------------
+
+XOR means:
+
+    exclusive OR
+
+
+Truth table:
+
+    A   B   A ^ B
+    -------------
+    0   0     0
+    0   1     1
+    1   0     1
+    1   1     0
+
+
+XOR produces 1 when the two bits are different.
+
+
+Example:
+
+    12 = 1100
+     5 = 0101
+
+       1100
+       0101
+       ----
+       1001
+
+Result:
+
+    9
+
+
+Therefore:
+
+    12 ^ 5 = 9
+
+
+---------------------------------------------------------------
+10. IMPORTANT XOR PROPERTIES
+---------------------------------------------------------------
+
+XOR has several extremely useful properties:
+
+    x ^ 0 = x
+
+    x ^ x = 0
+
+    x ^ y = y ^ x
+
+    (x ^ y) ^ z
+        =
+    x ^ (y ^ z)
+
+
+The most important:
+
+    x ^ x = 0
+
+
+and:
+
+    x ^ 0 = x
+
+
+These properties are used in many interview problems.
+
+
+---------------------------------------------------------------
+11. XOR FOR TOGGLING A BIT
+---------------------------------------------------------------
+
+XOR can toggle a bit.
+
+If bit is:
+
+    0
+
+XOR with 1:
+
+    0 ^ 1 = 1
+
+
+If bit is:
+
+    1
+
+XOR with 1:
+
+    1 ^ 1 = 0
+
+
+Therefore:
+
+    x ^= (1 << n);
+
+toggles bit n.
+
+
+Example:
+
+    x = 1010
+
+Toggle bit 1:
+
+    mask = 0010
+
+    1010
+    0010
+    ----
+    1000
+
+
+Result:
+
+    8
+
+
+---------------------------------------------------------------
+12. BITWISE NOT — ~
+---------------------------------------------------------------
+
+NOT flips every bit.
+
+Truth table:
+
+    A   ~A
+    ------
+    0    1
+    1    0
+
+
+Example using an 8-bit representation:
+
+    x:
+
+    00001111
+
+    ~x:
+
+    11110000
+
+
+Important:
+
+The exact numeric result of ~ depends on the type and its width,
+and signed integer representation/behavior must be considered.
+
+For an unsigned 8-bit conceptual value:
+
+    ~00001111
+    = 11110000
+
+
+Do not blindly assume every C integer has exactly 8 bits.
+
+
+---------------------------------------------------------------
+13. INTEGER PROMOTIONS AND ~
+---------------------------------------------------------------
+
+A classic trap:
+
+    unsigned char x = 0x0F;
+
+    ~x
+
+
+The operand is subject to integer promotions before the bitwise
+operation.
+
+Therefore the operation may occur as an int rather than as an
+8-bit unsigned value.
+
+This is why:
+
+    ~x
+
+does not necessarily produce the intuitive 8-bit:
+
+    0xF0
+
+
+When exact-width behavior is required, explicitly use an appropriate
+unsigned type and mask/cast carefully.
+
+
+---------------------------------------------------------------
+14. LEFT SHIFT — <<
+---------------------------------------------------------------
+
+Left shift moves bits toward the left.
+
+Example:
+
+    00000101
+
+Shift left by 1:
+
+    00001010
+
+
+Therefore:
+
+    5 << 1 = 10
+
+
+Conceptually, for suitable non-overflowing unsigned values:
+
+    x << n
+
+corresponds to multiplying by:
+
+    2^n
+
+
+Example:
+
+    3 << 3
+
+    0011
+    → 0110
+    → 1100
+    → 11000
+
+Result:
+
+    24
+
+
+---------------------------------------------------------------
+15. LEFT SHIFT AS MULTIPLICATION
+---------------------------------------------------------------
+
+For suitable unsigned values:
+
+    x << 1 = x × 2
+
+    x << 2 = x × 4
+
+    x << 3 = x × 8
+
+
+Example:
+
+    7 << 3
+
+    = 7 × 8
+    = 56
+
+
+But do not blindly apply the multiplication rule to signed
+expressions or shifts that overflow the representable range.
+
+For predictable bit manipulation, unsigned integers are generally
+preferred.
+
+
+---------------------------------------------------------------
+16. RIGHT SHIFT — >>
+---------------------------------------------------------------
+
+Right shift moves bits toward the right.
+
+Example:
+
+    00010100
+
+Shift right by 2:
+
+    00000101
+
+
+Therefore:
+
+    20 >> 2 = 5
+
+
+For unsigned values, right shift fills the left side with zeros.
+
+
+For signed values, the result for a right shift of a negative value
+is implementation-defined in C.
+
+Therefore, distinguish:
+
+    unsigned right shift
+
+from:
+
+    signed negative right shift.
+
+
+---------------------------------------------------------------
+17. SHIFT RULES — IMPORTANT
+---------------------------------------------------------------
+
+For:
+
+    x << n
+
+or:
+
+    x >> n
+
+
+The shift count must be valid.
+
+For an unsigned integer type with width W:
+
+    0 <= n < W
+
+
+A shift count outside this range leads to undefined behavior.
+
+
+Example for a 32-bit unsigned type:
+
+    x << 31     valid shift count
+
+    x << 32     invalid
+
+
+Do not assume:
+
+    x << 32
+
+means zero.
+
+
+---------------------------------------------------------------
+18. CHECK ODD OR EVEN
+---------------------------------------------------------------
+
+The least significant bit tells whether an integer is odd/even.
+
+Binary representation:
+
+    even → last bit 0
+
+    odd  → last bit 1
+
+
+Therefore:
+
+    if (x & 1)
+        printf("Odd");
+    else
+        printf("Even");
+
+
+Example:
+
+    x = 13
+
+    1101
+    0001
+    ----
+    0001
+
+Non-zero:
+
+    odd
+
+
+Example:
+
+    x = 12
+
+    1100
+    0001
+    ----
+    0000
+
+Therefore:
+
+    even
+
+
+This is a classic bit-manipulation technique.
+
+
+---------------------------------------------------------------
+19. CHECK WHETHER A BIT IS SET
+---------------------------------------------------------------
+
+To check bit n:
+
+    if (x & (1u << n))
+    {
+        // bit is set
+    }
+
+
+Explanation:
+
+    1u << n
+
+creates a mask with only bit n set.
+
+
+Example:
+
+    x = 13
+
+    1101
+
+
+Check bit 2:
+
+    1u << 2
+
+    0100
+
+
+Then:
+
+    1101
+    0100
+    ----
+    0100
+
+
+Non-zero:
+
+    bit 2 is set.
+
+
+---------------------------------------------------------------
+20. SET A BIT
+---------------------------------------------------------------
+
+Set bit n:
+
+    x |= (1u << n);
+
+
+Meaning:
+
+    force bit n to 1.
+
+
+Example:
+
+    x = 8
+
+    1000
+
+
+Set bit 1:
+
+    x |= 0010
+
+
+Result:
+
+    1010
+
+    = 10
+
+
+The other bits remain unchanged.
+
+
+---------------------------------------------------------------
+21. CLEAR A BIT
+---------------------------------------------------------------
+
+To clear bit n:
+
+    x &= ~(1u << n);
+
+
+First:
+
+    1u << n
+
+creates:
+
+    ...00100...
+
+
+Then:
+
+    ~(1u << n)
+
+creates a mask with:
+
+    0 at bit n
+    1 everywhere else
+
+
+ANDing with it clears that bit.
+
+
+Example:
+
+    x = 15
+
+    1111
+
+
+Clear bit 2:
+
+    mask = 0100
+
+    ~mask:
+
+    1011
+
+
+Then:
+
+    1111
+    1011
+    ----
+    1011
+
+
+Result:
+
+    11
+
+
+---------------------------------------------------------------
+22. TOGGLE A BIT
+---------------------------------------------------------------
+
+Toggle bit n:
+
+    x ^= (1u << n);
+
+
+If bit is:
+
+    0 → becomes 1
+
+If bit is:
+
+    1 → becomes 0
+
+
+Example:
+
+    x = 1010
+
+    toggle bit 3:
+
+    mask = 1000
+
+
+    1010
+    1000
+    ----
+    0010
+
+
+Result:
+
+    2
+
+
+---------------------------------------------------------------
+23. EXTRACT A BIT
+---------------------------------------------------------------
+
+To obtain bit n as a value of 0 or 1:
+
+    (x >> n) & 1u
+
+
+Example:
+
+    x = 13
+
+    1101
+
+
+Extract bit 2:
+
+    x >> 2
+
+    0011
+
+
+Then:
+
+    0011
+    0001
+    ----
+    0001
+
+
+Result:
+
+    1
+
+
+Therefore:
+
+    ((x >> n) & 1u)
+
+is a standard way to extract bit n.
+
+
+---------------------------------------------------------------
+24. MASKING
+---------------------------------------------------------------
+
+Masking means selecting or modifying particular bits while ignoring
+others.
+
+Suppose:
+
+    x = 10110110
+
+
+Mask:
+
+    00001111
+
+
+AND:
+
+    10110110
+    00001111
+    --------
+    00000110
+
+
+The lower four bits are extracted.
+
+
+Therefore:
+
+    x & 0x0F
+
+extracts the lower 4 bits.
+
+
+Masking is fundamental in:
+
+    • hardware registers
+    • networking
+    • binary protocols
+    • permissions/flags
+    • packed data
+    • embedded systems
+
+
+---------------------------------------------------------------
+25. EXTRACTING A RANGE OF BITS
+---------------------------------------------------------------
+
+Suppose we want bits:
+
+    2 through 4
+
+
+There are:
+
+    3 bits
+
+
+A mask for 3 bits:
+
+    111
+
+
+Shift it into position:
+
+    111 << 2
+
+
+Result:
+
+    00011100
+
+
+Then:
+
+    x & (111 << 2)
+
+extracts those bits while keeping their original position.
+
+
+To normalize them to the right:
+
+    (x >> 2) & 111
+
+
+In C:
+
+    (x >> start) & ((1u << width) - 1u)
+
+
+This formula is useful when:
+
+    width
+
+is valid and the shift does not exceed the type's width.
+
+
+---------------------------------------------------------------
+26. COUNT SET BITS
+---------------------------------------------------------------
+
+A set bit is:
+
+    bit = 1
+
+
+Example:
+
+    101101
+
+contains:
+
+    four 1s
+
+
+Simple method:
+
+    count = 0;
+
+    while (x != 0)
+    {
+        count += x & 1u;
+        x >>= 1;
+    }
+
+
+Each iteration checks the lowest bit.
+
+
+Complexity:
+
+    O(number of bits)
+
+
+For a fixed-width integer this is effectively bounded by the type
+width.
+
+
+---------------------------------------------------------------
+27. KERNIGHAN'S SET-BIT ALGORITHM
+---------------------------------------------------------------
+
+A more efficient classic technique is:
+
+    while (x != 0)
+    {
+        x = x & (x - 1);
+        count++;
+    }
+
+
+Why does it work?
+
+
+Consider:
+
+    x = 1011000
+
+
+Then:
+
+    x - 1 = 1010111
+
+
+AND:
+
+    1011000
+    1010111
+    -------
+    1010000
+
+
+The lowest set bit disappears.
+
+
+Therefore:
+
+    x & (x - 1)
+
+removes the lowest set bit.
+
+
+The loop runs once for every set bit.
+
+
+Complexity:
+
+    O(number of set bits)
+
+
+This is a classic GATE/interview technique.
+
+
+---------------------------------------------------------------
+28. CHECK POWER OF TWO
+---------------------------------------------------------------
+
+For positive x:
+
+    x is a power of 2
+
+if and only if:
+
+    x & (x - 1) == 0
+
+
+Example:
+
+    x = 8
+
+Binary:
+
+    1000
+
+
+x - 1:
+
+    0111
+
+
+AND:
+
+    1000
+    0111
+    ----
+    0000
+
+
+Therefore 8 is a power of 2.
+
+
+But:
+
+    x = 10
+
+    1010
+    1001
+    ----
+    1000
+
+Non-zero.
+
+
+Therefore 10 is not a power of 2.
+
+
+Important:
+
+    0
+
+also satisfies:
+
+    x & (x - 1) == 0
+
+
+Therefore the complete condition is:
+
+    x > 0 && (x & (x - 1)) == 0
+
+
+For unsigned x, this is especially clean.
+
+
+---------------------------------------------------------------
+29. CLEAR LOWEST SET BIT
+---------------------------------------------------------------
+
+The expression:
+
+    x &= (x - 1);
+
+
+clears the lowest set bit.
+
+
+Example:
+
+    x = 101100
+
+    x - 1 = 101011
+
+
+    101100
+    101011
+    ------
+    101000
+
+
+The lowest 1 disappears.
+
+
+This operation is used in:
+
+    • counting set bits
+    • bitset algorithms
+    • subset-related algorithms
+    • interview problems
+
+
+---------------------------------------------------------------
+30. ISOLATE LOWEST SET BIT
+---------------------------------------------------------------
+
+A classic expression:
+
+    x & -x
+
+
+isolates the lowest set bit for suitable signed/unsigned contexts,
+but the details of signed arithmetic and types matter.
+
+A safer conceptual form often used with unsigned values is based on
+the two's-complement identity.
+
+Example:
+
+    x = 101100
+
+The lowest set bit is:
+
+    000100
+
+
+This technique appears frequently in advanced bit algorithms.
+
+
+---------------------------------------------------------------
+31. SWAP USING XOR
+---------------------------------------------------------------
+
+Classic XOR swap:
+
+    a ^= b;
+    b ^= a;
+    a ^= b;
+
+
+Suppose:
+
+    a = 5
+    b = 3
+
+
+The values are exchanged.
+
+
+Why?
+
+
+After first:
+
+    a = a ^ b
+
+
+After second:
+
+    b = (a ^ b) ^ b
+      = a
+
+
+After third:
+
+    a = (a ^ b) ^ a
+      = b
+
+
+Therefore:
+
+    a and b are swapped.
+
+
+IMPORTANT PRACTICAL NOTE:
+
+This technique is mainly an interview/bit-manipulation exercise.
+
+In normal production C, the simple temporary-variable swap is often
+clearer:
+
+    int temp = a;
+    a = b;
+    b = temp;
+
+
+Also, XOR swap has aliasing concerns if a and b refer to the same
+object.
+
+
+---------------------------------------------------------------
+32. BIT MASK FOR FLAGS
+---------------------------------------------------------------
+
+Multiple Boolean states can be stored inside one integer.
+
+Suppose:
+
+    bit 0 = READ
+    bit 1 = WRITE
+    bit 2 = EXECUTE
+
+
+Define:
+
+    #define READ    (1u << 0)
+    #define WRITE   (1u << 1)
+    #define EXECUTE (1u << 2)
+
+
+Then:
+
+    unsigned permissions = READ | WRITE;
+
+
+Binary:
+
+    011
+
+
+Check:
+
+    if (permissions & WRITE)
+    {
+        // write permission exists
+    }
+
+
+Add:
+
+    permissions |= EXECUTE;
+
+
+Remove:
+
+    permissions &= ~WRITE;
+
+
+This is one of the most important practical uses of bit masks.
+
+
+---------------------------------------------------------------
+33. MULTIPLE FLAGS
+---------------------------------------------------------------
+
+Suppose:
+
+    flags = READ | WRITE | EXECUTE;
+
+
+Then:
+
+    flags
+
+contains multiple independent Boolean values.
+
+
+Check one:
+
+    flags & READ
+
+
+Check several:
+
+    (flags & (READ | WRITE)) == (READ | WRITE)
+
+
+This asks:
+
+    "Are both READ and WRITE set?"
+
+
+This technique is common in:
+
+    • OS permissions
+    • device configuration
+    • networking
+    • APIs
+    • status registers
+
+
+---------------------------------------------------------------
+34. BIT FIELDS
+---------------------------------------------------------------
+
+C structures can contain bit-field members.
+
+Example:
+
+    struct Flags
+    {
+        unsigned int ready : 1;
+        unsigned int error : 1;
+        unsigned int mode  : 2;
+    };
+
+
+Here:
+
+    ready
+
+uses:
+
+    1 bit
+
+
+    error
+
+uses:
+
+    1 bit
+
+
+    mode
+
+uses:
+
+    2 bits
+
+
+Bit-fields can pack multiple small integer values into storage.
+
+
+---------------------------------------------------------------
+35. BIT-FIELD EXAMPLE
+---------------------------------------------------------------
+
+    struct Status
+    {
+        unsigned int ready : 1;
+        unsigned int error : 1;
+        unsigned int code  : 3;
+    };
+
+
+Usage:
+
+    struct Status s = {0};
+
+    s.ready = 1;
+    s.error = 0;
+    s.code = 5;
+
+
+This is useful when data naturally consists of small fields.
+
+
+---------------------------------------------------------------
+36. BIT-FIELD LIMITATIONS
+---------------------------------------------------------------
+
+Bit-fields are convenient but have implementation-dependent aspects.
+
+Important considerations include:
+
+    • allocation order of bit-fields
+    • alignment
+    • size of the containing unit
+    • representation details
+
+Therefore do not assume a particular bit-field memory layout is
+portable across all systems.
+
+
+This is especially important for:
+
+    network protocols
+    hardware registers
+    binary file formats
+
+
+For exact portable bit layouts, explicit masks and shifts may be
+more appropriate.
+
+
+---------------------------------------------------------------
+37. BIT MANIPULATION AND unsigned TYPES
+---------------------------------------------------------------
+
+For low-level bit manipulation, unsigned integer types are usually
+easier to reason about.
+
+Example:
+
+    unsigned int x;
+
+
+Why?
+
+Because unsigned arithmetic has well-defined modulo behavior, and
+the bit pattern directly represents a value in the unsigned range.
+
+
+For signed integers, issues involving:
+
+    • negative values
+    • signed overflow
+    • right shift of negative values
+    • representation assumptions
+
+can complicate reasoning.
+
+
+Therefore:
+
+    unsigned int
+
+or fixed-width unsigned types such as:
+
+    uint32_t
+
+can be useful when exact width is required and the implementation
+provides that type.
+
+
+---------------------------------------------------------------
+38. BITWISE VS LOGICAL OPERATORS
+---------------------------------------------------------------
+
+This is a very important distinction.
+
+Bitwise:
+
+    &
+    |
+    ^
+    ~
+
+
+Logical:
+
+    &&
+    ||
+    !
+
+
+Example:
+
+    5 & 3
+
+Binary:
+
+    0101
+    0011
+    ----
+    0001
+
+Result:
+
+    1
+
+
+But:
+
+    5 && 3
+
+means:
+
+    true && true
+
+Result:
+
+    1
+
+
+They are completely different operations.
+
+
+---------------------------------------------------------------
+39. OPERATOR PRECEDENCE TRAP
+---------------------------------------------------------------
+
+Bitwise expressions can become difficult to read.
+
+For example:
+
+    if (x & 1 == 0)
+
+
+This does NOT express the intended grouping clearly.
+
+Use parentheses:
+
+    if ((x & 1u) == 0)
+
+
+Likewise:
+
+    if (x & mask)
+
+is clearer than relying on precedence in complicated expressions.
+
+
+Good bit manipulation code uses explicit parentheses.
+
+
+---------------------------------------------------------------
+40. PRACTICAL PROGRAM — SET/CLEAR/TOGGLE/CHECK
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        unsigned int x = 0;
+
+        // Set bit 2
+        x |= (1u << 2);
+
+        // Set bit 4
+        x |= (1u << 4);
+
+        // Check bit 2
+        if (x & (1u << 2))
+            printf("Bit 2 is set\n");
+
+        // Clear bit 2
+        x &= ~(1u << 2);
+
+        // Toggle bit 4
+        x ^= (1u << 4);
+
+        return 0;
+    }
+
+
+This demonstrates the four fundamental operations:
+
+    SET
+    CLEAR
+    CHECK
+    TOGGLE
+
+
+---------------------------------------------------------------
+41. PRACTICAL PROGRAM — COUNT SET BITS
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    unsigned int count_bits(unsigned int x)
+    {
+        unsigned int count = 0;
+
+        while (x != 0)
+        {
+            x &= (x - 1);
+            count++;
+        }
+
+        return count;
+    }
+
+    int main(void)
+    {
+        unsigned int x = 29;
+
+        printf("%u\n", count_bits(x));
+
+        return 0;
+    }
+
+
+29 in binary:
+
+    11101
+
+
+Number of set bits:
+
+    4
+
+
+Output:
+
+    4
+
+
+---------------------------------------------------------------
+42. PRACTICAL PROGRAM — POWER OF TWO
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int is_power_of_two(unsigned int x)
+    {
+        return x != 0 && (x & (x - 1)) == 0;
+    }
+
+    int main(void)
+    {
+        unsigned int x = 32;
+
+        if (is_power_of_two(x))
+            printf("Power of 2\n");
+        else
+            printf("Not a power of 2\n");
+
+        return 0;
+    }
+
+
+For:
+
+    32 = 100000
+
+    31 = 011111
+
+AND:
+
+    000000
+
+Therefore 32 is a power of two.
+
+
+---------------------------------------------------------------
+43. PRACTICAL PROGRAM — EXTRACT LOWER N BITS
+---------------------------------------------------------------
+
+Suppose:
+
+    x = 29
+
+Binary:
+
+    11101
+
+
+Extract lower 3 bits:
+
+    11101
+    00111
+    -----
+    00101
+
+
+Result:
+
+    5
+
+
+Expression:
+
+    x & ((1u << n) - 1u)
+
+
+For:
+
+    n = 3
+
+mask:
+
+    1u << 3 = 1000
+
+then:
+
+    1000 - 1 = 0111
+
+
+Therefore:
+
+    x & 0111
+
+
+extracts the lower 3 bits.
+
+
+Again, ensure the shift count is valid for the type.
+
+
+---------------------------------------------------------------
+44. COMMON BIT TRICKS — MASTER TABLE
+---------------------------------------------------------------
+
+Check odd:
+
+    x & 1u
+
+
+Set bit n:
+
+    x |= (1u << n)
+
+
+Clear bit n:
+
+    x &= ~(1u << n)
+
+
+Toggle bit n:
+
+    x ^= (1u << n)
+
+
+Check bit n:
+
+    x & (1u << n)
+
+
+Extract bit n:
+
+    (x >> n) & 1u
+
+
+Clear lowest set bit:
+
+    x &= x - 1
+
+
+Count set bits:
+
+    repeatedly x &= x - 1
+
+
+Power of 2:
+
+    x > 0 && (x & (x - 1)) == 0
+
+
+Extract lower n bits:
+
+    x & ((1u << n) - 1u)
+
+
+---------------------------------------------------------------
+45. INTERVIEW PROBLEM — FIND UNIQUE NUMBER
+---------------------------------------------------------------
+
+Suppose every number appears twice except one.
+
+Example:
+
+    2 4 7 2 4
+
+
+Which number occurs once?
+
+
+Use XOR:
+
+    2 ^ 4 ^ 7 ^ 2 ^ 4
+
+
+Rearrange:
+
+    (2 ^ 2) ^ (4 ^ 4) ^ 7
+
+
+Because:
+
+    x ^ x = 0
+
+
+we get:
+
+    0 ^ 0 ^ 7
+
+Therefore:
+
+    7
+
+
+Algorithm:
+
+    result = 0;
+
+    for each x:
+        result ^= x;
+
+
+Time:
+
+    O(n)
+
+
+Extra space:
+
+    O(1)
+
+
+This is a classic interview/GATE-style problem.
+
+
+---------------------------------------------------------------
+46. INTERVIEW PROBLEM — TWO UNIQUE NUMBERS
+---------------------------------------------------------------
+
+Suppose every number occurs twice except two numbers.
+
+Example:
+
+    2 3 2 5
+
+
+Unique values:
+
+    3 and 5
+
+
+First:
+
+    XOR all values
+
+    2 ^ 3 ^ 2 ^ 5
+
+Pairs cancel:
+
+    3 ^ 5
+
+
+Since:
+
+    3 ^ 5 != 0
+
+there is at least one bit where 3 and 5 differ.
+
+
+Choose one set bit from:
+
+    3 ^ 5
+
+
+Use it as a dividing mask.
+
+Partition the numbers into two groups based on that bit.
+
+Each group eventually produces one unique value using XOR.
+
+
+This is a classic advanced XOR technique.
+
+
+---------------------------------------------------------------
+47. INTERVIEW PROBLEM — MISSING NUMBER
+---------------------------------------------------------------
+
+Suppose numbers are:
+
+    0, 1, 2, 3, 5
+
+Missing:
+
+    4
+
+
+One approach uses XOR.
+
+Compute:
+
+    0 ^ 1 ^ 2 ^ 3 ^ 4 ^ 5
+
+and XOR with all array elements:
+
+    0 ^ 1 ^ 2 ^ 3 ^ 5
+
+
+Every present number cancels.
+
+The result is:
+
+    4
+
+
+This avoids arithmetic-sum overflow concerns that can arise from
+using:
+
+    n(n+1)/2
+
+
+---------------------------------------------------------------
+48. INTERVIEW PROBLEM — CHECK BIT PARITY
+---------------------------------------------------------------
+
+Parity means whether the number of set bits is:
+
+    even
+
+or:
+
+    odd
+
+
+Example:
+
+    1011
+
+has:
+
+    3 set bits
+
+Therefore odd parity.
+
+
+A simple approach:
+
+    count set bits
+
+and:
+
+    count % 2
+
+
+For advanced solutions, XOR/folding techniques can reduce the work,
+but the exact method depends on integer width.
+
+
+---------------------------------------------------------------
+49. INTERVIEW PROBLEM — REVERSE BITS
+---------------------------------------------------------------
+
+Given a fixed-width unsigned integer, reverse the bit order.
+
+General idea:
+
+    result = 0
+
+    repeatedly:
+        shift result left
+        copy lowest bit of x into result
+        shift x right
+
+
+Conceptually:
+
+    result = (result << 1) | (x & 1u);
+    x >>= 1;
+
+
+Repeat for the chosen width.
+
+
+This is a common low-level programming exercise.
+
+
+---------------------------------------------------------------
+50. BIT MANIPULATION AND HARDWARE
+---------------------------------------------------------------
+
+A hardware register might conceptually contain:
+
+    bit 0 → enable
+    bit 1 → interrupt
+    bit 2 → reset
+    bit 3 → mode
+
+
+Software can use masks:
+
+    ENABLE = 1u << 0
+    INTERRUPT = 1u << 1
+    RESET = 1u << 2
+    MODE = 1u << 3
+
+
+Then:
+
+    register |= ENABLE;
+
+means:
+
+    enable feature
+
+
+and:
+
+    register &= ~RESET;
+
+means:
+
+    clear reset bit
+
+
+This is why bit manipulation is fundamental in embedded and
+system-level C.
+
+
+---------------------------------------------------------------
+51. COMMON MISTAKES
+---------------------------------------------------------------
+
+Mistake 1:
+
+    if (x & 1 == 0)
+
+Use:
+
+    if ((x & 1u) == 0)
+
+
+Mistake 2:
+
+    x << 32
+
+when x is a 32-bit type.
+
+Invalid shift count.
+
+
+Mistake 3:
+
+    Assuming ~ always operates on exactly 8 bits.
+
+Integer promotions matter.
+
+
+Mistake 4:
+
+    Using signed integers carelessly for low-level bit operations.
+
+
+Mistake 5:
+
+    Assuming right shift of a negative signed integer is always
+    identical on every implementation.
+
+C specifies this behavior differently from unsigned shifting.
+
+
+Mistake 6:
+
+    Forgetting that:
+
+    x & (x - 1)
+
+    requires care around x = 0 depending on the intended algorithm.
+
+
+Mistake 7:
+
+    Assuming a bit-field layout is universally portable.
+
+
+Mistake 8:
+
+    Confusing:
+
+    &
+    with
+    &&
+
+
+Mistake 9:
+
+    Confusing:
+
+    |
+    with
+    ||
+
+
+Mistake 10:
+
+    Assuming XOR swap is always better than a temporary variable.
+
+Usually clarity is more important in production code.
+
+
+---------------------------------------------------------------
+52. GATE-LEVEL CONCEPT — x & (x - 1)
+---------------------------------------------------------------
+
+Why does:
+
+    x & (x - 1)
+
+clear the lowest set bit?
+
+
+Let x have the form:
+
+    xxxx1000...000
+
+where the rightmost 1 is the lowest set bit.
+
+Then:
+
+    x - 1
+
+becomes:
+
+    xxxx0111...111
+
+
+AND:
+
+    xxxx1000...000
+    xxxx0111...111
+    ----------------
+    xxxx0000...000
+
+
+Thus exactly the lowest set bit is cleared.
+
+
+This one identity leads to:
+
+    • power-of-two testing
+    • set-bit counting
+    • lowest-set-bit manipulation
+
+
+---------------------------------------------------------------
+53. GATE-LEVEL CONCEPT — XOR CANCELLATION
+---------------------------------------------------------------
+
+Suppose:
+
+    A ^ B ^ A
+
+
+By associativity:
+
+    (A ^ A) ^ B
+
+
+Since:
+
+    A ^ A = 0
+
+we get:
+
+    0 ^ B
+
+and:
+
+    0 ^ B = B
+
+
+Therefore:
+
+    A ^ B ^ A = B
+
+
+This cancellation property is the foundation of many XOR problems.
+
+
+---------------------------------------------------------------
+54. GATE-LEVEL CONCEPT — MASKING
+---------------------------------------------------------------
+
+Suppose:
+
+    x = abcdefgh
+
+
+and:
+
+    mask = 00001111
+
+
+Then:
+
+    x & mask
+
+gives:
+
+    0000efgh
+
+
+The upper four bits disappear.
+
+
+Similarly:
+
+    x | mask
+
+forces the lower four bits to:
+
+    1111
+
+
+And:
+
+    x & ~mask
+
+clears those selected bits.
+
+
+Therefore:
+
+    AND → select/clear
+    OR  → set
+    XOR → toggle
+    NOT → invert
+
+
+This is an excellent mental model.
+
+
+---------------------------------------------------------------
+55. BIT MANIPULATION — MASTER MENTAL MODEL
+---------------------------------------------------------------
+
+AND:
+
+    &
+
+Think:
+
+    SELECT / CLEAR
+
+
+OR:
+
+    |
+
+Think:
+
+    SET
+
+
+XOR:
+
+    ^
+
+Think:
+
+    TOGGLE / DIFFERENCE
+
+
+NOT:
+
+    ~
+
+Think:
+
+    INVERT
+
+
+LEFT SHIFT:
+
+    <<
+
+Think:
+
+    MOVE BITS LEFT
+
+
+RIGHT SHIFT:
+
+    >>
+
+Think:
+
+    MOVE BITS RIGHT
+
+
+MASK:
+
+    pattern used to select or modify bits
+
+
+---------------------------------------------------------------
+56. CHAPTER 22 — FINAL REVISION
+---------------------------------------------------------------
+
+Binary:
+
+    each bit represents a power of 2.
+
+
+AND:
+
+    x & mask
+
+
+OR:
+
+    x | mask
+
+
+XOR:
+
+    x ^ mask
+
+
+NOT:
+
+    ~x
+
+
+Left shift:
+
+    x << n
+
+
+Right shift:
+
+    x >> n
+
+
+Odd/even:
+
+    x & 1u
+
+
+Check bit n:
+
+    x & (1u << n)
+
+
+Set bit n:
+
+    x |= (1u << n)
+
+
+Clear bit n:
+
+    x &= ~(1u << n)
+
+
+Toggle bit n:
+
+    x ^= (1u << n)
+
+
+Extract bit n:
+
+    (x >> n) & 1u
+
+
+Clear lowest set bit:
+
+    x &= x - 1
+
+
+Count set bits:
+
+    repeatedly apply x &= x - 1
+
+
+Power of two:
+
+    x > 0 && (x & (x - 1)) == 0
+
+
+XOR cancellation:
+
+    x ^ x = 0
+
+    x ^ 0 = x
+
+
+Flags:
+
+    combine independent Boolean states into bits.
+
+
+Bit-fields:
+
+    compact representation of small fields, with
+    implementation-dependent layout considerations.
+
+
+===============================================================
+CHAPTER 22 COMPLETE
+===============================================================
+
+NEXT:
+
+    CHAPTER 23 — DATA STRUCTURES USING C
+
+Topics:
+
+    23.1 Complexity Basics
+         • Time complexity
+         • Space complexity
+         • Big-O
+         • Big-Theta
+         • Big-Omega
+
+    23.2 Linked List
+         • Singly linked list
+         • Doubly linked list
+         • Circular linked list
+         • Insertion
+         • Deletion
+         • Searching
+         • Reversal
+
+    23.3 Stack
+         • Array implementation
+         • Linked-list implementation
+         • Push
+         • Pop
+         • Peek
+         • Applications
+
+    23.4 Queue
+         • Simple queue
+         • Circular queue
+         • Deque
+         • Priority queue
+         • Implementations
+
+    23.5 Trees
+         • Binary tree
+         • Tree traversal
+         • BST
+         • Insertion
+         • Deletion
+         • Searching

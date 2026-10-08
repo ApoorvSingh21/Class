@@ -1,0 +1,2844 @@
+u============================================================
+             C PROGRAMMING — CHAPTER 9
+                    FUNCTIONS IN C
+             FULL JOB-READY EXPLANATION
+============================================================
+
+1. WHAT IS A FUNCTION?
+------------------------------------------------------------
+A function is a reusable block of code designed to perform
+a specific task.
+
+Instead of writing the same code repeatedly, we write it
+once inside a function and call it whenever required.
+
+Basic syntax:
+
+return_type function_name(parameter_list)
+{
+    // statements
+    return value;
+}
+
+Example:
+
+#include <stdio.h>
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main(void)
+{
+    int result = add(10, 20);
+
+    printf("%d\n", result);
+
+    return 0;
+}
+
+Output:
+30
+
+
+------------------------------------------------------------
+2. WHY FUNCTIONS ARE NEEDED
+------------------------------------------------------------
+
+Without functions:
+
+    main()
+    {
+        code for addition
+        code for factorial
+        code for prime checking
+        code for sorting
+        code for searching
+        ...
+    }
+
+This makes programs:
+
+    - difficult to understand
+    - difficult to debug
+    - difficult to maintain
+    - difficult to reuse
+    - unnecessarily large
+
+With functions:
+
+    main()
+      |
+      +---- add()
+      |
+      +---- factorial()
+      |
+      +---- isPrime()
+      |
+      +---- sort()
+      |
+      +---- search()
+
+Advantages:
+
+    1. Code reusability
+    2. Modularity
+    3. Easier debugging
+    4. Easier testing
+    5. Better readability
+    6. Easier maintenance
+    7. Team development
+    8. Separation of responsibilities
+
+
+------------------------------------------------------------
+3. THREE IMPORTANT PARTS OF A FUNCTION
+------------------------------------------------------------
+
+A function generally involves:
+
+    1. Declaration
+    2. Definition
+    3. Call
+
+
+------------------------------------------------------------
+4. FUNCTION DECLARATION
+------------------------------------------------------------
+
+A declaration tells the compiler that a function exists.
+
+Example:
+
+int add(int, int);
+
+This is called a function prototype.
+
+General syntax:
+
+return_type function_name(parameter_types);
+
+
+Example:
+
+int calculateSum(int, int);
+float calculateAverage(float, float);
+void display(void);
+
+
+------------------------------------------------------------
+5. FUNCTION DEFINITION
+------------------------------------------------------------
+
+Definition contains the actual implementation.
+
+Example:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+Here:
+
+    int     -> return type
+    add     -> function name
+    a, b    -> parameters
+    return  -> returns result
+
+
+------------------------------------------------------------
+6. FUNCTION CALL
+------------------------------------------------------------
+
+A function call executes the function.
+
+Example:
+
+int result = add(10, 20);
+
+Execution:
+
+main()
+  |
+  |-- add(10,20)
+  |
+  |-- a = 10
+  |-- b = 20
+  |
+  |-- return 30
+  |
+main receives 30
+
+
+------------------------------------------------------------
+7. COMPLETE FUNCTION EXAMPLE
+------------------------------------------------------------
+
+#include <stdio.h>
+
+int add(int, int);
+
+int main(void)
+{
+    int result;
+
+    result = add(10, 20);
+
+    printf("Result = %d\n", result);
+
+    return 0;
+}
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+Output:
+
+Result = 30
+
+
+------------------------------------------------------------
+8. PARAMETERS AND ARGUMENTS
+------------------------------------------------------------
+
+Parameter:
+    Variable written in function definition/declaration.
+
+Argument:
+    Actual value supplied during function call.
+
+Example:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main(void)
+{
+    add(10, 20);
+}
+
+Here:
+
+    a, b       -> parameters
+    10, 20     -> arguments
+
+
+------------------------------------------------------------
+9. TYPES OF FUNCTIONS
+------------------------------------------------------------
+
+Functions can be categorized based on:
+
+A. Arguments
+B. Return value
+
+
+Type 1:
+    No arguments, no return value
+
+Example:
+
+void display(void)
+{
+    printf("Hello\n");
+}
+
+
+Type 2:
+    Arguments, no return value
+
+Example:
+
+void displayNumber(int n)
+{
+    printf("%d\n", n);
+}
+
+
+Type 3:
+    No arguments, return value
+
+Example:
+
+int getNumber(void)
+{
+    return 100;
+}
+
+
+Type 4:
+    Arguments and return value
+
+Example:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+This fourth type is extremely common.
+
+
+------------------------------------------------------------
+10. VOID FUNCTIONS
+------------------------------------------------------------
+
+If a function does not return a value, use void.
+
+Example:
+
+void greet(void)
+{
+    printf("Hello\n");
+}
+
+Call:
+
+greet();
+
+
+IMPORTANT:
+
+Prefer:
+
+void greet(void)
+
+instead of:
+
+void greet()
+
+In a function prototype, `void` inside the parentheses
+explicitly means "no parameters".
+
+In modern C, use:
+
+int main(void)
+
+rather than:
+
+int main()
+
+
+------------------------------------------------------------
+11. RETURN STATEMENT
+------------------------------------------------------------
+
+The return statement:
+
+    1. sends a value back
+    2. terminates the current function
+
+Example:
+
+int square(int x)
+{
+    return x * x;
+}
+
+If:
+
+square(5)
+
+then:
+
+return 25;
+
+
+A void function can also use return without a value:
+
+void check(int x)
+{
+    if (x < 0)
+        return;
+
+    printf("Positive or zero\n");
+}
+
+
+------------------------------------------------------------
+12. RETURN TYPE
+------------------------------------------------------------
+
+A function can return different types.
+
+Example:
+
+int getAge(void)
+{
+    return 25;
+}
+
+
+double getPI(void)
+{
+    return 3.14159;
+}
+
+
+char getGrade(void)
+{
+    return 'A';
+}
+
+
+void display(void)
+{
+    printf("Hello");
+}
+
+
+------------------------------------------------------------
+13. PASS BY VALUE
+------------------------------------------------------------
+
+C uses pass-by-value for function arguments.
+
+Example:
+
+#include <stdio.h>
+
+void change(int x)
+{
+    x = 100;
+}
+
+int main(void)
+{
+    int a = 10;
+
+    change(a);
+
+    printf("%d\n", a);
+
+    return 0;
+}
+
+Output:
+
+10
+
+Why?
+
+A copy of `a` is passed to change().
+
+Memory concept:
+
+main:
+
+a = 10
+
+       |
+       | copy
+       v
+
+change():
+
+x = 10
+
+Changing x does not change a.
+
+
+------------------------------------------------------------
+14. HOW TO MODIFY ORIGINAL DATA
+------------------------------------------------------------
+
+C does not have C++-style reference parameters.
+
+To modify the caller's object, pass its address.
+
+Example:
+
+#include <stdio.h>
+
+void change(int *x)
+{
+    *x = 100;
+}
+
+int main(void)
+{
+    int a = 10;
+
+    change(&a);
+
+    printf("%d\n", a);
+
+    return 0;
+}
+
+Output:
+
+100
+
+Explanation:
+
+&a
+ |
+ v
+address of a
+
+x
+ |
+ v
+points to a
+
+*x
+ |
+ v
+actual a
+
+
+This concept is extremely important for:
+
+    - pointers
+    - arrays
+    - structures
+    - dynamic memory
+    - system programming
+
+
+------------------------------------------------------------
+15. SWAP TWO NUMBERS USING FUNCTION
+------------------------------------------------------------
+
+#include <stdio.h>
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+
+    *a = *b;
+    *b = temp;
+}
+
+int main(void)
+{
+    int x = 10;
+    int y = 20;
+
+    swap(&x, &y);
+
+    printf("x = %d\n", x);
+    printf("y = %d\n", y);
+
+    return 0;
+}
+
+Output:
+
+x = 20
+y = 10
+
+
+------------------------------------------------------------
+16. ARRAYS AS FUNCTION ARGUMENTS
+------------------------------------------------------------
+
+Example:
+
+void display(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}
+
+Call:
+
+int arr[] = {10, 20, 30, 40, 50};
+
+display(arr, 5);
+
+
+IMPORTANT:
+
+When an array is passed to a function, it is adjusted to a
+pointer to its first element.
+
+Therefore:
+
+void display(int arr[], int n)
+
+is effectively similar to:
+
+void display(int *arr, int n)
+
+
+------------------------------------------------------------
+17. ARRAY SIZE MUST GENERALLY BE PASSED SEPARATELY
+------------------------------------------------------------
+
+Incorrect assumption:
+
+void display(int arr[])
+{
+    int n = sizeof(arr) / sizeof(arr[0]);
+}
+
+This does NOT correctly determine the original array length
+inside the function.
+
+Why?
+
+Inside the function parameter, `arr` is a pointer.
+
+Correct:
+
+void display(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+}
+
+
+------------------------------------------------------------
+18. MODIFYING AN ARRAY INSIDE A FUNCTION
+------------------------------------------------------------
+
+#include <stdio.h>
+
+void doubleElements(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] *= 2;
+    }
+}
+
+int main(void)
+{
+    int arr[] = {1, 2, 3, 4};
+
+    doubleElements(arr, 4);
+
+    for (int i = 0; i < 4; i++)
+        printf("%d ", arr[i]);
+
+    return 0;
+}
+
+Output:
+
+2 4 6 8
+
+The function modifies the original array elements.
+
+
+------------------------------------------------------------
+19. PASSING POINTERS TO FUNCTIONS
+------------------------------------------------------------
+
+Example:
+
+void setValue(int *p)
+{
+    *p = 500;
+}
+
+int main(void)
+{
+    int x = 10;
+
+    setValue(&x);
+
+    printf("%d", x);
+
+    return 0;
+}
+
+Output:
+
+500
+
+
+General idea:
+
+caller:
+    object
+
+      |
+    address
+      |
+      v
+
+function:
+    pointer
+      |
+      v
+    object
+
+
+------------------------------------------------------------
+20. LOCAL VARIABLES
+------------------------------------------------------------
+
+A variable declared inside a function/block is local to that
+scope.
+
+Example:
+
+void test(void)
+{
+    int x = 10;
+
+    printf("%d", x);
+}
+
+`x` cannot be directly accessed from main().
+
+
+------------------------------------------------------------
+21. GLOBAL VARIABLES
+------------------------------------------------------------
+
+A variable declared outside all functions has file scope
+(unless modified by other declarations/specifiers).
+
+Example:
+
+#include <stdio.h>
+
+int count = 10;
+
+void display(void)
+{
+    printf("%d\n", count);
+}
+
+int main(void)
+{
+    display();
+
+    return 0;
+}
+
+Global variables have static storage duration.
+
+
+------------------------------------------------------------
+22. GLOBAL VARIABLES — BE CAREFUL
+------------------------------------------------------------
+
+Although globals can be useful, excessive use creates problems:
+
+    - hidden dependencies
+    - harder testing
+    - harder debugging
+    - unexpected modifications
+    - poor modularity
+
+Prefer passing required data through function parameters when
+practical.
+
+
+------------------------------------------------------------
+23. SCOPE VS LIFETIME
+------------------------------------------------------------
+
+These are different concepts.
+
+SCOPE:
+    Where a name can be accessed in source code.
+
+LIFETIME:
+    How long the object exists during program execution.
+
+Example:
+
+void test(void)
+{
+    int x = 10;
+}
+
+`x` has block scope.
+
+Its lifetime normally lasts from entering the block until
+execution leaves the block.
+
+
+------------------------------------------------------------
+24. STATIC LOCAL VARIABLE
+------------------------------------------------------------
+
+Example:
+
+#include <stdio.h>
+
+void counter(void)
+{
+    static int count = 0;
+
+    count++;
+
+    printf("%d\n", count);
+}
+
+int main(void)
+{
+    counter();
+    counter();
+    counter();
+
+    return 0;
+}
+
+Output:
+
+1
+2
+3
+
+Why?
+
+A static local variable:
+
+    - has block scope
+    - retains its value between function calls
+    - has static storage duration
+    - is initialized only once
+
+
+------------------------------------------------------------
+25. NORMAL LOCAL VS STATIC LOCAL
+------------------------------------------------------------
+
+Normal:
+
+void test(void)
+{
+    int x = 0;
+    x++;
+    printf("%d\n", x);
+}
+
+Calling repeatedly:
+
+1
+1
+1
+
+
+Static:
+
+void test(void)
+{
+    static int x = 0;
+    x++;
+    printf("%d\n", x);
+}
+
+Calling repeatedly:
+
+1
+2
+3
+
+
+------------------------------------------------------------
+26. RECURSION
+------------------------------------------------------------
+
+Recursion means a function calls itself.
+
+Example:
+
+void countdown(int n)
+{
+    if (n == 0)
+        return;
+
+    printf("%d\n", n);
+
+    countdown(n - 1);
+}
+
+
+Call:
+
+countdown(3);
+
+Execution:
+
+countdown(3)
+    |
+    +--> print 3
+    |
+    +--> countdown(2)
+             |
+             +--> print 2
+             |
+             +--> countdown(1)
+                      |
+                      +--> print 1
+                      |
+                      +--> countdown(0)
+                               |
+                               +--> return
+
+
+Output:
+
+3
+2
+1
+
+
+------------------------------------------------------------
+27. BASE CASE IN RECURSION
+------------------------------------------------------------
+
+Every useful recursive algorithm needs a termination
+condition.
+
+Example:
+
+int factorial(int n)
+{
+    if (n <= 1)
+        return 1;
+
+    return n * factorial(n - 1);
+}
+
+factorial(5):
+
+5 * factorial(4)
+    4 * factorial(3)
+        3 * factorial(2)
+            2 * factorial(1)
+                1
+
+Result:
+
+120
+
+
+------------------------------------------------------------
+28. RECURSION CALL STACK
+------------------------------------------------------------
+
+Each function invocation generally gets its own activation
+record/stack frame when automatic storage is involved.
+
+factorial(4)
+
+Stack:
+
++------------------+
+| factorial(1)     |
++------------------+
+| factorial(2)     |
++------------------+
+| factorial(3)     |
++------------------+
+| factorial(4)     |
++------------------+
+| main()           |
++------------------+
+
+After the base case, frames return in reverse order.
+
+
+------------------------------------------------------------
+29. RECURSION DEPTH
+------------------------------------------------------------
+
+Deep recursion can consume significant stack space.
+
+Example:
+
+void infinite(void)
+{
+    infinite();
+}
+
+There is no base case.
+
+Eventually the program may fail because of stack exhaustion.
+
+Therefore recursion must have:
+
+    - correct base case
+    - progress toward base case
+    - reasonable depth
+
+
+------------------------------------------------------------
+30. ITERATION VS RECURSION
+------------------------------------------------------------
+
+Factorial iteratively:
+
+int factorial(int n)
+{
+    int result = 1;
+
+    for (int i = 2; i <= n; i++)
+        result *= i;
+
+    return result;
+}
+
+
+Recursive:
+
+int factorial(int n)
+{
+    if (n <= 1)
+        return 1;
+
+    return n * factorial(n - 1);
+}
+
+Iteration often uses less stack space.
+
+Recursion can make some algorithms easier to express.
+
+Common recursive algorithms:
+
+    - tree traversal
+    - DFS
+    - divide and conquer
+    - merge sort
+    - quicksort
+    - backtracking
+
+
+------------------------------------------------------------
+31. STATIC FUNCTION
+------------------------------------------------------------
+
+At file scope:
+
+static int helper(int x)
+{
+    return x * 2;
+}
+
+A file-scope static function has internal linkage.
+
+That means it is intended to be accessible only within the
+same translation unit/source file.
+
+This is useful for implementation-private helper functions.
+
+
+------------------------------------------------------------
+32. INLINE FUNCTIONS
+------------------------------------------------------------
+
+C supports the `inline` function specifier.
+
+Example:
+
+static inline int square(int x)
+{
+    return x * x;
+}
+
+Important:
+
+`inline` is a request/optimization hint, not a guarantee that
+the compiler will replace every call with the function body.
+
+Modern optimizing compilers make their own decisions.
+
+
+------------------------------------------------------------
+33. FUNCTION POINTERS
+------------------------------------------------------------
+
+A function pointer stores the address of a function.
+
+Example:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int (*operation)(int, int);
+
+operation = add;
+
+int result = operation(10, 20);
+
+printf("%d", result);
+
+Output:
+
+30
+
+
+Meaning:
+
+int (*operation)(int, int)
+
+means:
+
+operation is a pointer to a function that:
+
+    takes two int arguments
+    returns int
+
+
+------------------------------------------------------------
+34. FUNCTION POINTER SYNTAX
+------------------------------------------------------------
+
+General:
+
+return_type (*pointer_name)(parameter_types);
+
+
+Example:
+
+int (*fp)(int, int);
+
+
+Can point to:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+
+Assignment:
+
+fp = add;
+
+or:
+
+fp = &add;
+
+
+Call:
+
+fp(10, 20);
+
+
+------------------------------------------------------------
+35. CALLBACK FUNCTIONS
+------------------------------------------------------------
+
+A callback is a function passed to another function, often
+through a function pointer.
+
+Example:
+
+#include <stdio.h>
+
+void process(int a, int b, int (*operation)(int, int))
+{
+    printf("%d\n", operation(a, b));
+}
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int multiply(int a, int b)
+{
+    return a * b;
+}
+
+int main(void)
+{
+    process(5, 3, add);
+    process(5, 3, multiply);
+
+    return 0;
+}
+
+Output:
+
+8
+15
+
+Callbacks are widely used in:
+
+    - sorting
+    - event systems
+    - operating systems
+    - libraries
+    - embedded systems
+    - GUI programming
+
+
+------------------------------------------------------------
+36. qsort() AND FUNCTION POINTERS
+------------------------------------------------------------
+
+The C standard library's qsort() uses a comparison function.
+
+Example:
+
+#include <stdlib.h>
+
+int compare(const void *a, const void *b)
+{
+    int x = *(const int *)a;
+    int y = *(const int *)b;
+
+    return (x > y) - (x < y);
+}
+
+int arr[] = {40, 10, 30, 20};
+
+qsort(arr, 4, sizeof(arr[0]), compare);
+
+This is an important real-world example of callbacks.
+
+
+------------------------------------------------------------
+37. VARIADIC FUNCTIONS
+------------------------------------------------------------
+
+A variadic function accepts a variable number of arguments.
+
+Example:
+
+printf()
+
+can accept:
+
+printf("%d", 10);
+
+printf("%d %d", 10, 20);
+
+printf("%d %d %d", 10, 20, 30);
+
+
+To create variadic functions, use:
+
+#include <stdarg.h>
+
+
+Example:
+
+#include <stdio.h>
+#include <stdarg.h>
+
+int sum(int count, ...)
+{
+    va_list args;
+    int total = 0;
+
+    va_start(args, count);
+
+    for (int i = 0; i < count; i++)
+    {
+        total += va_arg(args, int);
+    }
+
+    va_end(args);
+
+    return total;
+}
+
+int main(void)
+{
+    printf("%d\n", sum(3, 10, 20, 30));
+
+    return 0;
+}
+
+Output:
+
+60
+
+
+IMPORTANT:
+
+C does not automatically know how many variable arguments
+were supplied.
+
+The programmer must provide a reliable way to determine them,
+such as a count or sentinel.
+
+
+------------------------------------------------------------
+38. HEADER FILES AND FUNCTIONS
+------------------------------------------------------------
+
+Header files commonly contain:
+
+    - function declarations
+    - macros
+    - types
+    - constants
+
+Example:
+
+#include <stdio.h>
+
+printf() is declared by the standard I/O header.
+
+
+Your own header:
+
+math_utils.h
+
+#ifndef MATH_UTILS_H
+#define MATH_UTILS_H
+
+int add(int a, int b);
+int square(int x);
+
+#endif
+
+
+Implementation:
+
+math_utils.c
+
+#include "math_utils.h"
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int square(int x)
+{
+    return x * x;
+}
+
+
+main.c
+
+#include <stdio.h>
+#include "math_utils.h"
+
+int main(void)
+{
+    printf("%d\n", add(10, 20));
+
+    return 0;
+}
+
+
+Compile:
+
+gcc main.c math_utils.c -o program
+
+
+------------------------------------------------------------
+39. HEADER GUARDS
+------------------------------------------------------------
+
+Header guards prevent multiple inclusion problems.
+
+Pattern:
+
+#ifndef FILE_NAME_H
+#define FILE_NAME_H
+
+// declarations
+
+#endif
+
+
+Modern compilers also commonly support:
+
+#pragma once
+
+but traditional header guards are standard C preprocessing
+techniques and are highly portable.
+
+
+------------------------------------------------------------
+40. MODULAR PROGRAMMING
+------------------------------------------------------------
+
+Large programs should be divided into modules.
+
+Example project:
+
+project/
+|
++-- main.c
+|
++-- calculator.c
+|
++-- calculator.h
+|
++-- input.c
+|
++-- input.h
+|
++-- Makefile
+
+
+Benefits:
+
+    - maintainability
+    - code reuse
+    - testing
+    - team collaboration
+    - separate compilation
+
+
+------------------------------------------------------------
+41. FUNCTION PROTOTYPE — WHY IMPORTANT?
+------------------------------------------------------------
+
+Consider:
+
+int main(void)
+{
+    printf("%d\n", add(10, 20));
+}
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+Better practice:
+
+int add(int a, int b);
+
+int main(void)
+{
+    printf("%d\n", add(10, 20));
+}
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+The prototype tells the compiler about:
+
+    - function name
+    - return type
+    - parameter types
+
+
+------------------------------------------------------------
+42. FUNCTION DECLARATION VS DEFINITION
+------------------------------------------------------------
+
+Declaration:
+
+int add(int, int);
+
+Definition:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+Declaration says:
+
+    "This function exists."
+
+Definition says:
+
+    "This is what the function does."
+
+
+------------------------------------------------------------
+43. FUNCTION OVERLOADING IN C
+------------------------------------------------------------
+
+C does NOT support function overloading like C++.
+
+You cannot write:
+
+int add(int a, int b);
+
+float add(float a, float b);
+
+with the same function name and expect C to select based on
+argument types.
+
+Instead use different names:
+
+int add_int(int a, int b);
+
+float add_float(float a, float b);
+
+
+------------------------------------------------------------
+44. DEFAULT ARGUMENTS IN C
+------------------------------------------------------------
+
+C does NOT support C++-style default arguments.
+
+Not valid C:
+
+int add(int a, int b = 10);
+
+
+Instead explicitly pass required arguments or design a
+different API.
+
+
+------------------------------------------------------------
+45. NESTED FUNCTIONS
+------------------------------------------------------------
+
+Standard C does not support defining a function inside another
+function.
+
+Not standard C:
+
+void outer(void)
+{
+    void inner(void)
+    {
+    }
+}
+
+Some compilers provide non-standard extensions, but avoid them
+for portable C programming.
+
+
+------------------------------------------------------------
+46. FUNCTION REENTRANCY — BASIC IDEA
+------------------------------------------------------------
+
+A reentrant function can safely be called again before a
+previous invocation has completed, under appropriate conditions.
+
+Avoid relying on:
+
+    - shared mutable global state
+    - static local state
+
+when writing functions intended for concurrent or interrupt-
+driven environments.
+
+This becomes important in:
+
+    - operating systems
+    - embedded systems
+    - multithreading
+    - signal handling
+
+
+------------------------------------------------------------
+47. PURE-STYLE FUNCTIONS
+------------------------------------------------------------
+
+A function is easier to reason about when:
+
+    output depends only on inputs
+    and
+    it does not modify external state.
+
+Example:
+
+int square(int x)
+{
+    return x * x;
+}
+
+This has no global-state dependency.
+
+Such functions are easier to:
+
+    - test
+    - debug
+    - reuse
+    - reason about
+
+
+------------------------------------------------------------
+48. COMMON FUNCTION BUGS
+------------------------------------------------------------
+
+BUG 1:
+Forgetting return value.
+
+int add(int a, int b)
+{
+    a + b;     // wrong if result is expected
+}
+
+
+Correct:
+
+return a + b;
+
+
+BUG 2:
+Wrong return type.
+
+int getValue(void)
+{
+    return 3.14;   // conversion occurs
+}
+
+If precision matters, use an appropriate type.
+
+
+BUG 3:
+Missing prototype.
+
+Calling a function without a correct visible declaration
+can cause serious problems, especially when argument/return
+types do not match expectations.
+
+
+BUG 4:
+Returning address of a local variable.
+
+int *getValue(void)
+{
+    int x = 10;
+    return &x;     // WRONG
+}
+
+After the function returns, x's lifetime has ended.
+
+
+BUG 5:
+Incorrect pointer usage.
+
+void change(int *p)
+{
+    p = NULL;      // changes only local pointer copy
+}
+
+This does not change the caller's pointer.
+
+
+BUG 6:
+Infinite recursion.
+
+void test(void)
+{
+    test();
+}
+
+
+BUG 7:
+Incorrect array size calculation.
+
+void test(int arr[])
+{
+    sizeof(arr);   // size of pointer, not original array
+}
+
+
+------------------------------------------------------------
+49. RETURNING POINTERS FROM FUNCTIONS
+------------------------------------------------------------
+
+This is valid if the returned pointer points to an object that
+continues to exist after the function returns.
+
+BAD:
+
+int *getNumber(void)
+{
+    int x = 10;
+    return &x;
+}
+
+
+Potentially valid:
+
+int *getStaticNumber(void)
+{
+    static int x = 10;
+    return &x;
+}
+
+
+But using static storage introduces shared state, so design
+carefully.
+
+
+Another valid approach is dynamically allocated memory:
+
+int *createNumber(void)
+{
+    int *p = malloc(sizeof *p);
+
+    if (p != NULL)
+        *p = 10;
+
+    return p;
+}
+
+The caller must eventually free the allocated memory.
+
+
+------------------------------------------------------------
+50. CONST PARAMETERS
+------------------------------------------------------------
+
+If a function should not modify data through a pointer,
+use const.
+
+Example:
+
+void printArray(const int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+}
+
+This communicates the function's intention and lets the
+compiler diagnose accidental modification through arr.
+
+
+------------------------------------------------------------
+51. CONST WITH POINTER PARAMETERS
+------------------------------------------------------------
+
+Example:
+
+const int *p;
+
+Means:
+
+    pointer to const int
+
+You cannot modify the int through p.
+
+Example:
+
+void display(const int *p)
+{
+    printf("%d", *p);
+}
+
+
+------------------------------------------------------------
+52. FUNCTION PARAMETER QUALIFIERS
+------------------------------------------------------------
+
+Example:
+
+void display(const int *arr, size_t n);
+
+This says:
+
+    arr points to int objects that this function promises not
+    to modify through arr.
+
+For job interviews, understand the difference between:
+
+    int *p
+    const int *p
+    int *const p
+    const int *const p
+
+
+------------------------------------------------------------
+53. FUNCTION POINTER VS NORMAL POINTER
+------------------------------------------------------------
+
+Normal pointer:
+
+int *p;
+
+p points to an int object.
+
+
+Function pointer:
+
+int (*fp)(int, int);
+
+fp points to a function accepting two int parameters and
+returning int.
+
+
+------------------------------------------------------------
+54. FUNCTION POINTER TABLE
+------------------------------------------------------------
+
+Function pointers can implement dispatch tables.
+
+Example:
+
+#include <stdio.h>
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int sub(int a, int b)
+{
+    return a - b;
+}
+
+int mul(int a, int b)
+{
+    return a * b;
+}
+
+int main(void)
+{
+    int (*operations[])(int, int) =
+    {
+        add,
+        sub,
+        mul
+    };
+
+    printf("%d\n", operations[0](10, 5));
+    printf("%d\n", operations[1](10, 5));
+    printf("%d\n", operations[2](10, 5));
+
+    return 0;
+}
+
+Output:
+
+15
+5
+50
+
+
+Useful for:
+
+    - menu systems
+    - command interpreters
+    - state machines
+    - embedded systems
+    - parsers
+
+
+------------------------------------------------------------
+55. FUNCTIONS AND MEMORY
+------------------------------------------------------------
+
+A typical process memory model contains regions such as:
+
++-------------------------+
+| Stack                   |
+| function call frames    |
++-------------------------+
+| Heap                    |
+| dynamic allocation      |
++-------------------------+
+| Static/Data             |
+| global/static objects   |
++-------------------------+
+| Read-only data          |
++-------------------------+
+| Text/Code               |
+| machine instructions    |
++-------------------------+
+
+Exact layout depends on the OS, ABI, linker, architecture,
+and compiler.
+
+
+------------------------------------------------------------
+56. STACK FRAME
+------------------------------------------------------------
+
+When a function is called, the implementation generally needs
+to maintain information associated with that invocation.
+
+Conceptually:
+
+main()
+  |
+  +--> add()
+         |
+         +--> parameters
+         +--> local variables
+         +--> return information
+
+
+Important:
+
+The exact stack-frame layout is implementation/ABI dependent.
+
+Do not assume every compiler uses exactly the same layout.
+
+
+------------------------------------------------------------
+57. FUNCTION CALL FLOW
+------------------------------------------------------------
+
+Example:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main(void)
+{
+    int x = add(10, 20);
+}
+
+Flow:
+
+main()
+ |
+ | call add(10,20)
+ v
+add()
+ |
+ | calculate 10 + 20
+ |
+ | return 30
+ v
+main()
+ |
+ x = 30
+
+
+------------------------------------------------------------
+58. RECURSIVE FACTORIAL — COMPLETE PROGRAM
+------------------------------------------------------------
+
+#include <stdio.h>
+
+long long factorial(int n)
+{
+    if (n < 0)
+        return -1;
+
+    if (n <= 1)
+        return 1;
+
+    return (long long)n * factorial(n - 1);
+}
+
+int main(void)
+{
+    int n = 5;
+
+    printf("Factorial = %lld\n", factorial(n));
+
+    return 0;
+}
+
+Output:
+
+Factorial = 120
+
+NOTE:
+
+Even long long has a finite range. Large factorials overflow
+the type.
+
+
+------------------------------------------------------------
+59. PRIME CHECK USING FUNCTION
+------------------------------------------------------------
+
+#include <stdio.h>
+#include <stdbool.h>
+
+bool isPrime(int n)
+{
+    if (n < 2)
+        return false;
+
+    for (int i = 2; i <= n / i; i++)
+    {
+        if (n % i == 0)
+            return false;
+    }
+
+    return true;
+}
+
+int main(void)
+{
+    int n = 29;
+
+    if (isPrime(n))
+        printf("Prime\n");
+    else
+        printf("Not Prime\n");
+
+    return 0;
+}
+
+
+Why:
+
+i <= n / i
+
+instead of:
+
+i * i <= n
+
+The division form avoids multiplication overflow for integer
+types in cases where i*i could overflow.
+
+
+------------------------------------------------------------
+60. GCD USING FUNCTION
+------------------------------------------------------------
+
+#include <stdio.h>
+
+int gcd(int a, int b)
+{
+    while (b != 0)
+    {
+        int temp = a % b;
+        a = b;
+        b = temp;
+    }
+
+    return a;
+}
+
+int main(void)
+{
+    printf("%d\n", gcd(48, 18));
+
+    return 0;
+}
+
+Output:
+
+6
+
+This is Euclid's algorithm.
+
+
+------------------------------------------------------------
+61. LINEAR SEARCH USING FUNCTION
+------------------------------------------------------------
+
+int linearSearch(const int arr[], int n, int key)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == key)
+            return i;
+    }
+
+    return -1;
+}
+
+Example:
+
+int arr[] = {10, 20, 30, 40};
+
+int index = linearSearch(arr, 4, 30);
+
+index = 2
+
+
+------------------------------------------------------------
+62. MAXIMUM ELEMENT USING FUNCTION
+------------------------------------------------------------
+
+int findMax(const int arr[], int n)
+{
+    if (n <= 0)
+        return 0;   // Better API design may use a status result.
+
+    int max = arr[0];
+
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+
+    return max;
+}
+
+
+IMPORTANT JOB CONCEPT:
+
+Always think about invalid input.
+
+What should happen when:
+
+    n == 0
+    arr == NULL
+
+A production-quality API should define its contract clearly.
+
+
+------------------------------------------------------------
+63. MULTIPLE RETURN VALUES
+------------------------------------------------------------
+
+C functions can directly return only one value.
+
+But multiple results can be produced through pointers.
+
+Example:
+
+void calculate(int a, int b, int *sum, int *product)
+{
+    *sum = a + b;
+    *product = a * b;
+}
+
+int main(void)
+{
+    int sum;
+    int product;
+
+    calculate(5, 4, &sum, &product);
+
+    printf("Sum = %d\n", sum);
+    printf("Product = %d\n", product);
+}
+
+
+------------------------------------------------------------
+64. BETTER API DESIGN
+------------------------------------------------------------
+
+A good function should generally have:
+
+    - clear name
+    - clear parameters
+    - clear return value
+    - documented assumptions
+    - predictable behavior
+    - limited side effects
+    - proper error handling
+
+
+Poor:
+
+void process(int x, int y, int z, int a, int b, int c);
+
+
+Better:
+
+Use meaningful structures when many related values are passed.
+
+
+------------------------------------------------------------
+65. STRUCTURES WITH FUNCTIONS
+------------------------------------------------------------
+
+Example:
+
+struct Student
+{
+    char name[50];
+    int age;
+    float marks;
+};
+
+void displayStudent(const struct Student *s)
+{
+    printf("%s %d %.2f\n",
+           s->name,
+           s->age,
+           s->marks);
+}
+
+Using a pointer avoids copying the whole structure and
+`const` prevents modification.
+
+
+------------------------------------------------------------
+66. FUNCTION DESIGN — SINGLE RESPONSIBILITY
+------------------------------------------------------------
+
+Prefer:
+
+readInput()
+validateInput()
+calculateResult()
+displayResult()
+
+rather than:
+
+doEverything()
+
+Example:
+
+int calculateTotal(int price, int quantity)
+{
+    return price * quantity;
+}
+
+One function = one clear responsibility.
+
+
+------------------------------------------------------------
+67. ERROR HANDLING THROUGH RETURN VALUES
+------------------------------------------------------------
+
+Example:
+
+int divide(int a, int b, int *result)
+{
+    if (b == 0)
+        return 0;
+
+    *result = a / b;
+
+    return 1;
+}
+
+Usage:
+
+int result;
+
+if (divide(10, 2, &result))
+{
+    printf("%d\n", result);
+}
+else
+{
+    printf("Division failed\n");
+}
+
+A more expressive production API might use an enum/status
+code rather than a simple 0/1.
+
+
+------------------------------------------------------------
+68. FUNCTION COMPLEXITY
+------------------------------------------------------------
+
+Example:
+
+int sum(const int arr[], int n)
+{
+    int sum = 0;
+
+    for (int i = 0; i < n; i++)
+        sum += arr[i];
+
+    return sum;
+}
+
+Time complexity:
+
+O(n)
+
+Space complexity:
+
+O(1)
+
+Breaking code into functions does NOT automatically change
+algorithmic complexity.
+
+
+------------------------------------------------------------
+69. FUNCTION REUSE
+------------------------------------------------------------
+
+Suppose:
+
+calculateTax()
+calculateSalary()
+calculateBonus()
+
+A reusable function:
+
+double calculateTax(double salary)
+{
+    ...
+}
+
+can be used from multiple parts of the application.
+
+
+------------------------------------------------------------
+70. COMPILATION OF MULTIPLE FUNCTIONS
+------------------------------------------------------------
+
+Suppose:
+
+main.c
+math.c
+math.h
+
+Compile:
+
+gcc -Wall -Wextra -std=c17 main.c math.c -o app
+
+Or separately:
+
+gcc -Wall -Wextra -std=c17 -c main.c
+gcc -Wall -Wextra -std=c17 -c math.c
+
+Then:
+
+gcc main.o math.o -o app
+
+
+This introduces:
+
+    source files
+        |
+        v
+    object files
+        |
+        v
+    linker
+        |
+        v
+    executable
+
+
+------------------------------------------------------------
+71. IMPORTANT COMPILER FLAGS
+------------------------------------------------------------
+
+Recommended during learning:
+
+gcc -Wall -Wextra -Wpedantic -std=c17 file.c -o app
+
+Useful:
+
+-Wall
+-Wextra
+-Wpedantic
+
+These help detect many mistakes.
+
+For debugging:
+
+gcc -g file.c -o app
+
+For optimization:
+
+gcc -O2 file.c -o app
+
+
+------------------------------------------------------------
+72. DECLARATION CONSISTENCY
+------------------------------------------------------------
+
+Suppose header says:
+
+int add(int, int);
+
+Implementation must match:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+Do not create inconsistent declarations and definitions.
+
+In professional projects, put the declaration in the header
+and include that header in the implementation file so the
+compiler can detect mismatches.
+
+
+------------------------------------------------------------
+73. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+Does C support pass by reference?
+
+Answer:
+
+No.
+
+C uses pass-by-value.
+
+However, pointers allow a function to modify caller-owned
+objects by passing their addresses.
+
+
+------------------------------------------------------------
+74. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+What is the difference between declaration and definition?
+
+Answer:
+
+Declaration tells the compiler about an entity.
+
+Definition provides the entity itself/implementation as
+required.
+
+For a function:
+
+int add(int, int);       // declaration
+
+int add(int a, int b)    // definition
+{
+    return a + b;
+}
+
+
+------------------------------------------------------------
+75. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+What is recursion?
+
+Answer:
+
+Recursion is a technique where a function directly or
+indirectly calls itself.
+
+A correct recursive solution needs a termination condition
+and progress toward that condition.
+
+
+------------------------------------------------------------
+76. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+What is a function pointer?
+
+Answer:
+
+A function pointer is a pointer that stores the address of a
+function with a compatible function type.
+
+Example:
+
+int (*fp)(int, int);
+
+
+------------------------------------------------------------
+77. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+What is a callback?
+
+Answer:
+
+A callback is a function supplied to another function so that
+the receiving function can invoke it later, commonly through
+a function pointer.
+
+
+------------------------------------------------------------
+78. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+Can a function return an array?
+
+Answer:
+
+A function cannot return an array type directly.
+
+Common alternatives:
+
+    - return a pointer
+    - fill a caller-provided array
+    - return a structure containing data
+    - allocate dynamically and return a pointer
+
+
+------------------------------------------------------------
+79. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+Can a function return a pointer?
+
+Answer:
+
+Yes.
+
+But the pointer must not point to an object whose lifetime
+has already ended.
+
+Wrong:
+
+int *f(void)
+{
+    int x = 10;
+    return &x;
+}
+
+
+------------------------------------------------------------
+80. COMMON INTERVIEW QUESTION
+------------------------------------------------------------
+
+Q:
+Can one function call another function?
+
+Yes.
+
+Example:
+
+int square(int x)
+{
+    return x * x;
+}
+
+int calculate(int x)
+{
+    return square(x) + 10;
+}
+
+
+------------------------------------------------------------
+81. OUTPUT PREDICTION
+------------------------------------------------------------
+
+Question:
+
+#include <stdio.h>
+
+void test(void)
+{
+    static int x = 0;
+    x++;
+    printf("%d ", x);
+}
+
+int main(void)
+{
+    test();
+    test();
+    test();
+
+    return 0;
+}
+
+Output:
+
+1 2 3
+
+
+------------------------------------------------------------
+82. OUTPUT PREDICTION
+------------------------------------------------------------
+
+void change(int x)
+{
+    x = 50;
+}
+
+int main(void)
+{
+    int x = 10;
+
+    change(x);
+
+    printf("%d", x);
+}
+
+Output:
+
+10
+
+Reason:
+
+pass-by-value.
+
+
+------------------------------------------------------------
+83. OUTPUT PREDICTION
+------------------------------------------------------------
+
+void change(int *x)
+{
+    *x = 50;
+}
+
+int main(void)
+{
+    int x = 10;
+
+    change(&x);
+
+    printf("%d", x);
+}
+
+Output:
+
+50
+
+
+------------------------------------------------------------
+84. GATE-LEVEL CONCEPT
+------------------------------------------------------------
+
+Consider:
+
+void f(int *p)
+{
+    *p = 20;
+}
+
+int main(void)
+{
+    int x = 10;
+
+    f(&x);
+
+    printf("%d", x);
+}
+
+Question:
+
+Why does x become 20?
+
+Answer:
+
+    &x
+      |
+      v
+    address of x
+      |
+      v
+    p
+
+Then:
+
+    *p
+
+accesses the object x.
+
+Therefore:
+
+    *p = 20
+
+modifies x itself.
+
+
+------------------------------------------------------------
+85. GATE-LEVEL RECURSION COMPLEXITY
+------------------------------------------------------------
+
+Consider:
+
+int f(int n)
+{
+    if (n <= 1)
+        return 1;
+
+    return f(n - 1) + 1;
+}
+
+How many recursive calls?
+
+Approximately:
+
+n
+
+Time complexity:
+
+O(n)
+
+Stack space:
+
+O(n)
+
+
+------------------------------------------------------------
+86. GATE-LEVEL FUNCTION POINTER CONCEPT
+------------------------------------------------------------
+
+Given:
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int (*fp)(int, int) = add;
+
+Then:
+
+fp(2, 3)
+
+is equivalent in effect to:
+
+add(2, 3)
+
+and produces:
+
+5
+
+
+------------------------------------------------------------
+87. JOB-READY FUNCTION DESIGN CHECKLIST
+------------------------------------------------------------
+
+Before writing a function, ask:
+
+    1. What is the function's responsibility?
+    2. What inputs does it require?
+    3. What output should it produce?
+    4. Can inputs be invalid?
+    5. How are errors reported?
+    6. Should parameters be const?
+    7. Does it modify caller data?
+    8. Does it have global-state dependencies?
+    9. What is its time complexity?
+    10. What is its space complexity?
+    11. Is it reusable?
+    12. Is its name meaningful?
+    13. Is its prototype visible?
+    14. Is its behavior documented?
+
+
+============================================================
+              PRACTICAL PROGRAMS TO PRACTICE
+============================================================
+
+1. Add two numbers using a function
+2. Subtract two numbers
+3. Find maximum of two numbers
+4. Find maximum of three numbers
+5. Check even/odd
+6. Check positive/negative
+7. Check prime
+8. Print primes in a range
+9. Calculate factorial
+10. Fibonacci using recursion
+11. Fibonacci using iteration
+12. Reverse a number
+13. Check palindrome
+14. Calculate sum of digits
+15. Calculate GCD
+16. Calculate LCM
+17. Linear search
+18. Binary search
+19. Find maximum array element
+20. Find minimum array element
+21. Calculate array sum
+22. Reverse an array
+23. Sort an array
+24. Swap two numbers using pointers
+25. Modify an array using a function
+26. Count vowels in a string
+27. Reverse a string
+28. Compare two strings
+29. Structure passed to function
+30. Function pointer calculator
+31. Callback-based calculator
+32. Recursive binary search
+33. Recursive factorial
+34. Recursive GCD
+35. Menu-driven calculator
+
+
+============================================================
+                 CHAPTER 9 SUMMARY
+============================================================
+
+You should now understand:
+
+    [✓] Function
+    [✓] Function declaration
+    [✓] Function definition
+    [✓] Function call
+    [✓] Parameters
+    [✓] Arguments
+    [✓] Return values
+    [✓] void functions
+    [✓] Function prototypes
+    [✓] Pass by value
+    [✓] Pointers with functions
+    [✓] Arrays with functions
+    [✓] const parameters
+    [✓] Local variables
+    [✓] Global variables
+    [✓] Scope
+    [✓] Lifetime
+    [✓] static local variables
+    [✓] Recursion
+    [✓] Stack frames
+    [✓] Recursion depth
+    [✓] static functions
+    [✓] inline
+    [✓] Function pointers
+    [✓] Callback functions
+    [✓] Variadic functions
+    [✓] Header files
+    [✓] Header guards
+    [✓] Modular programming
+    [✓] Multiple source files
+    [✓] Function complexity
+    [✓] Common function bugs
+    [✓] Function API design
+    [✓] Interview concepts
+    [✓] GATE-level concepts
+
+
+============================================================
+             JOB-READY SKILL CHECK
+============================================================
+
+You are ready to move forward when you can independently:
+
+    1. Write a function from scratch.
+    2. Explain declaration vs definition.
+    3. Explain parameters vs arguments.
+    4. Explain pass-by-value.
+    5. Modify caller data using pointers.
+    6. Pass arrays to functions.
+    7. Write recursive functions.
+    8. Explain recursion stack behavior.
+    9. Use static local variables correctly.
+    10. Create your own .h and .c files.
+    11. Compile multiple C files.
+    12. Use function pointers.
+    13. Implement callbacks.
+    14. Use const correctly in function parameters.
+    15. Analyze function time/space complexity.
+    16. Identify common function-related bugs.
+
+
+============================================================
+              NEXT: CHAPTER 10 — ARRAYS
+============================================================
+
+Topics:
+
+1. What is an Array?
+2. Need for Arrays
+3. Array Declaration
+4. Array Initialization
+5. Array Indexing
+6. Memory Representation
+7. Array Traversal
+8. One-Dimensional Arrays
+9. Two-Dimensional Arrays
+10. Multidimensional Arrays
+11. Character Arrays
+12. Arrays and Pointers
+13. Array-to-Pointer Conversion
+14. Passing Arrays to Functions
+15. const Arrays
+16. Array Size and sizeof
+17. Dynamic Arrays
+18. Variable Length Arrays
+19. Array of Pointers
+20. Pointer to Array
+21. Strings and Character Arrays
+22. Array Searching
+23. Array Sorting
+24. Array Manipulation
+25. Common Array Bugs
+26. Out-of-Bounds Access
+27. Buffer Overflow
+28. Memory Layout
+29. Practical Programs
+30. Interview Questions
+31. GATE-Level Problems
+32. Job-Ready Array Problems
+============================================================

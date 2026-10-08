@@ -1,0 +1,1611 @@
+Worked for 4s
+
+===============================================================
+CHAPTER 28 — C STANDARD LIBRARY
+===============================================================
+
+The C Standard Library is one of the most important parts of
+professional C programming.
+
+Instead of implementing everything from scratch, C provides
+standard headers and functions for:
+
+    • Input/output
+    • Memory management
+    • Strings
+    • Mathematics
+    • Character handling
+    • Time
+    • Assertions
+    • Boolean types
+    • Fixed-width integers
+    • Limits
+    • Common type definitions
+
+
+The syllabus covers:
+
+28.1  stdio.h
+28.2  stdlib.h
+28.3  string.h
+28.4  math.h
+28.5  ctype.h
+28.6  time.h
+28.7  assert.h
+28.8  stdbool.h
+28.9  stdint.h
+28.10 limits.h
+28.11 stddef.h
+
+Important Functions:
+
+    malloc/free
+    memcpy
+    memmove
+    memset
+    memcmp
+    atoi/strtol
+    qsort
+    bsearch
+
+
+===============================================================
+28.1 stdio.h
+===============================================================
+
+stdio.h = Standard Input/Output header.
+
+It provides functionality for:
+
+    • Console I/O
+    • File I/O
+    • Formatted input/output
+    • Character input/output
+
+
+---------------------------------------------------------------
+COMMON FUNCTIONS
+---------------------------------------------------------------
+
+    printf()
+    scanf()
+    getchar()
+    putchar()
+    puts()
+    fgets()
+    fputs()
+
+File-related functions include:
+
+    fopen()
+    fclose()
+    fgetc()
+    fputc()
+    fread()
+    fwrite()
+    fprintf()
+    fscanf()
+    fseek()
+    ftell()
+    rewind()
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int age;
+
+        printf("Enter age: ");
+
+        if (scanf("%d", &age) == 1)
+        {
+            printf("Age = %d\n", age);
+        }
+
+        return 0;
+    }
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+<stdio.h> also provides:
+
+    FILE
+
+which is used for stream/file operations.
+
+Example:
+
+    FILE *fp;
+
+
+===============================================================
+28.2 stdlib.h
+===============================================================
+
+stdlib.h = General utilities.
+
+It provides functionality related to:
+
+    • Dynamic memory
+    • Numeric conversion
+    • Program control
+    • Searching
+    • Sorting
+    • Random number generation
+    • General utilities
+
+
+---------------------------------------------------------------
+IMPORTANT FUNCTIONS
+---------------------------------------------------------------
+
+    malloc()
+    calloc()
+    realloc()
+    free()
+
+Conversions:
+
+    atoi()
+    strtol()
+    strtoul()
+    strtod()
+
+Algorithms:
+
+    qsort()
+    bsearch()
+
+
+Other commonly used functions include:
+
+    exit()
+    abort()
+    rand()
+    srand()
+
+
+===============================================================
+malloc()
+===============================================================
+
+malloc() dynamically allocates memory.
+
+Example:
+
+    #include <stdlib.h>
+
+    int *p = malloc(5 * sizeof(*p));
+
+Always check allocation when failure matters:
+
+    int *p = malloc(5 * sizeof(*p));
+
+    if (p == NULL)
+    {
+        return 1;
+    }
+
+
+After using the memory:
+
+    free(p);
+
+
+---------------------------------------------------------------
+IMPORTANT PATTERN
+---------------------------------------------------------------
+
+    allocate
+       ↓
+    use
+       ↓
+    free
+
+
+Example:
+
+    int *p = malloc(sizeof(*p));
+
+    if (p != NULL)
+    {
+        *p = 100;
+
+        printf("%d\n", *p);
+
+        free(p);
+        p = NULL;
+    }
+
+
+Setting the pointer to NULL after free is a useful defensive
+practice when the pointer remains in scope.
+
+
+===============================================================
+28.3 string.h
+===============================================================
+
+string.h provides operations involving strings and raw memory.
+
+Important functions include:
+
+    strlen()
+    strcpy()
+    strncpy()
+    strcat()
+    strcmp()
+
+Memory functions include:
+
+    memcpy()
+    memmove()
+    memset()
+    memcmp()
+
+
+---------------------------------------------------------------
+strlen()
+---------------------------------------------------------------
+
+Returns the length of a null-terminated string, excluding
+'\0'.
+
+Example:
+
+    char s[] = "Hello";
+
+    printf("%zu\n", strlen(s));
+
+Result:
+
+    5
+
+
+Remember:
+
+    strlen(s)
+        = number of characters before '\0'
+
+    sizeof(s)
+        = total size of the array when s is actually an array
+
+
+===============================================================
+STRING COPY
+===============================================================
+
+    strcpy(destination, source);
+
+Example:
+
+    char src[] = "Hello";
+    char dest[20];
+
+    strcpy(dest, src);
+
+
+IMPORTANT:
+
+The destination must have enough space.
+
+Incorrect:
+
+    char dest[3];
+
+    strcpy(dest, "Hello");
+
+
+This can overflow the destination.
+
+
+===============================================================
+strcmp()
+===============================================================
+
+Compares two strings lexicographically.
+
+Example:
+
+    if (strcmp(a, b) == 0)
+    {
+        printf("Equal\n");
+    }
+
+
+IMPORTANT:
+
+Do NOT compare C strings using:
+
+    if (a == b)
+
+That compares pointer values, not string contents.
+
+
+===============================================================
+28.4 math.h
+===============================================================
+
+math.h provides mathematical functions.
+
+Common functions:
+
+    sqrt()
+    pow()
+    sin()
+    cos()
+    tan()
+    log()
+    log10()
+    exp()
+    fabs()
+    ceil()
+    floor()
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <math.h>
+
+    int main(void)
+    {
+        double x = 25.0;
+
+        printf("%.2f\n", sqrt(x));
+
+        return 0;
+    }
+
+
+Depending on the toolchain/platform, linking with the math
+library may be required.
+
+For example, with a common GCC/Linux setup:
+
+    gcc program.c -lm
+
+
+===============================================================
+28.5 ctype.h
+===============================================================
+
+ctype.h provides character classification and conversion
+functions.
+
+Important functions:
+
+    isalpha()
+    isdigit()
+    isalnum()
+    isspace()
+    isupper()
+    islower()
+    isxdigit()
+
+Conversions:
+
+    toupper()
+    tolower()
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <ctype.h>
+
+    int main(void)
+    {
+        char c = 'A';
+
+        if (isalpha((unsigned char)c))
+        {
+            printf("Alphabet\n");
+        }
+
+        printf("%c\n", tolower((unsigned char)c));
+
+        return 0;
+    }
+
+
+---------------------------------------------------------------
+IMPORTANT DETAIL
+---------------------------------------------------------------
+
+For the ctype functions, passing an arbitrary negative
+signed-char value can be problematic.
+
+A safe general pattern when the argument comes from a char
+object is:
+
+    isalpha((unsigned char)c)
+
+except for EOF handling where applicable.
+
+
+===============================================================
+28.6 time.h
+===============================================================
+
+time.h provides facilities for working with time and dates.
+
+Important types/functions include:
+
+    time_t
+    time()
+    clock()
+    difftime()
+    localtime()
+    gmtime()
+    mktime()
+    strftime()
+
+
+---------------------------------------------------------------
+CURRENT TIME
+---------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <time.h>
+
+    int main(void)
+    {
+        time_t now = time(NULL);
+
+        printf("%lld\n", (long long)now);
+
+        return 0;
+    }
+
+
+The exact representation of time_t is implementation-defined;
+do not assume it is always a particular integer type in portable
+C.
+
+
+---------------------------------------------------------------
+clock()
+---------------------------------------------------------------
+
+clock() is associated with processor time used by the program,
+not simply wall-clock elapsed time.
+
+This distinction is important when measuring performance.
+
+
+===============================================================
+28.7 assert.h
+===============================================================
+
+assert.h provides:
+
+    assert()
+
+
+It is useful for checking assumptions during development.
+
+Example:
+
+    #include <assert.h>
+
+    int divide(int a, int b)
+    {
+        assert(b != 0);
+
+        return a / b;
+    }
+
+
+If the assertion condition is false, the program reports an
+assertion failure and terminates according to the assertion
+mechanism.
+
+
+---------------------------------------------------------------
+NDEBUG
+---------------------------------------------------------------
+
+If NDEBUG is defined before including assert.h:
+
+    #define NDEBUG
+    #include <assert.h>
+
+assert expressions are disabled.
+
+This is useful for distinguishing development-time assertions
+from normal runtime error handling.
+
+IMPORTANT:
+
+Do not use assert() as the only protection for conditions that
+must be checked in production.
+
+For example, validating user input should normally be real
+error handling, not merely:
+
+    assert(user_input_is_valid);
+
+
+===============================================================
+28.8 stdbool.h
+===============================================================
+
+stdbool.h provides the traditional C boolean convenience
+definitions:
+
+    bool
+    true
+    false
+
+
+Example:
+
+    #include <stdbool.h>
+
+    bool is_even(int n)
+    {
+        return n % 2 == 0;
+    }
+
+
+Usage:
+
+    bool result = is_even(10);
+
+Conceptually:
+
+    true
+    false
+
+
+IMPORTANT MODERN-C NOTE:
+
+The C language has evolved across standards. In newer C
+standards, boolean support is also part of the language/library
+model, so the exact role of <stdbool.h> depends on the C
+standard being used.
+
+For syllabus/interview purposes, remember:
+
+    <stdbool.h>
+        ↓
+    convenient boolean type/constants in traditional C usage
+
+
+===============================================================
+28.9 stdint.h
+===============================================================
+
+stdint.h provides integer types with specified widths when the
+implementation supports them.
+
+Examples:
+
+    int8_t
+    int16_t
+    int32_t
+    int64_t
+
+Unsigned versions:
+
+    uint8_t
+    uint16_t
+    uint32_t
+    uint64_t
+
+
+---------------------------------------------------------------
+WHY USE FIXED-WIDTH TYPES?
+---------------------------------------------------------------
+
+Suppose you need exactly 32 bits.
+
+Instead of assuming:
+
+    unsigned int
+
+has exactly 32 bits, use:
+
+    uint32_t
+
+when available.
+
+
+Example:
+
+    #include <stdint.h>
+
+    uint32_t counter = 100;
+
+
+This is particularly useful in:
+
+    • Network programming
+    • Embedded systems
+    • Binary file formats
+    • Hardware-related programming
+    • Protocol implementations
+
+
+---------------------------------------------------------------
+RELATED TYPES
+---------------------------------------------------------------
+
+    int_least32_t
+    int_fast32_t
+    uint_least32_t
+    uint_fast32_t
+
+There are also types for pointer/integer conversions such as:
+
+    intptr_t
+    uintptr_t
+
+when provided by the implementation.
+
+
+===============================================================
+28.10 limits.h
+===============================================================
+
+limits.h provides limits of integer types.
+
+Common macros:
+
+    CHAR_BIT
+    CHAR_MIN
+    CHAR_MAX
+
+    INT_MIN
+    INT_MAX
+
+    UINT_MAX
+
+    LONG_MIN
+    LONG_MAX
+
+    ULONG_MAX
+
+and corresponding limits for other integer types.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <limits.h>
+
+    int main(void)
+    {
+        printf("INT_MIN = %d\n", INT_MIN);
+        printf("INT_MAX = %d\n", INT_MAX);
+
+        return 0;
+    }
+
+
+This is better than blindly assuming integer ranges.
+
+
+===============================================================
+28.11 stddef.h
+===============================================================
+
+stddef.h provides commonly useful definitions related to
+standard C types and expressions.
+
+Important items include:
+
+    size_t
+    ptrdiff_t
+    NULL
+    offsetof()
+
+
+---------------------------------------------------------------
+size_t
+---------------------------------------------------------------
+
+size_t is an unsigned integer type suitable for representing
+sizes of objects.
+
+Example:
+
+    size_t n = sizeof(int);
+
+
+This is why:
+
+    sizeof()
+
+returns a value of type:
+
+    size_t
+
+
+---------------------------------------------------------------
+ptrdiff_t
+---------------------------------------------------------------
+
+ptrdiff_t is an integer type suitable for representing the
+difference between pointers into the same array.
+
+Example conceptually:
+
+    int a[10];
+
+    int *p = &a[2];
+    int *q = &a[7];
+
+    ptrdiff_t d = q - p;
+
+
+Here:
+
+    d == 5
+
+
+===============================================================
+offsetof()
+===============================================================
+
+offsetof() gives the byte offset of a structure member from the
+beginning of the structure, as supported by the implementation.
+
+Example:
+
+    #include <stddef.h>
+
+    struct Student
+    {
+        int id;
+        double marks;
+    };
+
+    size_t offset = offsetof(struct Student, marks);
+
+
+This is useful in low-level programming and is closely related
+to structure layout.
+
+
+===============================================================
+IMPORTANT FUNCTION — memcpy()
+===============================================================
+
+Syntax:
+
+    memcpy(destination, source, number_of_bytes);
+
+
+Example:
+
+    int source[3] = {1, 2, 3};
+    int destination[3];
+
+    memcpy(destination,
+           source,
+           sizeof(source));
+
+
+Afterwards:
+
+    destination = {1, 2, 3}
+
+
+---------------------------------------------------------------
+CRITICAL RULE
+---------------------------------------------------------------
+
+memcpy() is NOT for overlapping memory regions.
+
+If source and destination overlap, use:
+
+    memmove()
+
+
+===============================================================
+IMPORTANT FUNCTION — memmove()
+===============================================================
+
+memmove() copies bytes while correctly handling overlapping
+source and destination regions.
+
+Example:
+
+    char s[] = "ABCDE";
+
+    memmove(s + 1, s, 4);
+
+
+Because the regions overlap, memmove() is appropriate.
+
+
+---------------------------------------------------------------
+MEMCPY VS MEMMOVE
+---------------------------------------------------------------
+
+    memcpy()
+        ↓
+    overlapping regions:
+        NOT allowed
+
+    memmove()
+        ↓
+    overlapping regions:
+        supported
+
+
+INTERVIEW QUESTION:
+
+    Which one should you use when source and destination
+    overlap?
+
+Answer:
+
+    memmove()
+
+
+===============================================================
+IMPORTANT FUNCTION — memset()
+===============================================================
+
+memset() fills a region of memory with a byte value.
+
+Syntax:
+
+    memset(pointer, value, number_of_bytes);
+
+
+Example:
+
+    char buffer[10];
+
+    memset(buffer, 0, sizeof(buffer));
+
+
+Now every byte of buffer is zero.
+
+
+---------------------------------------------------------------
+IMPORTANT TRAP
+---------------------------------------------------------------
+
+This:
+
+    int a[5];
+
+    memset(a, 1, sizeof(a));
+
+
+does NOT generally produce:
+
+    {1, 1, 1, 1, 1}
+
+
+Instead, every byte is set to:
+
+    0x01
+
+So each int becomes a value whose bytes are all 0x01.
+
+This is a classic C interview trap.
+
+
+---------------------------------------------------------------
+COMMON USE
+---------------------------------------------------------------
+
+To zero an object:
+
+    memset(buffer, 0, sizeof(buffer));
+
+
+For integer arrays, however, if you want every element to be
+the integer value 1, use an explicit loop.
+
+
+===============================================================
+IMPORTANT FUNCTION — memcmp()
+===============================================================
+
+memcmp() compares raw memory byte-by-byte.
+
+Example:
+
+    if (memcmp(a, b, sizeof(a)) == 0)
+    {
+        printf("Same bytes\n");
+    }
+
+
+IMPORTANT:
+
+memcmp() compares object representations, not necessarily
+logical values of arbitrary objects.
+
+For example, padding bytes in structures can make raw memory
+comparisons inappropriate.
+
+Do not blindly use:
+
+    memcmp(struct1, struct2, sizeof(struct1))
+
+as a universal way to test whether two structures are logically
+equal.
+
+
+===============================================================
+IMPORTANT FUNCTION — atoi()
+===============================================================
+
+atoi() converts a string to int.
+
+Example:
+
+    int x = atoi("123");
+
+
+Result:
+
+    x = 123
+
+
+---------------------------------------------------------------
+PROBLEM WITH atoi()
+---------------------------------------------------------------
+
+atoi() has poor error-reporting behavior.
+
+For robust parsing, prefer:
+
+    strtol()
+
+
+when you need to distinguish conversion failures and handle
+range errors properly.
+
+
+===============================================================
+strtol()
+===============================================================
+
+strtol() converts a string to a long while providing more
+control over errors and parsing.
+
+Example:
+
+    #include <errno.h>
+    #include <limits.h>
+    #include <stdlib.h>
+
+    char *end;
+
+    errno = 0;
+
+    long value = strtol("123", &end, 10);
+
+    if (errno == ERANGE)
+    {
+        /* range error */
+    }
+
+
+The end pointer can be used to determine where conversion
+stopped.
+
+
+---------------------------------------------------------------
+WHY strtol() IS BETTER
+---------------------------------------------------------------
+
+atoi():
+
+    "Convert this string."
+
+strtol():
+
+    "Convert this string and let me inspect
+     whether conversion was valid and whether
+     the value was out of range."
+
+
+For professional input parsing:
+
+    strtol()
+        >
+    atoi()
+
+
+===============================================================
+IMPORTANT FUNCTION — qsort()
+===============================================================
+
+qsort() performs generic sorting.
+
+Prototype conceptually:
+
+    qsort(base, count, element_size, comparator);
+
+
+Example:
+
+    #include <stdlib.h>
+
+    int compare_ints(const void *a, const void *b)
+    {
+        int x = *(const int *)a;
+        int y = *(const int *)b;
+
+        if (x < y) return -1;
+        if (x > y) return 1;
+        return 0;
+    }
+
+
+Usage:
+
+    int a[] = {5, 2, 8, 1, 3};
+
+    qsort(a,
+          5,
+          sizeof(a[0]),
+          compare_ints);
+
+
+After sorting:
+
+    1 2 3 5 8
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+Do NOT write:
+
+    return *(int *)a - *(int *)b;
+
+
+as a universal comparator.
+
+For large integer values, subtraction can overflow.
+
+Safer:
+
+    if (x < y) return -1;
+    if (x > y) return 1;
+    return 0;
+
+
+===============================================================
+IMPORTANT FUNCTION — bsearch()
+===============================================================
+
+bsearch() performs binary search in a sorted array.
+
+Conceptually:
+
+    bsearch(key,
+            base,
+            count,
+            element_size,
+            comparator);
+
+
+IMPORTANT:
+
+The array must already be sorted according to the same
+comparison ordering.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    int a[] = {1, 3, 5, 7, 9};
+
+    int key = 5;
+
+    int *result = bsearch(
+        &key,
+        a,
+        5,
+        sizeof(a[0]),
+        compare_ints
+    );
+
+
+If found:
+
+    result != NULL
+
+
+Otherwise:
+
+    result == NULL
+
+
+===============================================================
+qsort() + bsearch() COMBINATION
+===============================================================
+
+A common professional pattern:
+
+    unsorted data
+          ↓
+       qsort()
+          ↓
+    sorted data
+          ↓
+       bsearch()
+          ↓
+      fast search
+
+
+Example:
+
+    int a[] = {9, 1, 5, 3, 7};
+
+    qsort(a, 5, sizeof(a[0]), compare_ints);
+
+    int key = 5;
+
+    int *p = bsearch(
+        &key,
+        a,
+        5,
+        sizeof(a[0]),
+        compare_ints
+    );
+
+
+===============================================================
+STANDARD LIBRARY HEADER MAP
+===============================================================
+
+    stdio.h
+       ↓
+    Input / Output / Files
+
+
+    stdlib.h
+       ↓
+    Memory / Conversion / Sorting / Searching
+
+
+    string.h
+       ↓
+    Strings / Raw memory
+
+
+    math.h
+       ↓
+    Mathematics
+
+
+    ctype.h
+       ↓
+    Character classification/conversion
+
+
+    time.h
+       ↓
+    Time and date facilities
+
+
+    assert.h
+       ↓
+    Assertions
+
+
+    stdbool.h
+       ↓
+    Boolean convenience support
+
+
+    stdint.h
+       ↓
+    Integer types with specified widths
+
+
+    limits.h
+       ↓
+    Integer limits
+
+
+    stddef.h
+       ↓
+    size_t / ptrdiff_t / offsetof / related definitions
+
+
+===============================================================
+COMMON INTERVIEW TRAPS
+===============================================================
+
+TRAP 1:
+
+    memcpy()
+        vs
+    memmove()
+
+Answer:
+
+    memcpy() -> source/destination must not overlap
+
+    memmove() -> overlapping regions are supported
+
+
+---------------------------------------------------------------
+
+TRAP 2:
+
+    memset(a, 1, sizeof(a))
+
+Does this set every int in a to 1?
+
+Answer:
+
+    No.
+
+It sets every byte to 0x01.
+
+
+---------------------------------------------------------------
+
+TRAP 3:
+
+    atoi()
+
+Is it ideal for robust command-line parsing?
+
+Answer:
+
+    No.
+
+Prefer strtol() when you need proper error/range handling.
+
+
+---------------------------------------------------------------
+
+TRAP 4:
+
+    qsort()
+
+Does qsort() automatically know the element type?
+
+Answer:
+
+    No.
+
+You provide:
+
+    base
+    number of elements
+    element size
+    comparison function
+
+
+---------------------------------------------------------------
+
+TRAP 5:
+
+    bsearch()
+
+Can you call bsearch() on arbitrary unsorted data?
+
+Answer:
+
+    No.
+
+The data must be sorted according to the comparator/order
+expected by the search.
+
+
+---------------------------------------------------------------
+
+TRAP 6:
+
+    strlen(s)
+
+Does it count '\0'?
+
+Answer:
+
+    No.
+
+
+---------------------------------------------------------------
+
+TRAP 7:
+
+    sizeof(s)
+
+Does it always give the string length?
+
+Answer:
+
+    No.
+
+For an actual array:
+
+        sizeof(s)
+            =
+        total array size in bytes
+
+while:
+
+        strlen(s)
+            =
+        number of characters before '\0'
+
+
+===============================================================
+PROFESSIONAL ERROR-HANDLING PATTERN
+===============================================================
+
+A robust C program should generally:
+
+    INPUT
+      ↓
+    VALIDATE
+      ↓
+    CONVERT
+      ↓
+    CHECK ERRORS
+      ↓
+    PROCESS
+      ↓
+    RELEASE RESOURCES
+
+
+Example:
+
+    char *end;
+    errno = 0;
+
+    long value = strtol(input, &end, 10);
+
+    if (end == input)
+    {
+        /* no number was converted */
+    }
+    else if (errno == ERANGE)
+    {
+        /* value outside representable range */
+    }
+    else
+    {
+        /* valid conversion candidate */
+    }
+
+
+===============================================================
+GATE / INTERVIEW QUESTIONS
+===============================================================
+
+Q1. Which header provides malloc()?
+
+Answer:
+
+    stdlib.h
+
+
+Q2. Which header provides strlen()?
+
+Answer:
+
+    string.h
+
+
+Q3. Which header provides sqrt()?
+
+Answer:
+
+    math.h
+
+
+Q4. Which header provides isdigit()?
+
+Answer:
+
+    ctype.h
+
+
+Q5. Which header provides INT_MAX?
+
+Answer:
+
+    limits.h
+
+
+Q6. Which header provides size_t?
+
+Answer:
+
+    stddef.h provides size_t.
+
+It is also exposed by many other standard headers where
+needed.
+
+
+Q7. Which is safe for overlapping memory?
+
+Answer:
+
+    memmove()
+
+
+Q8. What does memset() operate on?
+
+Answer:
+
+    Bytes of memory.
+
+
+Q9. Why can memset(int_array, 1, ...) be surprising?
+
+Answer:
+
+    Because memset writes the byte 0x01 to every byte rather
+    than assigning integer value 1 to each element.
+
+
+Q10. Why is strtol() generally preferable to atoi()?
+
+Answer:
+
+    It provides better control over parsing and error/range
+    detection.
+
+
+Q11. What does qsort() require?
+
+Answer:
+
+    A base address, element count, element size, and
+    comparison function.
+
+
+Q12. What does bsearch() require?
+
+Answer:
+
+    A sorted array and a comparison function consistent with
+    that ordering.
+
+
+===============================================================
+MASTER REVISION
+===============================================================
+
+                 C STANDARD LIBRARY
+
+                        |
+        +---------------+---------------+
+        |               |               |
+       I/O            MEMORY          STRINGS
+        |               |               |
+     stdio.h        stdlib.h        string.h
+        |               |
+        |          malloc/free
+        |          qsort/bsearch
+        |
+        +--------------------------------
+
+        MATH
+          |
+       math.h
+
+        CHARACTERS
+          |
+       ctype.h
+
+        TIME
+          |
+       time.h
+
+        ASSERTIONS
+          |
+       assert.h
+
+        INTEGER TYPES
+          |
+       stdint.h
+
+        INTEGER LIMITS
+          |
+       limits.h
+
+        COMMON TYPES
+          |
+       stddef.h
+
+
+---------------------------------------------------------------
+MOST IMPORTANT FUNCTIONS
+---------------------------------------------------------------
+
+    malloc()
+       ↓
+    dynamic allocation
+
+    free()
+       ↓
+    release allocation
+
+    memcpy()
+       ↓
+    non-overlapping byte copy
+
+    memmove()
+       ↓
+    overlapping-safe byte move
+
+    memset()
+       ↓
+    fill bytes
+
+    memcmp()
+       ↓
+    compare bytes
+
+    atoi()
+       ↓
+    simple string → int conversion
+
+    strtol()
+       ↓
+    robust numeric conversion
+
+    qsort()
+       ↓
+    generic sorting
+
+    bsearch()
+       ↓
+    binary search
+
+
+===============================================================
+CHAPTER 28 — FINAL TAKEAWAY
+===============================================================
+
+A professional C programmer should not memorize only syntax.
+
+You should know:
+
+    Which header?
+        ↓
+    Which function?
+        ↓
+    What are its arguments?
+        ↓
+    What does it return?
+        ↓
+    What assumptions does it make?
+        ↓
+    What errors can occur?
+        ↓
+    What are the memory implications?
+
+The standard library is what turns basic C syntax into
+practical software.
+
+===============================================================
+END OF CHAPTER 28
+===============================================================

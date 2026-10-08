@@ -1,0 +1,1592 @@
+===============================================================
+CHAPTER 17 — PREPROCESSOR
+===============================================================
+
+This chapter follows the uploaded C Programming — Job-Ready
+Master Syllabus.
+
+17.1 Preprocessor
+17.2 #include
+17.3 #define
+17.4 Macros
+17.5 Parameterized Macros
+17.6 #undef
+17.7 Conditional Compilation
+    ├── #if
+    ├── #ifdef
+    ├── #ifndef
+    ├── #elif
+    └── #endif
+
+17.8 Predefined Macros
+    ├── __FILE__
+    ├── __LINE__
+    ├── __DATE__
+    └── __TIME__
+
+17.9 Macro vs Function
+17.10 Header Guards
+
+
+===============================================================
+17.1 PREPROCESSOR
+===============================================================
+
+The C preprocessor is a stage that processes source code before
+the actual compilation of the C program.
+
+A simplified compilation pipeline is:
+
+    C source code
+          |
+          v
+    PREPROCESSOR
+          |
+          v
+    Expanded/processed source
+          |
+          v
+    COMPILER
+          |
+          v
+    Assembly
+          |
+          v
+    Linker
+          |
+          v
+    Executable
+
+
+Preprocessor directives generally begin with:
+
+    #
+
+
+Examples:
+
+    #include <stdio.h>
+
+    #define PI 3.14159
+
+    #ifdef DEBUG
+
+
+IMPORTANT:
+
+Preprocessor directives are handled before normal C compilation.
+
+
+---------------------------------------------------------------
+COMMON PREPROCESSOR DIRECTIVES
+---------------------------------------------------------------
+
+    #include
+    #define
+    #undef
+    #if
+    #ifdef
+    #ifndef
+    #elif
+    #else
+    #endif
+
+
+===============================================================
+17.2 #include
+===============================================================
+
+`#include` tells the preprocessor to include the contents of
+another file.
+
+Example:
+
+    #include <stdio.h>
+
+
+This is commonly used to make declarations from a header
+available to the program.
+
+
+---------------------------------------------------------------
+SYSTEM/IMPLEMENTATION HEADER STYLE
+---------------------------------------------------------------
+
+Example:
+
+    #include <stdio.h>
+
+Angle brackets are conventionally used for system or
+implementation-provided headers.
+
+
+---------------------------------------------------------------
+LOCAL HEADER STYLE
+---------------------------------------------------------------
+
+Example:
+
+    #include "student.h"
+
+Double quotes are conventionally used for headers supplied as
+part of the project.
+
+The exact search behavior is implementation/toolchain
+dependent, but the distinction is important in normal C
+development.
+
+
+---------------------------------------------------------------
+WHY DO WE USE HEADER FILES?
+---------------------------------------------------------------
+
+Headers commonly contain declarations and other information
+needed by multiple source files.
+
+For example:
+
+    main.c
+        |
+        +---- includes ----> student.h
+                                |
+                                +-- declarations
+
+
+A project can therefore be divided into reusable components.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+Suppose:
+
+    math_utils.h
+
+contains declarations.
+
+Then:
+
+    #include "math_utils.h"
+
+allows source files to use the declarations provided there.
+
+
+===============================================================
+17.3 #define
+===============================================================
+
+`#define` creates a preprocessor macro.
+
+Basic syntax:
+
+    #define NAME replacement
+
+
+Example:
+
+    #define PI 3.14159
+
+
+Then:
+
+    double area = PI * r * r;
+
+
+The preprocessor substitutes the macro where applicable before
+the compiler processes the resulting source.
+
+
+---------------------------------------------------------------
+OBJECT-LIKE MACRO
+---------------------------------------------------------------
+
+Example:
+
+    #define MAX_SIZE 100
+
+Usage:
+
+    int arr[MAX_SIZE];
+
+
+Conceptually, preprocessing changes the occurrence of:
+
+    MAX_SIZE
+
+to:
+
+    100
+
+
+It is important to understand that this is preprocessing, not
+a runtime variable.
+
+
+---------------------------------------------------------------
+MACRO NAMES
+---------------------------------------------------------------
+
+A common convention is to use uppercase names:
+
+    #define MAX_SIZE 100
+    #define BUFFER_SIZE 1024
+    #define PI 3.141592653589793
+
+
+This is a convention, not a requirement.
+
+
+===============================================================
+17.4 MACROS
+===============================================================
+
+A macro is a rule understood by the preprocessor.
+
+Example:
+
+    #define SQUARE(x) ((x) * (x))
+
+
+When used:
+
+    int result = SQUARE(5);
+
+
+the preprocessor expands the macro text.
+
+Conceptually:
+
+    int result = ((5) * (5));
+
+
+IMPORTANT:
+
+A macro is not a normal function.
+
+It is expanded by the preprocessor.
+
+
+---------------------------------------------------------------
+MACROS CAN REPRESENT CONSTANT-LIKE VALUES
+---------------------------------------------------------------
+
+Example:
+
+    #define BUFFER_SIZE 1024
+
+
+---------------------------------------------------------------
+MACROS CAN REPRESENT CODE FRAGMENTS
+---------------------------------------------------------------
+
+Example:
+
+    #define PRINT_HELLO() printf("Hello\n")
+
+
+Then:
+
+    PRINT_HELLO();
+
+
+may expand into the corresponding source text.
+
+
+===============================================================
+17.5 PARAMETERIZED MACROS
+===============================================================
+
+A function-like macro can accept parameters.
+
+Example:
+
+    #define SQUARE(x) ((x) * (x))
+
+
+Another:
+
+    #define MAX(a, b) ((a) > (b) ? (a) : (b))
+
+
+Usage:
+
+    int x = MAX(10, 20);
+
+
+Conceptually:
+
+    int x = ((10) > (20) ? (10) : (20));
+
+
+---------------------------------------------------------------
+WHY ARE EXTRA PARENTHESES IMPORTANT?
+---------------------------------------------------------------
+
+Consider the unsafe macro:
+
+    #define SQUARE(x) x * x
+
+Now:
+
+    SQUARE(2 + 3)
+
+can expand conceptually to:
+
+    2 + 3 * 2 + 3
+
+which does NOT mean:
+
+    (2 + 3) * (2 + 3)
+
+
+The safer form is:
+
+    #define SQUARE(x) ((x) * (x))
+
+
+Then:
+
+    SQUARE(2 + 3)
+
+becomes:
+
+    ((2 + 3) * (2 + 3))
+
+
+This is a classic C interview question.
+
+
+---------------------------------------------------------------
+MACRO PARENTHESES — GENERAL RULE
+---------------------------------------------------------------
+
+Prefer:
+
+    #define ADD(a, b) ((a) + (b))
+
+rather than:
+
+    #define ADD(a, b) a + b
+
+
+because surrounding the entire replacement expression and each
+parameter helps prevent precedence-related surprises.
+
+
+===============================================================
+MACRO SIDE-EFFECT TRAP
+===============================================================
+
+Consider:
+
+    #define SQUARE(x) ((x) * (x))
+
+Now:
+
+    int i = 5;
+
+    int result = SQUARE(i++);
+
+
+The macro expands conceptually to:
+
+    ((i++) * (i++))
+
+
+The argument is evaluated more than once.
+
+Therefore, `i++` causes side effects multiple times.
+
+This is a major reason why macros can be dangerous.
+
+
+A normal function:
+
+    int square(int x)
+    {
+        return x * x;
+    }
+
+evaluates the argument once before entering the function.
+
+
+---------------------------------------------------------------
+IMPORTANT LESSON
+---------------------------------------------------------------
+
+A parameterized macro does NOT behave exactly like a function.
+
+Always consider:
+
+    precedence
+    multiple evaluation
+    side effects
+    type behavior
+
+
+===============================================================
+17.6 #undef
+===============================================================
+
+`#undef` removes a macro definition.
+
+Example:
+
+    #define SIZE 100
+
+    #undef SIZE
+
+
+After `#undef`, the macro `SIZE` is no longer defined.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+    #define VALUE 10
+
+    printf("%d\n", VALUE);
+
+    #undef VALUE
+
+After the `#undef`, further uses of `VALUE` are no longer
+recognized as that macro.
+
+
+---------------------------------------------------------------
+WHY USE #undef?
+---------------------------------------------------------------
+
+It can be useful when:
+
+    a macro needs to be replaced
+    a configuration changes
+    a header or library needs to avoid a macro conflict
+
+
+===============================================================
+17.7 CONDITIONAL COMPILATION
+===============================================================
+
+Conditional compilation allows portions of source code to be
+included or excluded during preprocessing.
+
+Important directives:
+
+    #if
+    #ifdef
+    #ifndef
+    #elif
+    #else
+    #endif
+
+
+The general idea is:
+
+    condition true
+        |
+        +----> compile/include this section
+
+    condition false
+        |
+        +----> exclude this section
+
+
+===============================================================
+17.7.1 #if
+===============================================================
+
+`#if` tests a preprocessing expression.
+
+Example:
+
+    #define VERSION 2
+
+    #if VERSION >= 2
+        printf("Version 2 or newer\n");
+    #endif
+
+
+If the condition evaluates as true during preprocessing, the
+controlled section is retained.
+
+
+---------------------------------------------------------------
+#if / #else
+---------------------------------------------------------------
+
+Example:
+
+    #define DEBUG 1
+
+    #if DEBUG
+        printf("Debug mode\n");
+    #else
+        printf("Release mode\n");
+    #endif
+
+
+Only the appropriate section is retained for compilation.
+
+
+===============================================================
+17.7.2 #ifdef
+===============================================================
+
+`#ifdef` means:
+
+    "if this macro is defined"
+
+
+Example:
+
+    #define DEBUG
+
+    #ifdef DEBUG
+        printf("Debugging enabled\n");
+    #endif
+
+
+The existence of `DEBUG` is what matters.
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+These are different concepts:
+
+    #if DEBUG
+
+and:
+
+    #ifdef DEBUG
+
+
+`#if DEBUG` evaluates a preprocessing expression.
+
+`#ifdef DEBUG` checks whether the macro is defined.
+
+
+===============================================================
+17.7.3 #ifndef
+===============================================================
+
+`#ifndef` means:
+
+    "if this macro is NOT defined"
+
+
+Example:
+
+    #ifndef MAX_SIZE
+    #define MAX_SIZE 100
+    #endif
+
+
+This says:
+
+    If MAX_SIZE has not already been defined,
+    define it as 100.
+
+
+This pattern is extremely important for header guards.
+
+
+===============================================================
+17.7.4 #elif
+===============================================================
+
+`#elif` means:
+
+    "else if"
+
+Example:
+
+    #if VERSION == 1
+
+        printf("Version 1\n");
+
+    #elif VERSION == 2
+
+        printf("Version 2\n");
+
+    #else
+
+        printf("Unknown version\n");
+
+    #endif
+
+
+This allows multiple compile-time alternatives.
+
+
+===============================================================
+17.7.5 #endif
+===============================================================
+
+Every conditional preprocessing block must eventually be closed
+with:
+
+    #endif
+
+
+Example:
+
+    #ifdef DEBUG
+
+        printf("Debug");
+
+    #endif
+
+
+Think of:
+
+    #if
+    #ifdef
+    #ifndef
+
+as opening a preprocessing conditional block, and:
+
+    #endif
+
+as closing it.
+
+
+===============================================================
+PRACTICAL CONDITIONAL COMPILATION
+===============================================================
+
+One common use is debugging.
+
+Example:
+
+    #ifdef DEBUG
+        printf("x = %d\n", x);
+    #endif
+
+
+If `DEBUG` is defined:
+
+    debug statement is included.
+
+
+If `DEBUG` is not defined:
+
+    debug statement is excluded before compilation.
+
+
+This allows developers to maintain optional debugging code.
+
+
+===============================================================
+CONDITIONAL COMPILATION FLOW
+===============================================================
+
+Example:
+
+    #define OS 1
+
+    #if OS == 1
+
+        /* Code for option 1 */
+
+    #elif OS == 2
+
+        /* Code for option 2 */
+
+    #else
+
+        /* Other option */
+
+    #endif
+
+
+Flow:
+
+    preprocessing
+         |
+         v
+    evaluate condition
+         |
+     +---+---+
+     |       |
+   true    false
+     |       |
+     v       v
+   keep    discard
+   code     code
+
+
+===============================================================
+17.8 PREDEFINED MACROS
+===============================================================
+
+The C environment provides predefined macros.
+
+The syllabus specifically includes:
+
+    __FILE__
+    __LINE__
+    __DATE__
+    __TIME__
+
+
+These are useful for diagnostics, logging, and debugging.
+
+
+===============================================================
+17.8.1 __FILE__
+===============================================================
+
+`__FILE__` expands to a string representing the current source
+file name.
+
+Example:
+
+    printf("File: %s\n", __FILE__);
+
+
+This can help identify where a diagnostic message originated.
+
+
+===============================================================
+17.8.2 __LINE__
+===============================================================
+
+`__LINE__` expands to the current source line number.
+
+Example:
+
+    printf("Line: %d\n", __LINE__);
+
+
+This is especially useful for debugging.
+
+
+---------------------------------------------------------------
+COMBINING __FILE__ AND __LINE__
+---------------------------------------------------------------
+
+Example:
+
+    printf("Error at %s:%d\n", __FILE__, __LINE__);
+
+
+This can produce a diagnostic similar to:
+
+    Error at main.c:25
+
+
+The exact file representation depends on the implementation
+and compilation environment.
+
+
+===============================================================
+17.8.3 __DATE__
+===============================================================
+
+`__DATE__` provides a string representing the date of
+translation.
+
+Example:
+
+    printf("Build date: %s\n", __DATE__);
+
+
+===============================================================
+17.8.4 __TIME__
+===============================================================
+
+`__TIME__` provides a string representing the time of
+translation.
+
+Example:
+
+    printf("Build time: %s\n", __TIME__);
+
+
+Together:
+
+    printf("Built on %s at %s\n", __DATE__, __TIME__);
+
+
+These describe translation/build-time information, not the
+current runtime clock.
+
+
+===============================================================
+PREDEFINED MACROS — SUMMARY
+===============================================================
+
+    __FILE__
+        -> source file information
+
+    __LINE__
+        -> current source line
+
+    __DATE__
+        -> translation date
+
+    __TIME__
+        -> translation time
+
+
+Useful for:
+
+    debugging
+    logging
+    diagnostics
+    build information
+
+
+===============================================================
+17.9 MACRO VS FUNCTION
+===============================================================
+
+This is one of the most important interview topics in this
+chapter.
+
+
+---------------------------------------------------------------
+MACRO
+---------------------------------------------------------------
+
+Example:
+
+    #define SQUARE(x) ((x) * (x))
+
+
+Characteristics:
+
+    processed by preprocessor
+    no normal function call
+    text-based expansion
+    can work with expressions of compatible types
+    arguments may be evaluated multiple times
+    no normal parameter type checking
+    can cause precedence/side-effect problems
+
+
+---------------------------------------------------------------
+FUNCTION
+---------------------------------------------------------------
+
+Example:
+
+    int square(int x)
+    {
+        return x * x;
+    }
+
+
+Characteristics:
+
+    handled by compiler as a function
+    arguments are evaluated before the call
+    parameter types are specified
+    normal function semantics apply
+    easier to debug in many situations
+    function call may have runtime overhead depending on
+    optimization and implementation
+
+
+---------------------------------------------------------------
+COMPARISON
+---------------------------------------------------------------
+
+    +----------------------+--------------------------+
+    | Macro                | Function                 |
+    +----------------------+--------------------------+
+    | Preprocessor         | Compiler                 |
+    | Text expansion       | Function semantics       |
+    | No normal type check | Parameter types exist   |
+    | May evaluate args    | Arguments evaluated      |
+    | multiple times       | according to call rules  |
+    | Can have side-effect | Safer for normal use    |
+    | traps                |                          |
+    +----------------------+--------------------------+
+
+
+IMPORTANT:
+
+Do not assume:
+
+    macro = always faster
+    function = always slower
+
+Modern compilers can optimize functions, including inlining
+when appropriate.
+
+The important distinction is semantic behavior.
+
+
+===============================================================
+17.10 HEADER GUARDS
+===============================================================
+
+Header guards prevent the contents of a header from being
+processed multiple times within a translation unit.
+
+Standard pattern:
+
+    #ifndef STUDENT_H
+    #define STUDENT_H
+
+    /* declarations */
+
+    #endif
+
+
+This is one of the most important practical uses of:
+
+    #ifndef
+    #define
+    #endif
+
+
+---------------------------------------------------------------
+WHY HEADER GUARDS?
+---------------------------------------------------------------
+
+Suppose a header is included multiple times:
+
+    main.c
+       |
+       +---- a.h
+       |
+       +---- b.h
+                |
+                +---- a.h
+
+Without protection, the contents of `a.h` could be encountered
+multiple times, potentially causing repeated declarations or
+definitions.
+
+
+With:
+
+    #ifndef A_H
+    #define A_H
+
+    ...
+
+    #endif
+
+the contents are processed only when the guard macro has not
+already been defined in that translation unit.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+File:
+
+    student.h
+
+Contents:
+
+    #ifndef STUDENT_H
+    #define STUDENT_H
+
+    struct Student
+    {
+        int roll;
+        float marks;
+    };
+
+    #endif
+
+
+Then:
+
+    #include "student.h"
+
+can safely appear through multiple include paths in the same
+translation unit.
+
+
+===============================================================
+HEADER GUARD FLOW
+===============================================================
+
+First inclusion:
+
+    STUDENT_H not defined
+            |
+            v
+    #ifndef -> TRUE
+            |
+            v
+    #define STUDENT_H
+            |
+            v
+    process header contents
+
+
+Second inclusion:
+
+    STUDENT_H already defined
+            |
+            v
+    #ifndef -> FALSE
+            |
+            v
+    header contents skipped
+
+
+This is the core idea of a header guard.
+
+
+===============================================================
+PREPROCESSOR + COMPILATION EXAMPLE
+===============================================================
+
+Source:
+
+    #include <stdio.h>
+
+    #define PI 3.14
+
+    #ifdef DEBUG
+        #define MESSAGE "Debug mode"
+    #endif
+
+    int main(void)
+    {
+        printf("%f\n", PI);
+        return 0;
+    }
+
+
+Conceptually:
+
+    SOURCE
+      |
+      v
+    PREPROCESSOR
+      |
+      +-- process #include
+      |
+      +-- expand PI
+      |
+      +-- process #ifdef
+      |
+      v
+    processed source
+      |
+      v
+    COMPILER
+      |
+      v
+    object code
+      |
+      v
+    LINKER
+      |
+      v
+    executable
+
+
+===============================================================
+MACRO PRECEDENCE TRAP
+===============================================================
+
+Bad:
+
+    #define DOUBLE(x) x + x
+
+
+Then:
+
+    int result = 3 * DOUBLE(5);
+
+
+Expansion:
+
+    3 * 5 + 5
+
+Result:
+
+    20
+
+But perhaps the intended result was:
+
+    3 * (5 + 5)
+    = 30
+
+
+Safer:
+
+    #define DOUBLE(x) ((x) + (x))
+
+
+Then:
+
+    3 * DOUBLE(5)
+
+becomes:
+
+    3 * ((5) + (5))
+
+which gives:
+
+    30
+
+
+===============================================================
+MACRO SIDE-EFFECT TRAP
+===============================================================
+
+Bad usage:
+
+    #define MAX(a, b) ((a) > (b) ? (a) : (b))
+
+Then:
+
+    int x = 5;
+    int y = MAX(x++, 10);
+
+
+The expression can evaluate `x++` in a way that is not
+equivalent to passing it once to a function.
+
+General rule:
+
+    Avoid passing expressions with side effects to macros that
+    may evaluate parameters more than once.
+
+
+===============================================================
+PREPROCESSOR DOES NOT UNDERSTAND C TYPES
+===============================================================
+
+Consider:
+
+    #define VALUE 10
+
+The preprocessor does not know that:
+
+    VALUE
+
+is an `int` variable.
+
+It performs preprocessing according to macro rules.
+
+This is fundamentally different from:
+
+    int value = 10;
+
+
+The latter is a C declaration understood by the compiler.
+
+
+===============================================================
+#DEFINE VS const
+===============================================================
+
+Macro:
+
+    #define MAX_SIZE 100
+
+
+Constant object:
+
+    const int max_size = 100;
+
+
+They are not the same mechanism.
+
+`#define`:
+
+    handled by preprocessor
+    no object is created merely because of the macro
+    no C type associated with the macro itself
+
+
+`const` object:
+
+    part of C language
+    has a type
+    follows C object/declaration semantics
+
+
+The syllabus focuses on `#define` as part of the preprocessor;
+understanding this distinction is important for interviews.
+
+
+===============================================================
+IMPORTANT INTERVIEW QUESTIONS
+===============================================================
+
+Q1. What is the C preprocessor?
+
+A:
+
+It is the preprocessing stage that processes directives such as
+#include, #define, and conditional compilation directives
+before compilation.
+
+
+Q2. What does #include do?
+
+A:
+
+It causes the referenced header contents to be included during
+preprocessing.
+
+
+Q3. What does #define do?
+
+A:
+
+It defines a preprocessor macro.
+
+
+Q4. What does #undef do?
+
+A:
+
+It removes a macro definition.
+
+
+Q5. Difference between #if and #ifdef?
+
+A:
+
+    #if
+        evaluates a preprocessing expression.
+
+    #ifdef
+        checks whether a macro is defined.
+
+
+Q6. What does #ifndef mean?
+
+A:
+
+It checks whether a macro has not been defined.
+
+
+Q7. Why are header guards used?
+
+A:
+
+To prevent repeated processing of a header's contents within a
+translation unit.
+
+
+Q8. What is a parameterized macro?
+
+A:
+
+A function-like preprocessor macro that accepts arguments.
+
+Example:
+
+    #define MAX(a,b) ((a) > (b) ? (a) : (b))
+
+
+Q9. Why should macro parameters be parenthesized?
+
+A:
+
+To reduce operator-precedence problems during expansion.
+
+
+Q10. What is the major danger of macros compared with
+functions?
+
+A:
+
+Macro arguments can be substituted and potentially evaluated
+multiple times, causing unexpected side effects.
+
+
+===============================================================
+GATE-LEVEL CONCEPTS
+===============================================================
+
+1. PREPROCESSING IS NOT COMPILATION
+
+    #define
+    #include
+    #if
+
+are handled before normal compilation.
+
+
+2. MACRO EXPANSION CAN CHANGE OPERATOR PRECEDENCE
+
+Always inspect the expanded expression conceptually.
+
+
+3. MACRO ARGUMENTS MAY BE EVALUATED MULTIPLE TIMES
+
+Therefore:
+
+    MACRO(i++)
+
+can be dangerous.
+
+
+4. HEADER GUARDS ARE PREPROCESSOR LOGIC
+
+Pattern:
+
+    #ifndef X
+    #define X
+    ...
+    #endif
+
+
+5. #ifdef CHECKS DEFINITION
+
+It does not evaluate the numerical value in the same way as:
+
+    #if X
+
+
+6. PREDEFINED MACROS ARE USEFUL FOR DIAGNOSTICS
+
+Especially:
+
+    __FILE__
+    __LINE__
+
+
+===============================================================
+MASTER CONCEPT MAP
+===============================================================
+
+                    PREPROCESSOR
+                         |
+        +----------------+----------------+
+        |                |                |
+      Include          Macros        Conditional
+        |                |             Compilation
+        |                |                |
+    #include          #define        #if/#ifdef
+                       #undef        #ifndef/#elif
+                                         |
+                                       #endif
+                         |
+                +--------+--------+
+                |                 |
+        Object-like          Function-like
+          macro                 macro
+                |                 |
+             VALUE            MAX(a,b)
+
+
+                         |
+                         v
+                PREDEFINED MACROS
+                         |
+        +--------+-------+-------+--------+
+        |        |               |        |
+      FILE     LINE            DATE     TIME
+
+
+                         |
+                         v
+                  HEADER GUARDS
+                         |
+              #ifndef + #define
+                         |
+                       #endif
+
+
+===============================================================
+CHAPTER 17 MASTER REVISION
+===============================================================
+
+PREPROCESSOR
+    -> works before compilation
+
+#include
+    -> includes header/source contents
+
+#define
+    -> defines a macro
+
+#undef
+    -> removes a macro definition
+
+MACRO
+    -> preprocessor substitution/expansion
+
+PARAMETERIZED MACRO
+    -> macro with arguments
+
+#if
+    -> compile conditionally based on preprocessing expression
+
+#ifdef
+    -> compile conditionally if macro is defined
+
+#ifndef
+    -> compile conditionally if macro is not defined
+
+#elif
+    -> alternative preprocessing condition
+
+#endif
+    -> closes conditional compilation
+
+__FILE__
+    -> current source-file information
+
+__LINE__
+    -> current source line
+
+__DATE__
+    -> translation date
+
+__TIME__
+    -> translation time
+
+HEADER GUARD
+    -> prevents repeated header processing
+
+CORE MACRO WARNING
+    -> precedence problems
+    -> multiple evaluation
+    -> side effects
+
+
+===============================================================
+MOST IMPORTANT SYNTAX TO REMEMBER
+===============================================================
+
+Object-like macro:
+
+    #define SIZE 100
+
+
+Parameterized macro:
+
+    #define SQUARE(x) ((x) * (x))
+
+
+Remove macro:
+
+    #undef SIZE
+
+
+Conditional:
+
+    #ifdef DEBUG
+        ...
+    #endif
+
+
+Expression condition:
+
+    #if VERSION >= 2
+        ...
+    #endif
+
+
+Alternative:
+
+    #if CONDITION
+        ...
+    #elif OTHER_CONDITION
+        ...
+    #else
+        ...
+    #endif
+
+
+Header guard:
+
+    #ifndef MY_HEADER_H
+    #define MY_HEADER_H
+
+    /* declarations */
+
+    #endif
+
+
+Diagnostics:
+
+    printf("%s:%d\n", __FILE__, __LINE__);
+
+
+===============================================================
+CHAPTER 17 COMPLETE
+===============================================================
+
+You should now understand:
+
+    ✓ Preprocessor
+    ✓ #include
+    ✓ #define
+    ✓ Object-like macros
+    ✓ Function-like macros
+    ✓ Parameterized macros
+    ✓ Macro parentheses
+    ✓ Macro side effects
+    ✓ #undef
+    ✓ #if
+    ✓ #ifdef
+    ✓ #ifndef
+    ✓ #elif
+    ✓ #endif
+    ✓ __FILE__
+    ✓ __LINE__
+    ✓ __DATE__
+    ✓ __TIME__
+    ✓ Macro vs function
+    ✓ Header guards
+    ✓ GATE/interview traps
+    ✓ Practical preprocessing flow
+
+
+NEXT CHAPTER FROM THE SYLLABUS:
+
+===============================================================
+CHAPTER 18 — FILE HANDLING
+===============================================================
+
+18.1 File Concepts
+18.2 FILE pointer
+18.3 fopen()
+18.4 fclose()
+
+18.5 File Modes
+    ├── r
+    ├── w
+    ├── a
+    ├── r+
+    ├── w+
+    └── a+
+
+18.6 Character File I/O
+    ├── fgetc()
+    └── fputc()
+
+18.7 String File I/O
+    ├── fgets()
+    └── fputs()
+
+18.8 Formatted File I/O
+    ├── fprintf()
+    └── fscanf()
+
+18.9 Binary Files
+    ├── fread()
+    └── fwrite()
+
+18.10 File Positioning
+    ├── fseek()
+    ├── ftell()
+    ├── rewind()
+    └── SEEK_SET/SEEK_CUR/SEEK_END
+
+18.11 Error Handling in File Operations
+===============================================================

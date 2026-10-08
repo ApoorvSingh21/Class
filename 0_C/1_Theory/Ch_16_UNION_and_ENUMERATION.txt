@@ -1,0 +1,1453 @@
+f===============================================================
+CHAPTER 16 — UNION & ENUMERATION
+===============================================================
+
+This chapter follows the uploaded C Programming —
+Job-Ready Master Syllabus.
+
+16.1 UNION
+    ├── Definition
+    ├── Declaration
+    ├── Initialization
+    ├── Memory behavior
+    └── Structure vs Union
+
+16.2 enum
+    ├── Enumeration
+    ├── enum constants
+    └── Practical usage
+
+16.3 typedef
+    ├── Type aliases
+    ├── typedef with structures
+    └── typedef with pointers
+
+
+===============================================================
+16.1 UNION
+===============================================================
+
+A union is a user-defined data type in C that allows different
+members to share the SAME memory location.
+
+Basic syntax:
+
+    union UnionName
+    {
+        data_type member1;
+        data_type member2;
+        data_type member3;
+    };
+
+Example:
+
+    union Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+
+---------------------------------------------------------------
+STRUCTURE VS UNION — CORE IDEA
+---------------------------------------------------------------
+
+Structure:
+
+    struct Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+Each member has its own storage.
+
+Conceptually:
+
+    +---------+
+    | int     |
+    +---------+
+    | float   |
+    +---------+
+    | char    |
+    +---------+
+
+
+Union:
+
+    union Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+Members share storage.
+
+Conceptually:
+
+    +-------------------------+
+    | shared memory          |
+    | int / float / char     |
+    +-------------------------+
+
+Therefore, a union is useful when only one of several possible
+representations needs to be stored at a time.
+
+
+===============================================================
+16.1.1 UNION DECLARATION
+===============================================================
+
+Example:
+
+    union Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+Create an object:
+
+    union Data d;
+
+
+Access members using the dot operator:
+
+    d.i
+    d.f
+    d.c
+
+
+For a pointer to a union:
+
+    union Data *p = &d;
+
+Use:
+
+    p->i
+    p->f
+    p->c
+
+
+The same `.` and `->` rules apply to structures and unions.
+
+
+===============================================================
+16.1.2 UNION INITIALIZATION
+===============================================================
+
+A union can be initialized.
+
+Example:
+
+    union Data d = {10};
+
+This initializes the first member.
+
+If:
+
+    union Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+then:
+
+    union Data d = {10};
+
+initializes:
+
+    d.i
+
+
+Designated initialization can explicitly select a member:
+
+    union Data d = {.f = 10.5f};
+
+
+This is useful because it makes the intended active member
+clear.
+
+
+===============================================================
+16.1.3 UNION MEMORY BEHAVIOR
+===============================================================
+
+This is the most important concept of unions.
+
+Consider:
+
+    union Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+    union Data d;
+
+All members overlap in storage.
+
+Conceptually:
+
+          d
+    +----------------+
+    |                |
+    | shared memory  |
+    |                |
+    +----------------+
+       ^      ^    ^
+       |      |    |
+       i      f    c
+
+
+Therefore:
+
+    d.i
+    d.f
+    d.c
+
+refer to the same underlying storage area.
+
+
+---------------------------------------------------------------
+SIZE OF UNION
+---------------------------------------------------------------
+
+The size of a union is sufficient to represent its members,
+with alignment requirements taken into account.
+
+A useful conceptual rule is:
+
+    sizeof(union)
+        >=
+    sizeof(largest member)
+
+The exact size can depend on alignment and implementation.
+
+Example:
+
+    union Data
+    {
+        int i;
+        double d;
+        char c;
+    };
+
+The union must have enough storage for the largest member
+(`double` in a typical implementation), subject to alignment.
+
+
+===============================================================
+16.1.4 ACTIVE MEMBER
+===============================================================
+
+A union can represent different data using the same storage.
+
+Example:
+
+    union Data d;
+
+    d.i = 100;
+
+At this point, we use the union as an integer representation.
+
+Then:
+
+    d.f = 20.5f;
+
+Now the same storage is being used for the float member.
+
+Writing another member changes the shared storage.
+
+
+IMPORTANT:
+
+    d.i = 100;
+    d.f = 20.5f;
+
+Do NOT think that both values are independently stored.
+
+They are sharing the same memory.
+
+
+===============================================================
+UNION EXAMPLE
+===============================================================
+
+    #include <stdio.h>
+
+    union Data
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+    int main(void)
+    {
+        union Data d;
+
+        d.i = 100;
+        printf("Integer: %d\n", d.i);
+
+        d.f = 20.5f;
+        printf("Float: %.2f\n", d.f);
+
+        d.c = 'A';
+        printf("Character: %c\n", d.c);
+
+        return 0;
+    }
+
+
+The key idea is:
+
+    write member
+        ↓
+    shared storage changes
+        ↓
+    another member can then use that storage
+
+
+===============================================================
+16.1.5 STRUCTURE VS UNION
+===============================================================
+
+STRUCTURE:
+
+    struct Example
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+Members generally have separate storage.
+
+UNION:
+
+    union Example
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+Members share storage.
+
+
+Comparison:
+
+    +----------------------+-------------------------+
+    | Structure            | Union                   |
+    +----------------------+-------------------------+
+    | Separate storage     | Shared storage          |
+    | All members coexist  | Members overlap         |
+    | Larger in many cases | Often smaller           |
+    | All values retained  | One representation at   |
+    |                      | a time is typically     |
+    |                      | intended                |
+    +----------------------+-------------------------+
+
+
+IMPORTANT:
+
+A union is not simply a "smaller structure".
+
+Its semantic purpose is different:
+
+    STRUCTURE
+        = record containing multiple fields
+
+    UNION
+        = one storage location interpreted through
+          different members
+
+
+===============================================================
+WHEN SHOULD WE USE A UNION?
+===============================================================
+
+Use a union when an object may represent one of several
+alternative forms and storing all forms simultaneously is
+unnecessary.
+
+Conceptual example:
+
+    A message may contain:
+
+        integer value
+        OR
+        floating-point value
+        OR
+        character value
+
+A union allows these alternatives to share storage.
+
+
+---------------------------------------------------------------
+REAL-WORLD STYLE EXAMPLE
+---------------------------------------------------------------
+
+    enum DataType
+    {
+        TYPE_INT,
+        TYPE_FLOAT,
+        TYPE_CHAR
+    };
+
+    union Value
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+Now a program can conceptually maintain:
+
+    type
+    +
+    corresponding value
+
+
+This pattern is a foundation for tagged unions.
+
+
+===============================================================
+TAGGED UNION CONCEPT
+===============================================================
+
+A union by itself does not automatically remember which member
+was most recently written.
+
+Therefore, a common design is:
+
+    enum Type
+    {
+        INT_VALUE,
+        FLOAT_VALUE,
+        CHAR_VALUE
+    };
+
+    union Value
+    {
+        int i;
+        float f;
+        char c;
+    };
+
+    struct Variant
+    {
+        enum Type type;
+        union Value value;
+    };
+
+
+Now:
+
+    type
+       +
+    value
+
+work together.
+
+Example:
+
+    struct Variant v;
+
+    v.type = INT_VALUE;
+    v.value.i = 100;
+
+
+The `type` field tells the program how to interpret the
+union's shared storage.
+
+
+===============================================================
+16.2 ENUMERATION — enum
+===============================================================
+
+`enum` is used to define a set of named integer constants.
+
+Basic syntax:
+
+    enum EnumName
+    {
+        CONSTANT1,
+        CONSTANT2,
+        CONSTANT3
+    };
+
+
+Example:
+
+    enum Day
+    {
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        SUNDAY
+    };
+
+
+Now:
+
+    enum Day today;
+
+can represent one of these named values.
+
+
+===============================================================
+16.2.1 ENUM CONSTANTS
+===============================================================
+
+By default, enumeration constants receive integer values
+starting from 0.
+
+Example:
+
+    enum Day
+    {
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY
+    };
+
+
+Conceptually:
+
+    MONDAY     = 0
+    TUESDAY    = 1
+    WEDNESDAY  = 2
+
+
+This makes code more readable than using unexplained numbers.
+
+Instead of:
+
+    if (day == 2)
+
+we can write:
+
+    if (day == WEDNESDAY)
+
+
+---------------------------------------------------------------
+CUSTOM ENUM VALUES
+---------------------------------------------------------------
+
+Values can be explicitly assigned.
+
+Example:
+
+    enum Status
+    {
+        SUCCESS = 0,
+        FAILURE = 1
+    };
+
+
+Another example:
+
+    enum Level
+    {
+        LOW = 10,
+        MEDIUM = 20,
+        HIGH = 30
+    };
+
+
+If an enumerator does not have an explicit value, its value
+continues from the previous enumerator.
+
+Example:
+
+    enum Example
+    {
+        A = 5,
+        B,
+        C
+    };
+
+
+Conceptually:
+
+    A = 5
+    B = 6
+    C = 7
+
+
+===============================================================
+16.2.2 USING enum
+===============================================================
+
+Example:
+
+    enum Status
+    {
+        SUCCESS,
+        FAILURE,
+        PENDING
+    };
+
+    enum Status status;
+
+    status = SUCCESS;
+
+
+Then:
+
+    if (status == SUCCESS)
+    {
+        printf("Operation successful\n");
+    }
+
+
+This is much more readable than:
+
+    int status = 0;
+
+
+because:
+
+    SUCCESS
+
+communicates meaning.
+
+
+===============================================================
+ENUM WITH switch
+===============================================================
+
+Enums are particularly useful with `switch`.
+
+Example:
+
+    enum Day
+    {
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY
+    };
+
+    enum Day day = TUESDAY;
+
+    switch (day)
+    {
+        case MONDAY:
+            printf("Monday\n");
+            break;
+
+        case TUESDAY:
+            printf("Tuesday\n");
+            break;
+
+        case WEDNESDAY:
+            printf("Wednesday\n");
+            break;
+    }
+
+
+This combines two important C concepts:
+
+    enum
+      +
+    switch
+
+
+===============================================================
+ENUM PRACTICAL USAGE
+===============================================================
+
+The syllabus specifically includes practical usage.
+
+Common conceptual applications include:
+
+    Status:
+        SUCCESS
+        FAILURE
+        PENDING
+
+    State:
+        START
+        RUNNING
+        STOPPED
+
+    Direction:
+        NORTH
+        SOUTH
+        EAST
+        WEST
+
+    Permission:
+        READ
+        WRITE
+        EXECUTE
+
+    Connection:
+        DISCONNECTED
+        CONNECTING
+        CONNECTED
+
+
+Enums make program logic easier to understand.
+
+
+===============================================================
+IMPORTANT enum CONCEPT
+===============================================================
+
+Enumeration constants are integer constants.
+
+For example:
+
+    enum Color
+    {
+        RED,
+        GREEN,
+        BLUE
+    };
+
+
+The constants represent integer values.
+
+Conceptually:
+
+    RED   -> 0
+    GREEN -> 1
+    BLUE  -> 2
+
+
+But the important purpose is not merely representing numbers.
+
+The main benefit is:
+
+    meaningful names
+        instead of
+    unexplained numeric values
+
+
+===============================================================
+enum VS #define
+===============================================================
+
+Both can create symbolic names, but they are different
+mechanisms.
+
+Using enum:
+
+    enum Status
+    {
+        SUCCESS,
+        FAILURE
+    };
+
+
+Using macros:
+
+    #define SUCCESS 0
+    #define FAILURE 1
+
+
+`enum` is part of the C language type system and provides a
+natural way to describe related enumeration constants.
+
+`#define` is handled by the preprocessor.
+
+
+===============================================================
+16.3 TYPEDEF
+===============================================================
+
+`typedef` creates an alias for an existing type.
+
+Basic syntax:
+
+    typedef existing_type new_name;
+
+
+Example:
+
+    typedef unsigned int uint;
+
+Now:
+
+    uint x;
+
+is an alias-based spelling for:
+
+    unsigned int x;
+
+
+IMPORTANT:
+
+`typedef` does NOT create a completely new fundamental type.
+
+It creates another name for an existing type.
+
+
+===============================================================
+TYPEDEF WITH STRUCTURES
+===============================================================
+
+Without typedef:
+
+    struct Student
+    {
+        int roll;
+        float marks;
+    };
+
+To declare:
+
+    struct Student s;
+
+
+With typedef:
+
+    typedef struct
+    {
+        int roll;
+        float marks;
+    } Student;
+
+
+Now:
+
+    Student s;
+
+
+This is often more convenient.
+
+
+---------------------------------------------------------------
+TAGGED STRUCTURE + typedef
+---------------------------------------------------------------
+
+Another common style:
+
+    typedef struct Student
+    {
+        int roll;
+        float marks;
+    } Student;
+
+
+Now both forms are available:
+
+    struct Student s1;
+
+and:
+
+    Student s2;
+
+
+The typedef name:
+
+    Student
+
+is an alias for:
+
+    struct Student
+
+
+===============================================================
+TYPEDEF WITH POINTERS
+===============================================================
+
+Pointers can also have typedef aliases.
+
+Example:
+
+    typedef int *IntPtr;
+
+Now:
+
+    IntPtr p;
+
+means:
+
+    int *p;
+
+
+Example:
+
+    int x = 10;
+
+    IntPtr p = &x;
+
+
+Then:
+
+    printf("%d\n", *p);
+
+
+---------------------------------------------------------------
+IMPORTANT POINTER typedef TRAP
+---------------------------------------------------------------
+
+Consider:
+
+    typedef int *IntPtr;
+
+Then:
+
+    IntPtr p1, p2;
+
+means:
+
+    int *p1;
+    int *p2;
+
+
+Both are pointers.
+
+
+Compare with:
+
+    int *p1, p2;
+
+Here:
+
+    p1 -> pointer to int
+    p2 -> int
+
+
+This is one reason typedef can sometimes improve pointer
+declarations.
+
+
+===============================================================
+TYPEDEF WITH STRUCTURE POINTERS
+===============================================================
+
+Example:
+
+    typedef struct Node
+    {
+        int data;
+        struct Node *next;
+    } Node;
+
+
+Now:
+
+    Node *head;
+
+
+is much shorter than:
+
+    struct Node *head;
+
+
+This style is commonly used when implementing data structures.
+
+
+===============================================================
+STRUCT + UNION + ENUM + TYPEDEF
+===============================================================
+
+These features become especially powerful when combined.
+
+Example:
+
+    typedef enum
+    {
+        INT_TYPE,
+        FLOAT_TYPE,
+        CHAR_TYPE
+    } DataType;
+
+
+Union:
+
+    typedef union
+    {
+        int i;
+        float f;
+        char c;
+    } Data;
+
+
+Then:
+
+    typedef struct
+    {
+        DataType type;
+        Data value;
+    } Variant;
+
+
+Now:
+
+    Variant v;
+
+
+can conceptually represent:
+
+    type
+      +
+    corresponding data
+
+
+Example:
+
+    v.type = INT_TYPE;
+    v.value.i = 100;
+
+
+This is an important low-level programming pattern.
+
+
+===============================================================
+MEMORY VIEW
+===============================================================
+
+STRUCTURE:
+
+    struct S
+    {
+        int a;
+        float b;
+        char c;
+    };
+
+Conceptually:
+
+    +---------+
+    | a       |
+    +---------+
+    | b       |
+    +---------+
+    | c       |
+    +---------+
+
+Separate storage.
+
+
+UNION:
+
+    union U
+    {
+        int a;
+        float b;
+        char c;
+    };
+
+Conceptually:
+
+    +----------------+
+    | shared storage |
+    +----------------+
+
+All members overlap.
+
+
+ENUM:
+
+    enum State
+    {
+        OFF,
+        ON
+    };
+
+Conceptually:
+
+    OFF -> integer constant
+    ON  -> integer constant
+
+
+TYPEDEF:
+
+    typedef unsigned long ulong;
+
+Conceptually:
+
+    ulong
+      |
+      +---- alias for ----> unsigned long
+
+
+===============================================================
+IMPORTANT INTERVIEW QUESTIONS
+===============================================================
+
+Q1. What is a union?
+
+A:
+
+A union is a user-defined type whose members share the same
+storage.
+
+
+Q2. What is the major difference between structure and union?
+
+A:
+
+Structure members have separate storage, while union members
+share storage.
+
+
+Q3. Why is a union usually smaller than the equivalent
+structure?
+
+A:
+
+Because union members overlap in storage rather than requiring
+separate storage for all members.
+
+
+Q4. Can all union members hold independent values at the same
+time?
+
+A:
+
+They share the same storage, so writing one member changes the
+shared representation. A union is normally used when only one
+alternative representation is needed at a time.
+
+
+Q5. What is enum?
+
+A:
+
+An enumeration defines named integer constants.
+
+
+Q6. What is the default first enum value?
+
+A:
+
+The first enumerator is 0 unless explicitly assigned another
+value.
+
+
+Q7. Can enum values be explicitly assigned?
+
+YES.
+
+Example:
+
+    enum Status
+    {
+        SUCCESS = 100,
+        FAILURE = 200
+    };
+
+
+Q8. What does typedef do?
+
+A:
+
+It creates an alias for an existing type.
+
+
+Q9. Does typedef create a completely new data type?
+
+NO.
+
+It creates another name for an existing type.
+
+
+Q10. Why is typedef commonly used with structures?
+
+It makes declarations shorter and easier to read.
+
+Example:
+
+    typedef struct Node
+    {
+        int data;
+        struct Node *next;
+    } Node;
+
+Then:
+
+    Node *head;
+
+
+===============================================================
+GATE-LEVEL THINKING
+===============================================================
+
+Consider:
+
+    union U
+    {
+        int x;
+        char c;
+    };
+
+    union U u;
+
+    u.x = 100;
+    u.c = 'A';
+
+
+Question:
+
+Does `u.c = 'A'` create a second independent storage location?
+
+NO.
+
+The character is written into the same union storage.
+
+
+---------------------------------------------------------------
+
+Consider:
+
+    enum Test
+    {
+        A = 3,
+        B,
+        C = 10,
+        D
+    };
+
+
+Values are:
+
+    A = 3
+    B = 4
+    C = 10
+    D = 11
+
+
+---------------------------------------------------------------
+
+Consider:
+
+    typedef int *P;
+
+    P a, b;
+
+Both are:
+
+    int *
+
+
+But:
+
+    int *a, b;
+
+means:
+
+    a -> int pointer
+    b -> int
+
+
+This is a classic C declaration trap.
+
+
+===============================================================
+COMMON MISTAKES
+===============================================================
+
+MISTAKE 1:
+
+Thinking union members have separate memory.
+
+WRONG.
+
+They share storage.
+
+
+MISTAKE 2:
+
+Thinking enum constants are strings.
+
+WRONG.
+
+They represent integer constants.
+
+
+MISTAKE 3:
+
+Thinking typedef creates a new runtime object.
+
+WRONG.
+
+It only creates a type alias.
+
+
+MISTAKE 4:
+
+Confusing:
+
+    typedef int *P;
+
+with:
+
+    int *P;
+
+These are completely different declarations.
+
+
+MISTAKE 5:
+
+Assuming union size is always exactly the size of its largest
+member.
+
+The implementation's alignment requirements can affect the
+actual size.
+
+
+MISTAKE 6:
+
+Using a union without tracking which interpretation is valid.
+
+A tagged-union design often uses:
+
+    enum tag
+    +
+    union value
+
+
+===============================================================
+STRUCTURE + UNION + ENUM + TYPEDEF
+MASTER RELATIONSHIP
+===============================================================
+
+                    USER-DEFINED TYPES
+                           |
+          +----------------+----------------+
+          |                |                |
+       struct            union             enum
+          |                |                |
+     separate           shared          named integer
+      members           storage           constants
+          |                |                |
+          +----------------+----------------+
+                           |
+                        typedef
+                           |
+                     convenient aliases
+
+
+===============================================================
+CHAPTER 16 MASTER REVISION
+===============================================================
+
+UNION
+    |
+    +-- user-defined type
+    +-- members share memory
+    +-- useful for alternative representations
+    +-- access using .
+    +-- pointer access using ->
+    +-- size depends on largest member + alignment
+    +-- structure and union are fundamentally different
+
+
+ENUM
+    |
+    +-- named integer constants
+    +-- default sequence starts at 0
+    +-- values can be explicitly assigned
+    +-- improves readability
+    +-- useful with switch
+    +-- useful for states/status/types
+
+
+TYPEDEF
+    |
+    +-- creates type alias
+    +-- does not create a new fundamental type
+    +-- useful with structures
+    +-- useful with pointers
+    +-- simplifies data-structure declarations
+
+
+MOST IMPORTANT PATTERNS:
+
+    union Data
+    {
+        int i;
+        float f;
+    };
+
+
+    enum Status
+    {
+        SUCCESS,
+        FAILURE
+    };
+
+
+    typedef unsigned int uint;
+
+
+    typedef struct Node
+    {
+        int data;
+        struct Node *next;
+    } Node;
+
+
+    typedef int *IntPtr;
+
+
+===============================================================
+CHAPTER 16 COMPLETE
+===============================================================
+
+You should now understand:
+
+    ✓ Union definition
+    ✓ Union declaration
+    ✓ Union initialization
+    ✓ Union memory behavior
+    ✓ Union vs structure
+    ✓ Shared storage
+    ✓ Active-member concept
+    ✓ Tagged union concept
+    ✓ enum
+    ✓ enum constants
+    ✓ Default enum values
+    ✓ Explicit enum values
+    ✓ Practical enum usage
+    ✓ typedef
+    ✓ typedef with structures
+    ✓ typedef with pointers
+    ✓ Structure/union/enum combination
+    ✓ Interview traps
+    ✓ GATE-level concepts
+
+
+NEXT:
+
+    CHAPTER 17 — PREPROCESSOR
+
+Topics:
+
+    17.1 Preprocessor
+    17.2 #include
+    17.3 #define
+    17.4 Macros
+    17.5 Parameterized Macros
+    17.6 #undef
+    17.7 Conditional Compilation
+        ├── #if
+        ├── #ifdef
+        ├── #ifndef
+        ├── #elif
+        └── #endif
+    17.8 Predefined Macros
+        ├── __FILE__
+        ├── __LINE__
+        ├── __DATE__
+        └── __TIME__
+    17.9 Macro vs Function
+    17.10 Header Guards
+===============================================================

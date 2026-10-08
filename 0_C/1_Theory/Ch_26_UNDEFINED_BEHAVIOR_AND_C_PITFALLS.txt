@@ -1,0 +1,1248 @@
+Worked for a few seconds
+
+===============================================================
+CHAPTER 26 — UNDEFINED BEHAVIOR & C PITFALLS
+===============================================================
+
+This chapter is extremely important for:
+    • GATE
+    • C interviews
+    • Output-prediction questions
+    • Debugging
+    • Low-level programming
+    • Writing reliable C programs
+
+The syllabus covers:
+
+26.1 Undefined Behavior
+26.2 Implementation-defined Behavior
+26.3 Unspecified Behavior
+
+26.4 Common Interview Traps
+    ├── ++i vs i++
+    ├── Operator precedence
+    ├── Integer division
+    ├── Signed/unsigned comparison
+    ├── Array bounds
+    ├── String termination
+    ├── sizeof behavior
+    └── Evaluation order
+
+26.5 Undefined Behavior Examples
+
+
+===============================================================
+26.1 UNDEFINED BEHAVIOR
+===============================================================
+
+Undefined Behavior (UB) means:
+
+    The C standard places NO requirements on what happens.
+
+Once a program executes undefined behavior, you cannot
+reasonably predict its result from the C language rules.
+
+It may:
+    • produce the expected result
+    • produce a different result
+    • crash
+    • appear to work
+    • change behavior after optimization
+    • behave differently on another compiler
+    • behave differently after an unrelated code change
+
+IMPORTANT:
+
+    "Undefined" does NOT mean "the compiler must report an error."
+
+Example:
+
+    int a[5];
+
+    printf("%d\n", a[10]);
+
+The access is outside the array bounds.
+
+This is undefined behavior.
+
+
+---------------------------------------------------------------
+WHY UB IS DANGEROUS
+---------------------------------------------------------------
+
+Consider:
+
+    int x = 10;
+
+    printf("%d\n", x);
+
+This is well-defined.
+
+But:
+
+    int a[3] = {10, 20, 30};
+
+    printf("%d\n", a[100]);
+
+The program may print:
+    0
+    10
+    garbage
+    some unrelated value
+
+or crash.
+
+There is NO valid C-language answer for the result.
+
+
+===============================================================
+26.2 IMPLEMENTATION-DEFINED BEHAVIOR
+===============================================================
+
+Implementation-defined behavior is different.
+
+The implementation/compiler is allowed to choose among
+multiple possibilities, BUT it must document which choice
+it made.
+
+Example:
+
+    Whether a plain char is signed or unsigned can be
+    implementation-defined.
+
+For example, on one implementation:
+
+    char c;
+
+may behave like:
+
+    signed char
+
+while another implementation may treat it like:
+
+    unsigned char
+
+The important distinction:
+
+    Implementation-defined
+        -> implementation chooses
+        -> choice must be documented
+
+
+    Undefined
+        -> standard imposes no requirements
+        -> no required documented result
+
+
+---------------------------------------------------------------
+CONCEPTUAL COMPARISON
+---------------------------------------------------------------
+
+                C Standard
+                    |
+        +-----------+-----------+
+        |                       |
+    Defined                 Not fully fixed
+                                |
+                    +-----------+-----------+
+                    |                       |
+             Implementation-          Unspecified
+                defined
+                    |
+              documented
+
+
+Example:
+
+    Implementation-defined:
+        signedness of plain char
+
+    Undefined:
+        accessing outside an array
+
+    Unspecified:
+        certain permitted choices where
+        implementation does not need to
+        document which choice occurred.
+
+
+===============================================================
+26.3 UNSPECIFIED BEHAVIOR
+===============================================================
+
+Unspecified behavior means:
+
+    The standard permits multiple possible behaviors
+    and does not require the implementation to document
+    which one it chooses.
+
+The implementation can choose any behavior permitted by
+the standard.
+
+This is different from undefined behavior.
+
+IMPORTANT:
+
+    Unspecified != Undefined
+
+
+---------------------------------------------------------------
+THREE TERMS TO REMEMBER
+---------------------------------------------------------------
+
+1. DEFINED BEHAVIOR
+
+    The C standard specifies what happens.
+
+    Example:
+        int x = 10 + 20;
+
+        x becomes 30.
+
+
+2. IMPLEMENTATION-DEFINED BEHAVIOR
+
+    Several choices are allowed.
+    Implementation chooses one and documents it.
+
+
+3. UNSPECIFIED BEHAVIOR
+
+    Several choices are allowed.
+    Implementation may choose any permitted choice,
+    without necessarily documenting which choice occurred.
+
+
+4. UNDEFINED BEHAVIOR
+
+    The standard imposes no requirements.
+
+    Anything can happen.
+
+
+===============================================================
+26.4 COMMON INTERVIEW TRAPS
+===============================================================
+
+
+---------------------------------------------------------------
+TRAP 1 — ++i VS i++
+---------------------------------------------------------------
+
+These operators have different values as expressions.
+
+    ++i
+
+means:
+
+    Increment first
+    Then produce the new value
+
+
+    i++
+
+means:
+
+    Produce the old value
+    Then increment i
+
+
+Example:
+
+    int i = 5;
+
+    int a = ++i;
+
+After execution:
+
+    i = 6
+    a = 6
+
+
+Example:
+
+    int i = 5;
+
+    int a = i++;
+
+After execution:
+
+    i = 6
+    a = 5
+
+
+---------------------------------------------------------------
+IMPORTANT
+---------------------------------------------------------------
+
+Do NOT conclude that:
+
+    ++i is always faster than i++
+
+or
+
+    i++ is always slower.
+
+For primitive integer variables, modern compilers can often
+generate equivalent optimized code when the old value is not
+needed.
+
+The important difference is SEMANTIC:
+
+    ++i -> value after increment
+    i++ -> value before increment
+
+
+---------------------------------------------------------------
+DANGEROUS EXAMPLE
+---------------------------------------------------------------
+
+    int i = 5;
+
+    printf("%d %d\n", i++, ++i);
+
+Do NOT try to calculate this as a normal arithmetic puzzle.
+
+The order in which function arguments are evaluated is not
+something you should assume.
+
+More importantly, modifying the same scalar object multiple
+times without a sequencing guarantee can lead to undefined
+behavior.
+
+The safe rule for interview/programming purposes:
+
+    Do not modify a variable multiple times in one expression
+    unless you are certain the operations are properly sequenced.
+
+
+===============================================================
+TRAP 2 — OPERATOR PRECEDENCE
+===============================================================
+
+Consider:
+
+    int x = 2 + 3 * 4;
+
+Multiplication has higher precedence.
+
+Therefore:
+
+    x = 2 + (3 * 4)
+      = 14
+
+
+Not:
+
+    (2 + 3) * 4
+      = 20
+
+
+---------------------------------------------------------------
+ANOTHER COMMON TRAP
+---------------------------------------------------------------
+
+    int x = 10;
+
+    if (x & 1 == 0)
+
+This does NOT necessarily mean:
+
+    if ((x & 1) == 0)
+
+Operator precedence matters.
+
+Best practice:
+
+    if ((x & 1) == 0)
+
+Always use parentheses when mixing operators whose precedence
+may be confusing.
+
+
+---------------------------------------------------------------
+IMPORTANT RULE
+---------------------------------------------------------------
+
+Precedence determines grouping.
+
+Associativity determines grouping when operators have the
+same precedence.
+
+Precedence does NOT necessarily determine the runtime order
+in which independent subexpressions are evaluated.
+
+
+===============================================================
+TRAP 3 — INTEGER DIVISION
+===============================================================
+
+Consider:
+
+    int x = 5 / 2;
+
+Result:
+
+    x = 2
+
+because both operands are integers.
+
+The fractional part is discarded.
+
+---------------------------------------------------------------
+
+Example:
+
+    double x = 5 / 2;
+
+Many beginners expect:
+
+    2.5
+
+But:
+
+    5 / 2
+
+is evaluated using integer arithmetic first.
+
+Therefore:
+
+    x = 2.0
+
+
+To obtain floating-point division:
+
+    double x = 5.0 / 2.0;
+
+Result:
+
+    2.5
+
+
+or:
+
+    double x = (double)5 / 2;
+
+Result:
+
+    2.5
+
+
+---------------------------------------------------------------
+INTERVIEW TRAP
+---------------------------------------------------------------
+
+    printf("%f", 5 / 2.0);
+
+Result:
+
+    2.500000
+
+because one operand is double.
+
+
+===============================================================
+TRAP 4 — SIGNED / UNSIGNED COMPARISON
+===============================================================
+
+This is one of the most important C interview traps.
+
+Example:
+
+    int a = -1;
+    unsigned int b = 1;
+
+    if (a < b)
+        printf("a is smaller");
+    else
+        printf("a is NOT smaller");
+
+
+Many beginners think:
+
+    -1 < 1
+
+therefore:
+
+    true
+
+But the comparison can involve conversion to unsigned,
+depending on the types and their ranks.
+
+For common implementations:
+
+    -1
+
+converted to unsigned may become a very large unsigned value.
+
+Conceptually:
+
+    -1
+      |
+      v
+    very large unsigned value
+
+
+Therefore the comparison can produce a surprising result.
+
+
+---------------------------------------------------------------
+LESSON
+---------------------------------------------------------------
+
+Whenever signed and unsigned integer types are mixed:
+
+    STOP
+
+and analyze the integer conversion rules.
+
+Do not rely on mathematical intuition alone.
+
+
+===============================================================
+TRAP 5 — ARRAY BOUNDS
+===============================================================
+
+Suppose:
+
+    int a[5] = {10, 20, 30, 40, 50};
+
+Valid indexes:
+
+    0
+    1
+    2
+    3
+    4
+
+
+This is valid:
+
+    a[4]
+
+
+This is invalid:
+
+    a[5]
+
+
+And:
+
+    a[10]
+
+
+is also invalid.
+
+C does not automatically perform bounds checking for ordinary
+array accesses.
+
+Therefore:
+
+    a[5]
+
+when the array has five elements, causes undefined behavior.
+
+
+---------------------------------------------------------------
+COMMON BUG
+---------------------------------------------------------------
+
+    for (int i = 0; i <= 5; i++)
+        printf("%d\n", a[i]);
+
+If:
+
+    int a[5];
+
+then valid values are:
+
+    i = 0 ... 4
+
+But the loop also accesses:
+
+    a[5]
+
+UB occurs.
+
+
+CORRECT:
+
+    for (int i = 0; i < 5; i++)
+
+
+===============================================================
+TRAP 6 — STRING TERMINATION
+===============================================================
+
+C strings are character sequences terminated by:
+
+    '\0'
+
+Example:
+
+    char s[] = "HELLO";
+
+Memory conceptually contains:
+
+    H
+    E
+    L
+    L
+    O
+    \0
+
+
+Therefore:
+
+    sizeof(s)
+
+is:
+
+    6
+
+
+not:
+
+    5
+
+
+---------------------------------------------------------------
+CHARACTER ARRAY VS C STRING
+---------------------------------------------------------------
+
+This is an array:
+
+    char a[3] = {'A', 'B', 'C'};
+
+
+It is NOT a valid null-terminated C string.
+
+There is no:
+
+    '\0'
+
+
+Calling:
+
+    printf("%s", a);
+
+can cause undefined behavior because %s expects a pointer
+to a null-terminated string.
+
+
+---------------------------------------------------------------
+CORRECT STRING
+---------------------------------------------------------------
+
+    char a[4] = {'A', 'B', 'C', '\0'};
+
+Now it is a valid C string.
+
+
+===============================================================
+TRAP 7 — sizeof BEHAVIOR
+===============================================================
+
+Consider:
+
+    int a[10];
+
+Inside the same scope:
+
+    sizeof(a)
+
+gives the total size of the array in bytes.
+
+If:
+
+    sizeof(int) == 4
+
+then:
+
+    sizeof(a) == 40
+
+
+---------------------------------------------------------------
+BUT WHEN PASSED TO A FUNCTION
+---------------------------------------------------------------
+
+Consider:
+
+    void fun(int a[])
+    {
+        printf("%zu\n", sizeof(a));
+    }
+
+
+Inside the parameter list:
+
+    int a[]
+
+is adjusted to a pointer parameter.
+
+Conceptually:
+
+    void fun(int *a)
+
+
+Therefore:
+
+    sizeof(a)
+
+inside the function gives the size of the pointer,
+NOT the size of the original array.
+
+
+---------------------------------------------------------------
+VERY IMPORTANT
+---------------------------------------------------------------
+
+When an array is passed to a function:
+
+    array -> pointer to first element
+
+The function does NOT automatically know the array length.
+
+Therefore commonly pass:
+
+    fun(a, n);
+
+
+Example:
+
+    void fun(int a[], int n)
+    {
+        for (int i = 0; i < n; i++)
+            printf("%d ", a[i]);
+    }
+
+
+===============================================================
+TRAP 8 — EVALUATION ORDER
+===============================================================
+
+One of the most dangerous misunderstandings in C is:
+
+    "The expression is written left-to-right,
+     so it must execute left-to-right."
+
+This is NOT generally true.
+
+Operator precedence tells us how an expression is grouped.
+
+It does not automatically specify the evaluation order of
+every operand.
+
+
+---------------------------------------------------------------
+EXAMPLE
+---------------------------------------------------------------
+
+Consider:
+
+    f() + g()
+
+
+Do not automatically assume:
+
+    f() executes first
+    then g()
+
+
+or:
+
+    g() executes first
+    then f()
+
+
+The exact evaluation rules depend on the operators and context.
+
+
+---------------------------------------------------------------
+EXTREMELY DANGEROUS PATTERN
+---------------------------------------------------------------
+
+    i = i++ + 1;
+
+
+Do not attempt to predict this as a normal arithmetic expression.
+
+The expression modifies and accesses the same scalar object
+without the required sequencing relationship.
+
+This leads to undefined behavior.
+
+
+---------------------------------------------------------------
+SAFE STYLE
+---------------------------------------------------------------
+
+Instead of:
+
+    i = i++ + 1;
+
+write simple statements:
+
+    i++;
+    i = i + 1;
+
+Even better, write the exact intended operation clearly.
+
+Readable code avoids sequencing traps.
+
+
+===============================================================
+26.5 UNDEFINED BEHAVIOR EXAMPLES
+===============================================================
+
+
+---------------------------------------------------------------
+EXAMPLE 1 — OUT-OF-BOUNDS ACCESS
+---------------------------------------------------------------
+
+    int a[3] = {1, 2, 3};
+
+    printf("%d\n", a[5]);
+
+Problem:
+
+    Index 5 does not exist.
+
+Result:
+
+    Undefined behavior.
+
+
+---------------------------------------------------------------
+EXAMPLE 2 — NULL DEREFERENCE
+---------------------------------------------------------------
+
+    int *p = NULL;
+
+    printf("%d\n", *p);
+
+Problem:
+
+    Dereferencing a null pointer.
+
+Result:
+
+    Undefined behavior.
+
+
+---------------------------------------------------------------
+EXAMPLE 3 — USE AFTER FREE
+---------------------------------------------------------------
+
+    int *p = malloc(sizeof(int));
+
+    *p = 10;
+
+    free(p);
+
+    printf("%d\n", *p);
+
+Problem:
+
+    p points to memory whose lifetime has ended.
+
+Result:
+
+    Undefined behavior.
+
+
+---------------------------------------------------------------
+EXAMPLE 4 — DOUBLE FREE
+---------------------------------------------------------------
+
+    int *p = malloc(sizeof(int));
+
+    free(p);
+    free(p);
+
+The second free is invalid.
+
+Result:
+
+    Undefined behavior.
+
+
+---------------------------------------------------------------
+EXAMPLE 5 — UNINITIALIZED AUTOMATIC VARIABLE
+---------------------------------------------------------------
+
+    int x;
+
+    printf("%d\n", x);
+
+An automatic variable with no initialization has an
+indeterminate value.
+
+Using an indeterminate value can lead to undefined behavior
+depending on the type and context.
+
+The safe approach:
+
+    int x = 0;
+
+
+---------------------------------------------------------------
+EXAMPLE 6 — MODIFYING A SCALAR MULTIPLE TIMES
+---------------------------------------------------------------
+
+    int i = 5;
+
+    i = i++ + ++i;
+
+The expression attempts multiple modifications of i without
+the necessary sequencing.
+
+Result:
+
+    Undefined behavior.
+
+
+---------------------------------------------------------------
+EXAMPLE 7 — BUFFER OVERFLOW
+---------------------------------------------------------------
+
+    char name[5];
+
+    strcpy(name, "ABCDEFG");
+
+The destination array is too small.
+
+This writes beyond the valid storage.
+
+Result:
+
+    Undefined behavior.
+
+
+---------------------------------------------------------------
+EXAMPLE 8 — INVALID STRING
+---------------------------------------------------------------
+
+    char s[3] = {'A', 'B', 'C'};
+
+    printf("%s", s);
+
+There is no terminating '\0'.
+
+The function may continue reading beyond the array looking for
+a null byte.
+
+Result:
+
+    Undefined behavior.
+
+
+===============================================================
+DEFINED vs UNSPECIFIED vs IMPLEMENTATION-DEFINED vs UB
+===============================================================
+
++------------------------+------------------------------------+
+| Category               | Meaning                            |
++------------------------+------------------------------------+
+| Defined                | Standard specifies behavior       |
+| Implementation-defined| Implementation chooses + documents|
+| Unspecified            | Implementation may choose         |
+| Undefined              | No requirements from standard     |
++------------------------+------------------------------------+
+
+
+INTERVIEW MEMORY TRICK:
+
+    IMPLEMENTATION-DEFINED
+        = "Choose and document"
+
+    UNSPECIFIED
+        = "Choose, documentation not required"
+
+    UNDEFINED
+        = "No requirements"
+
+
+===============================================================
+HOW TO HANDLE OUTPUT-BASED QUESTIONS
+===============================================================
+
+When you see a tricky C expression:
+
+STEP 1:
+    Check whether the code is syntactically valid.
+
+STEP 2:
+    Check types.
+
+STEP 3:
+    Check operator precedence.
+
+STEP 4:
+    Check associativity.
+
+STEP 5:
+    Check integer promotions/conversions.
+
+STEP 6:
+    Check array bounds.
+
+STEP 7:
+    Check pointer validity.
+
+STEP 8:
+    Check object lifetime.
+
+STEP 9:
+    Check whether a variable is modified/accessed
+    in a potentially unsequenced manner.
+
+STEP 10:
+    Check whether behavior is:
+        • defined
+        • implementation-defined
+        • unspecified
+        • undefined
+
+ONLY AFTER THIS:
+
+    Calculate the output.
+
+
+===============================================================
+IMPORTANT RULES FOR WRITING SAFE C
+===============================================================
+
+1. Never access outside array bounds.
+
+2. Always initialize variables before use.
+
+3. Never dereference NULL.
+
+4. Do not use memory after free().
+
+5. Do not free the same allocation twice.
+
+6. Leave room for '\0' when storing strings.
+
+7. Do not assume sizeof(pointer) == sizeof(array).
+
+8. Be careful when mixing signed and unsigned types.
+
+9. Do not rely on evaluation order unless the language rules
+   guarantee it.
+
+10. Use parentheses when operator precedence is unclear.
+
+11. Avoid complicated expressions with multiple side effects.
+
+12. Compile with strong warnings.
+
+
+===============================================================
+COMPILER WARNINGS
+===============================================================
+
+For GCC, a useful starting point is:
+
+    gcc -Wall -Wextra -Wpedantic program.c -o program
+
+
+Warnings are extremely valuable because many dangerous
+constructs can be detected before execution.
+
+For debugging memory-related problems, tools such as
+sanitizers can also be useful.
+
+For example, conceptually:
+
+    AddressSanitizer
+        -> detects many memory errors
+
+    UndefinedBehaviorSanitizer
+        -> detects many forms of undefined behavior
+
+These tools help find bugs; they do not change the C language
+rules.
+
+
+===============================================================
+GATE / INTERVIEW CONCEPTS
+===============================================================
+
+Q1. What is undefined behavior?
+
+Answer:
+    Behavior for which the C standard imposes no requirements.
+
+
+Q2. Is undefined behavior always a compilation error?
+
+Answer:
+    No.
+
+
+Q3. Is implementation-defined behavior the same as UB?
+
+Answer:
+    No.
+
+    Implementation-defined behavior is a permitted choice
+    that the implementation documents.
+
+
+Q4. What is unspecified behavior?
+
+Answer:
+    The standard allows multiple permitted choices without
+    requiring the implementation to document which choice
+    was selected.
+
+
+Q5. Why is array out-of-bounds access dangerous?
+
+Answer:
+    It violates the valid bounds of the array and results
+    in undefined behavior.
+
+
+Q6. Why is '\0' important?
+
+Answer:
+    C strings are null-terminated. String functions such as
+    %s expect a valid null-terminated string.
+
+
+Q7. What is the difference between ++i and i++?
+
+Answer:
+
+    ++i -> increment, then value of expression is new value
+
+    i++ -> value of expression is old value, then increment
+
+
+Q8. Does operator precedence determine evaluation order?
+
+Answer:
+
+    No.
+
+    Precedence primarily determines grouping of operators.
+
+
+Q9. Why can signed/unsigned comparison be surprising?
+
+Answer:
+
+    Integer conversion rules can convert a signed operand to
+    an unsigned type, producing a result different from
+    mathematical intuition.
+
+
+Q10. Why is sizeof(array) different from sizeof(pointer)?
+
+Answer:
+
+    An array is actual storage for its elements, while a
+    pointer stores an address.
+
+    However, when an array is passed as a function parameter,
+    the parameter is adjusted to a pointer.
+
+
+===============================================================
+MASTER REVISION
+===============================================================
+
+                    C BEHAVIOR MODEL
+
+                         |
+        +----------------+----------------+
+        |                |                |
+      Defined      Implementation-    Unspecified
+                    defined
+        |                |                |
+    Standard         Choice +          Choice
+    specifies        documented       permitted
+
+
+                         |
+                    UNDEFINED
+                         |
+               NO REQUIREMENTS
+
+
+---------------------------------------------------------------
+MOST IMPORTANT TRAPS
+---------------------------------------------------------------
+
+    ++i vs i++
+        ↓
+    value semantics
+
+    precedence
+        ↓
+    grouping
+
+    evaluation order
+        ↓
+    do NOT assume left-to-right
+
+    integer division
+        ↓
+    5 / 2 == 2
+
+    signed/unsigned
+        ↓
+    conversion can surprise you
+
+    array bounds
+        ↓
+    valid indexes are 0 ... n-1
+
+    strings
+        ↓
+    '\0' required
+
+    sizeof
+        ↓
+    array != pointer
+
+    invalid memory access
+        ↓
+    often UB
+
+
+===============================================================
+CHAPTER 26 — FINAL TAKEAWAY
+===============================================================
+
+The most important lesson is:
+
+    A C program is NOT correct merely because it produces
+    the expected output once.
+
+A correct program must obey the rules of the C language.
+
+Especially remember:
+
+    Undefined Behavior
+        ≠
+    Implementation-defined Behavior
+        ≠
+    Unspecified Behavior
+
+And for tricky interview questions:
+
+    FIRST determine whether the behavior is valid.
+
+    THEN determine the output.
+
+Never do the reverse.
+
+===============================================================
+END OF CHAPTER 26
+===============================================================
+
+Next chapter: Chapter 27 — Modular & Professional C Programming.

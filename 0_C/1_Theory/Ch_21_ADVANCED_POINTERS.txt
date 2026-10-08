@@ -1,0 +1,2269 @@
+# CHAPTER 21 — ADVANCED POINTERS IN C
+# ================================================================
+# Source topics:
+# 21.1 Pointer to Pointer
+# 21.2 Pointer Arrays
+# 21.3 Array of Pointers
+# 21.4 Pointer to Array
+# 21.5 Function Pointers
+# 21.6 Array of Function Pointers
+# 21.7 Callback Functions
+# 21.8 Generic Programming using void*
+# 21.9 Pointer Casting
+# 21.10 Complex Pointer Declarations
+# ================================================================
+
+
+1. WHY ADVANCED POINTERS?
+=========================
+
+In basic pointers, we learned:
+
+    int x = 10;
+    int *p = &x;
+
+Here:
+
+    x  → actual integer
+    p  → address of x
+    *p → value stored at that address
+
+Advanced pointers arise when pointers themselves become:
+
+    • data
+    • elements of arrays
+    • targets of other pointers
+    • function addresses
+    • generic interfaces
+    • dynamically allocated structures
+
+A useful mental model:
+
+    Variable
+       ↓
+    Address
+       ↓
+    Pointer
+       ↓
+    Pointer to pointer
+       ↓
+    More complex pointer structures
+
+
+---------------------------------------------------------------
+2. POINTER TO POINTER
+---------------------------------------------------------------
+
+A pointer to pointer stores the address of another pointer.
+
+Example:
+
+    int x = 10;
+
+    int *p = &x;
+
+    int **pp = &p;
+
+
+Memory relationship:
+
+    x = 10
+
+    p
+    │
+    └──────────► x
+
+    pp
+    │
+    └──────────► p
+                 │
+                 └──────────► x
+
+
+Access:
+
+    x      → 10
+    *p     → 10
+    **pp   → 10
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int x = 10;
+
+        int *p = &x;
+        int **pp = &p;
+
+        printf("%d\n", x);
+        printf("%d\n", *p);
+        printf("%d\n", **pp);
+
+        return 0;
+    }
+
+
+Output:
+
+    10
+    10
+    10
+
+
+---------------------------------------------------------------
+3. MODIFYING A POINTER THROUGH POINTER-TO-POINTER
+---------------------------------------------------------------
+
+A major practical use of int ** is modifying a pointer
+inside another function.
+
+Example:
+
+    void allocate(int **p)
+    {
+        *p = malloc(sizeof(int));
+
+        if (*p != NULL)
+            **p = 100;
+    }
+
+    int main(void)
+    {
+        int *p = NULL;
+
+        allocate(&p);
+
+        printf("%d\n", *p);
+
+        free(p);
+    }
+
+
+Why int **?
+
+Suppose:
+
+    int *p = NULL;
+
+Calling:
+
+    allocate(p);
+
+would pass only the current value of p.
+
+Calling:
+
+    allocate(&p);
+
+passes the address of p.
+
+Therefore the function can change p itself.
+
+
+Relationship:
+
+    main:
+
+        p
+        │
+        ▼
+       NULL
+
+    allocate(&p)
+
+        parameter
+        int **p
+             │
+             ▼
+        main's pointer p
+
+The function can therefore execute:
+
+    *p = newly_allocated_memory;
+
+
+This pattern is extremely important for:
+
+    • dynamic memory
+    • linked lists
+    • trees
+    • modifying caller-owned pointers
+    • output pointer parameters
+
+
+---------------------------------------------------------------
+4. POINTER ARRAYS / ARRAY OF POINTERS
+---------------------------------------------------------------
+
+An array can contain pointers.
+
+Example:
+
+    int *arr[3];
+
+
+This means:
+
+    arr = array of 3 pointers to int
+
+
+NOT:
+
+    pointer to an array
+
+
+Example:
+
+    int a = 10;
+    int b = 20;
+    int c = 30;
+
+    int *arr[3] = {&a, &b, &c};
+
+
+Conceptually:
+
+        arr[0] ─────► a = 10
+        arr[1] ─────► b = 20
+        arr[2] ─────► c = 30
+
+
+Access:
+
+    *arr[0] → 10
+    *arr[1] → 20
+    *arr[2] → 30
+
+
+Example:
+
+    #include <stdio.h>
+
+    int main(void)
+    {
+        int a = 10;
+        int b = 20;
+        int c = 30;
+
+        int *arr[3] = {&a, &b, &c};
+
+        for (int i = 0; i < 3; i++)
+        {
+            printf("%d\n", *arr[i]);
+        }
+
+        return 0;
+    }
+
+
+Output:
+
+    10
+    20
+    30
+
+
+---------------------------------------------------------------
+5. ARRAY OF POINTERS VS POINTER TO ARRAY
+---------------------------------------------------------------
+
+This is a major interview/GATE topic.
+
+A)
+
+    int *arr[5];
+
+Meaning:
+
+    arr = array of 5 pointers to int
+
+
+B)
+
+    int (*arr)[5];
+
+Meaning:
+
+    arr = pointer to an array of 5 integers
+
+
+Parentheses completely change the meaning.
+
+Compare:
+
+    int *arr[5];
+
+    [] has higher binding than *
+
+Therefore:
+
+    arr → array
+
+
+But:
+
+    int (*arr)[5];
+
+Parentheses force:
+
+    *arr
+
+to bind first.
+
+Therefore:
+
+    arr → pointer
+
+
+Remember:
+
+    int *a[5];
+          ↑
+          array first
+
+    int (*a)[5];
+         ↑
+         pointer first
+
+
+---------------------------------------------------------------
+6. ARRAY OF POINTERS WITH STRINGS
+---------------------------------------------------------------
+
+One of the most common applications:
+
+    char *names[] = {
+        "Alice",
+        "Bob",
+        "Charlie"
+    };
+
+
+Here:
+
+    names
+
+is an array of pointers to char.
+
+Conceptually:
+
+    names[0] ───► "Alice"
+    names[1] ───► "Bob"
+    names[2] ───► "Charlie"
+
+
+Access:
+
+    printf("%s\n", names[0]);
+
+
+Important distinction:
+
+    char names[][20]
+
+and:
+
+    char *names[]
+
+
+are different representations.
+
+First:
+
+    char names[][20]
+
+stores character arrays inside the larger array.
+
+Second:
+
+    char *names[]
+
+stores pointers.
+
+
+Also remember that string literals should not be modified.
+
+Do not do:
+
+    char *s = "Hello";
+    s[0] = 'Y';
+
+This attempts to modify a string literal and results in undefined
+behavior.
+
+
+---------------------------------------------------------------
+7. POINTER TO ARRAY
+---------------------------------------------------------------
+
+Consider:
+
+    int (*p)[5];
+
+
+This is:
+
+    pointer to an array of 5 integers
+
+
+Example:
+
+    int a[5] = {10, 20, 30, 40, 50};
+
+    int (*p)[5] = &a;
+
+
+Then:
+
+    (*p)[0] → 10
+    (*p)[1] → 20
+    (*p)[4] → 50
+
+
+Why?
+
+Because:
+
+    p
+    │
+    ▼
+    a[5]
+
+
+The expression:
+
+    (*p)[i]
+
+means:
+
+    access element i of the array pointed to by p.
+
+
+---------------------------------------------------------------
+8. POINTER TO ARRAY AND 2D ARRAYS
+---------------------------------------------------------------
+
+This becomes especially useful with 2D arrays.
+
+Example:
+
+    int matrix[3][4];
+
+
+The type of:
+
+    matrix
+
+when passed appropriately is related to:
+
+    pointer to an array of 4 integers
+
+
+For example:
+
+    void print(int (*p)[4], int rows)
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                printf("%d ", p[i][j]);
+            }
+
+            printf("\n");
+        }
+    }
+
+
+Call:
+
+    int matrix[3][4];
+
+    print(matrix, 3);
+
+
+Why 4 matters:
+
+    int (*p)[4]
+
+says each row contains 4 integers.
+
+Pointer arithmetic uses that array type when moving between rows.
+
+
+---------------------------------------------------------------
+9. FUNCTION POINTERS
+---------------------------------------------------------------
+
+Functions also have addresses.
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+
+A pointer can store the address of this function.
+
+Declaration:
+
+    int (*fp)(int, int);
+
+
+This means:
+
+    fp = pointer to a function
+         taking two int arguments
+         and returning int
+
+
+Assignment:
+
+    fp = add;
+
+
+Function call:
+
+    fp(10, 20);
+
+
+or:
+
+    (*fp)(10, 20);
+
+
+Both invoke the pointed-to function.
+
+
+Example:
+
+    #include <stdio.h>
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int main(void)
+    {
+        int (*fp)(int, int);
+
+        fp = add;
+
+        printf("%d\n", fp(10, 20));
+
+        return 0;
+    }
+
+
+Output:
+
+    30
+
+
+---------------------------------------------------------------
+10. BREAKING DOWN A FUNCTION POINTER
+---------------------------------------------------------------
+
+Consider:
+
+    int (*fp)(int, int);
+
+
+Read it from the identifier outward.
+
+Start:
+
+    fp
+
+Then:
+
+    (*fp)
+
+Therefore fp is a pointer.
+
+Then:
+
+    (*fp)(int, int)
+
+Therefore it points to a function taking two int arguments.
+
+Finally:
+
+    int (*fp)(int, int)
+
+Therefore the function returns int.
+
+
+Compare:
+
+    int *fp(int, int);
+
+
+This means something completely different.
+
+It means:
+
+    fp is a function taking two ints
+    and returning int *
+
+
+This is NOT a function pointer.
+
+
+The parentheses matter enormously.
+
+
+---------------------------------------------------------------
+11. FUNCTION POINTER USE CASES
+---------------------------------------------------------------
+
+Function pointers are useful for:
+
+    • callbacks
+    • sorting
+    • event handling
+    • state machines
+    • dispatch tables
+    • plugin-style interfaces
+    • runtime selection of behavior
+
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int multiply(int a, int b)
+    {
+        return a * b;
+    }
+
+    int calculate(
+        int a,
+        int b,
+        int (*operation)(int, int)
+    )
+    {
+        return operation(a, b);
+    }
+
+
+Usage:
+
+    calculate(10, 20, add);
+
+    calculate(10, 20, multiply);
+
+
+The behavior is selected by passing a function.
+
+
+---------------------------------------------------------------
+12. ARRAY OF FUNCTION POINTERS
+---------------------------------------------------------------
+
+We can create an array whose elements are function pointers.
+
+Suppose:
+
+    int add(int a, int b);
+    int subtract(int a, int b);
+    int multiply(int a, int b);
+
+
+We can write:
+
+    int (*operations[3])(int, int) = {
+        add,
+        subtract,
+        multiply
+    };
+
+
+Now:
+
+    operations[0] → add
+    operations[1] → subtract
+    operations[2] → multiply
+
+
+Usage:
+
+    int result = operations[0](10, 5);
+
+
+Result:
+
+    15
+
+
+Another:
+
+    operations[2](10, 5);
+
+
+Result:
+
+    50
+
+
+This is often called a dispatch table.
+
+
+---------------------------------------------------------------
+13. DISPATCH TABLE
+---------------------------------------------------------------
+
+Instead of:
+
+    switch (choice)
+    {
+        case 1:
+            add(...);
+            break;
+
+        case 2:
+            subtract(...);
+            break;
+
+        case 3:
+            multiply(...);
+            break;
+    }
+
+
+We can use:
+
+    int (*operations[])(int, int) = {
+        add,
+        subtract,
+        multiply
+    };
+
+
+Then:
+
+    operations[choice](a, b);
+
+
+provided that choice is validated.
+
+
+This can make command dispatch more compact.
+
+But never access outside the array:
+
+    operations[100](a, b);   // invalid if array is smaller
+
+
+Always validate the index.
+
+
+---------------------------------------------------------------
+14. CALLBACK FUNCTIONS
+---------------------------------------------------------------
+
+A callback is a function passed to another function so that
+the receiving function can call it.
+
+Example:
+
+    void process(int x, int (*callback)(int))
+    {
+        int result = callback(x);
+
+        printf("%d\n", result);
+    }
+
+
+Function:
+
+    int square(int x)
+    {
+        return x * x;
+    }
+
+
+Call:
+
+    process(5, square);
+
+
+Inside process:
+
+    callback(5)
+
+executes:
+
+    square(5)
+
+
+Result:
+
+    25
+
+
+Concept:
+
+    Caller
+       │
+       │ passes function address
+       ▼
+    process()
+       │
+       │ calls callback
+       ▼
+    square()
+
+
+---------------------------------------------------------------
+15. CALLBACKS — WHY THEY MATTER
+---------------------------------------------------------------
+
+Callbacks provide separation between:
+
+    WHAT to do
+
+and:
+
+    HOW the framework performs the operation.
+
+
+Examples in real software include:
+
+    • sorting comparison functions
+    • event handlers
+    • GUI callbacks
+    • interrupt-related interfaces
+    • library customization
+    • asynchronous programming
+    • state machines
+
+
+A familiar C-library example is qsort(), whose comparison
+function is supplied by the programmer.
+
+
+Conceptually:
+
+    qsort(data, count, size, comparator);
+
+
+The comparator is a callback.
+
+
+---------------------------------------------------------------
+16. void* — GENERIC POINTER
+---------------------------------------------------------------
+
+void * is a generic object pointer.
+
+Example:
+
+    void *p;
+
+
+It can hold the address of an object of different object types.
+
+Example:
+
+    int x = 10;
+
+    void *p = &x;
+
+
+To access the integer:
+
+    printf("%d\n", *(int *)p);
+
+
+Here:
+
+    p
+    ↓
+    void pointer
+
+    (int *)p
+    ↓
+    converted to int *
+
+    *(int *)p
+    ↓
+    integer value
+
+
+---------------------------------------------------------------
+17. WHY void* IS USEFUL
+---------------------------------------------------------------
+
+It allows functions to work with different object types.
+
+Conceptual example:
+
+    void print_value(void *data, char type)
+    {
+        if (type == 'i')
+            printf("%d\n", *(int *)data);
+        else if (type == 'd')
+            printf("%f\n", *(double *)data);
+    }
+
+
+Usage:
+
+    int x = 10;
+    double y = 3.14;
+
+    print_value(&x, 'i');
+    print_value(&y, 'd');
+
+
+The pointer itself does not contain type information telling the
+function what object it points to.
+
+The programmer/interface must know the correct type.
+
+
+---------------------------------------------------------------
+18. IMPORTANT void* RULE
+---------------------------------------------------------------
+
+A void pointer must be interpreted correctly before dereferencing.
+
+Suppose:
+
+    int x = 10;
+
+    void *p = &x;
+
+
+Correct:
+
+    *(int *)p
+
+
+Incorrect:
+
+    *(double *)p
+
+
+The second expression interprets the memory as a double even though
+the actual object is an int.
+
+The consequences can be undefined behavior and/or incorrect access.
+
+
+General principle:
+
+    void* removes compile-time type information.
+
+Therefore the programmer must preserve the correct type information
+through the interface.
+
+
+---------------------------------------------------------------
+19. POINTER CASTING
+---------------------------------------------------------------
+
+Pointer casting converts one pointer type to another.
+
+Example:
+
+    int x = 10;
+
+    int *p = &x;
+
+    void *vp = p;
+
+    int *q = (int *)vp;
+
+
+Then:
+
+    *q
+
+accesses x.
+
+
+Another example:
+
+    char *cp = (char *)&x;
+
+
+Now cp points to the first byte of x's object representation.
+
+This can be useful for examining object representation, but the
+meaning depends on the type, object representation, alignment, and
+access rules.
+
+
+---------------------------------------------------------------
+20. POINTER CASTING IS NOT MAGIC
+---------------------------------------------------------------
+
+Consider:
+
+    int x = 10;
+
+    double *p = (double *)&x;
+
+
+The cast itself does not convert the integer object into a double.
+
+It merely changes the pointer type.
+
+This is a critical distinction.
+
+Wrong idea:
+
+    (double *)&x
+
+means:
+
+    "convert x into double"
+
+Correct idea:
+
+    "treat this address as a pointer to double"
+
+Dereferencing such a pointer may violate alignment or object-access
+requirements and can result in undefined behavior.
+
+
+---------------------------------------------------------------
+21. POINTER CASTING WITH void*
+---------------------------------------------------------------
+
+A common generic pattern:
+
+    void *p = &x;
+
+Then:
+
+    int *ip = (int *)p;
+
+
+The cast tells the compiler how the pointer will be interpreted.
+
+But it does NOT change the underlying object.
+
+
+Think:
+
+    cast changes the pointer's type view,
+    not the object's actual type.
+
+
+---------------------------------------------------------------
+22. COMPLEX POINTER DECLARATIONS
+---------------------------------------------------------------
+
+C declarations become difficult because operators such as:
+
+    *
+    ()
+    []
+
+interact according to declaration syntax.
+
+
+Example:
+
+    int *p;
+
+
+p:
+
+    pointer to int
+
+
+Example:
+
+    int **p;
+
+
+p:
+
+    pointer to pointer to int
+
+
+Example:
+
+    int *arr[5];
+
+
+arr:
+
+    array of 5 pointers to int
+
+
+Example:
+
+    int (*arr)[5];
+
+
+arr:
+
+    pointer to array of 5 int
+
+
+Example:
+
+    int (*fp)(int);
+
+
+fp:
+
+    pointer to function taking int
+    and returning int
+
+
+Example:
+
+    int *fp(int);
+
+
+fp:
+
+    function taking int
+    and returning pointer to int
+
+
+Example:
+
+    int (*fp[5])(int);
+
+
+fp:
+
+    array of 5 pointers to functions
+    taking int and returning int
+
+
+These declarations are fundamentally different.
+
+
+---------------------------------------------------------------
+23. THE "RIGHT-LEFT" STYLE OF READING DECLARATIONS
+---------------------------------------------------------------
+
+A useful practical technique is to start at the identifier and
+move outward while respecting parentheses.
+
+Example:
+
+    int (*fp)(int, int);
+
+
+Start at:
+
+    fp
+
+See:
+
+    (*fp)
+
+Therefore:
+
+    fp is a pointer
+
+Then:
+
+    (*fp)(int, int)
+
+Therefore:
+
+    fp points to a function taking two ints
+
+Finally:
+
+    int
+
+Therefore:
+
+    function returns int.
+
+
+Example:
+
+    int *(*fp)(int);
+
+
+Start:
+
+    fp
+
+Then:
+
+    (*fp)
+
+→ pointer
+
+Then:
+
+    (*fp)(int)
+
+→ pointer to function taking int
+
+Then:
+
+    int *
+
+→ function returns pointer to int.
+
+
+Therefore:
+
+    fp is a pointer to a function
+    taking int
+    and returning int *.
+
+
+---------------------------------------------------------------
+24. IMPORTANT DECLARATION TABLE
+---------------------------------------------------------------
+
+Declaration:
+
+    int *p;
+
+Meaning:
+
+    pointer to int
+
+
+Declaration:
+
+    int **p;
+
+Meaning:
+
+    pointer to pointer to int
+
+
+Declaration:
+
+    int *a[5];
+
+Meaning:
+
+    array of 5 pointers to int
+
+
+Declaration:
+
+    int (*a)[5];
+
+Meaning:
+
+    pointer to array of 5 int
+
+
+Declaration:
+
+    int (*fp)(int);
+
+Meaning:
+
+    pointer to function taking int and returning int
+
+
+Declaration:
+
+    int *fp(int);
+
+Meaning:
+
+    function taking int and returning pointer to int
+
+
+Declaration:
+
+    int (*fp[5])(int);
+
+Meaning:
+
+    array of 5 function pointers
+
+
+Declaration:
+
+    int **a[5];
+
+Meaning:
+
+    array of 5 pointers to pointers to int
+
+
+Declaration:
+
+    int (*(*fp)(int))[5];
+
+Meaning:
+
+    fp is a pointer to a function taking int
+    and returning pointer to an array of 5 int.
+
+
+The last form demonstrates how rapidly declarations can become
+complex.
+
+
+---------------------------------------------------------------
+25. typedef CAN MAKE COMPLEX POINTERS READABLE
+---------------------------------------------------------------
+
+Instead of:
+
+    int (*operation)(int, int);
+
+
+we can write:
+
+    typedef int (*Operation)(int, int);
+
+
+Then:
+
+    Operation op;
+
+
+Now:
+
+    op
+
+means:
+
+    pointer to a function taking two ints and returning int.
+
+
+Example:
+
+    typedef int (*Operation)(int, int);
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int main(void)
+    {
+        Operation op = add;
+
+        printf("%d\n", op(2, 3));
+    }
+
+
+This is often much easier to maintain.
+
+
+---------------------------------------------------------------
+26. POINTER TO POINTER IN LINKED DATA STRUCTURES
+---------------------------------------------------------------
+
+Suppose:
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+    };
+
+
+To modify the head pointer from a function, we may use:
+
+    void insert_front(struct Node **head, int value);
+
+
+Why?
+
+Because:
+
+    head
+
+is itself a pointer.
+
+To modify the caller's head:
+
+    struct Node **
+
+
+is required.
+
+
+Conceptually:
+
+    main
+      │
+      └── head ─────► Node A
+                       │
+                       ▼
+                     Node B
+
+
+Function receives:
+
+    &head
+
+Therefore:
+
+    Node **
+
+
+It can replace:
+
+    head = Node A
+
+with:
+
+    head = New Node
+
+
+This is one of the most important real-world applications of
+pointer-to-pointer.
+
+
+---------------------------------------------------------------
+27. POINTERS AND MEMORY LEVELS
+---------------------------------------------------------------
+
+Consider:
+
+    int x = 10;
+    int *p = &x;
+    int **pp = &p;
+
+
+There are three levels:
+
+    x
+    │
+    │ value
+    ▼
+    10
+
+
+    p
+    │
+    │ stores address
+    ▼
+    &x
+
+
+    pp
+    │
+    │ stores address
+    ▼
+    &p
+
+
+Access levels:
+
+    x       → object
+    p       → pointer to x
+    *p      → x
+    pp      → pointer to p
+    *pp     → p
+    **pp    → x
+
+
+A useful rule:
+
+    Every * dereference moves one pointer level toward
+    the object.
+
+
+---------------------------------------------------------------
+28. POINTER ARITHMETIC WITH COMPLEX TYPES
+---------------------------------------------------------------
+
+Pointer arithmetic depends on the pointed-to type.
+
+Suppose:
+
+    int a[5];
+
+    int *p = a;
+
+
+Then:
+
+    p + 1
+
+moves by:
+
+    sizeof(int)
+
+
+But:
+
+    int (*q)[5] = &a;
+
+Here q points to an entire array of 5 integers.
+
+Pointer arithmetic on q moves by the size of:
+
+    int[5]
+
+
+This distinction becomes extremely important with multidimensional
+arrays.
+
+
+---------------------------------------------------------------
+29. FUNCTION POINTER TYPE COMPATIBILITY
+---------------------------------------------------------------
+
+Function pointer types must be compatible with the function being
+called through them.
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int (*fp)(int, int) = add;
+
+
+Correct.
+
+But using a function pointer with an incompatible function type and
+then calling through it can lead to undefined behavior.
+
+Therefore:
+
+    parameter types
+    return type
+    function-pointer type
+
+must be considered carefully.
+
+
+---------------------------------------------------------------
+30. COMMON MISTAKES
+---------------------------------------------------------------
+
+Mistake 1:
+
+    int *p;
+    printf("%d", *p);
+
+Problem:
+
+    p is uninitialized.
+
+It does not point to a valid int object.
+
+
+Mistake 2:
+
+    int **pp;
+    printf("%d", **pp);
+
+Problem:
+
+    pp is uninitialized.
+
+
+Mistake 3:
+
+    int *arr[5];
+
+Assuming this means:
+
+    pointer to array of 5 int
+
+It does not.
+
+It means:
+
+    array of 5 pointers to int.
+
+
+Mistake 4:
+
+    int (*arr)[5];
+
+Assuming this means:
+
+    array of 5 pointers
+
+It does not.
+
+It means:
+
+    pointer to array of 5 int.
+
+
+Mistake 5:
+
+    int *fp(int);
+
+thinking it means:
+
+    function pointer
+
+It means:
+
+    function returning int *.
+
+
+Correct function pointer:
+
+    int (*fp)(int);
+
+
+Mistake 6:
+
+    void *p = &x;
+    printf("%d", *p);
+
+Not valid in standard C because void* does not directly provide
+the object type for dereferencing.
+
+Use:
+
+    printf("%d", *(int *)p);
+
+
+Mistake 7:
+
+    double *p = (double *)&integer;
+
+and then dereferencing p.
+
+A cast does not make the object a double.
+
+
+Mistake 8:
+
+    operations[index](a, b);
+
+without validating index.
+
+This can access outside the function-pointer array.
+
+
+---------------------------------------------------------------
+31. INTERVIEW/GATE CONCEPT — DECLARATION TRAPS
+---------------------------------------------------------------
+
+Question:
+
+    int *a[10];
+
+What is a?
+
+Answer:
+
+    Array of 10 pointers to int.
+
+
+Question:
+
+    int (*a)[10];
+
+What is a?
+
+Answer:
+
+    Pointer to an array of 10 int.
+
+
+Question:
+
+    int (*fp)(double);
+
+Answer:
+
+    Pointer to a function taking double
+    and returning int.
+
+
+Question:
+
+    int *fp(double);
+
+Answer:
+
+    Function taking double
+    and returning pointer to int.
+
+
+Question:
+
+    int (*fp[10])(double);
+
+Answer:
+
+    Array of 10 pointers to functions
+    taking double and returning int.
+
+
+These are classic C declaration questions.
+
+
+---------------------------------------------------------------
+32. INTERVIEW/GATE CONCEPT — ARRAY OF POINTERS VS 2D ARRAY
+---------------------------------------------------------------
+
+Compare:
+
+    int a[3][4];
+
+with:
+
+    int *p[3];
+
+
+First:
+
+    a
+
+is a 2D array containing:
+
+    3 arrays of 4 int.
+
+
+Second:
+
+    p
+
+is an array containing:
+
+    3 pointers to int.
+
+
+They are NOT the same type.
+
+
+Similarly:
+
+    int **p;
+
+is NOT automatically equivalent to:
+
+    int a[3][4];
+
+
+This is a very common misconception.
+
+A dynamically allocated or separately represented 2D structure may
+use int **, but a true:
+
+    int a[3][4]
+
+has a specific array type and memory layout.
+
+
+---------------------------------------------------------------
+33. INTERVIEW/GATE CONCEPT — FUNCTION POINTER VS FUNCTION
+---------------------------------------------------------------
+
+A function name can be used in contexts where its address is needed.
+
+For example:
+
+    int add(int a, int b);
+
+    int (*fp)(int, int) = add;
+
+
+The function pointer stores the function's address representation
+as permitted by the C language.
+
+Calling:
+
+    fp(2, 3)
+
+invokes the function through the pointer.
+
+
+But:
+
+    int *fp(int, int)
+
+is not a function pointer.
+
+It declares a function.
+
+
+---------------------------------------------------------------
+34. MASTER MAP OF CHAPTER 21
+---------------------------------------------------------------
+
+                         ADVANCED POINTERS
+                                │
+       ┌────────────────────────┼────────────────────────┐
+       │                        │                        │
+       ▼                        ▼                        ▼
+ Pointer levels            Pointer arrays          Function pointers
+       │                        │                        │
+       ▼                        ▼                        ▼
+    int *                   int *a[5]              int (*fp)(...)
+       │
+       ▼
+    int **
+       │
+       ▼
+ Pointer to pointer
+
+
+Pointer-to-array:
+
+    int (*a)[5]
+
+
+Function-pointer array:
+
+    int (*fp[5])(int)
+
+
+Callbacks:
+
+    function passed as argument
+
+
+Generic programming:
+
+    void *
+
+
+Pointer casting:
+
+    (type *)pointer
+
+
+Complex declarations:
+
+    combine
+    *
+    ()
+    []
+
+
+---------------------------------------------------------------
+35. MOST IMPORTANT DISTINCTIONS
+---------------------------------------------------------------
+
+1.
+
+    int *a[5]
+
+    = array of pointers
+
+
+2.
+
+    int (*a)[5]
+
+    = pointer to array
+
+
+3.
+
+    int (*fp)(int)
+
+    = pointer to function
+
+
+4.
+
+    int *fp(int)
+
+    = function returning pointer
+
+
+5.
+
+    int **p
+
+    = pointer to pointer
+
+
+6.
+
+    void *p
+
+    = generic object pointer
+
+
+7.
+
+    typedef int (*FP)(int);
+
+    = FP becomes a function-pointer type alias
+
+
+---------------------------------------------------------------
+36. PRACTICAL EXAMPLE — MENU USING FUNCTION POINTERS
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+    int sub(int a, int b)
+    {
+        return a - b;
+    }
+
+    int mul(int a, int b)
+    {
+        return a * b;
+    }
+
+    int main(void)
+    {
+        int (*operations[])(int, int) = {
+            add,
+            sub,
+            mul
+        };
+
+        int choice = 0;
+        int a = 10;
+        int b = 5;
+
+        if (choice >= 0 && choice < 3)
+        {
+            printf("%d\n", operations[choice](a, b));
+        }
+
+        return 0;
+    }
+
+
+For:
+
+    choice = 0
+
+result:
+
+    15
+
+
+For:
+
+    choice = 1
+
+result:
+
+    5
+
+
+For:
+
+    choice = 2
+
+result:
+
+    50
+
+
+This demonstrates:
+
+    function pointers
+    +
+    array of function pointers
+    +
+    dispatch table
+
+
+---------------------------------------------------------------
+37. PRACTICAL EXAMPLE — POINTER TO POINTER
+---------------------------------------------------------------
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int create_value(int **p)
+    {
+        *p = malloc(sizeof **p);
+
+        if (*p == NULL)
+            return 0;
+
+        **p = 100;
+
+        return 1;
+    }
+
+    int main(void)
+    {
+        int *p = NULL;
+
+        if (create_value(&p))
+        {
+            printf("%d\n", *p);
+            free(p);
+        }
+
+        return 0;
+    }
+
+
+Important expression:
+
+    *p = malloc(sizeof **p);
+
+
+Why:
+
+    p
+
+has type:
+
+    int **
+
+therefore:
+
+    *p
+
+has type:
+
+    int *
+
+and:
+
+    **p
+
+has type:
+
+    int.
+
+
+---------------------------------------------------------------
+38. PRACTICAL EXAMPLE — CALLBACK
+---------------------------------------------------------------
+
+    #include <stdio.h>
+
+    int square(int x)
+    {
+        return x * x;
+    }
+
+    int cube(int x)
+    {
+        return x * x * x;
+    }
+
+    void apply(int value, int (*operation)(int))
+    {
+        printf("%d\n", operation(value));
+    }
+
+    int main(void)
+    {
+        apply(5, square);
+        apply(5, cube);
+
+        return 0;
+    }
+
+
+Output:
+
+    25
+    125
+
+
+The same apply() function can perform different operations.
+
+
+---------------------------------------------------------------
+39. HOW TO MASTER COMPLEX POINTERS
+---------------------------------------------------------------
+
+Do NOT try to memorize every declaration.
+
+Use this method:
+
+Step 1:
+
+    Find the identifier.
+
+Step 2:
+
+    Look immediately around it.
+
+Step 3:
+
+    Parentheses change binding.
+
+Step 4:
+
+    [] means array.
+
+Step 5:
+
+    () after the identifier means function.
+
+Step 6:
+
+    * means pointer.
+
+Step 7:
+
+    Continue outward.
+
+Example:
+
+    int (*fp[5])(double);
+
+
+Start:
+
+    fp
+
+
+Immediately:
+
+    fp[5]
+
+Therefore:
+
+    array of 5
+
+
+Then:
+
+    (*fp[5])
+
+Therefore elements are pointers.
+
+
+Then:
+
+    (*fp[5])(double)
+
+Therefore each pointer points to a function taking double.
+
+
+Finally:
+
+    int
+
+Therefore each function returns int.
+
+
+Final answer:
+
+    fp is an array of 5 pointers to functions
+    taking double and returning int.
+
+
+---------------------------------------------------------------
+40. CHAPTER 21 — FINAL REVISION
+---------------------------------------------------------------
+
+Pointer to pointer:
+
+    int **p;
+
+
+Array of pointers:
+
+    int *p[5];
+
+
+Pointer to array:
+
+    int (*p)[5];
+
+
+Function pointer:
+
+    int (*fp)(int);
+
+
+Array of function pointers:
+
+    int (*fp[5])(int);
+
+
+Callback:
+
+    function pointer passed to another function.
+
+
+Generic pointer:
+
+    void *p;
+
+
+Pointer casting:
+
+    (type *)p
+
+
+Complex declaration:
+
+    carefully analyze *, [], and () around identifier.
+
+
+Most important interview rule:
+
+    Parentheses can completely change a declaration.
+
+
+Compare:
+
+    int *a[5];
+
+    int (*a)[5];
+
+
+and:
+
+    int *fp(int);
+
+    int (*fp)(int);
+
+
+These pairs look almost identical but have completely different
+meanings.
+
+
+===============================================================
+CHAPTER 21 COMPLETE
+===============================================================
+
+NEXT CHAPTER:
+
+    CHAPTER 22 — BIT MANIPULATION
+
+Topics:
+
+    22.1 Binary Representation
+    22.2 Bitwise AND
+    22.3 Bitwise OR
+    22.4 Bitwise XOR
+    22.5 Bitwise NOT
+    22.6 Left Shift
+    22.7 Right Shift
+    22.8 Important Bit Tricks
+         • Check odd/even
+         • Check/set/clear a bit
+         • Toggle a bit
+         • Count set bits
+         • Power of 2
+         • Swap numbers
+         • Extract bits
+         • Masking
+    22.9 Bit Fields
+    22.10 Interview Problems on Bit Manipulation
